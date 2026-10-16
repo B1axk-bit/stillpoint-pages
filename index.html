@@ -254,6 +254,15 @@ a{color:inherit}
 .bar.pos{background:var(--pos);border-radius:0 4px 4px 0}
 .bar.neg.soft{background:var(--neg-soft)} .bar.pos.soft{background:var(--pos-soft)}
 .bar.mag{background:var(--mag);border-radius:0 4px 4px 0} .bar.mag.hi{background:var(--brass)}
+.bc.twin .bc-row{min-height:32px}
+.bc.twin .bc-track{height:24px}
+.bar.t1,.bar.t2{transform:none;height:9px}
+.bar.t1{top:2px} .bar.t2{top:13px}
+.bc.twin .bc-val{display:flex;flex-direction:column;align-items:flex-end;gap:1px;line-height:1.2;font-size:11.5px}
+.bc.twin .bc-val b{font-weight:500}
+.bc.twin .bc-val small{font-size:11px;color:var(--muted)}
+em.ai{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.04em;color:var(--brass);border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:1.4}
+.bc-name em.ai{margin-left:5px;vertical-align:1px}
 .bc-row:hover .bar,.bc-row:focus-visible .bar{filter:brightness(1.08) saturate(1.1)}
 .db-line{position:absolute;top:50%;height:2px;transform:translateY(-50%);background:var(--neg)}
 .db-dot{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface)}
@@ -262,6 +271,10 @@ a{color:inherit}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:14px;height:10px;border-radius:2px;display:inline-block}
+.legend i.sw2{width:16px;height:9px}
+.legend i.sw2.t1{background:linear-gradient(90deg,var(--neg) 50%,var(--pos) 50%)}
+.legend i.sw2.t2{background:linear-gradient(90deg,var(--neg-soft) 50%,var(--pos-soft) 50%)}
+.legend.sm{font-size:11.5px;margin:2px 0 6px}
 
 .rg{position:relative;padding-top:22px}
 .rg-track{position:relative;height:14px;background:var(--surface-2);border-radius:3px}
@@ -390,6 +403,7 @@ details.tt[open] summary::before{content:"▾"}
 .gg-days{display:flex;gap:4px;flex-wrap:wrap;padding-block:4px}
 .gg-days i{width:24px;height:24px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:11px;background:var(--neg);color:#fff}
 .gg-days i.next{background:transparent;color:var(--muted);border:1.5px dashed var(--muted)}
+.gg-days i.buy{background:var(--pos);font-weight:600}
 @media (max-width:1000px){.gauges{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.gauges{grid-template-columns:minmax(0,1fr)}}
 
@@ -454,6 +468,8 @@ details.tt[open] summary::before{content:"▾"}
 .cs-t b{font-size:13.5px}
 .cs-t span{font-size:11.5px;color:var(--muted)}
 .cs-v{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.cs-r{display:block;margin-top:6px;padding-left:8px;border-left:2px solid var(--brass);font-size:12px;color:var(--ink-2);line-height:1.55}
+.cs-r b{color:var(--brass);font-weight:600;margin-right:6px}
 .cs-next{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
 .rvd{font-family:var(--f-mono);font-size:11px;padding:1px 7px;border-radius:4px;border:1px solid var(--line);color:var(--ink-2);white-space:nowrap}
 .rvd.due{background:var(--brass);border-color:var(--brass);color:var(--surface);font-weight:500}
@@ -733,143 +749,145 @@ details.tt[open] summary::before{content:"▾"}
     "en": "Stillpoint",
     "about": "静观把市场噪音收成一句结论、一个现在能做的动作、一条改主意的线。研究框架，不是投资建议。",
     "tagline": "行情转得再快，先看清再动。",
-    "meta": "数据截至 2026-10-15 21:42 · 框架 v0.4.3 · 研究框架的观点展示，不是投资建议，不对应任何买卖点位"
+    "meta": "数据截至 2026-10-16 17:00 · 框架 v0.4.4 · 研究框架的观点展示，不是投资建议，不对应任何买卖点位"
   },
-  "edition": {"label": "研究档案 2026-10-15 晚 · 快照 21:42 · 框架 v0.4.3", "due": "10/16"},
+  "edition": {"label": "研究档案 2026-10-16 · 快照 15:10 · 框架 v0.4.4", "due": "10/16"},
   "verdict": {
     "headline": "好财报不是底，融资松开才是。",
     "highlight": "融资松开",
-    "sub": "全世界跌的是同一笔交易：借钱建 AI 机房。台积电证明需求没坏，但借钱在快速变贵，通胀又热到美联储没法出手。所以等：等韩国外资停手，等 CoreWeave 的债止跌。",
+    "sub": "全世界跌的是同一笔交易：借钱建 AI 机房。10/16 亚洲反弹、韩国外资转买，沃什讲话后 10 月加息概率掉到 15% 左右；但 CoreWeave 的 CDS 又创新高。踩踏和利率在松，融资还在紧，所以继续等：等韩国外资再买一天，等 CoreWeave 的债止跌。",
     "stance": "等待",
-    "chips": [{"k": "信心", "v": "中"}, {"k": "研究周期", "v": "1–3 个月"}, {"k": "和早上比", "v": "不变，理由更充分"}],
-    "dataNote": "亚太和 A 股是 10/15 收盘；美股是开盘后约 12 分钟的盘中数；美元、黄金、原油是 21:30–21:42 实时价。10/16 08:40 自动快照拉到美股收盘后重看。",
+    "chips": [{"k": "信心", "v": "中"}, {"k": "研究周期", "v": "1–3 个月"}, {"k": "和 10/15 比", "v": "立场不变，两盏灯在松"}],
+    "dataNote": "亚太和 A 股是 10/16 收盘；美股是 10/15 收盘；美元、黄金、原油是 10/16 15:10 实时价；加息概率和韩国资金流来自当天报道。美股 10/16 收盘后（10/17 早上）再更新。",
     "stanceTitle": "七个主题：三个维持，三个等待，一个回避"
   },
   "stanceScale": ["回避", "减", "等待", "有条件维持", "有条件建立", "加"],
   "stances": [
     {"theme": "AI 瓶颈层", "stance": "有条件维持", "note": "不追，等踩踏结束"},
-    {"theme": "A 股半导体设备", "stance": "有条件维持", "note": "不追"},
+    {"theme": "A 股半导体设备", "stance": "有条件维持", "note": "不追，10/16 回吐了"},
     {"theme": "防守端", "stance": "有条件维持", "note": "银行、红利、黄金"},
-    {"theme": "存储 · 韩国", "stance": "等待", "note": "多一个 HBM4 问号"},
+    {"theme": "存储 · 韩国", "stance": "等待", "note": "外资转买才一天，HBM4 问号还在"},
     {"theme": "A 股光模块", "stance": "等待", "note": "等融资缓解和放量止跌"},
-    {"theme": "美元拐点", "stance": "等待", "note": "六个条件 0 个确认"},
+    {"theme": "美元拐点", "stance": "等待", "note": "碰到 101.84，没有条件确认"},
     {"theme": "杠杆 AI 基建", "stance": "回避", "prev": "等待", "prevDate": "10/14", "note": "10/15 从等待收紧到回避"}
   ],
   "kpis": [
-    {"label": "CoreWeave 5 年 CDS", "value": "≈1,000", "unit": "bp", "delta": "10/14 刚过 600bp，一天走阔约 400bp", "read": "融资在变贵", "src": "路透 · 10/15"},
-    {"label": "韩国 KOSPI", "value": "−7.57", "unit": "%", "delta": "盘中熔断；外资连卖第 8 天", "read": "踩踏还没停", "src": "快照 · 10/15 收盘"},
+    {"label": "CoreWeave 5 年 CDS", "value": "≈1,040", "unit": "bp", "delta": "10/15 盘中最高 1,194.5bp，创纪录；隐含 5 年违约概率超过 60%", "read": "融资还在变贵", "src": "Bloomberg（ICE）、CNBC · 10/15"},
+    {"label": "韩国外资净买入", "value": "+3,414", "unit": "亿韩元", "delta": "连卖 8 天后第一次净买；KOSPI +2.05%", "read": "踩踏第一天停手", "src": "Financial News · 10/16 收盘"},
+    {"label": "10 月加息概率", "value": "≈15", "unit": "%", "delta": "沃什 10/16 讲话前约 28%；10/15 PPI 后 33.8%", "read": "利率这盏灯转绿", "src": "新浪财经；Mitrade 引 CME FedWatch · 10/16"},
     {"label": "台积电 Q3 收入", "value": "467.2", "unit": "亿美元", "delta": "同比 +41.2%；指引上沿是 458", "read": "需求没坏", "src": "SEC 6-K · 10/15"},
-    {"label": "10 年期美债收益率", "value": "−13", "unit": "bp", "delta": "约 5.05–5.07%；10/14 收 5.19%", "read": "PPI 很热，钱照样逃进美债", "src": "Trading Economics · 美股开盘前后"},
-    {"label": "10 月加息概率", "value": "33.8", "unit": "%", "delta": "PPI 前 29.3%，公布后升 4.5 个百分点", "read": "美联储托不了底", "src": "CME FedWatch · 10/15"},
-    {"label": "VIX", "value": "17.5", "unit": "", "delta": "SOFR−IORB −1bp（10/13）", "read": "系统不缺钱", "src": "快照 21:25 · ARGUS"}
+    {"label": "10 年期美债收益率", "value": "5.10", "unit": "%", "delta": "10/15 下行 9bp（5.19%→5.10%）；实际利率 2.78%", "read": "钱还在往美债躲", "src": "美国财政部 · 10/15"},
+    {"label": "VIX", "value": "16.5", "unit": "", "delta": "SOFR−IORB −2bp（10/14）；高收益债利差 3.25%（10/14）", "read": "系统不缺钱", "src": "快照 10/16 · ARGUS · FRED"}
   ],
   "signals": {
-    "head": "五盏灯两盏红：融资是唯一还在变差的一盏",
-    "sub": "①先转绿，瓶颈层可以重新评估；②转绿，杠杆 AI 才解禁。拥挤仓位的踩踏来得快、走得快，融资压力消化得慢。",
-    "diagnosis": {"verdict": "这是融资压力型下跌，不是流动性冲击", "rule": "只有真正的流动性冲击，才是乱中取利的入场信号。融资压力和经营恶化，对应的是等待或回避。", "rows": [{"name": "流动性压力", "level": 1, "tone": "warn", "levelLabel": "局部有，系统没有", "fact": "韩国熔断、外资连卖；美国资金面平静，VIX 17.5，高收益债利差 3.16%"}, {"name": "融资压力", "level": 3, "tone": "crit", "levelLabel": "主线，而且更重了", "fact": "CoreWeave CDS 约 1,000bp，两单 IPO 撤回或推迟，380 亿美元建设贷款折价分销"}, {"name": "经营恶化", "level": 0, "tone": "good", "levelLabel": "瓶颈层没有，存储有问号", "fact": "台积电超预期并上调全年；HBM4 设备订单推迟只是未证实报道"}]},
+    "head": "五盏灯一盏红：只剩融资还在变差",
+    "sub": "①转绿，瓶颈层可以重新评估；②转绿，杠杆 AI 才解禁。10/16 ①开始松、③转绿，②又创新高，和“亚洲先止跌、杠杆 AI 更久”的判断同向。",
+    "diagnosis": {"verdict": "还是融资压力型下跌，不是流动性冲击", "rule": "只有真正的流动性冲击，才是乱中取利的入场信号。融资压力和经营恶化，对应的是等待或回避。", "rows": [{"name": "流动性压力", "level": 1, "tone": "warn", "levelLabel": "局部在退，系统没有", "fact": "韩国外资转为净买，KOSPI +2.05%；美国 VIX 16.46，高收益债利差 3.25%"}, {"name": "融资压力", "level": 3, "tone": "crit", "levelLabel": "主线，又创新高", "fact": "CoreWeave CDS 盘中 1,194.5bp 创纪录，隐含违约概率超过 60%；9% 票据约 80.75 美分"}, {"name": "经营恶化", "level": 0, "tone": "good", "levelLabel": "瓶颈层没有，存储有问号", "fact": "ARGUS AI 基建 STRESSED，置信度 91%：融资压力还没传到核心硬件订单；HBM4 推迟仍未证实"}]},
     "checks": [
-      {"n": "①", "name": "踩踏", "state": "red", "prev": "red", "trend": "仍在恶化", "fact": "韩国外资第 8 天净卖 3.62 万亿韩元，KOSPI 盘中创新低；监管已开紧急会议", "unlock": "外资停止净卖出，KOSPI 放量后连续两天不创新低"},
-      {"n": "②", "name": "融资", "state": "red", "prev": "red", "trend": "更差", "fact": "CoreWeave CDS 600→1,000bp；Firmus 撤回 IPO，AirTrunk 推迟上市", "unlock": "CoreWeave 债券止跌，或 AI 借款人新融资顺利"},
-      {"n": "③", "name": "利率", "state": "amber", "prev": "amber", "trend": "不变", "fact": "9 月 PPI 环比 +1.3%，加息概率 33.8%；但美债大涨，利率不是今天的推手", "unlock": "10 月加息概率回落到 25% 以下"},
-      {"n": "④", "name": "系统流动性", "state": "green", "prev": "green", "trend": "不变", "fact": "SOFR−IORB −1bp，OFR 信用压力 −0.991，VIX 17.5", "unlock": "SOFR−IORB 留在 0 以下，OFR 不回到 0 附近"},
-      {"n": "⑤", "name": "基本面", "state": "green", "prev": "green", "trend": "更强", "fact": "台积电收入超指引上沿，全年增长从 >40% 上调到约 44%", "unlock": "瓶颈层指引不下修"}
-    ]
+      {"n": "①", "name": "踩踏", "state": "amber", "prev": "red", "trend": "开始松动", "fact": "外资连卖 8 天后转为净买 3,414 亿韩元；KOSPI +2.05%，盘中摸到 5,800，没有创新低", "unlock": "外资停止净卖出，KOSPI 放量后连续两天不创新低（第二天看 10/19）"},
+      {"n": "②", "name": "融资", "state": "red", "prev": "red", "trend": "更差", "fact": "CoreWeave CDS 盘中 1,194.5bp 创纪录；股价 10/15 反弹约 6%，债没跟", "unlock": "CoreWeave 债券止跌，或 AI 借款人新融资顺利"},
+      {"n": "③", "name": "利率", "state": "green", "prev": "amber", "trend": "刚转", "fact": "沃什 10/16 不给 10 月加息信号，概率从约 28% 降到约 15%；但 12 月加息仍约九成", "unlock": "10 月加息概率留在 25% 以下，直到 10/27–28 的 FOMC"},
+      {"n": "④", "name": "系统流动性", "state": "green", "prev": "green", "trend": "不变", "fact": "SOFR−IORB −2bp（10/14），OFR 信用压力 −0.982（10/13），VIX 16.46", "unlock": "SOFR−IORB 留在 0 以下，OFR 不回到 0 附近"},
+      {"n": "⑤", "name": "基本面", "state": "green", "prev": "green", "trend": "不变", "fact": "台积电收入超指引上沿，全年增长上调到约 44%；ARGUS 记 HPC 收入环比 +22%", "unlock": "瓶颈层指引不下修"}
+    ],
+    "prevLabel": "10/15"
   },
   "themesHead": "瓶颈层维持，借钱扩张的回避，其余在等",
   "themesSub": "每张卡片：一句判断、一张证据图、解除条件。立场按 1–3 个月的研究周期给出，是研究判断，不是买卖指令。",
   "themes": [
-    {"name": "AI 瓶颈层", "scope": "台积电、ASML 这类", "stances": [{"stance": "有条件维持"}], "verdict": "需求更强了，股价照跌。等踩踏结束再评估，不在下跌中途加。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。股价：台股 −2.01%，ADR −4.03%。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "87%"}, "unlock": "①转绿，且没有订单下修", "change": "不变，基本面证据更强"},
-    {"name": "杠杆 AI 基建", "scope": "CoreWeave 这类靠借债扩张的算力租赁", "stances": [{"stance": "回避"}], "verdict": "它的钱真的变贵了。压力从 CoreWeave 扩散到甲骨文和软银。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是 10/15", "min": 0, "max": 1100, "ticks": [0, 500, 1000], "rows": [{"name": "CoreWeave", "from": 600, "fromLabel": "10/14", "to": 1000, "toLabel": "10/15", "val": "600→1,000"}, {"name": "甲骨文", "from": 260, "fromLabel": "一周前", "to": 288, "toLabel": "10/15", "val": "260→288"}, {"name": "软银", "to": 424, "toLabel": "10/15", "val": "424"}], "foot": "CoreWeave 2032 年债约 78 美分，收益率超过 16%；Firmus 撤回最多 55 亿美元的 IPO。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "10/14 等待 → 10/15 回避"},
-    {"name": "存储 · 韩国", "scope": "三星、SK 海力士、KOSPI", "stances": [{"stance": "等待"}], "verdict": "踩踏没停，还多了 HBM4 订单推迟的传闻。不接下落的刀。", "viz": {"type": "bars", "title": "10/15 收盘跌幅（%）", "min": -12, "max": 0, "ticks": [-12, -8, -4, 0], "rows": [{"name": "SK 海力士", "v": -11.06}, {"name": "三星电子", "v": -9.48}, {"name": "KOSPI", "v": -7.57, "t": "盘中 −9.29%"}], "foot": "外资第 8 天净卖 3.62 万亿韩元，散户和机构在接。HBM4 设备订单推迟只是未证实报道。"}, "unlock": "①转绿，HBM4 推迟被证伪，长鑫竞争有更多证据", "change": "不变，多一个问号"},
-    {"name": "A 股 AI 链", "scope": "光模块 vs 半导体设备", "stances": [{"stance": "等待", "label": "光模块"}, {"stance": "有条件维持", "label": "设备"}], "verdict": "跟美国 AI 资本开支绑得越紧，跌得越多；靠国产替代的逆势涨。", "viz": {"type": "bars", "title": "10/15 收盘涨跌（%）", "min": -8, "max": 4, "ticks": [-8, -4, 0, 4], "rows": [{"name": "北方华创", "v": 3.95, "t": "设备"}, {"name": "中芯国际", "v": 1.84, "t": "设备"}, {"name": "中微公司", "v": 0.89, "t": "设备"}, {"name": "天孚通信", "v": -2.48, "t": "光模块"}, {"name": "中际旭创", "v": -5.19, "t": "光模块"}, {"name": "新易盛", "v": -7.49, "t": "光模块"}], "foot": "美国对中国光模块设限的传闻还没核实。"}, "unlock": "光模块：②缓解，加上 A 股放量止跌。设备：不因一天强就追", "change": "不变"},
-    {"name": "美元拐点", "scope": "美元指数 102.06（案例 3）", "stances": [{"stance": "等待"}], "verdict": "三四个条件同时转向才算拐点，现在一个都没确认。", "viz": {"type": "conds", "title": "六个拐点条件，10/15 的状态", "rows": [{"n": "①", "name": "美联储停止加息", "s": "amber", "v": "开始松动"}, {"n": "②", "name": "欧元止跌", "s": "amber", "v": "1.1210"}, {"n": "③", "name": "日元止跌", "s": "amber", "v": "157.83"}, {"n": "④", "name": "布伦特跌破 95", "s": "red", "v": "105.06"}, {"n": "⑤", "name": "避险需求退潮", "s": "red", "v": "踩踏未停"}, {"n": "⑥", "name": "跌破 101.84", "s": "amber", "v": "102.06"}], "foot": "10/15 避险资金去了美债和黄金，美元反而 −0.46%。只有一天，不当成确认。"}, "unlock": "六条里三四条同时转向", "change": "回看 10/30、11/12"},
-    {"name": "防守端", "scope": "银行、红利、黄金", "stances": [{"stance": "有条件维持"}], "verdict": "钱从 AI 股出来，去了美债和黄金，没有去美元。", "viz": {"type": "flows", "title": "10/15 避险资金去了哪", "rows": [{"name": "美债", "fact": "10 年期收益率 −13bp", "ok": true}, {"name": "黄金", "fact": "COMEX 4,172.5，+1.57%", "ok": true}, {"name": "银行", "fact": "工行 +0.59%，创新高，市值 A 股第一", "ok": true}, {"name": "美元", "fact": "美元指数 −0.46%", "ok": false}, {"name": "比特币", "fact": "24 小时 −2.4%，ETF 净流出", "ok": false}]}, "unlock": "继续有效：杠铃的防守端", "change": "黄金和美债一起扛住了"}
+    {"name": "AI 瓶颈层", "scope": "台积电、ASML 这类", "stances": [{"stance": "有条件维持"}], "verdict": "需求更强了，股价还没止跌：费城半导体 10/15 再跌 0.88%，连跌 8 天。等踩踏结束再评估，不在下跌中途加。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。台积电 ADR 10/15 收 422.25（−1.80%）。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "91%"}, "unlock": "①转绿，且没有订单下修", "change": "不变；ARGUS 置信度 87%→91%"},
+    {"name": "杠杆 AI 基建", "scope": "CoreWeave 这类靠借债扩张的算力租赁", "stances": [{"stance": "回避"}], "verdict": "钱更贵了：CDS 创纪录，市场按六成以上的 5 年违约概率定价。股价 10/15 反弹约 6%，债没跟。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是最新", "min": 0, "max": 1300, "ticks": [0, 400, 800, 1200], "rows": [{"name": "CoreWeave", "from": 600, "fromLabel": "10/14", "to": 1038, "toLabel": "10/15 午盘", "val": "600→1,038"}, {"name": "甲骨文", "from": 260, "fromLabel": "一周前", "to": 288, "toLabel": "10/15", "val": "260→288"}, {"name": "软银", "to": 424, "toLabel": "本周", "val": "424"}], "foot": "CoreWeave 盘中最高 1,194.5bp；9% 票据约 80.75 美分。公司说积压合同约 1,040 亿美元，称这轮抛售“不理性”。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "回避不变，CDS 再创新高"},
+    {"name": "存储 · 韩国", "scope": "三星、SK 海力士、KOSPI", "stances": [{"stance": "等待"}], "verdict": "外资第一次转买，但只有一天；HBM4 订单推迟还是没人证实，也没人否认。不接下落的刀。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/15", "l2": "10/16", "min": -12, "max": 4, "ticks": [-12, -8, -4, 0, 4], "rows": [{"name": "SK 海力士", "v": -11.06, "v2": 0.79}, {"name": "三星电子", "v": -9.48, "v2": 2.62}, {"name": "KOSPI", "v": -7.57, "v2": 2.05, "note": "10/15 盘中 −9.29%"}], "foot": "10/16 外资净买 3,414 亿韩元，机构和散户在卖。HBM4 后段设备订单推迟只有韩媒报道，SK 海力士没回应。"}, "unlock": "①转绿，HBM4 推迟被证伪，长鑫竞争有更多证据", "change": "不变，等外资再买一天"},
+    {"name": "A 股 AI 链", "scope": "光模块 vs 半导体设备", "stances": [{"stance": "等待", "label": "光模块"}, {"stance": "有条件维持", "label": "设备"}], "verdict": "10/16 反过来了：设备回吐，光模块分化。两天合起来，设备仍比光模块强，也说明不该因一天强就追。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/15", "l2": "10/16", "min": -8, "max": 5, "ticks": [-8, -4, 0, 4], "rows": [{"name": "北方华创", "v": 3.95, "v2": -2.68, "t": "设备"}, {"name": "中芯国际", "v": 1.84, "v2": -1.7, "t": "设备"}, {"name": "中微公司", "v": 0.89, "v2": -0.82, "t": "设备"}, {"name": "天孚通信", "v": -2.48, "v2": -4.71, "t": "光模块"}, {"name": "中际旭创", "v": -5.19, "v2": 1.99, "t": "光模块"}, {"name": "新易盛", "v": -7.49, "v2": 0.29, "t": "光模块"}], "foot": "两天累计：北方华创 +1.2%，中际旭创 −3.3%，天孚通信 −7.1%，新易盛 −7.2%。美国对中国光模块设限的传闻还没核实。"}, "unlock": "光模块：②缓解，加上 A 股放量止跌。设备：不因一天强就追", "change": "不变"},
+    {"name": "美元拐点", "scope": "美元指数 101.84（案例 3）", "stances": [{"stance": "等待"}], "verdict": "美元指数碰到 101.84 这条线，但六个条件里还没有一个确认转向。", "viz": {"type": "conds", "title": "六个拐点条件，10/16 的状态", "rows": [{"n": "①", "name": "美联储停止加息", "s": "amber", "v": "10 月概率约 15%，12 月仍约九成"}, {"n": "②", "name": "欧元止跌", "s": "amber", "v": "1.1237"}, {"n": "③", "name": "日元止跌", "s": "amber", "v": "157.98"}, {"n": "④", "name": "布伦特跌破 95", "s": "red", "v": "105.28"}, {"n": "⑤", "name": "避险需求退潮", "s": "amber", "v": "韩国外资转买"}, {"n": "⑥", "name": "跌破 101.84", "s": "amber", "v": "101.84，正好在线上"}], "foot": "美元连跌两天：10/15 −0.46%，10/16 −0.16%（15:10）。沃什讲话后彭博美元指数跌约 0.2%。⑤从红转黄。"}, "unlock": "六条里三四条同时转向", "change": "回看 10/30、11/12"},
+    {"name": "防守端", "scope": "银行、红利、黄金", "stances": [{"stance": "有条件维持"}], "verdict": "钱从 AI 股出来，去了美债和黄金，没有去美元；A 股尾盘是银行、保险在托。", "viz": {"type": "flows", "title": "10/15–10/16 避险资金去了哪", "rows": [{"name": "美债", "fact": "10 年期 10/15 下行 9bp，到 5.10%", "ok": true}, {"name": "黄金", "fact": "COMEX 4,197.4，10/15 +2.06%，10/16 再 +0.65%", "ok": true}, {"name": "美股防守", "fact": "10/15 必需消费涨超 2%，医疗盘中新高", "ok": true}, {"name": "A 股银行保险", "fact": "10/16 午后翻绿时尾盘出手护盘", "ok": true}, {"name": "美元", "fact": "两天 −0.46%、−0.16%", "ok": false}, {"name": "比特币", "fact": "约 8.2 万美元；ETF 7 个交易日里 5 天净流出", "ok": false}]}, "unlock": "继续有效：杠铃的防守端", "change": "不变"}
   ],
-  "evidenceHead": "同一笔交易，在全球按 AI 硬件权重拆仓",
-  "evidenceSub": "跌幅排序看的不是哪里风险大，而是指数里 AI 硬件占多少、外资仓位有多挤。所以这不是全球撤离风险资产。",
+  "evidenceHead": "同一笔交易：跌按 AI 硬件权重排，反弹也没改排序",
+  "evidenceSub": "跌幅排序看的不是哪里风险大，而是指数里 AI 硬件占多少、外资仓位有多挤。10/16 亚洲普遍反弹，但台湾只收回不到一成，所以这不是全球撤离风险资产，也还不能说结束。",
   "sameTrade": {
-    "title": "全球：AI 硬件越重，跌得越狠",
-    "sub": "10/15 各市场涨跌（%）",
+    "title": "10/16 亚洲反弹，AI 硬件重的市场只收回一到三成",
+    "sub": "每个市场两根：上面 10/15，下面 10/16。美股和欧洲只到 10/15 收盘，10/16 晚上才开盘。",
+    "l1": "10/15",
+    "l2": "10/16",
     "min": -8,
-    "max": 2,
+    "max": 3,
     "ticks": [-8, -6, -4, -2, 0, 2],
     "rows": [
-      {"name": "韩国 KOSPI", "v": -7.57, "ai": true, "t": "收盘"},
-      {"name": "日经 225", "v": -4.9, "ai": true, "t": "收盘", "note": "爱德万测试 −14.95%"},
-      {"name": "欧洲科技板块", "v": -3.5, "ai": true, "t": "盘中 21:03"},
-      {"name": "台湾加权", "v": -3.41, "ai": true, "t": "收盘"},
-      {"name": "创业板指", "v": -2.92, "t": "收盘"},
-      {"name": "恒生科技", "v": -2.72, "t": "收盘"},
-      {"name": "费城半导体", "v": -2.66, "ai": true, "t": "盘中 21:42"},
-      {"name": "上证指数", "v": -1.59, "t": "收盘"},
-      {"name": "恒生指数", "v": -1.03, "t": "收盘"},
-      {"name": "纳斯达克", "v": -0.9, "t": "盘中 21:42"},
-      {"name": "标普 500", "v": -0.28, "t": "盘中 21:41"},
-      {"name": "斯托克 600", "v": 0.1, "t": "盘中 21:03"},
-      {"name": "道琼斯", "v": 0.52, "t": "开盘"}
+      {"name": "韩国 KOSPI", "v": -7.57, "v2": 2.05, "ai": true, "t": "收盘"},
+      {"name": "日经 225", "v": -4.9, "v2": 1.39, "ai": true, "t": "收盘", "note": "10/15 爱德万测试 −14.95%"},
+      {"name": "台湾加权", "v": -3.41, "v2": 0.3, "ai": true, "t": "收盘"},
+      {"name": "创业板指", "v": -2.92, "v2": -0.39, "t": "收盘"},
+      {"name": "恒生科技", "v": -2.72, "v2": 1.16, "t": "收盘"},
+      {"name": "上证指数", "v": -1.59, "v2": 0.24, "t": "收盘"},
+      {"name": "恒生指数", "v": -1.03, "v2": 0.52, "t": "收盘"},
+      {"name": "费城半导体", "v": -0.88, "ai": true, "t": "10/15 收盘，连跌 8 天"},
+      {"name": "纳斯达克", "v": 0.08, "t": "10/15 收盘"},
+      {"name": "标普 500", "v": 0.33, "t": "10/15 收盘"},
+      {"name": "德国 DAX", "v": 0.33, "t": "10/15 收盘"},
+      {"name": "道琼斯", "v": 1.08, "t": "10/15 收盘"}
     ],
-    "src": "快照 10/15 21:42（东方财富、Yahoo）；欧洲科技和斯托克 600 来自路透、新浪的盘中报道；道指来自 Yahoo 开盘数。AI 硬件权重高低是报告的判断。"
+    "src": "亚太和 A 股：快照 10/15、10/16 收盘（东方财富）；港股 10/16 收盘：FX168；美股和欧洲：10/15 收盘（快照、21 世纪经济报道）。AI 硬件权重高低是报告的判断。"
   },
   "ashare": {
-    "title": "A 股：普跌放量，尾盘有大钱",
-    "sub": "5,108 家下跌；但最后 30 分钟，沪深 300ETF 成交是前一天全天的约 21 倍。媒体猜是大资金进场，没有官方确认，只当待验证信号。",
-    "breadth": {"up": 430, "down": 5108, "note": "行业板块 14 涨 / 482 跌"},
+    "title": "A 股：冲高回落，尾盘又见大钱",
+    "sub": "早盘超过 5,000 家上涨，午后三大指数翻绿，最少时不到 2,400 家在涨；尾盘 20 分钟沪深 300ETF（华泰柏瑞）成交 125 亿元，银行、保险护盘。连续两天尾盘放量，资金来源仍没有官方确认，只当待验证信号。",
+    "breadth": {"up": 3298, "down": 2123, "note": "平盘 148；涨超 9% 的 94 只，跌超 9% 的 31 只"},
     "pairs": [
-      {"title": "两市成交额（万亿元）", "max": 2, "ticks": [0, 0.5, 1, 1.5, 2], "rows": [{"label": "10/14", "v": 1.41}, {"label": "10/15", "v": 1.63, "hi": true}], "note": "多 2,186 亿，同一口径", "src": "快照估算"},
-      {"title": "沪深 300ETF（易方达）成交（亿元）", "max": 180, "ticks": [0, 60, 120, 180], "rows": [{"label": "10/14 全天", "v": 8.22}, {"label": "10/15 最后 30 分钟", "v": 173, "hi": true, "approx": true}], "note": "全部股票 ETF 成交 1,916 亿，前一天 1,183 亿", "src": "上海证券报"}
+      {"title": "两市成交额（万亿元）", "max": 2, "ticks": [0, 0.5, 1, 1.5, 2], "rows": [{"label": "10/14", "v": 1.41}, {"label": "10/15", "v": 1.63}, {"label": "10/16", "v": 1.56, "hi": true}], "note": "比 10/15 少 776 亿，同一口径", "src": "21 世纪经济报道；快照"},
+      {"title": "沪深 300ETF（华泰柏瑞）成交（亿元）", "max": 180, "ticks": [0, 60, 120, 180], "rows": [{"label": "10/15 全天", "v": 66.65}, {"label": "10/16 全天", "v": 161, "approx": true}, {"label": "10/16 尾盘 20 分钟", "v": 125.42, "hi": true}], "note": "上证 50ETF 华夏 24.66 → 54.01 亿；10/15 易方达沪深 300ETF 全天超 190 亿", "src": "每日经济新闻、新浪财经"}
     ],
-    "up": ["PCB 多股涨停", "白酒", "券商", "银行"],
-    "down": ["光模块", "存储", "航运"],
-    "src": "涨跌家数：21 世纪经济报道；板块与成交额：快照 10/15 收盘"
+    "up": ["航空装备 +5.98%", "燃料电池 +6.56%", "房地产", "汽车零部件"],
+    "down": ["印制电路板 −4.51%", "传媒", "电池", "CRO"],
+    "src": "涨跌家数与成交额：21 世纪经济报道 10/16；板块：快照 10/16 15:10（东方财富行业分类）；ETF：每日经济新闻、新浪财经"
   },
   "macro": {
-    "head": "钱多但贵，信用的量和价在背离",
+    "head": "钱多但贵，价格这头开始松；信用的量价还在背离",
     "sub": "吸引子 19 项宏观状态指数。正负号是方向，绝对值是底层指标同向的比例；方向不代表利好利空。",
-    "quadrant": {"label": "钱多但贵", "read": "系统不缺钱，最依赖借钱的节点被精准卡住。而且一时便宜不了：PPI 很热，加息概率 33.8%。", "qty": ["银行准备金 3.03 万亿美元，10/07 当周 +816 亿", "吸引子美元流动性 +0.54（扩张，边沿）"], "price": ["2 年期美债 4.82%，实际利率 2.84%", "吸引子资金利率 +0.64，9/30 转入上升", "10 月加息概率 33.8%"]},
+    "quadrant": {"label": "钱多但贵", "read": "系统不缺钱，最依赖借钱的节点被精准卡住。10/16 价格这头开始松：10 月加息概率掉到 15% 左右，实际利率回到 2.78%；但 12 月加息仍约九成，一时便宜不了。", "qty": ["银行准备金 3.02 万亿美元，10/14 当周 −75 亿，扩张暂停", "吸引子美元流动性 +0.56（扩张，边沿）"], "price": ["2 年期美债 4.77%，实际利率 2.78%（10/15）", "吸引子资金利率 +0.64，9/30 转入上升", "10 月加息概率约 15%（10/16 沃什讲话后）"], "note": "10/16 · 价格开始松", "arrow": "left"},
     "pair": {"title": "最值得盯的背离：信用现在松，领先信号一致看紧", "a": {"v": "+0.75", "label": "美国信用环境", "read": "信用在扩张，9/30 转入上升"}, "b": {"v": "−1.00", "label": "美国信用环境预警", "read": "领先信号 100% 指向收缩"}, "watch": "信用环境转入下降，说明预警兑现；预警回到 −0.6 以上，说明背离以放松收场。11/12 回看（案例 4）。"},
     "groups": [
-      {"name": "美国", "col": 0, "rows": [{"short": "物价", "v": 0.55, "reading": "物价上行压力", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "资金利率", "v": 0.6364, "reading": "资金利率上行", "conf": "中", "change": "转入上升", "date": "09-30"}, {"short": "资金利率预警", "v": 0.6818, "reading": "领先信号指向利率上行", "conf": "中", "change": "维持", "date": "10-11"}, {"short": "货币政策倾向", "v": -0.66, "reading": "偏紧", "conf": "中", "change": "维持", "date": "10-11"}, {"short": "财政政策力度", "v": -1.0, "reading": "收缩", "conf": "强", "change": "维持", "date": "09-13"}, {"short": "信用环境", "v": 0.75, "reading": "信用扩张", "conf": "中", "change": "转入上升", "date": "09-30", "pair": true}, {"short": "信用环境预警", "v": -1.0, "reading": "领先信号指向信用收缩", "conf": "强", "change": "维持", "date": "10-11", "pair": true}, {"short": "市场风险偏好", "v": -0.55, "reading": "风险偏好下降", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "消费就业周期", "v": 0.7182, "reading": "扩张", "conf": "中", "change": "维持", "date": "08-31"}, {"short": "制造业周期", "v": 0.9667, "reading": "扩张", "conf": "强", "change": "维持", "date": "09-30"}]},
-      {"name": "全球", "col": 1, "rows": [{"short": "美元流动性", "v": 0.5444, "reading": "美元流动性扩张", "conf": "边沿", "change": "维持", "date": "10-14"}, {"short": "风险偏好指数", "v": -0.9203, "reading": "风险偏好下降", "conf": "强", "change": "维持", "date": "10-09"}]},
+      {"name": "美国", "col": 0, "rows": [{"short": "物价", "v": 0.55, "reading": "物价上行压力", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "资金利率", "v": 0.6364, "reading": "资金利率上行", "conf": "中", "change": "转入上升", "date": "09-30"}, {"short": "资金利率预警", "v": 0.7273, "reading": "领先信号指向利率上行", "conf": "中", "change": "维持", "date": "10-18"}, {"short": "货币政策倾向", "v": -0.66, "reading": "偏紧", "conf": "中", "change": "维持", "date": "10-11"}, {"short": "财政政策力度", "v": -1.0, "reading": "收缩", "conf": "强", "change": "维持", "date": "09-13"}, {"short": "信用环境", "v": 0.75, "reading": "信用扩张", "conf": "中", "change": "转入上升", "date": "09-30", "pair": true}, {"short": "信用环境预警", "v": -1.0, "reading": "领先信号指向信用收缩", "conf": "强", "change": "维持", "date": "10-11", "pair": true}, {"short": "市场风险偏好", "v": -0.55, "reading": "风险偏好下降", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "消费就业周期", "v": 0.7182, "reading": "扩张", "conf": "中", "change": "维持", "date": "08-31"}, {"short": "制造业周期", "v": 0.9667, "reading": "扩张", "conf": "强", "change": "维持", "date": "09-30"}]},
+      {"name": "全球", "col": 1, "rows": [{"short": "美元流动性", "v": 0.5556, "reading": "美元流动性扩张", "conf": "边沿", "change": "维持", "date": "10-15"}, {"short": "风险偏好指数", "v": -0.9203, "reading": "风险偏好下降", "conf": "强", "change": "维持", "date": "10-12"}]},
       {"name": "欧洲", "col": 1, "rows": [{"short": "物价周期", "v": -0.55, "reading": "物价下行", "conf": "边沿", "change": "维持", "date": "08-31"}, {"short": "信用价格", "v": -0.55, "reading": "信用收缩、偏紧", "conf": "边沿", "change": "维持", "date": "09-30"}]},
-      {"name": "中国", "col": 1, "rows": [{"short": "物价", "v": 0.95, "reading": "物价上行压力", "conf": "强", "change": "维持", "date": "09-30"}, {"short": "流动性", "v": -0.6515, "reading": "流动性收缩", "conf": "中", "change": "维持", "date": "10-11"}, {"short": "信用环境", "v": 0.8571, "reading": "信用扩张", "conf": "强", "change": "维持", "date": "08-31"}, {"short": "外部金融条件", "v": -0.9167, "reading": "偏紧", "conf": "强", "change": "维持", "date": "10-14"}, {"short": "总需求", "v": -1.0, "reading": "收缩", "conf": "强", "change": "维持", "date": "09-30"}]}
+      {"name": "中国", "col": 1, "rows": [{"short": "物价", "v": 0.95, "reading": "物价上行压力", "conf": "强", "change": "维持", "date": "09-30"}, {"short": "流动性", "v": -0.6515, "reading": "流动性收缩", "conf": "中", "change": "维持", "date": "10-11"}, {"short": "信用环境", "v": 0.8571, "reading": "信用扩张", "conf": "强", "change": "维持", "date": "08-31"}, {"short": "外部金融条件", "v": -0.9167, "reading": "偏紧", "conf": "强", "change": "维持", "date": "10-15"}, {"short": "总需求", "v": -1.0, "reading": "收缩", "conf": "强", "change": "维持", "date": "09-30"}]}
     ],
-    "src": "吸引子宏观状态指数，快照 2026-10-15 21:42；日期是各指标的观测期。置信度：强 ≥0.8，中 0.6–0.8，边沿 0.2–0.6（勉强过半，最该设路标）。"
+    "src": "吸引子宏观状态指数，快照 2026-10-16 15:10；日期是各指标的观测期（资金利率预警是周频，按周末日期标）。置信度：强 ≥0.8，中 0.6–0.8，边沿 0.2–0.6（勉强过半，最该设路标）。"
   },
   "china": {
-    "head": "人民币破 6.70、PPI 偏强：按土狗的框架，A 股的风往内需和价值吹",
-    "sub": "沧海一土狗的框架管 A 股、人民币和楼市，补上吸引子和 ARGUS 偏美国的那一半。这里是我们按他的框架读 10/15 的数，不是他本人的最新观点。",
+    "head": "人民币 6.687、PPI 偏强：按土狗的框架，A 股的风还是往内需和价值吹",
+    "sub": "沧海一土狗的框架管 A 股、人民币和楼市，补上吸引子和 ARGUS 偏美国的那一半。这里是我们按他的框架读 10/16 的数，不是他本人的最新观点。",
     "factorsTitle": "两因素：A 股 = f(全球无风险利率, 楼市复苏)",
     "factorsNote": "先看人民币强弱选参照利率，再看利率和楼市有没有变。",
     "gauges": [
-      {"name": "参照币种 · 离岸人民币", "link": "选利率", "unit": "", "dec": 2, "min": 6.6, "max": 6.8, "ticks": [6.6, 6.65, 6.7, 6.75, 6.8], "cur": 6.6897, "curLabel": "6.6897", "asof": "10/15 21:42", "ref": {"v": 6.7, "l": "节点 6.70"}, "band": {"from": 6.7, "to": 6.71, "l": "9 月 6.70–6.71"}, "dir": ["← 人民币强", "人民币弱 →"], "state": "info", "stateLabel": "强，看人民币利率", "note": "人民币强时，全球无风险利率看中国一年存单；弱时才看两年美债（10/15 为 4.82%）。", "src": "快照 10/15 21:42 · 东方财富；6.70 节点来自土狗 9–10 月复盘"},
+      {"name": "参照币种 · 离岸人民币", "link": "选利率", "unit": "", "dec": 2, "min": 6.6, "max": 6.8, "ticks": [6.6, 6.65, 6.7, 6.75, 6.8], "cur": 6.687, "curLabel": "6.6870", "asof": "10/16 15:10", "ref": {"v": 6.7, "l": "节点 6.70"}, "band": {"from": 6.7, "to": 6.71, "l": "9 月 6.70–6.71"}, "dir": ["← 人民币强", "人民币弱 →"], "state": "info", "stateLabel": "强，看人民币利率", "note": "人民币强时，全球无风险利率看中国一年存单；弱时才看两年美债（10/15 为 4.77%）。", "src": "快照 10/16 15:10 · 东方财富；6.70 节点来自土狗 9–10 月复盘"},
       {"name": "因素一 · 一年期存单利率", "link": "准政策利率", "unit": "%", "dec": 2, "min": 1.3, "max": 1.55, "ticks": [1.3, 1.35, 1.4, 1.45, 1.5, 1.55], "cur": 1.4425, "curLabel": "1.4425", "asof": "10/13", "ghosts": [{"v": 1.488, "l": "9 月 1.488"}], "tgt": {"v": 1.35, "l": "土狗预期 1.35"}, "dir": ["← 更宽松", "更紧 →"], "state": "info", "stateLabel": "在往下走", "note": "他 10/14 预期金融街论坛（10/19–22）后降到 1.35% 附近，公积金贷款利率到 1.6% 附近。", "src": "土狗 10/13 复盘读数；快照还没有这项"},
       {"name": "因素二 · 北京二手房挂牌量", "link": "楼市复苏", "unit": "万套", "min": 9, "max": 13, "ticks": [9, 10, 11, 12, 13], "curLabel": "11.4–11.8", "asof": "9 月", "ref": {"v": 10, "l": "均衡线 10 万"}, "band": {"from": 11.4, "to": 11.8, "l": "9 月读数"}, "dir": ["← 挂牌少", "挂牌多 →"], "state": "watch", "stateLabel": "还在均衡线上方", "note": "上海二手房连涨 7 个月，已确认复苏（9/18）；北京偏弱。10 月读数待补。", "src": "土狗 9 月复盘（链家外网）；快照还没有这项"}
     ],
-    "switches": {"tag": "风格开关", "title": "两个开关都拨向内需和价值", "rows": [{"name": "汇率 · 中美关系", "model": "模型 2", "l": "贬值 · 紧张", "lr": "外需和科技占优（升波牛）", "r": "升值 · 缓和", "rr": "内需占优（降波牛）", "on": "r", "fact": "人民币 6.6897，破 6.70；9/28 中美元首会晤后，双创大跌，内需板块有韧性。"}, {"name": "PPI · 垄断要素", "model": "模型 11", "l": "PPI 弱", "lr": "成长和小微盘占优", "r": "PPI 强", "rr": "价值占优，也撑人民币", "on": "r", "fact": "PPI 同比 +3.8%（土狗复盘读数）；吸引子中国物价指数 +0.95，强（9/30）。"}], "up": ["银行", "白酒", "券商"], "down": ["光模块", "存储", "创业板指 −2.92%"], "check": "10/15 盘面大体对得上", "foot": "开关位置是定性判断。PCB 多股涨停是例外。"},
+    "switches": {"tag": "风格开关", "title": "两个开关都拨向内需和价值", "rows": [{"name": "汇率 · 中美关系", "model": "模型 2", "l": "贬值 · 紧张", "lr": "外需和科技占优（升波牛）", "r": "升值 · 缓和", "rr": "内需占优（降波牛）", "on": "r", "fact": "人民币 6.6870（10/16），破 6.70 后又强了一点；9/28 中美元首会晤后，双创大跌，内需板块有韧性。"}, {"name": "PPI · 垄断要素", "model": "模型 11", "l": "PPI 弱", "lr": "成长和小微盘占优", "r": "PPI 强", "rr": "价值占优，也撑人民币", "on": "r", "fact": "PPI 同比 +3.8%（土狗复盘读数）；吸引子中国物价指数 +0.95，强（9/30）。"}], "up": ["房地产", "白酒", "汽车零部件"], "down": ["半导体午后转跌", "PCB −4.51%", "创业板指 −0.39%"], "check": "10/16 盘面对得上一半", "foot": "开关位置是定性判断。10/16 领涨的是军工，来自兵装重组消息，和这两个开关无关。"},
     "phase": {"tag": "大类资产轮动三相", "title": "楼市从过冷走向温和：成长横扫的阶段过去，进入轮动", "zones": [{"k": "过冷", "v": "成长横扫"}, {"k": "温和", "v": "轮动"}, {"k": "过热", "v": "价值横扫"}], "from": {"p": 14, "l": "4–5 月"}, "to": {"p": 42, "l": "10 月 · 推演"}, "ev": ["4/11、5/9 成长创新高，他用“楼市过冷相”解释", "4/30 一线楼市进入右侧；9/18 上海二手房连涨 7 个月", "9/11 哑铃策略“结束了最好的一段时光”，市场陷入混沌"], "hist": "历史对照：2014–15 成长牛 → 2016–17 楼市牛；2017 价值牛 → 2018 债市牛。", "foot": "“成长牛的下一站是楼市牛”是他 5/9 的原话；现在落在哪一相，是我们按他 4–9 月的文章推演的。它和 10/14 的“楼市和长债同一生态位”有出入，用的时候标日期。"},
-    "bottom": {"title": "3700 点：他说是理论底，不是配置建议", "name": "上证指数 vs 3700", "link": "底部判断", "unit": "", "min": 3600, "max": 3850, "ticks": [3600, 3650, 3700, 3750, 3800, 3850], "cur": 3707.48, "curLabel": "3,707.48", "asof": "10/15 收盘", "ghosts": [{"v": 3767.23, "l": "10/14 收盘"}], "ref": {"v": 3700, "l": "土狗的 3700"}, "state": "watch", "stateLabel": "贴着线，待验", "note": "10/15 星球原话：“要么已经见底，要么明天上午见底”。回看两个条件：3700 守住，A 股 vix（沪深300 隐含波动率）回到 20 以下。它和静观的“等待”不冲突：他验证的是理论底，我们等的是融资松开。", "src": "快照 10/15 16:12 · 东方财富；土狗星球 10/15"},
-    "insurance": {"tag": "杠杆负反馈", "title": "银行创新高，在他的框架里还有另一种读法", "loop": ["下跌", "保险偿付能力降", "权益仓位上限降", "被动卖出"], "signals": [{"name": "银行股出挑", "fact": "10/15 工行 +0.59%，创新高", "state": "还亮着"}, {"name": "长债、TL 出挑", "fact": "10/12 TL 暴涨，10/15 高开低走", "state": "还亮着"}, {"name": "双创继续调整", "fact": "10/15 创业板指 −2.92%", "state": "还亮着"}], "rescue": "救援看量：节后宽基 ETF 净买入只有 236 亿元（10/13，他说“有点低”）；10/15 沪深300ETF（510310）成交放大到约 194 亿元。", "verdictTag": "按这套框架推演", "verdict": "三个信号都还亮着，保险调仓的冲击还不能说结束。银行的强有一部分是被动买入，不全是避险。"},
+    "bottom": {"title": "3700 点：他说是理论底，不是配置建议", "name": "上证指数 vs 3700", "link": "底部判断", "unit": "", "min": 3600, "max": 3850, "ticks": [3600, 3650, 3700, 3750, 3800, 3850], "cur": 3716.28, "curLabel": "3,716.28", "asof": "10/16 收盘", "ghosts": [{"v": 3707.48, "l": "10/15 收盘"}, {"v": 3681.28, "l": "10/16 盘中低点"}], "ref": {"v": 3700, "l": "土狗的 3700"}, "state": "watch", "stateLabel": "盘中跌破，收盘守住", "note": "10/15 星球原话：“要么已经见底，要么明天上午见底”。10/16 上午最高到 3,750.77，午后一度跌到 3,681.28，收在 3,716.28；10/15 盘中也跌破过 3700。按他定的两个条件回看：收盘守住了 3700；A 股 vix 回到 20 以下这项，这次没拿到数。它和静观的“等待”不冲突：他验证的是理论底，我们等的是融资松开。", "src": "快照 10/16 15:10 · 东方财富；盘中高低点来自财经日报（单一报道）；土狗星球 10/15"},
+    "insurance": {"tag": "杠杆负反馈", "title": "银行创新高，在他的框架里还有另一种读法", "loop": ["下跌", "保险偿付能力降", "权益仓位上限降", "被动卖出"], "signals": [{"name": "银行股出挑", "fact": "10/16 中国银行 −1.84%，尾盘才和保险一起护盘", "state": "变暗"}, {"name": "长债、TL 出挑", "fact": "10/12 TL 暴涨，10/15 高开低走；10/16 没拿到数", "state": "还亮着"}, {"name": "双创继续调整", "fact": "10/16 创业板指 −0.39%，科创 50 −0.06%", "state": "还亮着"}], "rescue": "救援看量：10/15 易方达沪深 300ETF 全天超 190 亿元，10/16 华泰柏瑞沪深 300ETF 尾盘 20 分钟 125 亿元；股票 ETF 9/28 以来连续 9 天净流入，累计 1,408.5 亿元（截至 10/15）。", "verdictTag": "按这套框架推演", "verdict": "银行这盏变暗，另外两盏还亮着。保险调仓的冲击还不能说结束，但连续两天尾盘都有大钱托着。"},
     "ledgerLink": "他哪类判断靠谱，看八年账本"
   },
   "watch": {
     "head": "盯这六个数，不猜底",
     "sub": "越过阈值，才说明状态变了。阈值是我们定的研究规则，不是历史定律。",
     "gauges": [
-      {"name": "CoreWeave 5 年 CDS", "link": "② 融资", "unit": "bp", "min": 0, "max": 1200, "ticks": [0, 300, 600, 900, 1200], "cur": 1000, "curLabel": "≈1,000", "asof": "10/15", "ghosts": [{"v": 600, "l": "10/14"}], "good": {"to": 600, "l": "缓解 <600"}, "state": "bad", "stateLabel": "远离缓解线", "note": "恶化：新的 AI 借款人融资失败，或 CDS 继续大幅走阔。", "src": "路透 · 10/15"},
-      {"name": "高收益债利差", "link": "信用扩散", "unit": "%", "min": 2.5, "max": 4.0, "ticks": [2.5, 3.0, 3.5, 4.0], "cur": 3.16, "curLabel": "3.16", "asof": "10/13", "good": {"to": 3.2, "l": "缓解 ≤3.2"}, "bad": {"from": 3.5, "l": "恶化 >3.5"}, "state": "good", "stateLabel": "还在缓解区", "note": "高过 3.5%，说明压力扩散到整个信用市场。数据滞后 2 天。", "src": "FRED · 10/13"},
-      {"name": "10 月加息概率", "link": "③ 利率", "unit": "%", "min": 0, "max": 50, "ticks": [0, 10, 20, 30, 40, 50], "cur": 33.8, "curLabel": "33.8", "asof": "10/15 PPI 后", "ghosts": [{"v": 22.1, "l": "10/13"}, {"v": 31.6, "l": "10/14 晚"}, {"v": 29.3, "l": "10/15 PPI 前"}], "good": {"to": 25, "l": "解除 <25"}, "state": "watch", "stateLabel": "没到解除线", "note": "10/13 22.1% → 10/14 31.6% → PPI 前 29.3% → PPI 后 33.8%。", "src": "Investing.com；CME FedWatch"},
-      {"name": "VIX", "link": "④ 系统", "unit": "", "min": 10, "max": 35, "ticks": [10, 15, 20, 25, 30, 35], "cur": 17.53, "curLabel": "17.5", "asof": "10/15 21:25", "bad": {"from": 25, "l": "流动性阶段 >25"}, "state": "good", "stateLabel": "低于警戒线", "note": "持续高于 25，说明进入流动性阶段，路径 C 才算发生。", "src": "快照 · Yahoo"},
-      {"name": "SOFR − IORB", "link": "④ 系统", "unit": "bp", "min": -10, "max": 10, "ticks": [-10, -5, 0, 5, 10], "cur": -1, "curLabel": "−1", "asof": "10/13", "ghosts": [{"v": -3, "l": "10/09"}], "bad": {"from": 0, "l": "转正 = 恶化"}, "state": "good", "stateLabel": "还在 0 以下", "note": "持续转正，说明美元资金面开始紧张。", "src": "ARGUS · 纽约联储"},
-      {"name": "韩国外资连续净卖出", "link": "① 踩踏", "type": "days", "days": 8, "unit": "天", "curLabel": "8", "state": "bad", "stateLabel": "还在卖", "note": "10/15 净卖 3.62 万亿韩元。停止净卖出，①才转绿。", "src": "Korea Times；21 世纪经济报道"}
+      {"name": "CoreWeave 5 年 CDS", "link": "② 融资", "unit": "bp", "min": 0, "max": 1200, "ticks": [0, 300, 600, 900, 1200], "cur": 1038, "curLabel": "≈1,040", "asof": "10/15 午盘", "ghosts": [{"v": 600, "l": "10/14"}, {"v": 1194.5, "l": "10/15 盘中最高"}], "good": {"to": 600, "l": "缓解 <600"}, "state": "bad", "stateLabel": "远离缓解线，又创新高", "note": "恶化：新的 AI 借款人融资失败，或 CDS 继续大幅走阔。10/15 盘中最高 1,194.5bp，隐含 5 年违约概率超过 60%。", "src": "Bloomberg（ICE）、CNBC · 10/15"},
+      {"name": "高收益债利差", "link": "信用扩散", "unit": "%", "min": 2.5, "max": 4.0, "ticks": [2.5, 3.0, 3.5, 4.0], "cur": 3.25, "curLabel": "3.25", "asof": "10/14", "good": {"to": 3.2, "l": "缓解 ≤3.2"}, "bad": {"from": 3.5, "l": "恶化 >3.5"}, "state": "watch", "stateLabel": "离开缓解区，没到恶化线", "note": "高过 3.5%，说明压力扩散到整个信用市场。数据滞后 2 天。", "src": "FRED · 10/14", "ghosts": [{"v": 3.16, "l": "10/13"}]},
+      {"name": "10 月加息概率", "link": "③ 利率", "unit": "%", "min": 0, "max": 50, "ticks": [0, 10, 20, 30, 40, 50], "cur": 15, "curLabel": "≈15", "asof": "10/16 沃什讲话后", "ghosts": [{"v": 22.1, "l": "10/13"}, {"v": 33.8, "l": "10/15 PPI 后"}, {"v": 28.2, "l": "10/16 讲话前"}], "good": {"to": 25, "l": "解除 <25"}, "state": "good", "stateLabel": "跌到解除线下方", "note": "10/13 22.1% → PPI 后 33.8% → 10/16 讲话前约 28% → 讲话后约 15%。12 月加息概率仍约九成；数字来自报道，FOMC 前还会变。", "src": "新浪财经；Mitrade 引 CME FedWatch · 10/16"},
+      {"name": "VIX", "link": "④ 系统", "unit": "", "min": 10, "max": 35, "ticks": [10, 15, 20, 25, 30, 35], "cur": 16.46, "curLabel": "16.5", "asof": "10/15 收盘", "bad": {"from": 25, "l": "流动性阶段 >25"}, "state": "good", "stateLabel": "低于警戒线", "note": "持续高于 25，说明进入流动性阶段，路径 C 才算发生。", "src": "快照 10/16 · Yahoo"},
+      {"name": "SOFR − IORB", "link": "④ 系统", "unit": "bp", "min": -10, "max": 10, "ticks": [-10, -5, 0, 5, 10], "cur": -2, "curLabel": "−2", "asof": "10/14", "ghosts": [{"v": -1, "l": "10/13"}, {"v": -3, "l": "10/09"}], "bad": {"from": 0, "l": "转正 = 恶化"}, "state": "good", "stateLabel": "还在 0 以下", "note": "持续转正，说明美元资金面开始紧张。", "src": "ARGUS · 纽约联储"},
+      {"name": "韩国外资净买卖", "link": "① 踩踏", "type": "days", "days": 8, "buys": [{"tip": "10/16|外资净买 3,414 亿韩元"}], "next": "10/19|再买一天，①才转绿", "unit": "天净买", "curLabel": "1", "state": "watch", "stateLabel": "连卖 8 天后转买", "note": "10/16 净买 3,414 亿韩元，KOSPI +2.05%。外资不再净卖、KOSPI 连续两天不创新低，①才转绿；下一个交易日是 10/19。", "src": "Financial News · 10/16；Korea Times；21 世纪经济报道"}
     ]
   },
   "paths": {
-    "head": "三条路：A 仍是基准，C 的风险在升",
+    "head": "三条路：A 仍是基准，10/16 像 A 的第一步",
     "sub": "不猜拐点，盯路标。实际走势哪条都不像时，回到机制层重找主要矛盾。",
     "rows": [
-      {"id": "A", "name": "分层消化", "status": "基准", "s": "base", "desc": "踩踏几天内演完，瓶颈层先企稳，存储和杠杆 AI 继续承压", "sign": "路标：①转绿，瓶颈层不再创新低"},
-      {"id": "B", "name": "快速 V 型反弹", "status": "暂时排除", "s": "out", "desc": "需要 PPI 偏弱、融资有好消息，两样都没来", "sign": "PPI 环比 +1.3%，融资更差"},
-      {"id": "C", "name": "传染到系统", "status": "风险升高，还没发生", "s": "risk", "desc": "信用压力已从 CoreWeave 扩散到甲骨文、软银和大科技 CDS", "sign": "路标：SOFR−IORB 转正，高收益利差 >3.5%"}
+      {"id": "A", "name": "分层消化", "status": "基准", "s": "base", "desc": "踩踏几天内演完，瓶颈层先企稳，存储和杠杆 AI 继续承压", "sign": "路标：①转绿。10/16 亚洲反弹、CDS 新高，和 A 同向"},
+      {"id": "B", "name": "快速 V 型反弹", "status": "暂时排除", "s": "out", "desc": "需要利率松、融资也有好消息", "sign": "加息概率降了，融资更差，只来了一半"},
+      {"id": "C", "name": "传染到系统", "status": "风险还在，没扩散", "s": "risk", "desc": "信用压力已到甲骨文、软银；高收益利差 3.16%→3.25%", "sign": "路标：SOFR−IORB 转正，高收益利差 >3.5%"}
     ],
     "triggersTitle": "什么情况下改判断",
     "triggers": [
@@ -877,15 +895,16 @@ details.tt[open] summary::before{content:"▾"}
       {"dir": "更谨慎", "tone": "crit", "sign": "HBM4 订单推迟被证实，或其他瓶颈层公司下修指引"},
       {"dir": "更谨慎", "tone": "crit", "sign": "高收益债利差高于 3.5%，或 SOFR−IORB 转正"}
     ],
-    "counter": "最强的反方：A 股尾盘 ETF 异常放量、韩国监管准备出手、台积电基本面强，凑在一起可能明天就大反弹。它会让等待缩短，推翻不了判断。"
+    "counter": "最强的反方：韩国外资转买、加息概率掉到 15%、A 股连续两天尾盘有大钱，凑在一起可能让反弹延续。它会让等待缩短，推翻不了判断：融资这盏灯还在变差。",
+    "origin": "10/16"
   },
   "agenda": {
-    "head": "下一个检查点：10/16 04:00 美股收盘",
-    "sub": "看费城半导体收在哪里、道指和纳指的分化能不能维持；白天看 KOSPI 外资是第 9 天净卖还是停手。",
-    "start": "2026-10-15",
+    "head": "下一个检查点：今晚美股，10/17 04:00 收盘",
+    "sub": "看费城半导体能不能结束 8 连跌、CoreWeave 的债跟不跟股价反弹；下周一（10/19）看韩国外资是不是连续第二天净买。美联储 10/17 起进入议息前静默期。",
+    "start": "2026-10-16",
     "end": "2026-11-13",
     "events": [
-      {"d": "2026-10-16", "label": "美股收盘 · KOSPI 外资", "time": "10/16 04:00 起", "row": 1, "key": true},
+      {"d": "2026-10-17", "label": "美股收盘 · 费城半导体", "time": "10/17 04:00", "row": 1, "key": true},
       {"d": "2026-10-19", "d2": "2026-10-22", "label": "金融街论坛", "time": "10/19–22", "row": 0, "short": "土狗看存单 1.35%", "note": "土狗 10/14 预期：一年存单降到 1.35% 附近，公积金贷款利率 1.6% 附近"},
       {"d": "2026-10-27", "d2": "2026-10-28", "label": "FOMC", "time": "10/27–28", "row": 1, "key": true},
       {"d": "2026-10-29", "label": "欧央行", "time": "10/29", "row": 0},
@@ -901,17 +920,18 @@ details.tt[open] summary::before{content:"▾"}
     ]
   },
   "log": {
-    "head": "6 个立场在等回看，第一次打分在 10/16",
-    "sub": "每个立场都记了锚点价格、路标读数和回看日期。到期按方向、路标、机制三项打分，看框架最常错在哪一层。",
+    "head": "10/16 首批回看到期：亚洲先松，融资更慢，和判断同向",
+    "sub": "每个立场都记了锚点价格、路标读数和回看日期。到期按方向、路标、机制三项打分。案例 5、6 下面是页面按 10/16 收盘数做的初读，正式打分记在案例日志。",
     "cases": [
       {"n": 1, "date": "10/14", "title": "美股下跌", "kind": "事件复盘", "view": "钱多但贵：利率从融资端拧 AI 借钱扩张的环", "next": ["10/28", "11/12"]},
       {"n": 2, "date": "10/15", "title": "AI 仓位从美股撤到亚洲", "kind": "状态判断", "view": "主导市场的是拥挤 AI 仓位撤退，不是利率", "next": ["10/22", "10/29", "11/12"]},
       {"n": 3, "date": "10/15", "title": "美元指数会不会见顶", "kind": "状态判断", "view": "不预判拐点，六个条件里三四个转向才算", "next": ["10/30", "11/12"]},
       {"n": 4, "date": "10/15", "title": "信用的量价背离", "kind": "一屏简报", "view": "信用量在扩张，领先信号一致看紧", "next": ["11/12"]},
-      {"n": 5, "date": "10/15", "title": "还要跌多久", "kind": "研究立场", "view": "不猜日期看止跌清单，现在不是加仓信号", "next": ["10/16", "10/22", "11/12"]},
-      {"n": 6, "date": "10/15 晚", "title": "全球市场复盘", "kind": "日复盘", "view": "定价的是资本不是需求，融资是唯一拖着的项", "next": ["10/16", "10/22", "11/12"]}
+      {"n": 5, "date": "10/15", "title": "还要跌多久", "kind": "研究立场", "view": "不猜日期看止跌清单，现在不是加仓信号", "next": ["10/16", "10/22", "11/12"], "read": "①在松、②更差，合“亚洲先止跌、杠杆 AI 更久”；锚点上 KOSPI +2.05%，台积电 ADR −1.8%，北方华创 −2.7%。"},
+      {"n": 6, "date": "10/15 晚", "title": "全球市场复盘", "kind": "日复盘", "view": "定价的是资本不是需求，融资是唯一拖着的项", "next": ["10/16", "10/22", "11/12"], "read": "美股 10/15 收盘接住了亚洲这一跌（道指 +1.08%，标普 +0.33%）；订单层没有新坏消息，“融资是唯一拖着的项”还成立。"}
     ],
-    "calib": {"reviewed": 0, "total": 6, "layers": [{"k": "事实层", "v": 1}, {"k": "机制层", "v": 0}, {"k": "决策层", "v": 0}], "note": "目前唯一一次失误在事实层：10/14 报告把 ASML 写成小跌，收盘实际 −3.94%。之后改为收盘数优先。每攒 4 个已回看案例，统计一次，改 skill 对应的一层。"}
+    "calib": {"reviewed": 0, "total": 6, "layers": [{"k": "事实层", "v": 1}, {"k": "机制层", "v": 0}, {"k": "决策层", "v": 0}], "note": "两条初读只看了一天，方向等 10/22 再打分。目前唯一一次失误在事实层：10/14 报告把 ASML 写成小跌，收盘实际 −3.94%，之后改为收盘数优先。每攒 4 个已回看案例，统计一次，改 skill 对应的一层。"},
+    "readLabel": "10/16 初读"
   },
   "ledger": {
     "tag": "账本 · 沧海一土狗",
@@ -927,12 +947,12 @@ details.tt[open] summary::before{content:"▾"}
     "verdict": "用他的框架看国内资金面的方向、眼前的议息和风格切换；不用它猜美债美元的走向和 A 股点位。",
     "openTitle": "还在等结果的 6 条",
     "open": [
-      {"d": "10/15", "t": "3700 点可粗略视为 A 股阶段性底部（理论验证）", "c": "回看：3700 守住，A 股 vix 回到 20 以下"},
+      {"d": "10/15", "t": "3700 点可粗略视为 A 股阶段性底部（理论验证）", "c": "10/16 盘中跌破、收在 3,716；A 股 vix 待补"},
       {"d": "10/14", "t": "金融街论坛后，一年存单降到 1.35% 附近，公积金贷款利率 1.6% 附近", "c": "论坛 10/19–22"},
-      {"d": "10/10", "t": "人民币升值，美债收益率逐步回落", "c": "十年美债 10/15 约 5.05%"},
+      {"d": "10/10", "t": "人民币升值，美债收益率逐步回落", "c": "人民币 6.687；十年美债 10/15 收 5.10%"},
       {"d": "10/1", "t": "美国要看非 AI；30 年按揭 7.79% 前高是衰退交易的关键节点", "c": "10/15 为 7.40%"},
       {"d": "8/26", "t": "结构性降息会把美国拖进衰退和熊市", "c": "待验"},
-      {"d": "7/31", "t": "日元“易贬难升”，垮塌式贬值不可避免", "c": "日元 10/15 为 157.83"}
+      {"d": "7/31", "t": "日元“易贬难升”，垮塌式贬值不可避免", "c": "日元 10/16 为 157.98"}
     ],
     "notes": ["最大的一次错：6–8 月多次预期 Q4 降息，9 月美联储加息。他没有撤回，改说“已经加息了 5.5 次”。所以用这套框架看美联储，要把解释力和预测准确度分开打分。", "点位按“区间 + 条件”打分，不按单日涨跌。机制比点位活得久：准备金框架、两年美债、相对收益资金、波动率，这些八年里一直在用，只是换了名字。"],
     "src": "依据 canghai-tugou-perspective v0.3 的 references/07-calls-ledger.md，只计语料内能看到的结果；按类型归组是我们做的。"
@@ -952,7 +972,7 @@ details.tt[open] summary::before{content:"▾"}
       {"name": "沧海一土狗", "role": "A 股、人民币和楼市", "line": "价格是博弈结果的投影：汇率投影中美关系和产业垄断力，波动率投影持仓结构。", "tools": ["两因素", "12 个核心模型", "杠杆负反馈", "八年账本"], "used": [{"l": "中国视角", "a": "china"}, {"l": "账本", "a": "ledger"}], "meta": "canghai-tugou-perspective v0.3 · 2018–2026 公开文 419 篇 + 2026 年星球 49 篇", "fresh": true, "modelsLabel": "12 个核心模型", "models": [["两因素框架", "A 股取决于全球无风险利率和楼市复苏"], ["汇率即中美关系的投影", "产业垄断力定中枢；缓和升值利内需，紧张贬值利外需和科技"], ["两类牛市", "降波牛内需涨，升波牛外需涨；波动率决定估值"], ["出口导向不可能三角 + 账期", "出口份额、杠杆下降、内需增长不可兼得；内需差在账期拉长"], ["寡头博弈与国家安全", "廉价出口在对手国是通胀；油价是“世界货币”"], ["市场定价效率", "相对收益资金多，效率低、趋势强，要看线"], ["波动率语言", "A 股 vix 稳定区间 [10, 20]；科技升波上涨才是好上涨"], ["美国金融条件收紧不可避免", "通胀来自油和 AI 融资，加息治不了，只会压垮非 AI 部位"], ["楼市新范式", "楼市和长债同一生态位；政策先杠杆类、后权益类"], ["准备金框架", "稀缺框架下，两年美债才是真实的政策利率"], ["垄断要素与 PPI", "货币的底色是垄断要素的供给；PPI 是中国资本市场最重要的指标"], ["大类资产轮动三相", "成长牛的下一站是楼市牛，价值牛之后是债市牛"]]}
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
-    "foot": "这是研究框架的观点展示，不是投资建议，不对应任何买卖点位。数字来自 2026-10-15 21:42 的 Mac 快照、当天公开报道和沧海一土狗 9–10 月复盘里的读数；盘中数会变，以收盘后的快照为准。中国视角和账本是按土狗公开文章里的框架整理和推演的，不代表他本人的最新观点。依据：静观（原 invest-compass）v0.4.3、canghai-tugou-perspective v0.3、analysis/2026-10-15-全球市场复盘.md、analysis/案例日志.md。"
+    "foot": "这是研究框架的观点展示，不是投资建议，不对应任何买卖点位。数字来自 2026-10-16 15:10 的 Mac 快照、当天公开报道和沧海一土狗 9–10 月复盘里的读数；美股是 10/15 收盘，盘中数会变，以收盘后的快照为准。中国视角和账本是按土狗公开文章里的框架整理和推演的，不代表他本人的最新观点。依据：静观 Stillpoint v0.4.4、canghai-tugou-perspective v0.3、analysis/2026-10-15-全球市场复盘.md、analysis/案例日志.md。"
   }
 }
 </script>
@@ -1013,6 +1033,17 @@ details.tt[open] summary::before{content:"▾"}
     var z = pos(0, min, max), x = pos(v, min, max);
     var left = v < 0 ? x : z, w = Math.max(Math.abs(x - z), 0.8);
     return h('i', {class: 'bar ' + (v > 0 ? 'pos' : 'neg') + (soft ? ' soft' : ''), style: 'left:' + left + '%;width:' + w + '%'});
+  }
+  function twinNodes(v1, v2, min, max){
+    var a = barNode(v1, min, max); a.classList.add('t1');
+    var out = [a];
+    if (v2 != null){ var b = barNode(v2, min, max, true); b.classList.add('t2'); out.push(b); }
+    return out;
+  }
+  function twinVal(v1, v2){ return [h('b', null, sgn(v1)), h('small', null, v2 != null ? sgn(v2) : '—')]; }
+  function twinTip(r, l1, l2, extra){
+    return sgn(r.v) + '%' + (r.v2 != null ? ' → ' + sgn(r.v2) + '%' : '') + '|' + r.name + (extra || '') + '|' +
+      l1 + ' ' + sgn(r.v) + '%，' + (r.v2 != null ? l2 + ' ' + sgn(r.v2) + '%' : l2 + ' 还没有') + (r.note ? '；' + r.note : '');
   }
   function ticksRow(ticks, min, max, fmt){
     return h('div', {class: 'ticks', 'aria-hidden': 'true'}, ticks.map(function(t, i){
@@ -1089,7 +1120,7 @@ details.tt[open] summary::before{content:"▾"}
     s.checks.forEach(function(c){
       $('lamps').appendChild(h('div', {class: 'lp card ' + c.state},
         h('div', {class: 'lp-top'}, h('span', {class: 'lp-n'}, c.n), h('b', null, c.name)),
-        h('div', {class: 'lp-state'}, '早上', h('i', {class: 'lamp sm ' + c.prev, 'aria-hidden': 'true'}), '→',
+        h('div', {class: 'lp-state'}, s.prevLabel || '上次', h('i', {class: 'lamp sm ' + c.prev, 'aria-hidden': 'true'}), '→',
           h('i', {class: 'lamp lg ' + c.state, 'aria-hidden': 'true'}), h('span', {class: 'lp-txt'}, LAMP[c.state] + ' · ' + c.trend)),
         h('p', {class: 'lp-fact'}, c.fact),
         h('p', {class: 'lp-unlock'}, h('span', null, c.state === 'green' ? '保持条件' : '转绿条件'), c.unlock)));
@@ -1126,11 +1157,14 @@ details.tt[open] summary::before{content:"▾"}
       h('p', {class: 'foot'}, v.foot));
   }
   function vizBars(v){
+    var twin = !!v.l2;
     var rows = v.rows.map(function(r){
+      if (twin) return {name: r.name, t: r.t, track: twinNodes(r.v, r.v2, v.min, v.max), val: twinVal(r.v, r.v2), tip: twinTip(r, v.l1, v.l2, r.t ? ' · ' + r.t : '')};
       return {name: r.name, t: r.t, track: [barNode(r.v, v.min, v.max)], val: sgn(r.v) + '%', tip: sgn(r.v) + '%|' + r.name + (r.t ? '|' + r.t : '')};
     });
     return h('figure', {class: 'viz'}, h('figcaption', null, v.title),
-      frame({nw: '5.6em', vw: '4.4em', min: v.min, max: v.max, ticks: v.ticks, rows: rows}),
+      twin ? h('div', {class: 'legend sm'}, h('span', null, h('i', {class: 'sw2 t1'}), v.l1), h('span', null, h('i', {class: 'sw2 t2'}), v.l2)) : null,
+      frame({nw: '5.6em', vw: twin ? '3.6em' : '4.4em', min: v.min, max: v.max, ticks: v.ticks, rows: rows, cls: twin ? 'twin' : ''}),
       v.foot ? h('p', {class: 'foot'}, v.foot) : null);
   }
   function vizConds(v){
@@ -1179,17 +1213,26 @@ details.tt[open] summary::before{content:"▾"}
     $('ev-sub').textContent = D.evidenceSub;
     var s = D.sameTrade, box = $('ev-trade');
     box.appendChild(h('div', {class: 'panel-h'}, h('h3', null, s.title), h('p', null, s.sub)));
-    box.appendChild(h('div', {class: 'legend'},
+    var twin = !!s.l2;
+    box.appendChild(h('div', {class: 'legend'}, twin ? [
+      h('span', null, h('i', {class: 'sw2 t1'}), s.l1 + '（上）'),
+      h('span', null, h('i', {class: 'sw2 t2'}), s.l2 + '（下，浅色）'),
+      h('span', null, h('em', {class: 'ai'}, 'AI'), 'AI 硬件权重高')
+    ] : [
       h('span', null, h('i', {style: 'background:var(--neg)'}), 'AI 硬件权重高'),
       h('span', null, h('i', {style: 'background:var(--neg-soft)'}), '其他市场'),
-      h('span', null, h('i', {style: 'background:var(--pos)'}), '上涨')));
+      h('span', null, h('i', {style: 'background:var(--pos)'}), '上涨')]));
     var rows = s.rows.map(function(r){
+      if (twin) return {name: r.ai ? [r.name, h('em', {class: 'ai', 'aria-label': 'AI 硬件权重高'}, 'AI')] : r.name, t: r.t,
+        track: twinNodes(r.v, r.v2, s.min, s.max), val: twinVal(r.v, r.v2), tip: twinTip(r, s.l1, s.l2, r.ai ? ' · AI 硬件权重高' : '')};
       return {name: r.name, t: r.t, track: [barNode(r.v, s.min, s.max, !r.ai)], val: sgn(r.v) + '%',
         tip: sgn(r.v) + '%|' + r.name + '|' + r.t + (r.ai ? ' · AI 硬件权重高' : '') + (r.note ? '|' + r.note : '')};
     });
-    box.appendChild(frame({nw: '7.4em', vw: '4.2em', min: s.min, max: s.max, ticks: s.ticks, rows: rows}));
+    box.appendChild(frame({nw: '7.4em', vw: twin ? '3.6em' : '4.2em', min: s.min, max: s.max, ticks: s.ticks, rows: rows, cls: twin ? 'twin' : ''}));
     box.appendChild(h('p', {class: 'src'}, s.src));
-    box.appendChild(tableToggle(['市场', '涨跌', '时点', 'AI 硬件权重'], s.rows.map(function(r){ return [r.name, sgn(r.v) + '%', r.t, r.ai ? '高' : '—']; })));
+    box.appendChild(twin
+      ? tableToggle(['市场', s.l1, s.l2, '时点', 'AI 硬件权重'], s.rows.map(function(r){ return [r.name, sgn(r.v) + '%', r.v2 != null ? sgn(r.v2) + '%' : '—', r.t, r.ai ? '高' : '—']; }))
+      : tableToggle(['市场', '涨跌', '时点', 'AI 硬件权重'], s.rows.map(function(r){ return [r.name, sgn(r.v) + '%', r.t, r.ai ? '高' : '—']; })));
 
     var a = D.ashare, ab = $('ev-ashare');
     ab.appendChild(h('div', {class: 'panel-h'}, h('h3', null, a.title), h('p', null, a.sub)));
@@ -1232,10 +1275,15 @@ details.tt[open] summary::before{content:"▾"}
       svg.appendChild(s('rect', {x: c[0] + 2, y: c[1] + 2, width: W / 2 - 4, height: H / 2 - 4, rx: 5, class: 'q-cell' + (c[3] ? ' on' : '')}));
       svg.appendChild(s('text', {x: c[0] + 12, y: c[1] + 26, class: 'q-lab' + (c[3] ? ' on' : '')}, c[2]));
     });
-    svg.appendChild(s('path', {d: 'M262 74 L 304 74', class: 'q-arrow'}));
-    svg.appendChild(s('path', {d: 'M298 70 L 304 74 L 298 78', class: 'q-arrow'}));
+    if (q.arrow === 'left'){
+      svg.appendChild(s('path', {d: 'M242 74 L 212 74', class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M218 70 L 212 74 L 218 78', class: 'q-arrow'}));
+    } else {
+      svg.appendChild(s('path', {d: 'M262 74 L 304 74', class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M298 70 L 304 74 L 298 78', class: 'q-arrow'}));
+    }
     svg.appendChild(s('circle', {cx: 252, cy: 74, r: 7, class: 'q-dot'}));
-    svg.appendChild(s('text', {x: mx + 12, y: Y0 + 100, class: 'q-note'}, '10/15 · 一时便宜不了'));
+    svg.appendChild(s('text', {x: mx + 12, y: Y0 + 100, class: 'q-note'}, q.note));
     svg.appendChild(s('text', {x: X0 + W / 2, y: 252, 'text-anchor': 'middle', class: 'q-ax'}, '钱的价：便宜 → 贵'));
     var ylab = s('text', {x: 14, y: my, 'text-anchor': 'middle', class: 'q-ax', transform: 'rotate(-90 14 ' + my + ')'}, '钱的量：少 → 多');
     svg.appendChild(ylab);
@@ -1402,9 +1450,11 @@ details.tt[open] summary::before{content:"▾"}
       card.appendChild(h('div', {class: 'gg-v'}, h('span', {class: 'gg-num'}, g.curLabel, g.unit ? h('small', null, g.unit) : null),
         h('span', {class: 'st ' + g.state}, h('i', {'aria-hidden': 'true'}), g.stateLabel)));
       if (g.type === 'days'){
-        var days = h('div', {class: 'gg-days', role: 'img', 'aria-label': '已连续 ' + g.days + ' 天净卖出'});
+        var buys = g.buys || [];
+        var days = h('div', {class: 'gg-days', role: 'img', 'aria-label': '连续 ' + g.days + ' 天净卖出' + (buys.length ? '，之后 ' + buys.length + ' 天净买入' : '')});
         for (var i = 1; i <= g.days; i++) days.appendChild(h('i', {'data-tip': '第 ' + i + ' 天|外资净卖出'}, String(i)));
-        days.appendChild(h('i', {class: 'next', tabindex: '0', 'data-tip': '10/16|第 9 天净卖，还是停手？'}, '?'));
+        buys.forEach(function(b){ days.appendChild(h('i', {class: 'buy', tabindex: '0', 'data-tip': b.tip}, '买')); });
+        if (g.next) days.appendChild(h('i', {class: 'next', tabindex: '0', 'data-tip': g.next}, '?'));
         card.appendChild(days);
       } else {
         var zl = h('div', {class: 'gg-zl'});
@@ -1454,7 +1504,7 @@ details.tt[open] summary::before{content:"▾"}
       svg.appendChild(s('text', {x: ex + 22, y: y + 24, class: 'p-g'}, r.sign));
     });
     svg.appendChild(s('circle', {cx: ox, cy: oy, r: 8, class: 'p-node'}));
-    svg.appendChild(s('text', {x: ox, y: oy + 28, 'text-anchor': 'middle', class: 'p-o'}, '10/15'));
+    svg.appendChild(s('text', {x: ox, y: oy + 28, 'text-anchor': 'middle', class: 'p-o'}, p.origin));
     $('p-fig').appendChild(svg);
     var t = $('trig');
     t.appendChild(h('h3', null, p.triggersTitle));
@@ -1470,7 +1520,7 @@ details.tt[open] summary::before{content:"▾"}
     var day = 86400000, t0 = Date.parse(a.start + 'T00:00:00Z'), t1 = Date.parse(a.end + 'T00:00:00Z');
     function xp(d){ return 2 + (Date.parse(d + 'T00:00:00Z') - t0) / (t1 - t0) * 96; }
     function md(d){ var p = d.split('-'); return (+p[1]) + '/' + (+p[2]); }
-    var box = h('div', {class: 'tl-h', role: 'img', 'aria-label': '10/15 到 11/12 的事件和回看日程'});
+    var box = h('div', {class: 'tl-h', role: 'img', 'aria-label': md(a.start) + ' 到 ' + md(a.end) + ' 的事件和回看日程'});
     box.appendChild(h('div', {class: 'tl-axis'}));
     box.appendChild(h('i', {class: 'tl-today', style: 'left:' + xp(a.start) + '%'}));
     a.events.forEach(function(e){
@@ -1486,7 +1536,7 @@ details.tt[open] summary::before{content:"▾"}
       box.appendChild(h('div', {class: 'tl-rv', style: 'left:' + x + '%;' + anchor, tabindex: '0', 'data-tip': md(r.d) + '|回看案例 ' + r.cases.join('、')},
         r.cases.map(function(c){ return h('i', null, String(c)); })));
     });
-    box.appendChild(h('span', {class: 'tl-wk tl-today-l', style: 'left:' + xp(a.start) + '%;transform:none'}, '今天 10/15'));
+    box.appendChild(h('span', {class: 'tl-wk tl-today-l', style: 'left:' + xp(a.start) + '%;transform:none'}, '今天 ' + md(a.start)));
     ['2026-10-22', '2026-10-29', '2026-11-05', '2026-11-12'].forEach(function(d){
       box.appendChild(h('span', {class: 'tl-wk', style: 'left:' + xp(d) + '%'}, md(d)));
     });
@@ -1517,7 +1567,7 @@ details.tt[open] summary::before{content:"▾"}
       $('cases').appendChild(h('div', {class: 'cs'},
         h('span', {class: 'cs-n'}, '#' + c.n),
         h('div', {class: 'cs-t'}, h('b', null, c.title), h('span', null, c.date + ' · ' + c.kind)),
-        h('p', {class: 'cs-v'}, c.view),
+        h('div', {class: 'cs-v'}, c.view, c.read ? h('span', {class: 'cs-r'}, h('b', null, l.readLabel || '初读'), c.read) : null),
         h('div', {class: 'cs-next', 'aria-label': '回看日期'}, c.next.map(function(d){ return h('span', {class: 'rvd' + (d === D.edition.due ? ' due' : '')}, d); }))));
     });
     var k = l.calib, cb = $('calib');
