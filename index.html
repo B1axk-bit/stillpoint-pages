@@ -8,7 +8,7 @@
 <meta name="theme-color" content="#0b1316" media="(prefers-color-scheme: dark)">
 <meta property="og:type" content="website">
 <meta property="og:site_name" content="静观 Stillpoint">
-<meta property="og:title" content="静观 · Stillpoint 观点看板">
+<meta property="og:title" content="静观 Stillpoint">
 <meta property="og:description" content="静观把市场噪音收成一句结论、一个现在能做的动作、一条改主意的线。研究框架的观点展示，不是投资建议。">
 <meta property="og:url" content="https://b1axk-bit.github.io/stillpoint-pages/">
 <meta property="og:image" content="https://b1axk-bit.github.io/stillpoint-pages/og.png">
@@ -26,7 +26,9 @@
   --bg:#edf1f0; --surface:#fbfcfc; --surface-2:#e5ebea; --ink:#0f2027; --ink-2:#46595e; --muted:#5f7074;
   --line:#d3dcdb; --grid:#e1e8e7; --axis:#9aabae;
   --brass:#8a5d0c; --brass-hi:#a8721a; --brass-wash:#f0e2c2; --brass-tint:#f7f0e0;
-  --neg:#2a78d6; --neg-soft:#9db7d6; --pos:#eb6834; --pos-soft:#f3b496; --mag:#8a9a9e;
+  --neg:#11905c; --neg-soft:#a3d6bf; --pos:#d23a3f; --pos-soft:#f0aeb0; --mag:#8a9a9e;
+  --ser:#2a78d6; --ser-soft:#9db7d6; --up-inv:#ff7b7f; --dn-inv:#3fd39a; --on-dir:#ffffff;
+  --pop-shadow:0 22px 44px -26px rgba(15,32,39,.42);
   --good:#0ca30c; --warn:#fab219; --crit:#d03b3b;
   --good-wash:#ddeedd; --warn-wash:#fbeecb; --crit-wash:#f7dddb;
   --z-strong:#e3e9e8; --z-mid:#ecf1f0; --z-edge:#f6eedb;
@@ -40,7 +42,8 @@
   --bg:#0b1316; --surface:#111c1f; --surface-2:#18262a; --ink:#e4ecea; --ink-2:#a6b6b4; --muted:#80918f;
   --line:#22333a; --grid:#1a282c; --axis:#3e5157;
   --brass:#d8a94f; --brass-hi:#e9c27a; --brass-wash:#3a2e17; --brass-tint:#1e1a12;
-  --neg:#3987e5; --neg-soft:#3f5b7c; --pos:#d95926; --pos-soft:#7d4630; --mag:#5c6f73;
+  --neg:#25b07a; --neg-soft:#2d5e49; --pos:#ee5a5f; --pos-soft:#7d3a3c; --mag:#5c6f73;
+  --ser:#3987e5; --ser-soft:#3f5b7c; --on-dir:#0b1316; --pop-shadow:0 22px 44px -18px rgba(0,0,0,.7);
   --good-wash:#12301a; --warn-wash:#33290f; --crit-wash:#3a1a1a;
   --z-strong:#1a282c; --z-mid:#152226; --z-edge:#211d14;
   --inv-bg:#1c2b2f; --inv-fg:#e4ecea; --inv-tag:#d8a94f;
@@ -49,7 +52,8 @@
   --bg:#0b1316; --surface:#111c1f; --surface-2:#18262a; --ink:#e4ecea; --ink-2:#a6b6b4; --muted:#80918f;
   --line:#22333a; --grid:#1a282c; --axis:#3e5157;
   --brass:#d8a94f; --brass-hi:#e9c27a; --brass-wash:#3a2e17; --brass-tint:#1e1a12;
-  --neg:#3987e5; --neg-soft:#3f5b7c; --pos:#d95926; --pos-soft:#7d4630; --mag:#5c6f73;
+  --neg:#25b07a; --neg-soft:#2d5e49; --pos:#ee5a5f; --pos-soft:#7d3a3c; --mag:#5c6f73;
+  --ser:#3987e5; --ser-soft:#3f5b7c; --on-dir:#0b1316; --pop-shadow:0 22px 44px -18px rgba(0,0,0,.7);
   --good-wash:#12301a; --warn-wash:#33290f; --crit-wash:#3a1a1a;
   --z-strong:#1a282c; --z-mid:#152226; --z-edge:#211d14;
   --inv-bg:#1c2b2f; --inv-fg:#e4ecea; --inv-tag:#d8a94f;
@@ -58,7 +62,8 @@
 *{box-sizing:border-box}
 [hidden]{display:none!important}
 html,body{margin:0}
-html{scroll-padding-top:64px}
+html{scroll-padding-top:76px}
+@media (max-width:1179px){html{scroll-padding-top:104px}}
 @media (prefers-reduced-motion:no-preference){html{scroll-behavior:smooth}}
 body{background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
 h1,h2,h3,p{margin:0}
@@ -71,31 +76,234 @@ a{color:inherit}
 .src{font-family:var(--f-mono);font-size:11px;color:var(--muted);line-height:1.5}
 .card{background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
 
-/* masthead */
-.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:var(--bg);background:color-mix(in srgb,var(--bg) 90%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
-.mast-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:20px;padding-block:9px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
-.brand{display:flex;align-items:center;gap:9px;text-decoration:none;flex:none}
-.brand svg{width:26px;height:26px}
-.brand .wm{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.04em}
-.brand .lb{font-family:var(--f-mono);font-size:10px;letter-spacing:.14em;color:var(--muted);text-transform:uppercase}
-.nav{position:relative;display:flex;gap:2px;overflow-x:auto;scrollbar-width:none;min-width:0;margin-left:auto}
-.nav::-webkit-scrollbar{display:none}
-.nav a{flex:none;text-decoration:none;font-size:13px;color:var(--ink-2);padding:4px 10px;border-radius:999px}
-.nav a:hover{background:var(--surface);color:var(--ink)}
-.nav a.on{background:var(--surface);color:var(--ink);font-weight:500;box-shadow:inset 0 0 0 1px var(--line)}
+/* masthead: a sticky global bar; below it a deck (market tape, status strip) that scrolls away, then a compact status takes over */
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:31;background:var(--bg)}
+.mast{position:sticky;top:env(safe-area-inset-top,0px);z-index:30;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.mast-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:56px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
+.brand svg{width:28px;height:28px;flex:none}
+.brand .wm,.brand .lb{font-family:var(--f-display);font-weight:900;font-size:24px;line-height:1;letter-spacing:.04em}
+.brand:hover .wm,.brand:hover .lb{color:var(--brass)}
+.ed-chip{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.ws{display:flex;gap:2px;flex:none;margin-left:6px}
+.ws-t{position:relative;font:inherit;font-size:14px;line-height:1;color:var(--ink-2);background:none;border:0;border-radius:6px;padding:10px 12px;cursor:pointer;display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap}
+.ws-t::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg);opacity:.55}
+.ws-t:hover{color:var(--ink);background:var(--surface)}
+.ws-t.on{color:var(--ink);font-weight:700}
+.ws-t.on::before{content:"";position:absolute;left:12px;right:12px;bottom:1px;height:2px;border-radius:2px;background:var(--brass)}
+.ws-t[aria-expanded="true"]{color:var(--ink);background:var(--surface);box-shadow:inset 0 0 0 1px var(--line)}
+.ws-t[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
+.hd-sp{flex:1 1 0;min-width:0}
+.hd-btn{flex:none;font:inherit;font-size:13px;line-height:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;height:34px;padding:0 13px;border-radius:999px;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);cursor:pointer;white-space:nowrap}
+.hd-btn:hover{color:var(--ink);border-color:var(--axis)}
+.hd-btn svg{width:15px;height:15px;flex:none}
+.chg-b{color:var(--brass);background:var(--brass-tint);border-color:color-mix(in srgb,var(--brass) 40%,var(--line))}
+.chg-b:hover{color:var(--brass);border-color:var(--brass)}
+.chg-b b{font-family:var(--f-mono);font-size:14px;font-weight:500}
+.chg-b .pip{width:7px;height:7px;border-radius:50%;background:var(--brass);flex:none}
+.hd-btn[aria-expanded="true"]{border-color:var(--brass);color:var(--ink)}
+.chg-b[aria-expanded="true"]{color:var(--brass)}
 .theme-t{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
 .theme-t:hover{color:var(--ink);border-color:var(--axis)}
 .theme-t svg{width:16px;height:16px}
+.theme-m{display:none}
 .prog{position:absolute;left:0;right:0;bottom:-1px;height:2px;pointer-events:none}
 .prog i{display:block;height:100%;background:var(--brass);transform-origin:0 50%;transform:scaleX(0)}
+/* compact status: inline in the bar on wide screens, a thin strip under it elsewhere */
+.cmp{display:none;align-items:center;gap:14px;font-size:12.5px;color:var(--ink-2);white-space:nowrap;min-width:0}
+.mast.compact .cmp{display:flex}
+.cmp b{color:var(--ink);font-weight:700}
+.cmp-st b{font-family:var(--f-display);font-weight:900;color:var(--brass);font-size:15px}
+.mast.compact .ed-chip{display:none}
+@media (min-width:1180px){.cmp{margin-left:8px;padding-left:16px;border-left:1px solid var(--line)}.mast.compact .brand .lb,.mast.compact .chg-pre{display:none}}
+@media (max-width:1179px){.ed-chip{display:none}
+  .cmp{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);padding-block:5px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:auto;scrollbar-width:none}
+  .cmp::-webkit-scrollbar{display:none}}
+@media (max-width:1000px){.brand .lb{display:none}}
+@media (max-width:900px){.chg-pre,.srch-b span{display:none}.srch-b{width:34px;padding:0}}
+@media (max-width:760px){
+  .mast-in{gap:8px;min-height:52px;padding-block:6px}
+  .brand svg{display:none}
+  .brand .wm{font-size:20px}
+  .ws{flex:1 1 auto;min-width:0;margin-left:0}
+  .ws-t{flex:1 1 0;padding:10px 4px}
+  .ws-t::after,.chg-b .pip,.hd-sp{display:none}
+  .ws-t.on::before{left:9px;right:9px}
+  .hd-btn{height:32px;padding:0 10px}
+  .srch-b{width:32px;padding:0}
+  .mast .theme-t{display:none}
+  .theme-m{display:grid;width:30px;height:30px}}
+@media (max-width:374px){.ws-t{font-size:13.5px;padding:10px 2px}.chg-b{padding:0 8px}}
 .about{display:flex;gap:8px;align-items:baseline;font-size:13px;color:var(--ink-2);line-height:1.6;max-width:44em}
 .about::before{content:"";flex:none;width:7px;height:7px;border-radius:50%;background:var(--brass);transform:translateY(-1px)}
-@media (max-width:760px){.brand .lb{display:none}.mast-in{gap:10px}
-  .nav{-webkit-mask-image:linear-gradient(90deg,#000 78%,transparent);mask-image:linear-gradient(90deg,#000 78%,transparent)}
-  .nav.at-end{-webkit-mask-image:none;mask-image:none}}
+
+/* deck: market tape on the inverse band, status strip under it */
+.tape-band{background:var(--inv-bg);color:var(--inv-fg)}
+.tape-in{max-width:1200px;margin:0 auto;display:flex;align-items:stretch;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.tape-vp{flex:1 1 auto;min-width:0;overflow:hidden;-webkit-mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 36px),transparent);mask-image:linear-gradient(90deg,transparent,#000 18px,#000 calc(100% - 36px),transparent)}
+.tape-tr{display:flex;width:max-content;animation:tape var(--tape-dur,40s) linear infinite}
+.tape-vp:hover .tape-tr,.tape-vp:focus-within .tape-tr{animation-play-state:paused}
+@keyframes tape{to{transform:translateX(-50%)}}
+@media (prefers-reduced-motion:reduce){.tape-tr{animation:none}.tape-vp{overflow-x:auto;scrollbar-width:none}.tape-vp::-webkit-scrollbar{display:none}}
+.stat-in.more{-webkit-mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent);mask-image:linear-gradient(90deg,#000 calc(100% - 56px),transparent)}
+.tape-lb{flex:none;display:flex;flex-direction:column;justify-content:center;gap:2px;padding:8px 14px 8px 0;font-family:var(--f-mono);font-size:10.5px;line-height:1.2;letter-spacing:.12em;color:var(--inv-tag)}
+.tape-lb small{font-size:10.5px;letter-spacing:.02em;color:color-mix(in srgb,var(--inv-fg) 58%,transparent)}
+.tk{flex:none;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:8px 15px;text-decoration:none;color:inherit;border-left:1px solid color-mix(in srgb,var(--inv-fg) 13%,transparent)}
+.tk:hover{background:color-mix(in srgb,var(--inv-fg) 7%,transparent)}
+.tk:focus-visible{outline-color:var(--inv-tag);outline-offset:-3px}
+.tk-n{font-size:11.5px;line-height:1.2;color:color-mix(in srgb,var(--inv-fg) 64%,transparent);white-space:nowrap}
+.tk-v{display:flex;align-items:baseline;gap:8px;font-family:var(--f-mono);font-size:13.5px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tk-c{font-style:normal;font-size:12px}
+.tk-c.up{color:var(--up-inv)} .tk-c.dn{color:var(--dn-inv)} .tk-c.flat{color:color-mix(in srgb,var(--inv-fg) 62%,transparent)}
+.stat-band{background:var(--surface);border-bottom:1px solid var(--line)}
+.stat-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;flex-wrap:wrap;gap:8px 20px;padding-block:9px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.sb{display:inline-flex;align-items:center;gap:7px;font-size:13px;line-height:1.3;white-space:nowrap;text-decoration:none;color:var(--ink)}
+a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1px}
+.sb .k{font-size:12px}
+.sb b{font-weight:700}
+.sb-tag{font-size:11px;color:var(--muted);border:1px solid var(--line);border-radius:4px;padding:0 5px;line-height:1.55}
+.sb-stance b{font-family:var(--f-display);font-weight:900;font-size:18px;line-height:1;color:var(--brass)}
+.sb-mono b{font-family:var(--f-mono);font-weight:500;letter-spacing:.03em}
+.sb-end{margin-left:auto}
+.lmp{display:inline-flex;align-items:center;gap:1px}
+.lmp-b{display:inline-flex;align-items:center;gap:3px;padding:2px 4px;border-radius:4px;text-decoration:none;color:var(--ink-2);font-family:var(--f-mono);font-size:11.5px;line-height:1.2}
+.lmp-b:hover{background:var(--surface-2);color:var(--ink)}
+.lmp-b .lamp{width:10px;height:10px}
+@media (max-width:760px){
+  .stat-in{flex-wrap:nowrap;overflow-x:auto;scrollbar-width:none;gap:20px}
+  .stat-in::-webkit-scrollbar{display:none}
+  .sb-end{margin-left:0}}
+
+/* summary menus */
+.mega{position:absolute;left:0;right:0;top:100%;z-index:2;background:var(--surface);border-bottom:1px solid var(--line);box-shadow:var(--pop-shadow);max-height:calc(100vh - 72px);max-height:calc(100dvh - 72px);overflow-y:auto;overscroll-behavior:contain}
+.mega-in{max-width:1200px;margin:0 auto;display:grid;grid-template-columns:minmax(0,13em) minmax(0,1fr);gap:28px;padding-block:20px 24px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.mg-side{display:flex;flex-direction:column;gap:8px;padding-top:2px}
+.mg-side h3{font-family:var(--f-display);font-weight:900;font-size:1.5rem;line-height:1.2}
+.mg-side p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.mg-go{align-self:flex-start;margin-top:4px;font-size:13px;font-weight:500;color:var(--brass);text-decoration:none;border-bottom:1px solid currentColor;padding-bottom:1px}
+.mg-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}
+.mg-grid.n2{grid-template-columns:repeat(2,minmax(0,1fr))}
+.mg-grid.n4{grid-template-columns:repeat(4,minmax(0,1fr))}
+@media (max-width:1100px){.mg-grid.n4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.mg-c{display:flex;flex-direction:column;gap:8px;padding:13px 14px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);min-width:0}
+.mg-h{display:flex;flex-direction:column;gap:5px;text-decoration:none;color:inherit}
+.mg-h b{font-size:14.5px;line-height:1.45;text-wrap:balance}
+.mg-h:hover b{color:var(--brass)}
+.mg-p{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.mg-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.mg-l a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1px 10px;padding:6px 0;border-top:1px dashed var(--line);text-decoration:none;color:inherit;font-size:12.5px;line-height:1.4}
+.mg-l a:hover .mg-n{color:var(--brass)}
+.mg-n{font-weight:500;display:flex;align-items:center;gap:6px;min-width:0}
+.mg-v{font-size:12px;color:var(--ink-2);white-space:nowrap;text-align:right}
+.mg-v.num{font-family:var(--f-mono);color:var(--ink)}
+.mg-v.up{color:var(--pos)} .mg-v.dn{color:var(--neg)}
+.mg-s{grid-column:1/-1;font-size:11.5px;color:var(--muted)}
+@media (max-width:980px){.mega-in{grid-template-columns:minmax(0,1fr);gap:14px}.mg-side{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.mg-side .tag{display:none}.mg-go{margin-top:0}}
+@media (max-width:700px){.mg-grid,.mg-grid.n2,.mg-grid.n4{grid-template-columns:minmax(0,1fr)}.mg-side h3{font-size:1.25rem}}
+
+/* change list */
+.chg-p{position:absolute;top:100%;right:max(16px,calc((100% - 1200px) / 2 + 16px));z-index:3;width:min(460px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;box-shadow:var(--pop-shadow);padding:14px 16px 6px}
+.cp-h{display:flex;flex-direction:column;gap:3px;padding-bottom:10px;border-bottom:1px solid var(--line)}
+.cp-h b{font-size:14px}
+.cp-h span{font-size:12.5px;color:var(--ink-2)}
+.cp-l{list-style:none;margin:0;padding:0}
+.cp-l a{display:grid;grid-template-columns:10px 6.4em minmax(0,1fr);align-items:baseline;gap:4px 10px;padding:9px 0;border-bottom:1px dashed var(--line);text-decoration:none;color:inherit;font-size:13px;line-height:1.5}
+.cp-l li:last-child a{border-bottom:0}
+.cp-l a:hover b{color:var(--brass)}
+.cp-l a span{color:var(--ink-2)}
+.cp-dot{display:inline-block;width:9px;height:9px;border-radius:2px;background:var(--axis)}
+@media (max-width:760px){.chg-p{left:0;right:0;width:auto;border-radius:0;border-inline:0}}
+
+/* search */
+.srch{position:fixed;inset:0;z-index:60;display:flex;justify-content:center;align-items:flex-start;padding-top:calc(env(safe-area-inset-top,0px) + 9vh);padding-bottom:16px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));background:color-mix(in srgb,var(--ink) 30%,transparent)}
+.srch-box{width:min(600px,100%);background:var(--surface);border:1px solid var(--line);border-radius:12px;box-shadow:var(--pop-shadow);display:flex;flex-direction:column;max-height:72vh;overflow:hidden}
+.srch-f{display:flex;align-items:center;gap:10px;padding:12px 14px;border-bottom:1px solid var(--line);color:var(--muted)}
+.srch-f svg{width:18px;height:18px;flex:none}
+.srch-f input{flex:1;min-width:0;font:inherit;font-size:16px;border:0;background:transparent;color:var(--ink);outline:none}
+.srch-f input::placeholder{color:var(--muted)}
+.srch-x{flex:none;font:inherit;font-size:12px;color:var(--ink-2);background:var(--surface-2);border:0;border-radius:6px;padding:5px 9px;cursor:pointer}
+.srch-r{overflow-y:auto;padding:4px 6px 8px;overscroll-behavior:contain}
+.sr-g{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.12em;color:var(--muted);padding:10px 10px 4px}
+.sr{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:1px 12px;align-items:center;padding:8px 10px;border-radius:8px;text-decoration:none;color:inherit}
+.sr.on{background:var(--brass-tint);box-shadow:inset 3px 0 0 var(--brass)}
+.sr b{font-size:14px;font-weight:500}
+.sr span{grid-column:1;font-size:12px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.sr em{grid-column:2;grid-row:1/span 2;font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--ink);white-space:nowrap}
+.sr-none{padding:18px 10px;font-size:13px;color:var(--ink-2)}
+.srch-foot{display:flex;gap:16px;padding:8px 14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+@media (max-width:760px){.srch{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}.srch-foot{display:none}}
+
+/* install: one box (download + how to install), then prompts to copy */
+.in-spec{list-style:none;margin:4px 0 0;padding:0;display:flex;flex-wrap:wrap;gap:6px}
+.in-spec li{font-size:12px;padding:2px 9px;border-radius:999px;background:var(--brass-tint);color:var(--ink);border:1px solid var(--brass-wash);white-space:nowrap}
+.in-spec li:first-child{font-family:var(--f-mono);color:var(--brass)}
+.in-feats{margin-bottom:22px}
+.in-feats .mt b{font-size:17px}
+.in-box1{display:grid;grid-template-columns:minmax(0,17em) minmax(0,1fr);overflow:hidden}
+.in-get{display:flex;flex-direction:column;gap:14px;padding:24px 22px;background:var(--bg);border-right:1px solid var(--line)}
+.in-get-h{display:flex;flex-direction:column;gap:4px}
+.in-get-h b{font-family:var(--f-display);font-weight:900;font-size:26px;letter-spacing:.06em;line-height:1.1}
+.in-get-h span{font-family:var(--f-mono);font-size:12px;color:var(--muted)}
+.in-dl{display:flex;align-items:center;justify-content:center;gap:9px;min-height:46px;padding:0 16px;border-radius:8px;background:var(--ink);color:var(--surface);text-decoration:none;font-size:15px;font-weight:700}
+.in-dl:hover{background:var(--brass);color:var(--on-dir)}
+.in-ico{display:inline-flex}
+.in-dl svg{width:16px;height:16px;flex:none}
+.in-dl small{font-family:var(--f-mono);font-size:12px;font-weight:400;opacity:.72}
+.in-dl.off{background:var(--surface-2);color:var(--ink-2);font-weight:500;cursor:default}
+.in-ins{align-self:flex-start;font-size:13px;color:var(--brass);text-decoration:none;border-bottom:1px solid var(--brass-wash)}
+.in-ins:hover{border-bottom-color:var(--brass)}
+.in-sha{margin-top:auto;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);overflow-wrap:anywhere;line-height:1.5}
+.in-how{min-width:0;display:flex;flex-direction:column}
+.in-tabs{display:flex;gap:2px;padding:6px 6px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.in-tabs::-webkit-scrollbar{display:none}
+.in-t{flex:none;font:inherit;font-size:13.5px;line-height:1;color:var(--ink-2);background:none;border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;padding:12px 14px;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
+.in-t:hover{color:var(--ink)}
+.in-t[aria-selected="true"]{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line);box-shadow:inset 0 2px 0 var(--brass)}
+.in-p{padding:18px 22px 20px;display:flex;flex-direction:column;gap:12px}
+.in-fit{font-size:12.5px;color:var(--muted)}
+.in-steps{list-style:none;margin:0;padding:0;counter-reset:st;display:flex;flex-direction:column;gap:11px}
+.in-steps li{counter-increment:st;display:grid;grid-template-columns:24px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.65}
+.in-steps li::before{content:counter(st);width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:11.5px;color:var(--brass);background:var(--bg);margin-top:2px}
+.in-steps li > *{grid-column:2}
+.in-code{position:relative;margin:2px 0 0;background:var(--inv-bg);color:var(--inv-fg);border-radius:8px;font-family:var(--f-mono);font-size:12.5px;line-height:1.7;min-width:0}
+.in-code pre{margin:0;padding:11px 74px 11px 14px;overflow-x:auto;white-space:pre}
+.in-cp{position:absolute;top:7px;right:7px;font:inherit;font-family:var(--f-body);font-size:12px;line-height:1;padding:6px 9px;border-radius:6px;border:1px solid color-mix(in srgb,var(--inv-fg) 22%,transparent);background:transparent;color:var(--inv-fg);cursor:pointer}
+.in-cp:hover{border-color:var(--inv-tag);color:var(--inv-tag)}
+.in-note{font-size:12.5px;color:var(--ink-2);line-height:1.65;padding:9px 12px;border-left:2px solid var(--brass);background:var(--brass-tint);border-radius:0 6px 6px 0}
+.in-sync{grid-column:1/-1;font-size:12px;color:var(--muted);line-height:1.6;padding:11px 22px 13px;border-top:1px solid var(--line)}
+.in-ht{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:34px}
+.in-ht span{font-size:12.5px;font-weight:400;color:var(--muted)}
+.in-asks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.in-ask{font:inherit;text-align:left;display:flex;flex-direction:column;gap:7px;padding:13px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);min-width:0}
+.in-ask:hover{border-color:var(--brass)}
+.in-ask-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.in-ask-h b{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--brass)}
+.in-ask-h i{font-style:normal;font-size:11.5px;color:var(--muted)}
+.in-ask.ok .in-ask-h i{color:var(--brass);font-weight:700}
+.in-ask-q{font-size:13.5px;line-height:1.65}
+.in-an{margin-top:10px;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+@media (max-width:1000px){.in-asks{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:820px){.in-box1{grid-template-columns:minmax(0,1fr)}.in-get{border-right:0;border-bottom:1px solid var(--line)}.in-sha{margin-top:0}}
+@media (max-width:640px){.in-asks{grid-template-columns:minmax(0,1fr)}}
+@media (max-width:560px){.in-tabs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:6px;padding:10px}
+  .in-t{margin:0;border:1px solid var(--line);border-radius:7px;text-align:center;padding:10px 6px;white-space:normal;line-height:1.3}
+  .in-t[aria-selected="true"]{border-color:var(--brass);background:var(--brass-tint);box-shadow:inset 0 0 0 1px var(--brass)}}
+@media (max-width:480px){.in-get,.in-p{padding-inline:16px}.in-sync{padding-inline:16px}}
+
+/* workspace dividers and jump highlight */
+.ws-div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-top:76px;padding-top:14px;border-top:2px solid var(--ink)}
+.ws-div b{font-family:var(--f-display);font-weight:900;font-size:1.3rem;letter-spacing:.04em}
+.ws-div span{color:var(--ink-2);font-size:13.5px}
+.ws-div + .mod{padding-top:30px}
+@keyframes jumpflash{0%,55%{box-shadow:0 0 0 3px var(--brass)}100%{box-shadow:0 0 0 3px transparent}}
+.flash{animation:jumpflash 1.8s ease-out}
+@media (prefers-reduced-motion:reduce){.flash{animation:none;outline:3px solid var(--brass);outline-offset:2px}}
 
 /* hero */
-.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;align-items:start;padding-block:36px 26px}
+.hero{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(0,1fr);gap:28px;align-items:stretch;padding-block:36px 26px}
+#ss{flex:1;display:flex;flex-direction:column}
+#ss>.ss{flex:1}
+#ss .ss-row:not(.ss-head){flex:1}
 .hero-main{display:flex;flex-direction:column;gap:16px;min-width:0}
 .edition{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:center}
 .edition .src{letter-spacing:.04em}
@@ -140,6 +348,9 @@ a{color:inherit}
 .kpi+.kpi{border-left:1px solid var(--line)}
 .kpi-l{font-size:12.5px;color:var(--ink-2)}
 .kpi-v{font-size:2rem;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-top:2px}
+.kpi-v.up{color:var(--pos)} .kpi-v.dn{color:var(--neg)}
+.kpi-c{font-family:var(--f-mono);font-weight:500;margin-right:6px;white-space:nowrap}
+.kpi-c.up{color:var(--pos)} .kpi-c.dn{color:var(--neg)}
 .kpi-v small{font-size:.8rem;font-weight:500;color:var(--ink-2);margin-left:3px;letter-spacing:0}
 .kpi-d{font-size:12px;color:var(--ink-2);line-height:1.45}
 .kpi-r{font-size:13px;font-weight:700;margin-top:4px;padding-top:6px;border-top:1px dashed var(--line)}
@@ -203,6 +414,14 @@ a{color:inherit}
 
 /* themes */
 .themes{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+.th-body{position:relative;display:flex;flex-direction:column;gap:12px;overflow:hidden}
+.themes.measure>.th{align-self:start}
+.th-body.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(color-mix(in srgb,var(--surface) 0%,transparent),var(--surface));pointer-events:none}
+.th-body.open::after{display:none}
+.th-more{align-self:center;display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12.5px;color:var(--brass);background:var(--brass-tint);border:1px solid var(--brass-wash);border-radius:999px;padding:4px 12px;cursor:pointer;margin-top:-4px}
+.th-more:hover{border-color:var(--brass)}
+.th-more::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
+.th-more[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
 .th{padding:16px 16px 14px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .th-h{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:10px;row-gap:8px;align-items:start}
 .th-n{font-family:var(--f-mono);font-size:12px;color:var(--brass);padding-top:3px}
@@ -211,6 +430,15 @@ a{color:inherit}
 .th-scope{font-size:12px;color:var(--muted)}
 .th-pills{grid-column:2;display:flex;flex-wrap:wrap;gap:6px}
 .th-verdict{font-family:var(--f-display);font-weight:700;font-size:15.5px;line-height:1.5}
+.tn{display:flex;flex-direction:column;gap:6px}
+.tn-h{display:flex;justify-content:space-between;align-items:baseline;gap:8px;flex-wrap:wrap}
+.tn-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
+.tn-l li{display:grid;grid-template-columns:minmax(0,1fr) 3.6em 4.8em 4.4em;align-items:baseline;gap:8px;padding:5px 0;border-top:1px dashed var(--line);font-size:13px;line-height:1.35}
+.tn-l b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.tn-t{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.tn-p{font-family:var(--f-mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+.tn-c{font-style:normal;font-family:var(--f-mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+.tn-c.up{color:var(--pos)} .tn-c.dn{color:var(--neg)} .tn-c.flat{color:var(--muted)}
 .th-f{margin-top:auto;display:flex;flex-direction:column;gap:4px;padding-top:10px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.5}
 .th-f div{display:grid;grid-template-columns:2.6em minmax(0,1fr);gap:6px}
 @media (max-width:1100px){.themes{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -233,7 +461,7 @@ a{color:inherit}
 /* figures and charts */
 .viz{margin:0;display:flex;flex-direction:column;gap:8px;min-width:0}
 .viz figcaption{font-size:12px;color:var(--muted)}
-.viz .foot{font-size:12px;color:var(--ink-2);line-height:1.55}
+.viz .foot{margin-top:0;font-size:12px;color:var(--ink-2);line-height:1.55}
 .bc{position:relative;--gap:10px;--axh:20px}
 .bc-grid{position:absolute;top:0;bottom:var(--axh);left:calc(var(--nw) + var(--gap));right:calc(var(--vw) + var(--gap));pointer-events:none}
 .bc-grid i{position:absolute;top:0;bottom:0;width:1px;background:var(--grid)}
@@ -264,10 +492,10 @@ a{color:inherit}
 em.ai{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.04em;color:var(--brass);border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:1.4}
 .bc-name em.ai{margin-left:5px;vertical-align:1px}
 .bc-row:hover .bar,.bc-row:focus-visible .bar{filter:brightness(1.08) saturate(1.1)}
-.db-line{position:absolute;top:50%;height:2px;transform:translateY(-50%);background:var(--neg)}
+.db-line{position:absolute;top:50%;height:2px;transform:translateY(-50%);background:var(--ser)}
 .db-dot{position:absolute;top:50%;width:11px;height:11px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface)}
-.db-dot.from{background:var(--surface);border:2px solid var(--neg)}
-.db-dot.to{background:var(--neg)}
+.db-dot.from{background:var(--surface);border:2px solid var(--ser)}
+.db-dot.to{background:var(--ser)}
 .legend{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:12px;color:var(--ink-2)}
 .legend span{display:inline-flex;align-items:center;gap:6px}
 .legend i{width:14px;height:10px;border-radius:2px;display:inline-block}
@@ -279,7 +507,7 @@ em.ai{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing
 .rg{position:relative;padding-top:22px}
 .rg-track{position:relative;height:14px;background:var(--surface-2);border-radius:3px}
 .rg-band{position:absolute;top:0;bottom:0;background:var(--brass-wash);border-left:2px solid var(--brass);border-right:2px solid var(--brass)}
-.rg-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--neg);transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface)}
+.rg-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--ser);transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface)}
 .rg-l{position:absolute;top:0;transform:translateX(-50%);font-size:11.5px;white-space:nowrap;color:var(--ink-2)}
 .rg-l b{color:var(--ink)}
 .ticks{position:relative;height:18px}
@@ -401,13 +629,17 @@ details.tt[open] summary::before{content:"▾"}
 .gg-ghost{position:absolute;top:50%;width:10px;height:10px;border-radius:50%;background:var(--surface);border:2px solid var(--muted);transform:translate(-50%,-50%)}
 .gg-note{font-size:12px;color:var(--ink-2);line-height:1.55}
 .gg-days{display:flex;gap:4px;flex-wrap:wrap;padding-block:4px}
-.gg-days i{width:24px;height:24px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:11px;background:var(--neg);color:#fff}
+.gg-days i{width:24px;height:24px;border-radius:4px;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:11px;background:var(--neg);color:var(--on-dir)}
 .gg-days i.next{background:transparent;color:var(--muted);border:1.5px dashed var(--muted)}
 .gg-days i.buy{background:var(--pos);font-weight:600}
 @media (max-width:1000px){.gauges{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:640px){.gauges{grid-template-columns:minmax(0,1fr)}}
 
 /* paths */
+.p-counter{display:flex;flex-direction:column;gap:6px;margin-top:4px;padding:14px 15px;border-radius:8px;background:var(--inv-bg);color:var(--inv-fg)}
+.p-counter .pc-tag{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--inv-bg);background:var(--inv-tag);border-radius:4px;padding:2px 8px}
+.p-counter b{font-family:var(--f-display);font-size:16px;line-height:1.5}
+.p-counter p{font-size:12.5px;line-height:1.65;color:color-mix(in srgb,var(--inv-fg) 78%,transparent)}
 .paths{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
 .paths-fig{padding:12px 8px 8px}
 .scroll-x{overflow-x:auto}
@@ -522,6 +754,43 @@ details.tt[open] summary::before{content:"▾"}
 .ph-ml span.gh{font-weight:400;color:var(--muted)}
 .ph-track{position:relative;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;height:16px}
 .ph-z{display:block;height:100%}
+.lc-head{display:flex;flex-direction:column;gap:6px}
+.lc-leg{margin:0}
+.lc-leg b{font-family:var(--f-mono);font-weight:500;font-size:11.5px}
+.lc-leg b.up{color:var(--pos)} .lc-leg b.dn{color:var(--neg)}
+.lc-sw{width:16px!important;height:0!important;border-radius:0!important;border-top:2px solid var(--muted)}
+.lc-sw.sh{border-top:2.5px solid var(--brass)} .lc-sw.bj{border-top-color:var(--ink)} .lc-sw.t1{border-top:1.5px dashed var(--muted)}
+.lc{flex:1 1 auto;min-height:176px;display:grid;grid-template-columns:2.6em minmax(0,1fr);grid-template-rows:minmax(140px,1fr) auto;column-gap:6px}
+.lc-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip-path:inset(50%);white-space:nowrap}
+.lc-y{position:relative}
+.lc-y span{position:absolute;right:0;transform:translateY(-50%);font-family:var(--f-mono);font-size:10.5px;color:var(--muted);line-height:1}
+.lc-plot{position:relative;margin-right:8px}
+.lc-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.lc-neg{fill:var(--neg-soft);opacity:.28}
+.lc-band{fill:var(--brass-tint)}
+.lc-grid{stroke:var(--grid);stroke-width:1}
+.lc-zero{stroke:var(--axis);stroke-width:1}
+.lc-ln{fill:none;stroke-linejoin:round;stroke-linecap:round}
+.lc-ln.sh{stroke:var(--brass);stroke-width:2.5}
+.lc-ln.bj{stroke:var(--ink);stroke-width:1.8}
+.lc-ln.t1{stroke:var(--muted);stroke-width:1.4;stroke-dasharray:4 3}
+.lc-dot{position:absolute;width:8px;height:8px;border-radius:50%;transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface);background:var(--muted);pointer-events:none}
+.lc-dot.sh{background:var(--brass)} .lc-dot.bj{background:var(--ink)}
+.lc-zl{position:absolute;left:6px;font-size:11px;color:var(--muted);pointer-events:none}
+.lc-zl.up{top:4px} .lc-zl.dn{left:auto;right:6px;bottom:4px;color:var(--neg)}
+.lc-bl{position:absolute;top:4px;transform:translateX(-50%);font-size:11px;color:var(--brass);white-space:nowrap;pointer-events:none}
+.lc-hit{position:absolute;top:0;bottom:0;display:block}
+.lc-hit:hover{background:color-mix(in srgb,var(--ink) 6%,transparent)}
+.lc-x{position:relative;height:28px;margin-right:8px}
+.lc-x span{position:absolute;top:5px;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);line-height:1.25}
+.lc-x small{font-size:9.5px;opacity:.8}
+.ph-now{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px dashed var(--line)}
+#cn-sw .sw{flex:1 1 auto;justify-content:center}
+.ph-seg{grid-template-columns:repeat(3,minmax(0,1fr))}
+.ph-seg span{font-size:12px;padding:5px 4px}
+.ph-seg small{font-size:inherit}
+.ph-seg small::before{content:" · "}
+@media (max-width:520px){.ph-seg span{line-height:1.35;border-radius:14px}.ph-seg span.on::before{display:none}.ph-seg small{display:block;font-size:11px}.ph-seg small::before{content:none}}
 .ph-z.z0{background:var(--neg-soft);border-radius:4px 0 0 4px}
 .ph-z.z1{background:var(--surface-2)}
 .ph-z.z2{background:var(--pos-soft);border-radius:0 4px 4px 0}
@@ -607,10 +876,10 @@ details.tt[open] summary::before{content:"▾"}
 @media (max-width:560px){.lenses{grid-template-columns:minmax(0,1fr)}}
 .foot{margin-top:28px;font-size:12px;color:var(--muted);line-height:1.7;max-width:60em}
 .site-f{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
-.sf-brand{display:flex;align-items:center;gap:9px}
+.sf-brand{display:flex;align-items:center;gap:8px}
 .sf-brand svg{width:24px;height:24px}
 .sf-brand b{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.04em}
-.sf-brand span{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted)}
+.sf-brand span{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.04em}
 .sf-tag{font-family:var(--f-display);font-size:15px;color:var(--ink-2)}
 
 .tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--surface);padding:7px 10px;border-radius:6px;font-size:12px;line-height:1.45;max-width:260px;display:flex;flex-direction:column;gap:1px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
@@ -618,25 +887,41 @@ details.tt[open] summary::before{content:"▾"}
 </style>
 </head>
 <body>
-<header class="mast">
+<header class="mast" id="mast">
   <div class="mast-in">
-    <a class="brand" href="#verdict" aria-label="静观，回到结论">
+    <a class="brand" href="#verdict" data-go="verdict" aria-label="静观 Stillpoint，回到结论">
       <svg viewBox="0 0 32 32" aria-hidden="true">
         <path d="M16 3 A13 13 0 1 1 3.78 20.45" fill="none" stroke="var(--ink)" stroke-width="1.9" stroke-linecap="round"/>
         <path d="M16 24 A8 8 0 1 1 18.74 8.48" fill="none" stroke="var(--brass)" stroke-width="1.9" stroke-linecap="round"/>
         <circle cx="16" cy="16" r="2.6" fill="var(--ink)"/>
       </svg>
-      <span class="wm">静观</span><span class="lb">Stillpoint · 观点看板</span>
+      <span class="wm">静观</span><span class="lb">Stillpoint</span>
     </a>
-    <nav class="nav" aria-label="看板目录">
-      <a href="#verdict">结论</a><a href="#signals">止跌清单</a><a href="#themes">主题</a><a href="#evidence">证据</a><a href="#macro">宏观</a><a href="#china">中国</a><a href="#watch">序参量</a><a href="#paths">路径</a><a href="#agenda">日程</a><a href="#log">账本</a><a href="#method">框架</a>
-    </nav>
+    <span class="ed-chip" id="ed-chip"></span>
+    <nav class="ws" id="ws" aria-label="四个工作区"></nav>
+    <div class="cmp scroll-x" id="cmp" aria-label="当前研判"></div>
+    <span class="hd-sp"></span>
+    <button class="hd-btn chg-b" id="chg-btn" type="button" aria-expanded="false" aria-controls="chg-p"></button>
+    <button class="hd-btn srch-b" id="srch-btn" type="button" aria-expanded="false" aria-controls="srch" aria-label="搜索指标" title="搜索指标（快捷键 ⌘K 或 Ctrl K）"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.6 10.6 L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>搜索指标</span></button>
     <button class="theme-t" id="theme-t" type="button" aria-label="切换深浅色" title="切换深浅色">
       <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.7 A6.3 6.3 0 0 1 8 14.3 Z" fill="currentColor"/></svg>
     </button>
   </div>
+  <div class="mega" id="mega" hidden></div>
+  <div class="chg-p" id="chg-p" role="region" aria-label="比上期的变化" hidden></div>
   <div class="prog" aria-hidden="true"><i id="prog"></i></div>
 </header>
+<div class="deck">
+  <div class="tape-band"><div class="tape-in scroll-x"><span class="tape-lb" id="tape-lb"></span><div class="tape-vp" id="tape-vp"><div class="tape-tr" id="tape" role="list" aria-label="行情"></div></div></div></div>
+  <div class="stat-band" id="stat-band"><div class="stat-in scroll-x" id="stat" aria-label="研判"></div></div>
+</div>
+<div class="srch" id="srch" role="dialog" aria-modal="true" aria-label="搜索指标" hidden>
+  <div class="srch-box">
+    <div class="srch-f"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="7" cy="7" r="4.8" fill="none" stroke="currentColor" stroke-width="1.6"/><path d="M10.6 10.6 L14 14" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><input id="srch-q" type="text" inputmode="search" enterkeyhint="go" placeholder="搜指标、主题或日程，比如 VIX、美元、10/19" autocomplete="off" spellcheck="false" aria-label="搜索指标" aria-controls="srch-r"><button class="srch-x" id="srch-x" type="button">关闭</button></div>
+    <div class="srch-r" id="srch-r" role="listbox" aria-label="搜索结果"></div>
+    <div class="srch-foot"><span>↑ ↓ 选择</span><span>回车 跳过去</span><span>Esc 关闭</span></div>
+  </div>
+</div>
 
 <main class="wrap">
   <section class="hero" id="verdict">
@@ -663,13 +948,30 @@ details.tt[open] summary::before{content:"▾"}
     <div class="lamps" id="lamps"></div>
   </section>
 
+  <div class="ws-div" id="ws-themes"></div>
+
   <section class="mod" id="themes">
     <header class="mod-h"><span class="tag">02 · Themes 主题判断</span><h2 id="th-h"></h2><p class="sub" id="th-sub"></p></header>
     <div class="themes" id="theme-grid"></div>
   </section>
 
+  <section class="mod" id="watch">
+    <header class="mod-h"><span class="tag">03 · Watch 序参量</span><h2 id="w-h"></h2><p class="sub" id="w-sub"></p></header>
+    <div class="gauges" id="gauges"></div>
+  </section>
+
+  <section class="mod" id="paths">
+    <header class="mod-h"><span class="tag">04 · Paths 路径</span><h2 id="p-h"></h2><p class="sub" id="p-sub"></p></header>
+    <div class="paths">
+      <div class="paths-fig card"><div class="scroll-x" id="p-fig"></div></div>
+      <div class="trig card" id="trig"></div>
+    </div>
+  </section>
+
+  <div class="ws-div" id="ws-evidence"></div>
+
   <section class="mod" id="evidence">
-    <header class="mod-h"><span class="tag">03 · Evidence 证据</span><h2 id="ev-h"></h2><p class="sub" id="ev-sub"></p></header>
+    <header class="mod-h"><span class="tag">05 · Evidence 证据</span><h2 id="ev-h"></h2><p class="sub" id="ev-sub"></p></header>
     <div class="ev">
       <div class="panel card" id="ev-trade"></div>
       <div class="panel card" id="ev-ashare"></div>
@@ -677,7 +979,7 @@ details.tt[open] summary::before{content:"▾"}
   </section>
 
   <section class="mod" id="macro">
-    <header class="mod-h"><span class="tag">04 · Macro 宏观状态</span><h2 id="mc-h"></h2><p class="sub" id="mc-sub"></p></header>
+    <header class="mod-h"><span class="tag">06 · Macro 宏观状态</span><h2 id="mc-h"></h2><p class="sub" id="mc-sub"></p></header>
     <div class="macro-top">
       <div class="quad card" id="quad"></div>
       <div class="pair-note card" id="pair-note"></div>
@@ -687,7 +989,7 @@ details.tt[open] summary::before{content:"▾"}
   </section>
 
   <section class="mod" id="china">
-    <header class="mod-h"><span class="tag">05 · China 中国视角 · 沧海一土狗</span><h2 id="cn-h"></h2><p class="sub" id="cn-sub"></p></header>
+    <header class="mod-h"><span class="tag">07 · China 中国视角 · 沧海一土狗</span><h2 id="cn-h"></h2><p class="sub" id="cn-sub"></p></header>
     <div class="cn-ft"><b id="cn-ft"></b><span id="cn-fn"></span></div>
     <div class="cn-row cn-g" id="cn-gauges"></div>
     <div class="cn-row cn-2"><div class="panel card" id="cn-sw"></div><div class="panel card" id="cn-ph"></div></div>
@@ -695,26 +997,24 @@ details.tt[open] summary::before{content:"▾"}
     <a class="cn-more" id="cn-more" href="#ledger"></a>
   </section>
 
-  <section class="mod" id="watch">
-    <header class="mod-h"><span class="tag">06 · Watch 序参量</span><h2 id="w-h"></h2><p class="sub" id="w-sub"></p></header>
-    <div class="gauges" id="gauges"></div>
+  <section class="mod" id="method">
+    <header class="mod-h"><span class="tag">08 · Method 框架</span><h2 id="m-h"></h2></header>
+    <div class="method" id="method-box"></div>
+    <h3 class="lens-t" id="lens-t"></h3>
+    <div class="lenses" id="lenses"></div>
+    <p class="route" id="route"></p>
+    <p class="foot" id="foot"></p>
   </section>
 
-  <section class="mod" id="paths">
-    <header class="mod-h"><span class="tag">07 · Paths 路径</span><h2 id="p-h"></h2><p class="sub" id="p-sub"></p></header>
-    <div class="paths">
-      <div class="paths-fig card"><div class="scroll-x" id="p-fig"></div></div>
-      <div class="trig card" id="trig"></div>
-    </div>
-  </section>
+  <div class="ws-div" id="ws-review"></div>
 
   <section class="mod" id="agenda">
-    <header class="mod-h"><span class="tag">08 · Agenda 日程</span><h2 id="a-h"></h2><p class="sub" id="a-sub"></p></header>
+    <header class="mod-h"><span class="tag">09 · Agenda 下一检查点</span><h2 id="a-h"></h2><p class="sub" id="a-sub"></p></header>
     <div class="agenda card" id="agenda-box"></div>
   </section>
 
   <section class="mod" id="log">
-    <header class="mod-h"><span class="tag">09 · Log 案例与账本</span><h2 id="l-h"></h2><p class="sub" id="l-sub"></p></header>
+    <header class="mod-h"><span class="tag">10 · Review 中途回看</span><h2 id="l-h"></h2><p class="sub" id="l-sub"></p></header>
     <div class="log">
       <div class="cases card" id="cases"></div>
       <div class="calib card" id="calib"></div>
@@ -722,13 +1022,23 @@ details.tt[open] summary::before{content:"▾"}
     <div class="ledger card" id="ledger"></div>
   </section>
 
-  <section class="mod" id="method">
-    <header class="mod-h"><span class="tag">10 · Method 框架</span><h2 id="m-h"></h2></header>
-    <div class="method" id="method-box"></div>
-    <h3 class="lens-t" id="lens-t"></h3>
-    <div class="lenses" id="lenses"></div>
-    <p class="route" id="route"></p>
-    <p class="foot" id="foot"></p>
+  <div class="ws-div" id="ws-install"></div>
+
+  <section class="mod" id="install">
+    <header class="mod-h"><span class="tag">11 · Install 安装</span><h2 id="in-h"></h2><p class="sub" id="in-sub"></p><ul class="in-spec" id="in-spec"></ul></header>
+    <div class="method in-feats" id="in-feats"></div>
+    <div class="in-box1 card" id="in-pkg">
+      <div class="in-get" id="in-get"></div>
+      <div class="in-how">
+        <div class="in-tabs" id="in-tabs" role="tablist" aria-label="装在哪里"></div>
+        <div id="in-panes"></div>
+      </div>
+      <p class="in-sync"><span id="in-verify"></span> <span id="in-sync"></span></p>
+    </div>
+    <h3 class="lens-t in-ht">装好以后这样问<span>点一下复制，贴进对话就行</span></h3>
+    <div class="in-asks" id="in-asks"></div>
+    <p class="in-an" id="in-an"></p>
+    <p class="foot" id="in-foot"></p>
   </section>
 
   <footer class="site-f">
@@ -758,7 +1068,7 @@ details.tt[open] summary::before{content:"▾"}
     "sub": "10/16 白天亚洲刚反弹、韩国外资转买，晚上美股就接着跌：纳指 −2.15%，费城半导体 −3.83%，CoreWeave −12%，VIX 到 20.3。霍尔木兹又有油轮被击沉，布伦特涨到 110 美元。10 月加息概率降到 15% 左右，12 月仍有 74%（CME），加息只是往后挪。所以继续等：等 CoreWeave 的债止跌，等 VIX 回到 20 以下，等周一亚洲不被拖下去。",
     "stance": "等待",
     "chips": [{"k": "信心", "v": "中"}, {"k": "研究周期", "v": "1–3 个月"}, {"k": "和 10/16 下午比", "v": "主线没换，立场不变"}],
-    "dataNote": "美股 10/16 收盘；亚太和 A 股是 10/16 收盘；美元、黄金、原油是 10/17 04:05 价格；CoreWeave 是 10/16 下午 2 点的盘中数，收盘数还没查到；加息概率来自当天报道。下一个交易日是 10/19 周一。",
+    "dataNote": "美股 10/16 收盘；亚太和 A 股是 10/16 收盘；美元、黄金、原油是 10/17 04:05 价格；CoreWeave 是 10/16 收盘（stockanalysis、Yahoo）；加息概率来自当天报道。下一个交易日是 10/19 周一。",
     "stanceTitle": "七个主题：三个维持，三个等待，一个回避"
   },
   "stanceScale": ["回避", "减", "等待", "有条件维持", "有条件建立", "加"],
@@ -768,15 +1078,15 @@ details.tt[open] summary::before{content:"▾"}
     {"theme": "防守端", "stance": "有条件维持", "note": "银行、红利、黄金"},
     {"theme": "存储 · 韩国", "stance": "等待", "note": "外资转买一天，美股又跌"},
     {"theme": "A 股光模块", "stance": "等待", "note": "等融资缓解和放量止跌"},
-    {"theme": "美元拐点", "stance": "等待", "note": "碰到 101.84，没有条件确认"},
+    {"theme": "美元拐点", "stance": "等待", "note": "刚跌破 101.84，六条里只有一条转向"},
     {"theme": "杠杆 AI 基建", "stance": "回避", "prev": "等待", "prevDate": "10/14", "note": "10/15 从等待收紧到回避"}
   ],
   "kpis": [
     {"label": "纳斯达克", "value": "−2.15", "unit": "%", "delta": "费城半导体 −3.83%，连跌 8 天；标普 −1.09%", "read": "美股接棒拆仓", "src": "快照 04:05 · 10/16 收盘"},
-    {"label": "CoreWeave 股价", "value": "−12", "unit": "%", "delta": "约 61.5 美元；2031 年债收益率超过 15%，连跌第五周", "read": "融资还在变贵", "src": "TheStreet · 10/16 14:01 ET 盘中（收盘数还没查到）"},
-    {"label": "VIX", "value": "20.3", "unit": "", "delta": "+23%；10/15 收 16.46，警戒线 25", "read": "波动回来了，还没到流动性阶段", "src": "快照 · Yahoo"},
-    {"label": "布伦特原油", "value": "109.6", "unit": "美元", "delta": "+3.4%；霍尔木兹又有油轮被伊朗导弹击沉", "read": "油价成了新的通胀压力", "src": "快照；Trading Economics"},
-    {"label": "12 月加息概率", "value": "74.3", "unit": "%", "delta": "一个月前 50.2%；10 月约 15%", "read": "加息没走，只是往后挪", "src": "AP 引 CME FedWatch · 10/16"},
+    {"label": "CoreWeave 股价", "value": "−12", "unit": "%", "delta": "收盘 61.39 美元；2031 年债收益率超过 15%，连跌第五周", "read": "融资还在变贵", "src": "stockanalysis.com、Yahoo · 10/16 收盘"},
+    {"label": "VIX", "value": "20.3", "unit": "", "delta": "前值 16.46（10/15 收盘）；警戒线 25", "read": "波动回来了，还没到流动性阶段", "src": "快照 · Yahoo", "dir": "up", "chg": "+23.1%"},
+    {"label": "布伦特原油", "value": "109.6", "unit": "美元", "delta": "前值约 105.9；霍尔木兹又有油轮被伊朗导弹击沉", "read": "油价成了新的通胀压力", "src": "快照；Trading Economics", "dir": "up", "chg": "+3.4%"},
+    {"label": "12 月加息概率", "value": "74.3", "unit": "%", "delta": "个百分点（对比一个月前 50.2%）；10 月约 15%", "read": "加息没走，只是往后挪", "src": "AP 引 CME FedWatch · 10/16", "dir": "up", "chg": "+24.1"},
     {"label": "韩国外资净买入", "value": "+3,414", "unit": "亿韩元", "delta": "10/16 连卖 8 天后第一次净买", "read": "周一要看能不能再买一天", "src": "Financial News · 10/16"}
   ],
   "signals": {
@@ -795,8 +1105,8 @@ details.tt[open] summary::before{content:"▾"}
   "themesHead": "瓶颈层维持，借钱扩张的回避，其余在等",
   "themesSub": "每张卡片：一句判断、一张证据图、解除条件。立场按 1–3 个月的研究周期给出，是研究判断，不是买卖指令。",
   "themes": [
-    {"name": "AI 瓶颈层", "scope": "台积电、ASML 这类", "stances": [{"stance": "有条件维持"}], "verdict": "需求没坏，股价继续跌：费城半导体 10/16 再跌 −3.8%，连跌 8 天。美银说这些公司已经在按崩盘后的估值交易。等踩踏结束再评估，不在下跌中途加。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。台积电 ADR 10/16 收盘 412.51（−2.31%），ASML −0.96%。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "91%"}, "unlock": "①转绿，且没有订单下修", "change": "不变；ARGUS 置信度 91%"},
-    {"name": "杠杆 AI 基建", "scope": "CoreWeave 这类靠借债扩张的算力租赁", "stances": [{"stance": "回避"}], "verdict": "钱更贵了，股价也撑不住：CoreWeave 10/16 跌约 12%，债券跌进困境区间。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是最新", "min": 0, "max": 1300, "ticks": [0, 400, 800, 1200], "rows": [{"name": "CoreWeave", "from": 600, "fromLabel": "10/14", "to": 1194.5, "toLabel": "10/15 收盘", "val": "600→1,195"}, {"name": "甲骨文", "from": 260, "fromLabel": "一周前", "to": 288, "toLabel": "10/15", "val": "260→288"}, {"name": "软银", "to": 424, "toLabel": "本周", "val": "424"}], "foot": "2031 年债收益率超过 15%，连跌第五周；CDS 10/15 创纪录，约 1,195bp。黄仁勋说 CoreWeave 在改善，市场没买账。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "回避不变，股债一起跌"},
+    {"name": "AI 瓶颈层", "scope": "芯片、代工和设备，卡住 AI 算力供给的环节", "stances": [{"stance": "有条件维持"}], "verdict": "需求没坏，股价继续跌：费城半导体 10/16 再跌 −3.8%，连跌 8 天。美银说这些公司已经在按崩盘后的估值交易。等踩踏结束再评估，不在下跌中途加。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "91%"}, "unlock": "①转绿，且没有订单下修", "change": "不变；ARGUS 置信度 91%", "names": {"title": "代表公司 · 10/16 收盘", "src": "快照 04:05 + stockanalysis", "rows": [{"n": "英伟达", "tk": "NVDA", "px": "214.13", "pct": -1.43}, {"n": "台积电 ADR", "tk": "TSM", "px": "412.51", "pct": -2.31}, {"n": "博通", "tk": "AVGO", "px": "328.81", "pct": -4.51}, {"n": "AMD", "tk": "AMD", "px": "528.75", "pct": -5.95}, {"n": "迈威尔", "tk": "MRVL", "px": "227.83", "pct": -5.56}, {"n": "Arm", "tk": "ARM", "px": "227.80", "pct": -6.94, "note": "高通官司判决又拖了一把"}, {"n": "ASML", "tk": "ASML", "px": "1,641.54", "pct": -0.96}, {"n": "应用材料", "tk": "AMAT", "px": "409.29", "pct": -4.82}, {"n": "泛林", "tk": "LRCX", "px": "263.94", "pct": -4.87}]}},
+    {"name": "杠杆 AI 基建", "scope": "CoreWeave、Nebius 这类靠借债扩张的算力租赁和数据中心", "stances": [{"stance": "回避"}], "verdict": "钱更贵了，股价也撑不住：CoreWeave 10/16 跌约 12%，债券跌进困境区间。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是最新", "min": 0, "max": 1300, "ticks": [0, 400, 800, 1200], "rows": [{"name": "CoreWeave", "from": 600, "fromLabel": "10/14", "to": 1194.5, "toLabel": "10/15 收盘", "val": "600→1,195"}, {"name": "甲骨文", "from": 260, "fromLabel": "一周前", "to": 288, "toLabel": "10/15", "val": "260→288"}, {"name": "软银", "to": 424, "toLabel": "本周", "val": "424"}], "foot": "2031 年债收益率超过 15%，连跌第五周；CDS 10/15 创纪录，约 1,195bp。黄仁勋说 CoreWeave 在改善，市场没买账。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "回避不变，股债一起跌", "names": {"title": "代表公司 · 10/16 收盘", "src": "stockanalysis、Yahoo", "rows": [{"n": "CoreWeave", "tk": "CRWV", "px": "61.39", "pct": -11.91, "note": "本周跌 25%；盘后 60.99"}, {"n": "Nebius", "tk": "NBIS", "px": "165.47", "pct": -12.18}, {"n": "IREN", "tk": "IREN", "px": "26.99", "pct": -11.19}, {"n": "Applied Digital", "tk": "APLD", "px": "18.05", "pct": -11.48}, {"n": "甲骨文", "tk": "ORCL", "px": "128.23", "pct": -4.64}, {"n": "软银", "tk": "9984.T", "px": "¥4,944", "pct": 1.9, "note": "东京 10/16 收盘，在美股下跌之前；当晚美国时段软银 ADR 一度跌 10%"}]}},
     {"name": "存储 · 韩国", "scope": "三星、SK 海力士、KOSPI", "stances": [{"stance": "等待"}], "verdict": "外资转买了一天，但当晚美光又跌，周一看韩国能不能再买一天。HBM4 推迟还是没人证实，也没人否认。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/15", "l2": "10/16", "min": -12, "max": 4, "ticks": [-12, -8, -4, 0, 4], "rows": [{"name": "SK 海力士", "v": -11.06, "v2": 0.79}, {"name": "三星电子", "v": -9.48, "v2": 2.62}, {"name": "KOSPI", "v": -7.57, "v2": 2.05, "note": "10/15 盘中 −9.29%"}], "foot": "10/16 外资净买 3,414 亿韩元。美光 10/16 约 −4%，本周约 −13%。HBM4 后段设备订单推迟只有韩媒报道，SK 海力士没回应。"}, "unlock": "①转绿，HBM4 推迟被证伪，长鑫竞争有更多证据", "change": "不变，周一再看"},
     {"name": "A 股 AI 链", "scope": "光模块 vs 半导体设备", "stances": [{"stance": "等待", "label": "光模块"}, {"stance": "有条件维持", "label": "设备"}], "verdict": "10/16 反过来了：设备回吐，光模块分化。两天合起来，设备仍比光模块强，也说明不该因一天强就追。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/15", "l2": "10/16", "min": -8, "max": 5, "ticks": [-8, -4, 0, 4], "rows": [{"name": "北方华创", "v": 3.95, "v2": -2.68, "t": "设备"}, {"name": "中芯国际", "v": 1.84, "v2": -1.7, "t": "设备"}, {"name": "中微公司", "v": 0.89, "v2": -0.82, "t": "设备"}, {"name": "天孚通信", "v": -2.48, "v2": -4.71, "t": "光模块"}, {"name": "中际旭创", "v": -5.19, "v2": 1.99, "t": "光模块"}, {"name": "新易盛", "v": -7.49, "v2": 0.29, "t": "光模块"}], "foot": "两天累计：北方华创 +1.2%，中际旭创 −3.3%，天孚通信 −7.1%，新易盛 −7.2%。美国对中国光模块设限的传闻还没核实。"}, "unlock": "光模块：②缓解，加上 A 股放量止跌。设备：不因一天强就追", "change": "不变"},
     {"name": "美元拐点", "scope": "美元指数 101.77（案例 3）", "stances": [{"stance": "等待"}], "verdict": "美元指数刚跌破 101.84，但油价和避险又往反方向拉，六条里只有一条转向。", "viz": {"type": "conds", "title": "六个拐点条件，美股 10/16 收盘的状态", "rows": [{"n": "①", "name": "美联储停止加息", "s": "amber", "v": "10 月约 15%，12 月 74%（CME）"}, {"n": "②", "name": "欧元止跌", "s": "amber", "v": "1.1240"}, {"n": "③", "name": "日元止跌", "s": "amber", "v": "157.97"}, {"n": "④", "name": "布伦特跌破 95", "s": "red", "v": "109.56，又涨了"}, {"n": "⑤", "name": "避险需求退潮", "s": "red", "v": "VIX 升到 20.3"}, {"n": "⑥", "name": "跌破 101.84", "s": "green", "v": "101.77，跌破了"}], "foot": "美元连跌两天：10/15 −0.46%，10/16 −0.23%。⑤从黄转回红：美股一跌，避险又回来了。三四条同时转向才算拐点。"}, "unlock": "六条里三四条同时转向", "change": "回看 10/30、11/12"},
@@ -863,7 +1173,7 @@ details.tt[open] summary::before{content:"▾"}
       {"name": "因素二 · 北京二手房挂牌量", "link": "楼市复苏", "unit": "万套", "min": 9, "max": 13, "ticks": [9, 10, 11, 12, 13], "curLabel": "11.4–11.8", "asof": "9 月", "ref": {"v": 10, "l": "均衡线 10 万"}, "band": {"from": 11.4, "to": 11.8, "l": "9 月读数"}, "dir": ["← 挂牌少", "挂牌多 →"], "state": "watch", "stateLabel": "还在均衡线上方", "note": "上海二手房连涨 7 个月，已确认复苏（9/18）；北京偏弱。10 月读数待补。", "src": "土狗 9 月复盘（链家外网）；快照还没有这项"}
     ],
     "switches": {"tag": "风格开关", "title": "两个开关都拨向内需和价值", "rows": [{"name": "汇率 · 中美关系", "model": "模型 2", "l": "贬值 · 紧张", "lr": "外需和科技占优（升波牛）", "r": "升值 · 缓和", "rr": "内需占优（降波牛）", "on": "r", "fact": "人民币 6.6870（10/16），破 6.70 后又强了一点；9/28 中美元首会晤后，双创大跌，内需板块有韧性。"}, {"name": "PPI · 垄断要素", "model": "模型 11", "l": "PPI 弱", "lr": "成长和小微盘占优", "r": "PPI 强", "rr": "价值占优，也撑人民币", "on": "r", "fact": "PPI 同比 +3.8%（土狗复盘读数）；吸引子中国物价指数 +0.95，强（9/30）。"}], "up": ["房地产", "白酒", "汽车零部件"], "down": ["半导体午后转跌", "PCB −4.51%", "创业板指 −0.39%"], "check": "10/16 盘面对得上一半", "foot": "开关位置是定性判断。10/16 领涨的是军工，来自兵装重组消息，和这两个开关无关。"},
-    "phase": {"tag": "大类资产轮动三相", "title": "楼市从过冷走向温和：成长横扫的阶段过去，进入轮动", "zones": [{"k": "过冷", "v": "成长横扫"}, {"k": "温和", "v": "轮动"}, {"k": "过热", "v": "价值横扫"}], "from": {"p": 14, "l": "4–5 月"}, "to": {"p": 42, "l": "10 月 · 推演"}, "ev": ["4/11、5/9 成长创新高，他用“楼市过冷相”解释", "4/30 一线楼市进入右侧；9/18 上海二手房连涨 7 个月", "9/11 哑铃策略“结束了最好的一段时光”，市场陷入混沌"], "hist": "历史对照：2014–15 成长牛 → 2016–17 楼市牛；2017 价值牛 → 2018 债市牛。", "foot": "“成长牛的下一站是楼市牛”是他 5/9 的原话；现在落在哪一相，是我们按他 4–9 月的文章推演的。它和 10/14 的“楼市和长债同一生态位”有出入，用的时候标日期。"},
+    "phase": {"tag": "大类资产轮动三相", "title": "楼市从过冷走向温和：成长横扫的阶段过去，进入轮动", "zones": [{"k": "过冷", "v": "成长横扫"}, {"k": "温和", "v": "轮动"}, {"k": "过热", "v": "价值横扫"}], "from": {"p": 14, "l": "4–5 月"}, "to": {"p": 42, "l": "10 月 · 推演"}, "ev": ["4/11、5/9 成长创新高，他用“楼市过冷相”解释", "4/30 一线楼市进入右侧；9/18 上海二手房连涨 7 个月", "9/11 哑铃策略“结束了最好的一段时光”，市场陷入混沌"], "hist": "历史对照：2014–15 成长牛 → 2016–17 楼市牛；2017 价值牛 → 2018 债市牛。", "foot": "“成长牛的下一站是楼市牛”是他 5/9 的原话；现在落在哪一相，是我们按他 4–9 月的文章推演的。它和 10/14 的“楼市和长债同一生态位”有出入，用的时候标日期。", "line": {"title": "一线城市二手房价格，每月环比（%）", "months": ["2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08"], "series": [{"k": "上海", "cls": "sh", "v": [-1.0, -0.9, -0.8, -0.6, -0.4, 0.2, 0.4, 0.7, 0.6, 0.4, 0.3, 0.3]}, {"k": "北京", "cls": "bj", "v": [-0.9, -1.1, -1.3, -1.3, -0.2, 0.3, 0.6, 0.4, 0.1, 0.1, 0.0, -0.1]}, {"k": "一线平均", "cls": "t1", "v": [-1.0, -0.9, -1.1, -0.9, -0.5, -0.1, 0.4, 0.4, 0.4, 0.3, 0.2, 0.1]}], "min": -1.5, "max": 1.0, "ticks": [-1.5, -1.0, -0.5, 0, 0.5, 1.0], "band": {"from": "2026-04", "to": "2026-05", "l": "成长新高"}, "read": "上海 2 月起连涨 7 个月，涨幅从 4 月的 0.7% 收窄到 0.3%；北京 8 月转跌 0.1%，是一线里唯一下跌的。", "src": "国家统计局 70 城二手住宅价格指数，最新为 8 月（9/15 发布）；9 月数据 10/19 公布。"}},
     "bottom": {"title": "3700 点：他说是理论底，不是配置建议", "name": "上证指数 vs 3700", "link": "底部判断", "unit": "", "min": 3600, "max": 3850, "ticks": [3600, 3650, 3700, 3750, 3800, 3850], "cur": 3716.28, "curLabel": "3,716.28", "asof": "10/16 收盘", "ghosts": [{"v": 3707.48, "l": "10/15 收盘"}, {"v": 3681.28, "l": "10/16 盘中低点"}], "ref": {"v": 3700, "l": "土狗的 3700"}, "state": "watch", "stateLabel": "盘中跌破，收盘守住", "note": "10/15 星球原话：“要么已经见底，要么明天上午见底”。10/16 上午最高到 3,750.77，午后一度跌到 3,681.28，收在 3,716.28；10/15 盘中也跌破过 3700。按他定的两个条件回看：收盘守住了 3700；A 股 vix 回到 20 以下这项，这次没拿到数。隔夜美股大跌，10/19 周一 3700 会再被考验。它和静观的“等待”不冲突：他验证的是理论底，我们等的是融资松开。", "src": "快照 10/16 15:10 · 东方财富；盘中高低点来自财经日报（单一报道）；土狗星球 10/15"},
     "insurance": {"tag": "杠杆负反馈", "title": "银行创新高，在他的框架里还有另一种读法", "loop": ["下跌", "保险偿付能力降", "权益仓位上限降", "被动卖出"], "signals": [{"name": "银行股出挑", "fact": "10/16 中国银行 −1.84%，尾盘才和保险一起护盘", "state": "变暗"}, {"name": "长债、TL 出挑", "fact": "10/12 TL 暴涨，10/15 高开低走；10/16 没拿到数", "state": "还亮着"}, {"name": "双创继续调整", "fact": "10/16 创业板指 −0.39%，科创 50 −0.06%", "state": "还亮着"}], "rescue": "救援看量：10/15 易方达沪深 300ETF 全天超 190 亿元，10/16 华泰柏瑞沪深 300ETF 尾盘 20 分钟 125 亿元；股票 ETF 9/28 以来连续 9 天净流入，累计 1,408.5 亿元（截至 10/15）。", "verdictTag": "按这套框架推演", "verdict": "银行这盏变暗，另外两盏还亮着。保险调仓的冲击还不能说结束，但连续两天尾盘都有大钱托着。"},
     "ledgerLink": "他哪类判断靠谱，看八年账本"
@@ -971,6 +1281,51 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
     "foot": "这是研究框架的观点展示，不是投资建议，不对应任何买卖点位。数字来自 2026-10-17 04:05 的 Mac 快照、当天公开报道和沧海一土狗 9–10 月复盘里的读数；美股 10/16 收盘。中国视角和账本是按土狗公开文章里的框架整理和推演的，不代表他本人的最新观点。依据：静观 Stillpoint v0.5.1、canghai-tugou-perspective v0.3、analysis/2026-10-15-全球市场复盘.md、analysis/案例日志.md。"
+  },
+  "header": {
+    "edition": "10/17 早 · 收盘版",
+    "stanceTag": "不变",
+    "mainline": {"v": "融资压力", "tag": "没换", "tip": "序参量 CoreWeave CDS 从约 1,000bp 走阔到约 1,195bp，还在变坏"},
+    "tapeLabel": "10/16 收盘",
+    "tape": [
+      {"n": "纳斯达克", "v": "26,140", "c": -2.15, "t": "10/16 收盘 · 东方财富", "to": "kpi-0"},
+      {"n": "费城半导体", "v": "11,137", "c": -3.83, "t": "10/16 收盘，连跌 8 天 · Yahoo", "to": "th-0"},
+      {"n": "道琼斯", "v": "52,002", "c": -0.34, "t": "10/16 收盘 · TheStreet", "to": "evidence"},
+      {"n": "KOSPI", "v": "5,668", "c": 2.05, "t": "10/16 收盘 · 东方财富", "to": "th-2"},
+      {"n": "上证指数", "v": "3,716", "c": 0.24, "t": "10/16 收盘 · 东方财富", "to": "china"},
+      {"n": "美元指数", "v": "101.77", "c": -0.23, "t": "10/17 04:05 · 东方财富", "to": "th-4"},
+      {"n": "10 年美债", "v": "5.09%", "note": "持平", "t": "10/16 美东下午 3 点 · AP", "to": "macro"},
+      {"n": "布伦特", "v": "109.56", "c": 3.44, "t": "10/17 03:55 · 东方财富", "to": "macro"},
+      {"n": "COMEX 黄金", "v": "4,189.5", "c": 0.47, "t": "10/17 03:55 · 东方财富", "to": "th-5"},
+      {"n": "VIX", "v": "20.26", "c": 23.09, "t": "10/17 03:50 · Yahoo", "to": "g-3"},
+      {"n": "CoreWeave CDS", "v": "1,195bp", "note": "纪录", "t": "10/15 收盘 · Bloomberg（ICE）", "to": "g-0"}
+    ],
+    "changes": {"since": "10/16 午", "lead": "立场和主线都没变，读数和判断有 5 处变化。", "items": [{"k": "② 融资", "s": "red", "v": "更差：CoreWeave 约 −12%，CDS 10/15 创纪录，约 1,195bp", "to": "chk-1"}, {"k": "③ 利率", "s": "green", "v": "名义上转绿：10 月加息概率约 15%，12 月仍 74.3%（CME）", "to": "chk-2"}, {"k": "④ 系统流动性", "s": "green", "v": "VIX 升到 20.3，过了 20，没到 25", "to": "g-3"}, {"k": "美元拐点", "v": "101.77，刚跌破 101.84；六条里只有一条转向", "to": "th-4"}, {"k": "订正", "v": "费城半导体是连跌 8 天，盘中版误写成 9 天", "to": "th-0"}]}
+  },
+  "install": {
+    "head": "把静观装进你自己的 Claude",
+    "sub": "静观是一个 Claude skill。装好以后问市场问题，Claude 会照这页的框架回答：先记账，再拆机制，最后给一个带证伪条件的立场。",
+    "spec": ["v0.6", "压缩包 46 KB", "主文件 12 KB", "核心分析不用 API Key（吸引子指标要）", "只读，不下单"],
+    "feats": [{"k": "记清账", "v": "每个数字带来源、日期和核验状态，并和上次快照比出变化。"}, {"k": "选主线", "v": "机制拆完用反转检验，只留一条进结论。"}, {"k": "敢回看", "v": "每个立场带证伪条件，记进案例日志，到期打分。"}],
+    "pkg": {"name": "stillpoint", "ver": "v0.6", "size": "46 KB", "zip": "https://b1axk-bit.github.io/stillpoint-pages/skill/stillpoint.zip", "skillUrl": "https://github.com/B1axk-bit/stillpoint-pages/blob/main/skill/stillpoint/SKILL.md", "sha256": "57a824b896561918ceb396e0f1a405e9780ada650861d53bc22d4f296f797cc1"},
+    "clients": [
+      {"k": "web", "name": "Claude 网页和 App", "fit": "Pro、Max、Team、Enterprise 套餐", "steps": ["打开 设置 → 功能（Settings › Capabilities），先打开“代码执行和文件创建”。", "在 Skills 一栏点“上传 skill”（Upload skill），选下载的 stillpoint.zip，不用解压。", "在列表里找到 stillpoint，打开它的开关。", "新开一个对话问“用静观看一下昨天美股”，回答先列事实账本、再给立场，就是装好了。"], "note": "Team 和 Enterprise 要管理员先在管理设置里打开 Skills。只上传 skill 不等于能联网取数：网页版的沙箱通常连不到行情接口，静观会改用公开报道，并在开头写明缺了哪些数据。"},
+      {"k": "code", "name": "Claude Code", "fit": "终端、桌面 App 和 IDE 插件；不用 API key，也不用装插件", "steps": ["把压缩包解压到个人 skill 目录，所有项目都能用：", "只想在一个项目里用，就放到项目的 .claude/skills/stillpoint/，提交进仓库，团队成员拉下来就有。", "输入 /skills，列表里有 stillpoint 就是装好了。如果 ~/.claude/skills 是这次新建的，先运行一次 /reload-skills。", "直接输入 /stillpoint 昨天美股怎么了，或者正常提问，比如“用我的框架看下美元”，Claude 会自己调用。"], "code": {"at": 0, "text": "mkdir -p ~/.claude/skills\nunzip stillpoint.zip -d ~/.claude/skills/"}, "note": "快照脚本在 Claude Code 里能直接运行；联网和执行命令时，Claude Code 会照常请你批准。"},
+      {"k": "api", "name": "Claude API", "fit": "自己写程序调用", "steps": ["用 Skills API（/v1/skills）上传 stillpoint 文件夹，记下返回的 skill_id。", "发消息时打开代码执行工具，在 container 参数里写上这个 skill_id。", "把快照 JSON 或新闻摘要作为文件一起传进去，让它照框架分析。"], "note": "API 的沙箱不能联网，快照脚本在里面跑不了，只能分析你传进去的数据。上传的 skill 在整个 workspace 共享。"},
+      {"k": "other", "name": "其他智能体", "fit": "Codex 等支持 Agent Skills 的客户端", "steps": ["支持 Agent Skills 标准的客户端，把 stillpoint 文件夹放进它文档里写的 skills 目录，比如 Codex 是 .agents/skills/stillpoint/。", "不支持 skill 的助手，可以把 SKILL.md 全文贴在对话开头。框架照样能用，只是不会自动触发，脚本也跑不了。"], "note": "这几种客户端我们都没有实测，按各自的官方文档整理。"}
+    ],
+    "verify": "已实测：Claude 网页版（v0.5，10/16）和 Mac 快照脚本；v0.6 只拆结构没改规则，重跑 10/16 结论一致。Claude Code、API 和其他智能体按官方文档整理，还没实测。",
+    "sync": "这几处的 skill 互不同步：网页上传的，Claude Code 和 API 里看不到，要分别装。",
+    "asks": [
+      {"k": "日常复盘", "q": "用静观复盘昨天的美股和今天的 A 股：先说主线和上次比换没换，再给三个关键事实和分主题的研究立场。"},
+      {"k": "事件归因", "q": "用静观拆 10/16 纳指跌、KOSPI 涨：每个主题只选一条主线，写出最强反方和改变判断的条件。"},
+      {"k": "单个资产", "q": "用静观看美元指数：按利差、贸易条件、避险、卖美国四个驱动拆，判断是不是拐点，给出路标和阈值。"},
+      {"k": "等还是加", "q": "用静观判断存储板块现在是等待还是有条件建立：行业、价格、是否适合我三问分开答；没给持仓就只答第一问。"},
+      {"k": "回看打分", "q": "用静观回看案例日志里到期的案例，按方向、路标、机制三项打分，说清错在哪一层。"},
+      {"k": "完整报告", "q": "用静观写一份完整报告，附事实账本、反转检验表和情景。"}
+    ],
+    "askNote": "数字都带日期、来源和核验状态，拿不到的会写明缺了什么。快照脚本本身不调用模型，但助手回答照常消耗 token。",
+    "foot": "研究框架，不是投资建议。装任何第三方 skill 之前，先通读一遍它的 SKILL.md 和脚本。安装步骤核对自 Claude 帮助中心和 Claude Code 文档（2026-10-17）。"
   }
 }
 </script>
@@ -1091,11 +1446,12 @@ details.tt[open] summary::before{content:"▾"}
   })();
 
   /* kpis */
-  D.kpis.forEach(function(k){
-    $('kpis').appendChild(h('div', {class: 'kpi'},
+  D.kpis.forEach(function(k, i){
+    var kd = k.dir ? ' ' + k.dir : (/^\+/.test(k.value) ? ' up' : (/^[−-]/.test(k.value) ? ' dn' : ''));
+    $('kpis').appendChild(h('div', {class: 'kpi', id: 'kpi-' + i},
       h('span', {class: 'kpi-l'}, k.label),
-      h('span', {class: 'kpi-v'}, k.value, k.unit ? h('small', null, k.unit) : null),
-      h('span', {class: 'kpi-d'}, k.delta),
+      h('span', {class: 'kpi-v' + kd}, k.value, k.unit ? h('small', null, k.unit) : null),
+      h('span', {class: 'kpi-d'}, k.chg ? h('b', {class: 'kpi-c ' + (k.dir || '')}, (k.dir === 'up' ? '▲ ' : (k.dir === 'dn' ? '▼ ' : '')) + k.chg) : null, k.delta),
       h('span', {class: 'kpi-r'}, k.read),
       h('span', {class: 'kpi-s'}, k.src)));
   });
@@ -1115,8 +1471,8 @@ details.tt[open] summary::before{content:"▾"}
         h('span', {class: 'diag-lv'}, r.levelLabel), h('p', null, r.fact)));
     });
     diag.appendChild(g);
-    s.checks.forEach(function(c){
-      $('lamps').appendChild(h('div', {class: 'lp card ' + c.state},
+    s.checks.forEach(function(c, i){
+      $('lamps').appendChild(h('div', {class: 'lp card ' + c.state, id: 'chk-' + i},
         h('div', {class: 'lp-top'}, h('span', {class: 'lp-n'}, c.n), h('b', null, c.name)),
         h('div', {class: 'lp-state'}, s.prevLabel || '上次', h('i', {class: 'lamp sm ' + c.prev, 'aria-hidden': 'true'}), '→',
           h('i', {class: 'lamp lg ' + c.state, 'aria-hidden': 'true'}), h('span', {class: 'lp-txt'}, LAMP[c.state] + ' · ' + c.trend)),
@@ -1186,24 +1542,83 @@ details.tt[open] summary::before{content:"▾"}
   $('th-h').textContent = D.themesHead;
   $('th-sub').textContent = D.themesSub;
   D.themes.forEach(function(t, idx){
-    var card = h('article', {class: 'th card'});
+    var card = h('article', {class: 'th card', id: 'th-' + idx});
     card.appendChild(h('header', {class: 'th-h'},
       h('span', {class: 'th-n'}, String(idx + 1).padStart(2, '0')),
       h('div', {class: 'th-t'}, h('h3', null, t.name), h('span', {class: 'th-scope'}, t.scope)),
       h('div', {class: 'th-pills'}, t.stances.map(function(s){ return pill(s.stance, s.label); }))));
     card.appendChild(h('p', {class: 'th-verdict'}, t.verdict));
-    card.appendChild(VIZ[t.viz.type](t.viz));
-    if (t.state){
-      card.appendChild(h('div', {class: 'ladder'}, h('span', {class: 'k'}, t.state.label),
-        h('ol', null, t.state.steps.map(function(st, i){
-          return h('li', {class: i === t.state.active ? 'on' : null}, st, i === t.state.active ? h('small', null, '置信度 ' + t.state.conf) : null);
+    var body = h('div', {class: 'th-body', id: 'thb-' + idx});
+    card.appendChild(body);
+    body.appendChild(VIZ[t.viz.type](t.viz));
+    if (t.names){
+      body.appendChild(h('div', {class: 'tn'},
+        h('div', {class: 'tn-h'}, h('span', {class: 'k'}, t.names.title), t.names.src ? h('span', {class: 'src'}, t.names.src) : null),
+        h('ul', {class: 'tn-l'}, t.names.rows.map(function(r){
+          var d = r.pct == null ? 'flat' : (r.pct > 0 ? 'up' : (r.pct < 0 ? 'dn' : 'flat'));
+          return h('li', r.note ? {'data-tip': r.n + '|' + r.note, tabindex: '0'} : null, h('b', null, r.n), h('span', {class: 'tn-t'}, r.tk),
+            h('span', {class: 'tn-p'}, r.px == null ? '—' : r.px), h('em', {class: 'tn-c ' + d}, r.pct == null ? (r.chg || '—') : sgn(r.pct) + '%'));
         }))));
     }
+    if (t.state){
+      body.insertBefore(h('div', {class: 'ladder'}, h('span', {class: 'k'}, t.state.label),
+        h('ol', null, t.state.steps.map(function(st, i){
+          return h('li', {class: i === t.state.active ? 'on' : null}, st, i === t.state.active ? h('small', null, '置信度 ' + t.state.conf) : null);
+        }))), body.children[1] || null);
+    }
+    var more = h('button', {class: 'th-more', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'thb-' + idx, hidden: ''}, '展开全部');
+    more.addEventListener('click', function(){
+      var open = body.classList.toggle('open');
+      body.style.maxHeight = open ? 'none' : (body.getAttribute('data-mh') || '');
+      more.setAttribute('aria-expanded', open ? 'true' : 'false');
+      more.textContent = open ? '收起' : '展开全部';
+      var top = card.getBoundingClientRect().top;
+      if (!open && top < 0) scrollBy(0, top - 76);
+    });
+    card.appendChild(more);
     card.appendChild(h('footer', {class: 'th-f'},
       h('div', null, h('span', {class: 'k'}, '解除'), h('span', null, t.unlock)),
       h('div', null, h('span', {class: 'k'}, '变化'), h('span', null, t.change))));
     $('theme-grid').appendChild(card);
   });
+  /* fold long theme cards: a row ends where its shortest card ends (stretched to take in cards that are only a little longer); taller cards fold to that line */
+  (function(){
+    var grid = $('theme-grid'), CAP = 420, MIN = 220, SLACK = 100, lastW = -1;
+    function fit(){
+      var rows = {};
+      grid.classList.add('measure');
+      [].forEach.call(grid.children, function(c){
+        var b = c.querySelector('.th-body'), m = c.querySelector('.th-more');
+        if (!b.classList.contains('open')){ b.style.maxHeight = 'none'; b.classList.remove('clip'); m.hidden = true; }
+      });
+      [].forEach.call(grid.children, function(c){
+        var b = c.querySelector('.th-body');
+        if (b.classList.contains('open')) return;
+        (rows[c.offsetTop] = rows[c.offsetTop] || []).push({b: b, m: c.querySelector('.th-more'), n: b.offsetHeight, f: c.offsetHeight - b.offsetHeight});
+      });
+      Object.keys(rows).forEach(function(k){
+        var row = rows[k], R;
+        if (row.length === 1) R = row[0].f + Math.min(row[0].n, CAP + 40);
+        else {
+          var hs = row.map(function(x){ return x.f + x.n; }).sort(function(a, b){ return a - b; });
+          R = hs[0];
+          for (var i = 1; i < hs.length && hs[i] - R <= SLACK; i++) R = hs[i];
+          row.forEach(function(x){ if (x.n > R - x.f) R = Math.max(R, x.f + 40 + MIN); });
+        }
+        row.forEach(function(x){
+          if (x.n <= R - x.f) return;
+          x.m.hidden = false;
+          var mh = Math.round(R - x.f - x.m.offsetHeight - 8) + 'px';
+          x.b.style.maxHeight = mh; x.b.setAttribute('data-mh', mh); x.b.classList.add('clip');
+        });
+      });
+      grid.classList.remove('measure');
+    }
+    function check(){ var w = grid.clientWidth; if (w && w !== lastW){ lastW = w; fit(); } }
+    if (window.ResizeObserver) new ResizeObserver(check).observe(grid); else addEventListener('resize', check);
+    check();
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ lastW = -1; check(); });
+  })();
 
   /* evidence */
   (function(){
@@ -1407,17 +1822,49 @@ details.tt[open] summary::before{content:"▾"}
     var ph = c.phase, pb = $('cn-ph');
     var zi = Math.min(2, Math.floor(ph.to.p / (100 / 3)));
     pb.appendChild(h('div', {class: 'panel-h'}, h('span', {class: 'tag'}, ph.tag), h('h3', null, ph.title)));
-    var tr = h('div', {class: 'ph-track', role: 'img', 'aria-label': '楼市三相：从' + ph.zones[0].k + '走向' + ph.zones[zi].k});
-    ph.zones.forEach(function(z, i){ tr.appendChild(h('i', {class: 'ph-z z' + i})); });
-    tr.appendChild(h('i', {class: 'ph-move', style: 'left:' + ph.from.p + '%;width:' + (ph.to.p - ph.from.p) + '%'}));
-    tr.appendChild(h('i', {class: 'ph-ghost', style: 'left:' + ph.from.p + '%', tabindex: '0', 'data-tip': ph.from.l + '|楼市' + ph.zones[0].k + '|' + ph.zones[0].v}));
-    tr.appendChild(h('i', {class: 'ph-mark', style: 'left:' + ph.to.p + '%', tabindex: '0', 'data-tip': ph.to.l + '|楼市' + ph.zones[zi].k + '|' + ph.zones[zi].v}));
-    pb.appendChild(h('div', {class: 'ph'},
-      h('div', {class: 'ph-ml', 'aria-hidden': 'true'},
-        h('span', {class: 'gh', style: 'left:' + ph.from.p + '%;' + edge(ph.from.p)}, ph.from.l),
-        h('span', {style: 'left:' + ph.to.p + '%;' + edge(ph.to.p)}, ph.to.l)),
-      tr,
-      h('div', {class: 'ph-zl'}, ph.zones.map(function(z, i){ return h('span', {class: i === zi ? 'on' : null}, h('b', null, '楼市' + z.k), z.v); }))));
+    if (ph.line){
+      var L = ph.line, ML = L.months.length, NS = 'http://www.w3.org/2000/svg';
+      var lx = function(i){ return i / (ML - 1) * 100; }, ly = function(v){ return (L.max - v) / (L.max - L.min) * 100; };
+      var sv = function(tag, a){ var e = document.createElementNS(NS, tag); for (var k in a) e.setAttribute(k, a[k]); return e; };
+      var svg = sv('svg', {viewBox: '0 0 100 100', preserveAspectRatio: 'none', class: 'lc-svg', 'aria-hidden': 'true'});
+      svg.appendChild(sv('rect', {x: 0, y: ly(0), width: 100, height: 100 - ly(0), class: 'lc-neg'}));
+      var b0 = lx(L.months.indexOf(L.band.from)), b1 = lx(L.months.indexOf(L.band.to)), bw = 50 / (ML - 1);
+      svg.appendChild(sv('rect', {x: b0 - bw, y: 0, width: b1 - b0 + 2 * bw, height: 100, class: 'lc-band'}));
+      L.ticks.forEach(function(t){ svg.appendChild(sv('line', {x1: 0, x2: 100, y1: ly(t), y2: ly(t), class: t === 0 ? 'lc-zero' : 'lc-grid', 'vector-effect': 'non-scaling-stroke'})); });
+      L.series.slice().reverse().forEach(function(se){
+        svg.appendChild(sv('polyline', {points: se.v.map(function(v, i){ return lx(i).toFixed(2) + ',' + ly(v).toFixed(2); }).join(' '), class: 'lc-ln ' + se.cls, 'vector-effect': 'non-scaling-stroke'}));
+      });
+      var plot = h('div', {class: 'lc-plot', role: 'img', 'aria-label': L.title + '：' + L.read}, svg,
+        h('span', {class: 'lc-zl up', 'aria-hidden': 'true'}, '环比上涨'), h('span', {class: 'lc-zl dn', 'aria-hidden': 'true'}, '环比下跌'),
+        h('span', {class: 'lc-bl', 'aria-hidden': 'true', style: 'left:' + (b0 + b1) / 2 + '%'}, L.band.l));
+      L.series.forEach(function(se){ plot.appendChild(h('i', {class: 'lc-dot ' + se.cls, style: 'left:100%;top:' + ly(se.v[ML - 1]) + '%'})); });
+      L.months.forEach(function(m, i){
+        var ym = m.split('-');
+        plot.appendChild(h('i', {class: 'lc-hit', style: 'left:' + (lx(i) - bw) + '%;width:' + 2 * bw + '%',
+          'data-tip': ym[0] + ' 年 ' + (+ym[1]) + ' 月|' + L.series.map(function(se){ return se.k + ' ' + sgn(se.v[i], 1) + '%'; }).join('|')}));
+      });
+      var yax = h('div', {class: 'lc-y', 'aria-hidden': 'true'}, L.ticks.map(function(t){ return h('span', {style: 'top:' + ly(t) + '%'}, t === 0 ? '0' : sgn(t, 1)); }));
+      var xax = h('div', {class: 'lc-x', 'aria-hidden': 'true'}, L.months.map(function(m, i){
+        var ym = m.split('-'), mo = +ym[1];
+        return h('span', {style: 'left:' + lx(i) + '%'}, mo, i === 0 || mo === 1 ? h('small', null, ym[0]) : null);
+      }));
+      pb.appendChild(h('div', {class: 'lc-head'}, h('span', {class: 'k'}, L.title),
+        h('div', {class: 'legend sm lc-leg'}, L.series.map(function(se){
+          var v = se.v[ML - 1];
+          return h('span', null, h('i', {class: 'lc-sw ' + se.cls}), se.k, h('b', {class: v > 0 ? 'up' : (v < 0 ? 'dn' : '')}, sgn(v, 1)));
+        }))));
+      pb.appendChild(h('div', {class: 'lc'}, yax, plot, h('span'), xax));
+      pb.appendChild(h('p', {class: 'gg-note'}, L.read));
+      pb.appendChild(h('p', {class: 'src'}, L.src));
+      pb.appendChild(h('table', {class: 'lc-sr'}, h('caption', null, L.title),
+        h('thead', null, h('tr', null, ['月份'].concat(L.series.map(function(se){ return se.k; })).map(function(x){ return h('th', null, x); }))),
+        h('tbody', null, L.months.map(function(m, i){
+          return h('tr', null, [m].concat(L.series.map(function(se){ return sgn(se.v[i], 1) + '%'; })).map(function(x){ return h('td', null, x); }));
+        }))));
+    }
+    pb.appendChild(h('div', {class: 'ph-now'}, h('span', {class: 'k'}, '三相位置 · ' + ph.from.l + ' → ' + ph.to.l),
+      h('div', {class: 'sw-seg ph-seg', role: 'img', 'aria-label': '楼市三相：现在在' + ph.zones[zi].k + '，' + ph.zones[zi].v},
+        ph.zones.map(function(z, i){ return h('span', {class: i === zi ? 'on' : null}, '楼市' + z.k, h('small', null, z.v)); }))));
     pb.appendChild(h('ul', {class: 'ev-list'}, ph.ev.map(function(x){ return h('li', null, x); })));
     pb.appendChild(h('p', {class: 'gg-note'}, ph.hist));
     pb.appendChild(h('p', {class: 'src'}, ph.foot));
@@ -1442,8 +1889,8 @@ details.tt[open] summary::before{content:"▾"}
     var w = D.watch;
     $('w-h').textContent = w.head;
     $('w-sub').textContent = w.sub;
-    w.gauges.forEach(function(g){
-      var card = h('div', {class: 'gg card'});
+    w.gauges.forEach(function(g, gi){
+      var card = h('div', {class: 'gg card', id: 'g-' + gi});
       card.appendChild(h('div', {class: 'gg-h'}, h('b', null, g.name), h('span', {class: 'gg-link'}, g.link)));
       card.appendChild(h('div', {class: 'gg-v'}, h('span', {class: 'gg-num'}, g.curLabel, g.unit ? h('small', null, g.unit) : null),
         h('span', {class: 'st ' + g.state}, h('i', {'aria-hidden': 'true'}), g.stateLabel)));
@@ -1507,7 +1954,9 @@ details.tt[open] summary::before{content:"▾"}
     var t = $('trig');
     t.appendChild(h('h3', null, p.triggersTitle));
     t.appendChild(h('ul', null, p.triggers.map(function(x){ return h('li', null, h('span', {class: 'dir ' + x.tone}, x.dir), h('span', null, x.sign)); })));
-    t.appendChild(h('p', {class: 'gg-note', style: 'padding-top:10px;border-top:1px dashed var(--line)'}, p.counter));
+    var ct = p.counter.replace(/^最强的反方是/, ''), cut = ct.indexOf('。') + 1;
+    t.appendChild(h('div', {class: 'p-counter'}, h('span', {class: 'pc-tag'}, '最强反方'),
+      h('b', null, cut > 0 ? ct.slice(0, cut) : ct), cut > 0 && cut < ct.length ? h('p', null, ct.slice(cut)) : null));
   })();
 
   /* agenda */
@@ -1625,47 +2074,364 @@ details.tt[open] summary::before{content:"▾"}
     $('sf-meta').textContent = D.brand.meta;
   })();
 
+  /* install: one box with the download and one tab per client, then prompts to copy */
+  (function(){
+    var I = D.install, P = I.pkg;
+    $('in-h').textContent = I.head;
+    $('in-sub').textContent = I.sub;
+    I.spec.forEach(function(x){ $('in-spec').appendChild(h('li', null, x)); });
+    I.feats.forEach(function(f, i){ $('in-feats').appendChild(h('div', {class: 'mt'}, h('span', {class: 'mt-n'}, '0' + (i + 1)), h('b', null, f.k), h('span', null, f.v))); });
+    function copy(text, btn, done, lab){
+      lab = lab || btn;
+      var was = lab.textContent;
+      function ok(){ lab.textContent = done; btn.classList.add('ok'); setTimeout(function(){ lab.textContent = was; btn.classList.remove('ok'); }, 1600); }
+      function sel(){
+        var r = document.createRange(), s = getSelection(), t = btn.parentNode.querySelector('pre') || btn.querySelector('.in-ask-q') || btn;
+        r.selectNodeContents(t); s.removeAllRanges(); s.addRange(r);
+      }
+      try { navigator.clipboard.writeText(text).then(ok, sel); } catch (e) { sel(); }
+    }
+    var ico = h('span', {class: 'in-ico', 'aria-hidden': 'true'});
+    ico.innerHTML = '<svg viewBox="0 0 16 16" aria-hidden="true"><path d="M8 2.2 V10.4 M4.6 7.2 L8 10.6 L11.4 7.2 M2.8 13.6 H13.2" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    add($('in-get'), [
+      h('div', {class: 'in-get-h'}, h('b', null, '静观'), h('span', null, P.name + ' · ' + P.ver)),
+      P.zip ? h('a', {class: 'in-dl', href: P.zip, download: P.name + '.zip'}, ico, '下载安装包', h('small', null, P.size))
+            : h('span', {class: 'in-dl off'}, '安装包还没放到公开地址'),
+      P.skillUrl ? h('a', {class: 'in-ins', href: P.skillUrl, target: '_blank', rel: 'noopener'}, '先看一遍 SKILL.md') : null,
+      P.zip && P.sha256 ? h('p', {class: 'in-sha'}, 'SHA-256 ' + P.sha256) : null]);
+    var tabs = [], panes = [];
+    function pick(i, focus){
+      tabs.forEach(function(t, j){ t.setAttribute('aria-selected', i === j ? 'true' : 'false'); t.tabIndex = i === j ? 0 : -1; panes[j].hidden = i !== j; });
+      if (focus) tabs[i].focus();
+    }
+    I.clients.forEach(function(c, i){
+      var t = h('button', {class: 'in-t', type: 'button', role: 'tab', id: 'inst-' + c.k, 'aria-controls': 'inp-' + c.k}, c.name);
+      t.addEventListener('click', function(){ pick(i); });
+      t.addEventListener('keydown', function(e){
+        var n = I.clients.length, j = e.key === 'ArrowRight' ? (i + 1) % n : (e.key === 'ArrowLeft' ? (i - 1 + n) % n : -1);
+        if (j >= 0){ e.preventDefault(); pick(j, true); }
+      });
+      tabs.push(t);
+      $('in-tabs').appendChild(t);
+      var ol = h('ol', {class: 'in-steps'}, c.steps.map(function(s, k){
+        var code = c.code && c.code.at === k ? c.code.text : null, cb = null;
+        if (code){
+          cb = h('button', {class: 'in-cp', type: 'button'}, '复制');
+          cb.addEventListener('click', function(){ copy(code, cb, '已复制'); });
+        }
+        return h('li', null, h('span', null, s), code ? h('div', {class: 'in-code'}, h('pre', null, code), cb) : null);
+      }));
+      var p = h('div', {class: 'in-p', role: 'tabpanel', id: 'inp-' + c.k, 'aria-labelledby': 'inst-' + c.k},
+        h('p', {class: 'in-fit'}, '适合：' + c.fit), ol, c.note ? h('p', {class: 'in-note'}, c.note) : null);
+      panes.push(p);
+      $('in-panes').appendChild(p);
+    });
+    pick(0);
+    $('in-verify').textContent = I.verify;
+    $('in-sync').textContent = I.sync;
+    I.asks.forEach(function(a){
+      var lab = h('i', null, '复制'), b = h('button', {class: 'in-ask', type: 'button', 'aria-label': '复制提问：' + a.q},
+        h('span', {class: 'in-ask-h'}, h('b', null, a.k), lab), h('span', {class: 'in-ask-q'}, a.q));
+      b.addEventListener('click', function(){ copy(a.q, b, '已复制', lab); });
+      $('in-asks').appendChild(b);
+    });
+    $('in-an').textContent = I.askNote;
+    $('in-foot').textContent = I.foot;
+  })();
+
+  /* masthead: workspaces with summary menus, change list, search, market tape, status strip */
+  (function(){
+    var H = D.header, V = D.verdict, mast = $('mast');
+    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var SEC = {verdict: '今日结论', kpis: '关键数字', signals: '止跌清单', themes: '主题判断', watch: '序参量', paths: '路径',
+      evidence: '证据', macro: '宏观状态', china: '中国视角', agenda: '下一检查点', log: '中途回看', method: '框架', install: '安装', 'in-pkg': '下载', 'in-cl': '装在哪里', 'in-asks': '怎么问'};
+    var HEAD = {verdict: V.headline, kpis: '六个关键数字', signals: D.signals.head, themes: D.themesHead, watch: D.watch.head, paths: D.paths.head,
+      evidence: D.evidenceHead, macro: D.macro.head, china: D.china.head, agenda: D.agenda.head, log: D.log.head, method: D.method.head, install: D.install.head};
+    var WS = [
+      {id: 'today', name: '总览', start: 'verdict', p: '现在怎么判断，该做什么。', secs: ['verdict', 'kpis', 'signals']},
+      {id: 'themes', name: '主题', start: 'ws-themes', p: '每个方向的立场，盯哪些读数，可能怎么走。', secs: ['themes', 'watch', 'paths']},
+      {id: 'evidence', name: '依据', start: 'ws-evidence', p: '判断背后的数据、机制和框架。', secs: ['evidence', 'macro', 'china', 'method']},
+      {id: 'review', name: '复盘', start: 'ws-review', p: '下一个检查点在哪，上次的判断中途看对没有。', secs: ['agenda', 'log']},
+      {id: 'install', name: '安装', start: 'ws-install', p: '把静观装进你自己的 Claude：下载、四种装法、装好怎么问。', secs: ['install']}];
+    var checks = D.signals.checks, ev = D.agenda.events, K = D.kpis, G = D.watch.gauges;
+    var nxt = ev.filter(function(e){ return e.key; })[0] || ev[0];
+    var fomc = ev.filter(function(e){ return /FOMC/.test(e.label); })[0];
+    var argus = D.themes.filter(function(t){ return t.state; })[0];
+    function dir(v){ v = String(v); return /^\+/.test(v) ? 'up' : (/^[−-]/.test(v) ? 'dn' : ''); }
+    function unit(u){ return !u ? '' : (/^[\x00-\x7f]/.test(u) ? u : ' ' + u); }
+    function link(id, cls, kids, extra){
+      var p = {class: cls, href: '#' + id, 'data-go': id};
+      if (extra) for (var k in extra) p[k] = extra[k];
+      return h('a', p, kids);
+    }
+    function lamps(){
+      return h('span', {class: 'lmp'}, checks.map(function(c, i){
+        return link('chk-' + i, 'lmp-b', [h('span', null, c.n), h('i', {class: 'lamp ' + c.state, 'aria-hidden': 'true'})],
+          {'data-tip': LAMP[c.state] + '|' + c.n + ' ' + c.name + '|' + c.trend, 'aria-label': c.n + ' ' + c.name + '：' + LAMP[c.state] + '，' + c.trend});
+      }));
+    }
+    function day(e){ return e.time.split(' ')[0]; }
+    function themeIdx(name){
+      for (var i = 0; i < D.themes.length; i++) if (D.themes[i].name === name) return i;
+      for (i = 0; i < D.themes.length; i++) if (D.themes[i].name.slice(0, 3) === name.slice(0, 3)) return i;
+      return -1;
+    }
+
+    /* global bar */
+    $('ed-chip').textContent = H.edition;
+    WS.forEach(function(w){ var d = $(w.start); if (d && d.classList.contains('ws-div')) add(d, [h('b', null, w.name), h('span', null, w.p)]); });
+    var tabs = WS.map(function(w){
+      var b = h('button', {class: 'ws-t', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'mega', 'data-ws': w.id}, w.name);
+      $('ws').appendChild(b);
+      return b;
+    });
+    var nChg = H.changes.items.length, chgBtn = $('chg-btn');
+    add(chgBtn, [h('i', {class: 'pip', 'aria-hidden': 'true'}), h('span', {class: 'chg-pre'}, '比上期：'), h('b', null, String(nChg)), ' 处变化']);
+    chgBtn.setAttribute('aria-label', '比上期：' + nChg + ' 处变化');
+    add($('cmp'), [h('span', {class: 'cmp-st'}, '立场 ', h('b', null, V.stance)), lamps(), h('span', null, '下个检查点 ', h('b', null, day(nxt)))]);
+
+    /* market tape: red up, green down */
+    var tape = $('tape');
+    add($('tape-lb'), ['行情', h('small', null, H.tapeLabel)]);
+    H.tape.forEach(function(t){
+      var d = t.c == null ? 'flat' : (t.c > 0 ? 'up' : (t.c < 0 ? 'dn' : 'flat'));
+      var chg = t.c == null ? (t.note || '') : sgn(t.c) + '%';
+      tape.appendChild(link(t.to, 'tk', [h('span', {class: 'tk-n'}, t.n), h('span', {class: 'tk-v'}, t.v, h('em', {class: 'tk-c ' + d}, chg))],
+        {role: 'listitem', 'data-tip': t.v + '  ' + chg + '|' + t.n + '|' + t.t, 'aria-label': t.n + ' ' + t.v + ' ' + chg}));
+    });
+    /* scroll on its own: repeat the set until it covers the screen, then double it so a -50% shift loops seamlessly */
+    if (!still){
+      var one = [].slice.call(tape.children), w = Math.max(tape.scrollWidth, 1);
+      var reps = Math.max(1, Math.ceil(Math.max($('tape-vp').clientWidth, screen.width || 0) / w));
+      for (var rp = 1; rp < reps * 2; rp++) one.forEach(function(n){
+        var c = n.cloneNode(true);
+        c.setAttribute('aria-hidden', 'true');
+        c.setAttribute('tabindex', '-1');
+        tape.appendChild(c);
+      });
+      tape.style.setProperty('--tape-dur', Math.round(w * reps / 42) + 's');
+    }
+
+    /* status strip */
+    var st = $('stat');
+    st.appendChild(link('verdict', 'sb sb-stance', [h('span', {class: 'k'}, '总立场'), h('b', null, V.stance), H.stanceTag ? h('span', {class: 'sb-tag'}, H.stanceTag) : null]));
+    st.appendChild(h('span', {class: 'sb', tabindex: '0', 'data-tip': H.mainline.v + '|主线' + (H.mainline.tip ? '|' + H.mainline.tip : '')},
+      h('span', {class: 'k'}, '主线'), h('b', null, H.mainline.v), H.mainline.tag ? h('span', {class: 'sb-tag'}, H.mainline.tag) : null));
+    st.appendChild(h('span', {class: 'sb'}, h('span', {class: 'k'}, '止跌清单'), lamps()));
+    if (argus) st.appendChild(link('th-' + D.themes.indexOf(argus), 'sb sb-mono',
+      [h('span', {class: 'k'}, argus.state.label.replace(/状态$/, '')), h('b', null, argus.state.steps[argus.state.active]), h('span', {class: 'k'}, argus.state.conf)]));
+    st.appendChild(link('agenda', 'sb', [h('span', {class: 'k'}, '下个检查点'), h('b', null, day(nxt)), h('span', null, nxt.label.split(' · ')[0])]));
+    if (fomc) st.appendChild(link('agenda', 'sb', [h('span', {class: 'k'}, 'FOMC'), h('b', null, fomc.time)]));
+    st.appendChild(link('log', 'sb sb-end', [h('span', {class: 'k'}, '完整回看'), h('b', null, D.edition.due)]));
+    var tm = h('button', {class: 'theme-t theme-m', type: 'button', 'aria-label': '切换深浅色', title: '切换深浅色'});
+    tm.appendChild($('theme-t').querySelector('svg').cloneNode(true));
+    st.appendChild(tm);
+
+    /* summary menus */
+    function mgCard(id, head, sub, list){
+      return h('div', {class: 'mg-c'},
+        link(id, 'mg-h', [h('span', {class: 'tag'}, SEC[id]), h('b', null, head)]),
+        sub ? h('p', {class: 'mg-p'}, sub) : null,
+        list && list.length ? h('ul', {class: 'mg-l'}, list.map(function(x){
+          return h('li', null, link(x.to, null, [h('span', {class: 'mg-n'}, x.n),
+            x.v != null ? h('span', {class: 'mg-v' + (x.m ? ' num' : '') + (x.d ? ' ' + x.d : '')}, x.v) : null,
+            x.s ? h('span', {class: 'mg-s'}, x.s) : null]));
+        })) : null);
+    }
+    var CB = D.log.calib;
+    var BODY = {
+      today: [
+        mgCard('verdict', V.headline, '总立场' + V.stance + '；' + V.chips.map(function(c){ return c.k + '：' + c.v; }).join('；')),
+        mgCard('kpis', '六个数字，都标了来源和时点', null, K.map(function(k, i){
+          return {to: 'kpi-' + i, n: k.label, v: k.value + unit(k.unit), m: true, d: dir(k.value), s: k.read}; })),
+        mgCard('signals', D.signals.head, null, checks.map(function(c, i){
+          return {to: 'chk-' + i, n: [h('i', {class: 'lamp sm ' + c.state, 'aria-hidden': 'true'}), c.n + ' ' + c.name], v: LAMP[c.state] + ' · ' + c.trend}; }))],
+      themes: [
+        mgCard('themes', V.stanceTitle, null, D.stances.map(function(s){
+          var i = themeIdx(s.theme); return {to: i >= 0 ? 'th-' + i : 'themes', n: s.theme, v: pill(s.stance), s: s.note}; })),
+        mgCard('watch', D.watch.head, null, G.map(function(g, i){
+          return {to: 'g-' + i, n: g.name, v: g.curLabel + unit(g.unit), m: true, s: g.stateLabel}; })),
+        mgCard('paths', D.paths.head, null, D.paths.rows.map(function(r){ return {to: 'paths', n: r.id + ' ' + r.name, v: r.status}; }))],
+      evidence: [
+        mgCard('evidence', D.evidenceHead, D.sameTrade.title),
+        mgCard('macro', D.macro.head, D.macro.quadrant.note),
+        mgCard('china', D.china.head, null),
+        mgCard('method', D.method.head, '视角：' + D.method.lenses.map(function(l){ return l.name; }).join('、') + '。')],
+      review: [
+        mgCard('agenda', D.agenda.head, null, ev.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; })),
+        mgCard('log', D.log.head, '已回看 ' + CB.reviewed + '/' + CB.total + '；失误记在' + CB.layers.map(function(l){ return l.k + ' ' + l.v + ' 次'; }).join('、') + '；下次完整回看 ' + D.edition.due + '。')],
+      install: [
+        mgCard('in-pkg', D.install.pkg.name + ' ' + D.install.pkg.ver, D.install.spec.slice(1).join('；') + '。' + (D.install.pkg.zip ? '' : '安装包还没放到公开地址。'), [
+          {to: 'in-pkg', n: D.install.pkg.zip ? '下载安装包' : '安装包', v: D.install.pkg.size, m: true}]),
+        mgCard('in-cl', '四种装法，都写了怎么确认装好', null, D.install.clients.map(function(c){ return {to: 'inst-' + c.k, n: c.name, s: c.fit}; })),
+        mgCard('in-asks', '装好以后这样问', null, D.install.asks.map(function(a){ return {to: 'in-asks', n: a.k, s: a.q.length > 26 ? a.q.slice(0, 26) + '…' : a.q}; }))]
+    };
+    var mega = $('mega'), panes = {};
+    WS.forEach(function(w){
+      var pane = h('div', {class: 'mega-in', hidden: ''},
+        h('div', {class: 'mg-side'}, h('span', {class: 'tag'}, '工作区'), h('h3', null, w.name), h('p', null, w.p), link(w.start, 'mg-go', '跳到' + w.name + '开头')),
+        h('div', {class: 'mg-grid n' + BODY[w.id].length}, BODY[w.id]));
+      panes[w.id] = pane;
+      mega.appendChild(pane);
+    });
+
+    /* change list */
+    var cp = $('chg-p'), C = H.changes;
+    cp.appendChild(h('div', {class: 'cp-h'}, h('b', null, '比上期（' + C.since + '）'), h('span', null, C.lead)));
+    cp.appendChild(h('ol', {class: 'cp-l'}, C.items.map(function(c){
+      return h('li', null, link(c.to, null, [c.s ? h('i', {class: 'lamp sm ' + c.s, 'aria-hidden': 'true'}) : h('i', {class: 'cp-dot', 'aria-hidden': 'true'}),
+        h('b', null, c.k), h('span', null, c.v)]));
+    })));
+
+    /* open, close, jump */
+    var openWs = null;
+    function closeMenus(){
+      if (openWs) panes[openWs].hidden = true;
+      openWs = null;
+      mega.hidden = true;
+      tabs.forEach(function(t){ t.setAttribute('aria-expanded', 'false'); });
+      cp.hidden = true;
+      chgBtn.setAttribute('aria-expanded', 'false');
+    }
+    tabs.forEach(function(t){
+      t.addEventListener('click', function(e){
+        e.stopPropagation();
+        var id = t.getAttribute('data-ws'), was = openWs === id;
+        closeMenus();
+        if (!was){ openWs = id; panes[id].hidden = false; mega.hidden = false; t.setAttribute('aria-expanded', 'true'); }
+      });
+    });
+    chgBtn.addEventListener('click', function(e){
+      e.stopPropagation();
+      var was = !cp.hidden;
+      closeMenus();
+      if (!was){ cp.hidden = false; chgBtn.setAttribute('aria-expanded', 'true'); }
+    });
+    document.addEventListener('click', function(e){
+      var a = e.target.closest && e.target.closest('[data-go]');
+      if (a){ e.preventDefault(); go(a.getAttribute('data-go')); return; }
+      if ((openWs || !cp.hidden) && !mega.contains(e.target) && !cp.contains(e.target)) closeMenus();
+    });
+    function go(id){
+      var el = $(id);
+      if (!el) return;
+      closeMenus();
+      closeSearch(true);
+      if (el.getAttribute('role') === 'tab') el.click();
+      var big = el.tagName === 'SECTION' || el.classList.contains('ws-div');
+      el.scrollIntoView({block: big ? 'start' : 'center', behavior: still ? 'auto' : 'smooth'});
+      if (!el.hasAttribute('tabindex') && !/^(A|BUTTON|INPUT)$/.test(el.tagName)) el.setAttribute('tabindex', '-1');
+      try { el.focus({preventScroll: true}); } catch (err) {}
+      if (!big){
+        el.classList.remove('flash'); void el.offsetWidth; el.classList.add('flash');
+        setTimeout(function(){ el.classList.remove('flash'); }, 1900);
+      }
+    }
+
+    /* search */
+    var IDX = [];
+    function ix(g, label, sub, to, val){ IDX.push({g: g, label: label, sub: sub || '', to: to, val: val || '', hay: [label, sub || '', val || ''].join(' ').toLowerCase()}); }
+    WS.forEach(function(w){ w.secs.forEach(function(id){ ix('板块', SEC[id], w.name + ' · ' + HEAD[id], id); }); });
+    D.themes.forEach(function(t, i){ ix('主题', t.name, t.verdict, 'th-' + i, t.stances.map(function(s){ return s.stance; }).join(' / ')); });
+    checks.forEach(function(c, i){ ix('止跌清单', c.n + ' ' + c.name, LAMP[c.state] + ' · ' + c.trend, 'chk-' + i); });
+    H.tape.forEach(function(t){ ix('行情', t.n, t.t, t.to, t.v + (t.c == null ? '' : ' ' + sgn(t.c) + '%')); });
+    K.forEach(function(k, i){ ix('关键数字', k.label, k.read, 'kpi-' + i, k.value + unit(k.unit)); });
+    G.forEach(function(g, i){ ix('序参量', g.name, g.stateLabel, 'g-' + i, g.curLabel + unit(g.unit)); });
+    ev.forEach(function(e){ ix('日程', e.label, e.note || '', 'agenda', e.time); });
+    D.install.clients.forEach(function(c){ ix('安装', '安装到 ' + c.name, c.fit + ' · skill', 'inst-' + c.k); });
+    ix('安装', '下载 ' + D.install.pkg.name + '.zip', 'skill 安装包 · ' + D.install.pkg.ver, 'in-pkg', D.install.pkg.size);
+    D.install.asks.forEach(function(a){ ix('安装', '示例提问：' + a.k, a.q, 'in-asks'); });
+    var ORDER = ['板块', '主题', '止跌清单', '行情', '关键数字', '序参量', '日程', '安装'];
+    var srch = $('srch'), q = $('srch-q'), res = $('srch-r'), sBtn = $('srch-btn'), hits = [], cur = 0, back = null;
+    function render(){
+      var terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
+      hits = IDX.filter(function(x){ return terms.length ? terms.every(function(t){ return x.hay.indexOf(t) >= 0; }) : x.g === '板块'; })
+        .map(function(x, i){ return [ORDER.indexOf(x.g), i, x]; }).sort(function(a, b){ return a[0] - b[0] || a[1] - b[1]; })
+        .map(function(r){ return r[2]; }).slice(0, 40);
+      res.textContent = '';
+      if (!hits.length){ res.appendChild(h('p', {class: 'sr-none'}, '没有找到“' + q.value.trim() + '”。试试 VIX、美元、CoreWeave 或 10/19。')); q.removeAttribute('aria-activedescendant'); return; }
+      var g = null;
+      hits.forEach(function(x, i){
+        if (x.g !== g){ g = x.g; res.appendChild(h('div', {class: 'sr-g', role: 'presentation'}, g)); }
+        res.appendChild(h('a', {class: 'sr' + (i === cur ? ' on' : ''), href: '#' + x.to, 'data-go': x.to, role: 'option', id: 'sr-' + i, 'aria-selected': i === cur ? 'true' : 'false'},
+          h('b', null, x.label), x.sub ? h('span', null, x.sub) : null, x.val ? h('em', null, x.val) : null));
+      });
+      q.setAttribute('aria-activedescendant', 'sr-' + cur);
+    }
+    function mark(){
+      [].forEach.call(res.querySelectorAll('.sr'), function(a, i){ a.classList.toggle('on', i === cur); a.setAttribute('aria-selected', i === cur ? 'true' : 'false'); });
+      var on = res.querySelector('.sr.on');
+      if (on) on.scrollIntoView({block: 'nearest'});
+      q.setAttribute('aria-activedescendant', 'sr-' + cur);
+    }
+    function openSearch(){
+      closeMenus();
+      back = document.activeElement;
+      srch.hidden = false;
+      sBtn.setAttribute('aria-expanded', 'true');
+      q.value = ''; cur = 0; render();
+      q.focus();
+    }
+    function closeSearch(quiet){
+      if (srch.hidden) return;
+      srch.hidden = true;
+      sBtn.setAttribute('aria-expanded', 'false');
+      if (!quiet && back && back.focus) back.focus();
+    }
+    sBtn.addEventListener('click', function(e){ e.stopPropagation(); openSearch(); });
+    $('srch-x').addEventListener('click', function(){ closeSearch(); });
+    srch.addEventListener('click', function(e){ if (e.target === srch) closeSearch(); });
+    q.addEventListener('input', function(){ cur = 0; render(); });
+    q.addEventListener('keydown', function(e){
+      if (e.key === 'ArrowDown'){ e.preventDefault(); if (hits.length){ cur = (cur + 1) % hits.length; mark(); } }
+      else if (e.key === 'ArrowUp'){ e.preventDefault(); if (hits.length){ cur = (cur - 1 + hits.length) % hits.length; mark(); } }
+      else if (e.key === 'Enter'){ e.preventDefault(); if (hits[cur]) go(hits[cur].to); }
+    });
+    document.addEventListener('keydown', function(e){
+      var typing = /^(INPUT|TEXTAREA|SELECT)$/.test(e.target.tagName) || e.target.isContentEditable;
+      if ((e.metaKey || e.ctrlKey) && (e.key === 'k' || e.key === 'K')){ e.preventDefault(); if (srch.hidden) openSearch(); else closeSearch(); }
+      else if (e.key === '/' && !typing && srch.hidden){ e.preventDefault(); openSearch(); }
+      else if (e.key === 'Escape'){
+        if (!srch.hidden) closeSearch();
+        else if (openWs || !cp.hidden){ var t = openWs ? tabs[WS.map(function(w){ return w.id; }).indexOf(openWs)] : chgBtn; closeMenus(); t.focus(); }
+      }
+    });
+
+    /* which workspace is in view, compact status once the deck scrolls away, reading progress */
+    var bar = $('prog'), band = $('stat-band'), sin = $('stat');
+    var starts = WS.map(function(w){ return $(w.start); }), curWs = -1, queued = false;
+    function edge(){ sin.classList.toggle('more', sin.scrollLeft + sin.clientWidth < sin.scrollWidth - 2); }
+    function update(){
+      queued = false;
+      var mb = mast.getBoundingClientRect().bottom, line = mb + 56, k = 0;
+      starts.forEach(function(s, i){ if (s && s.getBoundingClientRect().top <= line) k = i; });
+      if (k !== curWs){
+        tabs.forEach(function(t, i){ t.classList.toggle('on', i === k); if (i === k) t.setAttribute('aria-current', 'location'); else t.removeAttribute('aria-current'); });
+        curWs = k;
+      }
+      mast.classList.toggle('compact', band.getBoundingClientRect().bottom <= mb + 1);
+      var max = document.documentElement.scrollHeight - innerHeight;
+      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0) + ')';
+    }
+    function req(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
+    addEventListener('scroll', req, {passive: true});
+    addEventListener('resize', function(){ req(); edge(); });
+    sin.addEventListener('scroll', edge, {passive: true});
+    update(); edge();
+  })();
+
   /* theme toggle: remembers the choice in this browser only */
   (function(){
     var root = document.documentElement, KEY = 'stillpoint-theme';
     try { var saved = localStorage.getItem(KEY); if (saved === 'light' || saved === 'dark') root.setAttribute('data-theme', saved); } catch (e) {}
-    $('theme-t').addEventListener('click', function(){
+    function flip(){
       var cur = root.getAttribute('data-theme');
       if (cur !== 'light' && cur !== 'dark') cur = matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
       var next = cur === 'dark' ? 'light' : 'dark';
       root.setAttribute('data-theme', next);
       try { localStorage.setItem(KEY, next); } catch (e) {}
-    });
-  })();
-
-  /* nav: highlight the section in view, keep it visible on phones, show reading progress */
-  (function(){
-    var nav = document.querySelector('.nav'), bar = $('prog');
-    var links = [].slice.call(nav.querySelectorAll('a'));
-    var secs = links.map(function(a){ return document.getElementById(a.getAttribute('href').slice(1)); });
-    var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var cur = -1, queued = false;
-    function edge(){ nav.classList.toggle('at-end', nav.scrollLeft + nav.clientWidth >= nav.scrollWidth - 2); }
-    function update(){
-      queued = false;
-      var line = 96, k = 0;
-      secs.forEach(function(s, i){ if (s && s.getBoundingClientRect().top <= line) k = i; });
-      if (k !== cur){
-        if (cur >= 0){ links[cur].classList.remove('on'); links[cur].removeAttribute('aria-current'); }
-        cur = k;
-        var a = links[k];
-        a.classList.add('on'); a.setAttribute('aria-current', 'location');
-        if (nav.scrollWidth > nav.clientWidth) nav.scrollTo({left: Math.max(0, a.offsetLeft - (nav.clientWidth - a.offsetWidth) / 2), behavior: still ? 'auto' : 'smooth'});
-      }
-      var max = document.documentElement.scrollHeight - innerHeight;
-      bar.style.transform = 'scaleX(' + (max > 0 ? Math.min(1, Math.max(0, scrollY / max)) : 0) + ')';
-      edge();
     }
-    function req(){ if (!queued){ queued = true; requestAnimationFrame(update); } }
-    addEventListener('scroll', req, {passive: true});
-    addEventListener('resize', req);
-    nav.addEventListener('scroll', edge, {passive: true});
-    update();
+    [].forEach.call(document.querySelectorAll('.theme-t'), function(b){ b.addEventListener('click', flip); });
   })();
 
   /* one shared tooltip: values lead, labels follow */
