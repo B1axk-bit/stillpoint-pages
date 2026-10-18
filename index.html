@@ -19,7 +19,7 @@
 <title>静观 Stillpoint</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@600&display=swap">
 <style>
 /* Layout: a verdict board. Masthead, one verdict above the fold, then numbered modules that each open with their conclusion; cards only where a module is a separate object. */
 :root{
@@ -36,6 +36,7 @@
   --shadow:0 1px 0 rgba(15,32,39,.03),0 10px 24px -18px rgba(15,32,39,.25);
   --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
   --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-latin:"Cormorant Garamond","Cormorant","Garamond","Times New Roman",serif;
   --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -82,7 +83,9 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .mast-in{max-width:1200px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:56px;padding-block:8px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
 .brand{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);flex:none}
 .brand svg{width:28px;height:28px;flex:none}
-.brand .wm,.brand .lb{font-family:var(--f-display);font-weight:900;font-size:24px;line-height:1;letter-spacing:.04em}
+.brand .wm{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1;letter-spacing:.1em;margin-right:-.1em}
+.brand .bh,.sf-brand .bh{width:1px;height:17px;background:var(--line);flex:none}
+.brand .lb{font-family:var(--f-latin);font-weight:600;font-size:18px;line-height:1;letter-spacing:.03em;color:var(--ink-2)}
 .brand:hover .wm,.brand:hover .lb{color:var(--brass)}
 .ed-chip{flex:none;font-family:var(--f-mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
 .ws{display:flex;gap:2px;flex:none;margin-left:6px}
@@ -115,11 +118,11 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .cmp b{color:var(--ink);font-weight:700}
 .cmp-st b{font-family:var(--f-display);font-weight:900;color:var(--brass);font-size:15px}
 .mast.compact .ed-chip{display:none}
-@media (min-width:1180px){.cmp{margin-left:8px;padding-left:16px;border-left:1px solid var(--line)}.mast.compact .brand .lb,.mast.compact .chg-pre{display:none}}
+@media (min-width:1180px){.cmp{margin-left:8px;padding-left:16px;border-left:1px solid var(--line)}.mast.compact .brand .lb,.mast.compact .brand .bh,.mast.compact .chg-pre{display:none}}
 @media (max-width:1179px){.ed-chip{display:none}
   .cmp{position:absolute;left:0;right:0;top:100%;background:var(--surface);border-bottom:1px solid var(--line);padding-block:5px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));overflow-x:auto;scrollbar-width:none}
   .cmp::-webkit-scrollbar{display:none}}
-@media (max-width:1000px){.brand .lb{display:none}}
+@media (max-width:1000px){.brand .lb,.brand .bh{display:none}}
 @media (max-width:900px){.chg-pre,.srch-b span{display:none}.srch-b{width:34px;padding:0}}
 @media (max-width:760px){
   .mast-in{gap:8px;min-height:52px;padding-block:6px}
@@ -878,8 +881,9 @@ details.tt[open] summary::before{content:"▾"}
 .site-f{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);display:flex;flex-direction:column;gap:6px}
 .sf-brand{display:flex;align-items:center;gap:8px}
 .sf-brand svg{width:24px;height:24px}
-.sf-brand b{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.04em}
-.sf-brand span{font-family:var(--f-display);font-weight:900;font-size:18px;letter-spacing:.04em}
+.sf-brand b{font-family:var(--f-display);font-weight:700;font-size:18px;letter-spacing:.1em}
+.sf-brand .bh{height:15px}
+.sf-brand span{font-family:var(--f-latin);font-weight:600;font-size:15px;letter-spacing:.03em;color:var(--ink-2)}
 .sf-tag{font-family:var(--f-display);font-size:15px;color:var(--ink-2)}
 
 .tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--surface);padding:7px 10px;border-radius:6px;font-size:12px;line-height:1.45;max-width:260px;display:flex;flex-direction:column;gap:1px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
@@ -895,7 +899,7 @@ details.tt[open] summary::before{content:"▾"}
         <path d="M16 24 A8 8 0 1 1 18.74 8.48" fill="none" stroke="var(--brass)" stroke-width="1.9" stroke-linecap="round"/>
         <circle cx="16" cy="16" r="2.6" fill="var(--ink)"/>
       </svg>
-      <span class="wm">静观</span><span class="lb">Stillpoint</span>
+      <span class="wm">静观</span><i class="bh" aria-hidden="true"></i><span class="lb">Stillpoint</span>
     </a>
     <span class="ed-chip" id="ed-chip"></span>
     <nav class="ws" id="ws" aria-label="四个工作区"></nav>
@@ -1046,7 +1050,7 @@ details.tt[open] summary::before{content:"▾"}
           <path d="M16 3 A13 13 0 1 1 3.78 20.45" fill="none" stroke="var(--ink)" stroke-width="1.9" stroke-linecap="round"/>
           <path d="M16 24 A8 8 0 1 1 18.74 8.48" fill="none" stroke="var(--brass)" stroke-width="1.9" stroke-linecap="round"/>
           <circle cx="16" cy="16" r="2.6" fill="var(--ink)"/>
-        </svg><b>静观</b><span>Stillpoint</span></div>
+        </svg><b>静观</b><i class="bh" aria-hidden="true"></i><span>Stillpoint</span></div>
     <p class="sf-tag" id="sf-tag"></p>
     <p class="src" id="sf-meta"></p>
   </footer>
