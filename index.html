@@ -888,6 +888,75 @@ details.tt[open] summary::before{content:"▾"}
 
 .tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--surface);padding:7px 10px;border-radius:6px;font-size:12px;line-height:1.45;max-width:260px;display:flex;flex-direction:column;gap:1px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
 .tip b{font-family:var(--f-mono);font-size:14px;font-weight:500}
+/* extras:css */
+/* freshness tags */
+.fr{display:inline-flex;align-items:center;gap:5px;margin-right:8px;padding:0 6px;border-radius:3px;font-family:var(--f-mono);font-size:10.5px;line-height:1.7;color:var(--ink-2);background:var(--surface-2);white-space:nowrap;vertical-align:1px;cursor:default}
+.fr::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--axis)}
+.fr.old{color:var(--ink);background:var(--warn-wash)}
+.fr.old::before{background:var(--warn)}
+.fr-sum{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:8px;font-size:12px;color:var(--ink-2);line-height:1.6}
+.fr-sum .fr{margin:0}
+.fr-sum a{color:var(--ink);text-decoration:none;border-bottom:1px dotted var(--axis)}
+.fr-sum a:hover{border-bottom-color:var(--brass)}
+.fr-sum em{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-left:3px}
+
+/* signpost alerts */
+.al-bar{margin-top:18px;display:flex;align-items:flex-start;gap:10px 18px;padding:11px 14px;border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:0 8px 8px 0;background:var(--surface);box-shadow:var(--shadow);scroll-margin-top:120px}
+.al-bar.hit{border-left-color:var(--crit)}
+.al-bar.calm{border-left-color:var(--good)}
+.al-bar + .hero{padding-top:24px}
+.al-k{display:flex;flex-direction:column;gap:2px;flex:none;min-width:7.5em}
+.al-k b{display:inline-flex;align-items:center;gap:7px;font-size:13.5px}
+.al-k span{font-size:11.5px;color:var(--muted);font-family:var(--f-mono)}
+.al-l{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:6px 22px;min-width:0;flex:1}
+.al-i{display:inline-flex;align-items:baseline;gap:7px;font-size:13px;line-height:1.5;color:var(--ink);text-decoration:none}
+.al-i:hover span{color:var(--ink)}
+.al-i i{flex:none;width:8px;height:8px;border-radius:50%;align-self:center}
+.al-i.hit i{background:var(--crit)} .al-i.near i{background:var(--warn)}
+.al-i.clear i{background:var(--good)} .al-i.soon i{background:transparent;box-shadow:inset 0 0 0 2px var(--good)}
+.al-i b{font-weight:700;white-space:nowrap}
+.al-i span{color:var(--ink-2)}
+.al-i em{font-style:normal;font-size:10.5px;font-weight:700;color:var(--brass);border:1px solid var(--brass);border-radius:3px;padding:0 4px;line-height:1.5;align-self:center}
+.al-pip{width:9px;height:9px;border-radius:50%;background:var(--warn);flex:none}
+.al-bar.hit .al-pip{background:var(--crit)} .al-bar.calm .al-pip{background:var(--good)}
+@media (max-width:700px){.al-bar{flex-direction:column;gap:8px}.al-l{flex-direction:column;gap:9px}.al-i{display:grid;grid-template-columns:8px minmax(0,1fr) auto;column-gap:8px;row-gap:1px;align-items:center}.al-i i{grid-column:1;grid-row:1}.al-i b{grid-column:2;grid-row:1}.al-i em{grid-column:3;grid-row:1}.al-i span{grid-column:2/4;grid-row:2}}
+
+/* stance timeline */
+.vt{margin-top:14px;padding:18px;display:flex;flex-direction:column;gap:14px;scroll-margin-top:70px}
+.vt-wrap{overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+.vt-t{border-collapse:separate;border-spacing:0;width:100%;font-size:12.5px}
+.vt-t th,.vt-t td{padding:8px 12px;border-bottom:1px solid var(--grid);text-align:left;vertical-align:top;min-width:11.5em}
+.vt-t tr:last-child th,.vt-t tr:last-child td{border-bottom:0}
+.vt-t thead th{background:var(--surface-2);font-weight:700;white-space:nowrap}
+.vt-t thead th small{font-family:var(--f-mono);font-size:10.5px;font-weight:400;color:var(--muted);margin-left:6px}
+.vt-t thead th.now{color:var(--brass)}
+.vt-t thead th.now::after{content:"最新";margin-left:6px;font-size:10.5px;font-weight:700;color:var(--surface);background:var(--brass);border-radius:3px;padding:0 4px}
+.vt-t tbody th{position:sticky;left:0;z-index:1;background:var(--surface);color:var(--ink-2);font-weight:500;white-space:nowrap;min-width:0;width:6.5em}
+.vt-t thead th:first-child{position:sticky;left:0;z-index:2;min-width:0}
+.vt-t td.now{background:var(--brass-tint)}
+.vt-t td.chg{box-shadow:inset 3px 0 0 var(--brass)}
+.vt-t td.chg.now{box-shadow:inset 3px 0 0 var(--brass)}
+.vt-h{font-family:var(--f-display);font-weight:700;font-size:13.5px;line-height:1.45}
+.vt-d{color:var(--ink-2);line-height:1.5}
+.vt-g th{padding-top:12px;font-size:11px;letter-spacing:.08em;color:var(--muted)!important}
+.vt-g td{padding-top:12px}
+.vt-lmp{display:flex;gap:6px;align-items:center}
+.vt-lmp span{display:inline-flex;flex-direction:column;align-items:center;gap:2px;font-size:10px;color:var(--muted);cursor:default}
+.vt-lmp span.chg .lamp{box-shadow:0 0 0 2px var(--surface),0 0 0 3.5px var(--brass)}
+.vt-foot{display:flex;flex-direction:column;gap:4px}
+.vt-t tbody th,.vt-t thead th:first-child{box-shadow:inset -1px 0 0 var(--line)}
+.vt-list{display:none;list-style:none;margin:0;padding:0;flex-direction:column;border:1px solid var(--line);border-radius:6px}
+.vt-list li{display:flex;flex-direction:column;gap:6px;padding:12px 14px}
+.vt-list li+li{border-top:1px solid var(--grid)}
+.vt-list li.now{background:var(--brass-tint)}
+.vt-lh{display:flex;align-items:center;gap:8px;flex-wrap:wrap}
+.vt-lh b{font-size:13.5px}
+.vt-lh small{font-family:var(--f-mono);font-size:10.5px;color:var(--muted);margin-right:auto}
+.vt-list li.now .vt-lh b{color:var(--brass)}
+.vt-c{font-size:12px;color:var(--ink-2);line-height:1.6}
+@media (max-width:700px){.vt-wrap{display:none}.vt-list{display:flex}}
+.vt-foot p{font-size:12px;color:var(--ink-2);line-height:1.6}
+/* /extras:css */
 </style>
 </head>
 <body>
@@ -928,6 +997,7 @@ details.tt[open] summary::before{content:"▾"}
 </div>
 
 <main class="wrap">
+  <div class="al-bar" id="alerts" role="region" aria-label="路标提醒" hidden></div>
   <section class="hero" id="verdict">
     <div class="hero-main">
       <p class="about" id="v-about"></p>
@@ -1023,6 +1093,7 @@ details.tt[open] summary::before{content:"▾"}
       <div class="cases card" id="cases"></div>
       <div class="calib card" id="calib"></div>
     </div>
+    <div class="vt card" id="vtl"></div>
     <div class="ledger card" id="ledger"></div>
   </section>
 
@@ -1330,6 +1401,40 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "askNote": "数字都带日期、来源和核验状态，拿不到的会写明缺了什么。快照脚本本身不调用模型，但助手回答照常消耗 token。",
     "foot": "研究框架，不是投资建议。装任何第三方 skill 之前，先通读一遍它的 SKILL.md 和脚本。安装步骤核对自 Claude 帮助中心和 Claude Code 文档（2026-10-17）。"
+  },
+  "alerts": {
+    "since": "10/16 午",
+    "items": [
+      {"lv": "near", "k": "美元流动性", "v": "吸引子 10/16 转负（−0.54），只有 1 个观测日；连续 3 个、或 SOFR−IORB 跟着转正，才改“钱多”", "to": "macro", "new": true},
+      {"lv": "near", "k": "上证 3700", "v": "收 3,716.28，离 3700 只差 16 点", "to": "cn-bottom", "new": false},
+      {"lv": "soon", "k": "韩国外资", "v": "连卖 8 天后转买 1 天，10/19 再买一天，① 踩踏才可能转绿", "to": "g-5", "new": false}
+    ]
+  },
+  "fresh": {
+    "asof": "10/17",
+    "items": [
+      {"id": "kpi-1", "in": ".kpi-s", "n": "CoreWeave 股价", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"id": "kpi-3", "in": ".kpi-s", "n": "布伦特原油", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"id": "kpi-4", "in": ".kpi-s", "n": "12 月加息概率", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"id": "kpi-5", "in": ".kpi-s", "n": "韩国外资净买入", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"id": "g-0", "in": ".src", "n": "CoreWeave 5 年 CDS", "k": "day", "d": "10/15", "age": 1, "old": false},
+      {"id": "g-1", "in": ".src", "n": "高收益债利差", "k": "day", "d": "10/15", "age": 1, "old": false},
+      {"id": "g-2", "in": ".src", "n": "10 月加息概率", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"id": "g-5", "in": ".src", "n": "韩国外资净买卖", "k": "day", "d": "10/16", "age": 0, "old": false},
+      {"q": "#cn-gauges > .gg", "i": 1, "in": ".src", "n": "一年期存单利率", "k": "day", "d": "10/13", "age": 3, "old": true},
+      {"q": "#cn-gauges > .gg", "i": 2, "in": ".src", "n": "北京二手房挂牌量", "k": "month", "d": "9 月", "age": 0, "old": false},
+      {"q": "#cn-sw .sw", "i": 1, "in": ".sw-fact", "n": "PPI", "k": "none", "d": "", "age": 0, "old": true}
+    ]
+  },
+  "timeline": {
+    "head": "3 期里结论换过 1 次，立场一次没动",
+    "sub": "每次发布记一期：结论、总立场、诊断、止跌清单和七个主题的立场，和前一期比变了的地方都标出来。止跌清单前后变过 2 盏灯。",
+    "before": ["杠杆 AI 基建：10/14 是等待，首版改成回避"],
+    "entries": [
+      {"key": "10/15 晚", "snap": "21:42", "head": "好财报不是底，融资松开才是。", "stance": "等待", "diag": "这是融资压力型下跌，不是流动性冲击", "lamps": [["①", "踩踏", "red"], ["②", "融资", "red"], ["③", "利率", "amber"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
+      {"key": "10/16 午", "snap": "15:10", "head": "好财报不是底，融资松开才是。", "stance": "等待", "diag": "还是融资压力型下跌，不是流动性冲击", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
+      {"key": "10/17 早", "snap": "08:40", "head": "融资不松，反弹就站不住。", "stance": "等待", "diag": "还是融资压力型下跌，正往美股大科技扩散", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]}
+    ]
   }
 }
 </script>
@@ -2148,14 +2253,14 @@ details.tt[open] summary::before{content:"▾"}
     var H = D.header, V = D.verdict, mast = $('mast');
     var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
     var SEC = {verdict: '今日结论', kpis: '关键数字', signals: '止跌清单', themes: '主题判断', watch: '序参量', paths: '路径',
-      evidence: '证据', macro: '宏观状态', china: '中国视角', agenda: '下一检查点', log: '中途回看', method: '框架', install: '安装', 'in-pkg': '下载', 'in-cl': '装在哪里', 'in-asks': '怎么问'};
+      evidence: '证据', macro: '宏观状态', china: '中国视角', agenda: '下一检查点', log: '中途回看', vtl: '观点时间线', alerts: '路标提醒', method: '框架', install: '安装', 'in-pkg': '下载', 'in-cl': '装在哪里', 'in-asks': '怎么问'};
     var HEAD = {verdict: V.headline, kpis: '六个关键数字', signals: D.signals.head, themes: D.themesHead, watch: D.watch.head, paths: D.paths.head,
-      evidence: D.evidenceHead, macro: D.macro.head, china: D.china.head, agenda: D.agenda.head, log: D.log.head, method: D.method.head, install: D.install.head};
+      evidence: D.evidenceHead, macro: D.macro.head, china: D.china.head, agenda: D.agenda.head, log: D.log.head, vtl: D.timeline.head, method: D.method.head, install: D.install.head};
     var WS = [
       {id: 'today', name: '总览', start: 'verdict', p: '现在怎么判断，该做什么。', secs: ['verdict', 'kpis', 'signals']},
       {id: 'themes', name: '主题', start: 'ws-themes', p: '每个方向的立场，盯哪些读数，可能怎么走。', secs: ['themes', 'watch', 'paths']},
       {id: 'evidence', name: '依据', start: 'ws-evidence', p: '判断背后的数据、机制和框架。', secs: ['evidence', 'macro', 'china', 'method']},
-      {id: 'review', name: '复盘', start: 'ws-review', p: '下一个检查点在哪，上次的判断中途看对没有。', secs: ['agenda', 'log']},
+      {id: 'review', name: '复盘', start: 'ws-review', p: '下一个检查点在哪，上次的判断看对没有，每期结论怎么变的。', secs: ['agenda', 'log', 'vtl']},
       {id: 'install', name: '安装', start: 'ws-install', p: '把静观装进你自己的 Claude：下载、四种装法、装好怎么问。', secs: ['install']}];
     var checks = D.signals.checks, ev = D.agenda.events, K = D.kpis, G = D.watch.gauges;
     var nxt = ev.filter(function(e){ return e.key; })[0] || ev[0];
@@ -2263,7 +2368,8 @@ details.tt[open] summary::before{content:"▾"}
         mgCard('method', D.method.head, '视角：' + D.method.lenses.map(function(l){ return l.name; }).join('、') + '。')],
       review: [
         mgCard('agenda', D.agenda.head, null, ev.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; })),
-        mgCard('log', D.log.head, '已回看 ' + CB.reviewed + '/' + CB.total + '；失误记在' + CB.layers.map(function(l){ return l.k + ' ' + l.v + ' 次'; }).join('、') + '；下次完整回看 ' + D.edition.due + '。')],
+        mgCard('log', D.log.head, '已回看 ' + CB.reviewed + '/' + CB.total + '；失误记在' + CB.layers.map(function(l){ return l.k + ' ' + l.v + ' 次'; }).join('、') + '；下次完整回看 ' + D.edition.due + '。'),
+        mgCard('vtl', D.timeline.head, null, D.timeline.entries.slice(-4).reverse().map(function(e){ return {to: 'vtl', n: e.key, v: e.stance, s: e.head}; }))],
       install: [
         mgCard('in-pkg', D.install.pkg.name + ' ' + D.install.pkg.ver, D.install.spec.slice(1).join('；') + '。' + (D.install.pkg.zip ? '' : '安装包还没放到公开地址。'), [
           {to: 'in-pkg', n: D.install.pkg.zip ? '下载安装包' : '安装包', v: D.install.pkg.size, m: true}]),
@@ -2342,10 +2448,12 @@ details.tt[open] summary::before{content:"▾"}
     K.forEach(function(k, i){ ix('关键数字', k.label, k.read, 'kpi-' + i, k.value + unit(k.unit)); });
     G.forEach(function(g, i){ ix('序参量', g.name, g.stateLabel, 'g-' + i, g.curLabel + unit(g.unit)); });
     ev.forEach(function(e){ ix('日程', e.label, e.note || '', 'agenda', e.time); });
+    D.alerts.items.forEach(function(a){ ix('路标', a.k, a.v, a.to || 'alerts', '路标' + {hit: '越线', near: '逼近', soon: '接近解除', clear: '解除'}[a.lv]); });
+    D.timeline.entries.forEach(function(e){ ix('时间线', e.key + ' 的结论', e.head, 'vtl', '时间线 · ' + e.stance); });
     D.install.clients.forEach(function(c){ ix('安装', '安装到 ' + c.name, c.fit + ' · skill', 'inst-' + c.k); });
     ix('安装', '下载 ' + D.install.pkg.name + '.zip', 'skill 安装包 · ' + D.install.pkg.ver, 'in-pkg', D.install.pkg.size);
     D.install.asks.forEach(function(a){ ix('安装', '示例提问：' + a.k, a.q, 'in-asks'); });
-    var ORDER = ['板块', '主题', '止跌清单', '行情', '关键数字', '序参量', '日程', '安装'];
+    var ORDER = ['板块', '路标', '主题', '止跌清单', '行情', '关键数字', '序参量', '日程', '时间线', '安装'];
     var srch = $('srch'), q = $('srch-q'), res = $('srch-r'), sBtn = $('srch-btn'), hits = [], cur = 0, back = null;
     function render(){
       var terms = q.value.trim().toLowerCase().split(/\s+/).filter(Boolean);
@@ -2438,6 +2546,125 @@ details.tt[open] summary::before{content:"▾"}
     [].forEach.call(document.querySelectorAll('.theme-t'), function(b){ b.addEventListener('click', flip); });
   })();
 
+  /* extras:js */
+  /* freshness tags, signpost alerts, stance timeline */
+  (function(){
+    var F = D.fresh, A = D.alerts, T = D.timeline;
+    function host(x){ return x.id ? $(x.id) : (document.querySelectorAll(x.q)[x.i] || null); }
+
+    /* hand-entered readings: a date tag on each, and one line in the verdict listing the stale ones */
+    if (F && F.items.length){
+      var stale = [];
+      F.items.forEach(function(x, i){
+        var card = host(x);
+        if (!card) return;
+        if (!card.id) card.id = 'fr-' + i;
+        var into = x['in'] ? card.querySelector(x['in']) : card;
+        if (!into) return;
+        var lab = '手填 · ' + (x.k === 'none' ? '没标日期' : '截至 ' + x.d) + (x.old && x.k === 'day' ? ' · 旧了 ' + x.age + ' 个交易日' : '');
+        var why = x.k === 'none' ? '这项没写读数日期，用之前先核对' : (x.k === 'month' ? '月度数据，下个月的读数出来前都算新' :
+          (x.old ? '比快照日 ' + F.asof + ' 早 ' + x.age + ' 个交易日' : '和快照日 ' + F.asof + ' 相差 ' + x.age + ' 个交易日以内'));
+        into.insertBefore(h('span', {class: 'fr' + (x.old ? ' old' : ''), tabindex: '0', 'data-tip': lab + '|' + x.n + '|' + why + '；快照里没有这项，是手动填的'}), into.firstChild).textContent = lab;
+        if (x.old) stale.push({x: x, id: card.id});
+      });
+      var sum = h('p', {class: 'fr-sum'});
+      if (stale.length){
+        add(sum, [h('span', {class: 'fr old'}, '手填读数 ' + F.items.length + ' 项，' + stale.length + ' 项该更新')]);
+        stale.forEach(function(s){ sum.appendChild(h('a', {href: '#' + s.id, 'data-go': s.id}, s.x.n, h('em', null, s.x.k === 'none' ? '没标日期' : s.x.d))); });
+      } else {
+        add(sum, [h('span', {class: 'fr'}, '手填读数 ' + F.items.length + ' 项'), '都在快照日前两个交易日以内']);
+      }
+      $('v-data').parentNode.insertBefore(sum, $('v-data').nextSibling);
+    }
+
+    /* signposts: crossed, close to a line, or one step from relief */
+    var items = A ? A.items : [];
+    var cb = $('cn-c') && D.china.bottom ? [].filter.call($('cn-c').querySelectorAll('.gg'), function(c){ var t = c.querySelector('.gg-title'); return t && t.textContent === D.china.bottom.title; })[0] : null;
+    if (cb && !cb.id) cb.id = 'cn-bottom';
+    if (items.length){
+      var n = {hit: 0, near: 0, soon: 0, clear: 0};
+      items.forEach(function(a){ n[a.lv]++; });
+      var parts = [];
+      parts.push(n.hit ? n.hit + ' 条越线' : '没有越线');
+      if (n.near) parts.push(n.near + ' 条逼近');
+      if (n.clear) parts.push(n.clear + ' 条解除');
+      if (n.soon) parts.push(n.soon + ' 条接近解除');
+      var bar = $('alerts');
+      bar.className = 'al-bar' + (n.hit ? ' hit' : (n.near ? '' : ' calm'));
+      add(bar, [
+        h('div', {class: 'al-k'}, h('b', null, h('i', {class: 'al-pip', 'aria-hidden': 'true'}), '路标提醒'), h('span', null, parts.join(' · '))),
+        h('ul', {class: 'al-l'}, items.map(function(a){
+          var L = {hit: '越线', near: '逼近', soon: '接近解除', clear: '解除'}[a.lv];
+          return h('li', null, h('a', {class: 'al-i ' + a.lv, href: '#' + (a.to || 'watch'), 'data-go': a.to || 'watch', 'aria-label': L + '：' + a.k + '，' + a.v},
+            h('i', {'aria-hidden': 'true'}), h('b', null, a.k), h('span', null, a.v), a['new'] && A.since ? h('em', {title: '比 ' + A.since + ' 新出现'}, '新') : null));
+        }))]);
+      bar.hidden = false;
+    }
+
+    /* stance timeline: one column per edition */
+    if (T && T.entries.length){
+      var E = T.entries, box = $('vtl'), last = E.length - 1;
+      box.appendChild(h('div', {class: 'panel-h'}, h('span', {class: 'tag'}, 'Timeline · 观点时间线'), h('h3', null, T.head), h('p', null, T.sub)));
+      function cells(get, show, same){
+        return E.map(function(e, i){
+          var v = get(e), p = i ? get(E[i - 1]) : null, chg = i > 0 && !(same || function(a, b){ return a === b; })(v, p);
+          var c = h('td', {class: (i === last ? 'now' : '') + (chg ? ' chg' : '')}, show(v, e, i));
+          if (chg && typeof p === 'string') c.setAttribute('data-tip', v + '|' + e.key + '|之前（' + E[i - 1].key + '）：' + p);
+          return c;
+        });
+      }
+      function row(label, tds, cls){ return h('tr', {class: cls || null}, h('th', {scope: 'row'}, label), tds); }
+      var names = [];
+      E.forEach(function(e){ e.themes.forEach(function(t){ if (names.indexOf(t[0]) < 0) names.push(t[0]); }); });
+      var order = D.stances.map(function(s){ return s.theme; });
+      names.sort(function(a, b){ var x = order.indexOf(a), y = order.indexOf(b); return (x < 0 ? 99 : x) - (y < 0 ? 99 : y); });
+      function th(e, name){ for (var i = 0; i < e.themes.length; i++) if (e.themes[i][0] === name) return e.themes[i][1]; return ''; }
+      var body = [
+        row('结论', cells(function(e){ return e.head; }, function(v){ return h('span', {class: 'vt-h'}, v); })),
+        row('总立场', cells(function(e){ return e.stance; }, function(v){ return pill(v); })),
+        row('诊断', cells(function(e){ return e.diag; }, function(v){ return h('span', {class: 'vt-d'}, v); })),
+        row('止跌清单', cells(function(e){ return e.lamps.map(function(l){ return l[2]; }).join(','); }, function(v, e, i){
+          return h('span', {class: 'vt-lmp'}, e.lamps.map(function(l, k){
+            var p = i ? E[i - 1].lamps[k] : null, c = p && p[2] !== l[2];
+            return h('span', {class: c ? 'chg' : null, tabindex: '0', 'data-tip': LAMP[l[2]] + '|' + l[0] + ' ' + l[1] + '|' + e.key + (c ? '；之前是' + LAMP[p[2]] : '')}, h('i', {class: 'lamp sm ' + l[2], 'aria-hidden': 'true'}), l[0]);
+          }));
+        }, function(a, b){ return true; })),
+        h('tr', {class: 'vt-g'}, h('th', {scope: 'row'}, '七个主题'), E.map(function(e, i){ return h('td', {class: i === last ? 'now' : null}); }))
+      ];
+      names.forEach(function(name){
+        body.push(row(name, cells(function(e){ return th(e, name); }, function(v){ return v ? pill(v) : h('span', {class: 'k'}, '—'); })));
+      });
+      var wrap = h('div', {class: 'vt-wrap scroll-x'}, h('table', {class: 'vt-t'},
+        h('thead', null, h('tr', null, h('th', null, ''), E.map(function(e, i){ return h('th', {class: i === last ? 'now' : null, scope: 'col'}, e.key, h('small', null, '快照 ' + e.snap)); }))),
+        h('tbody', null, body)));
+      box.appendChild(wrap);
+      /* phones: newest first, one block per edition with what changed since the one before */
+      var W = {red: '红灯', amber: '黄灯', green: '绿灯'};
+      box.appendChild(h('ol', {class: 'vt-list'}, E.map(function(e, i){
+        var p = i ? E[i - 1] : null, c = [];
+        if (p){
+          if (p.head !== e.head) c.push('结论换了');
+          if (p.diag !== e.diag) c.push('诊断改了');
+          e.lamps.forEach(function(l, k){ var q = p.lamps[k]; if (q && q[2] !== l[2]) c.push(l[0] + ' ' + W[q[2]] + '转' + W[l[2]]); });
+          var moved = p.stance !== e.stance ? ['总立场 ' + p.stance + ' → ' + e.stance] : [];
+          e.themes.forEach(function(t){ var was = th(p, t[0]); if (was && was !== t[1]) moved.push(t[0] + ' ' + was + ' → ' + t[1]); });
+          c = c.concat(moved.length ? moved : ['立场没动']);
+        }
+        return h('li', {class: i === last ? 'now' : null},
+          h('div', {class: 'vt-lh'}, h('b', null, e.key), h('small', null, '快照 ' + e.snap), pill(e.stance)),
+          h('p', {class: 'vt-h'}, e.head),
+          h('span', {class: 'vt-lmp'}, e.lamps.map(function(l){ return h('span', null, h('i', {class: 'lamp sm ' + l[2], 'aria-hidden': 'true'}), l[0]); })),
+          h('p', {class: 'vt-c'}, p ? '和 ' + p.key + ' 比：' + c.join('；') : '首版'));
+      }).reverse()));
+      var foot = h('div', {class: 'vt-foot'});
+      if (T.before && T.before.length) foot.appendChild(h('p', null, '首版之前：' + T.before.join('；') + '。'));
+      foot.appendChild(h('p', null, '每次发布自动记一列，同一天同一时段只留最后一版；七个主题的立场是 1–3 个月的研究判断，不是买卖指令。'));
+      box.appendChild(foot);
+      requestAnimationFrame(function(){ if (wrap.scrollWidth > wrap.clientWidth) wrap.scrollLeft = wrap.scrollWidth; });
+    }
+  })();
+
+  /* /extras:js */
   /* one shared tooltip: values lead, labels follow */
   var tip = h('div', {class: 'tip', role: 'tooltip', hidden: ''});
   document.body.appendChild(tip);
