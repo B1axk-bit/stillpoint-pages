@@ -1229,7 +1229,7 @@ details.tt[open] summary::before{content:"▾"}
   "macro": {
     "head": "钱在变少，还贵：美元流动性连续 3 个观测日为负",
     "sub": "吸引子 19 项宏观状态指数。正负号是方向，绝对值是底层指标同向的比例；方向不代表利好利空。",
-    "quadrant": {"label": "钱在变少，还贵", "read": "吸引子美元流动性连续 3 个观测日为负（10/16、10/19、10/20），按我们定的规则，“钱多”改成“钱在变少”。资金面本身还没紧：SOFR−IORB −2bp，银行准备金 3.02 万亿美元，高收益债利差 3.29%。价格这头还贵：12 月前加息的概率约 94%，布伦特又到 110。点还画在右上，箭头指向“钱少又贵”。", "qty": ["银行准备金 3.02 万亿美元，10/14 当周 −75 亿，扩张暂停", "吸引子美元流动性 −0.59（10/20，置信度边沿），连续 3 个观测日为负"], "price": ["2 年期美债 4.79%，10 年期 5.12%（10/20 收盘）", "布伦特结算 108.79（10/20），10/21 早上 109.97", "10 月加息概率约 17%，12 月前累计约 94%（FXEmpire 引 CME，10/20）"], "note": "10/21 · 按规则改", "arrow": "down", "qtyLabel": "量：在变少"},
+    "quadrant": {"label": "钱在变少，还贵", "read": "吸引子美元流动性连续 3 个观测日为负（10/16、10/19、10/20），按我们定的规则，“钱多”改成“钱在变少”。资金面本身还没紧：SOFR−IORB −2bp，银行准备金 3.02 万亿美元，高收益债利差 3.29%。价格这头还贵：12 月前加息的概率约 94%，布伦特又到 110。点画在“钱多但贵”和“钱少又贵”的分界线上，箭头往下。", "qty": ["银行准备金 3.02 万亿美元，10/14 当周 −75 亿，扩张暂停", "吸引子美元流动性 −0.59（10/20，置信度边沿），连续 3 个观测日为负"], "price": ["2 年期美债 4.79%，10 年期 5.12%（10/20 收盘）", "布伦特结算 108.79（10/20），10/21 早上 109.97", "10 月加息概率约 17%，12 月前累计约 94%（FXEmpire 引 CME，10/20）"], "note": "10/21 起往下走", "arrow": "down", "pos": "r-mid", "qtyLabel": "量：在变少"},
     "pair": {"title": "最值得盯的背离：信用现在松，领先信号一致看紧", "a": {"v": "+0.75", "label": "美国信用环境", "read": "信用在扩张，9/30 转入上升"}, "b": {"v": "−0.91", "label": "美国信用环境预警", "read": "领先信号 91% 指向收缩"}, "watch": "信用环境转入下降，说明预警兑现；预警回到 −0.6 以上，说明背离以放松收场。11/12 回看（案例 4）。"},
     "groups": [
       {"name": "美国", "col": 0, "rows": [{"short": "物价", "v": 0.55, "reading": "物价上行压力", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "资金利率", "v": 0.6364, "reading": "资金利率上行", "conf": "中", "change": "转入上升", "date": "09-30"}, {"short": "资金利率预警", "v": 0.7273, "reading": "领先信号指向利率上行", "conf": "中", "change": "维持", "date": "10-18"}, {"short": "货币政策倾向", "v": -0.66, "reading": "偏紧", "conf": "中", "change": "维持", "date": "10-18"}, {"short": "财政政策力度", "v": -1.0, "reading": "收缩", "conf": "强", "change": "维持", "date": "09-13"}, {"short": "信用环境", "v": 0.75, "reading": "信用扩张", "conf": "中", "change": "转入上升", "date": "09-30", "pair": true}, {"short": "信用环境预警", "v": -0.9062, "reading": "领先信号指向信用收缩", "conf": "强", "change": "维持", "date": "10-18", "pair": true}, {"short": "市场风险偏好", "v": -0.55, "reading": "风险偏好下降", "conf": "边沿", "change": "维持", "date": "09-30"}, {"short": "消费就业周期", "v": 0.7182, "reading": "扩张", "conf": "中", "change": "维持", "date": "08-31"}, {"short": "制造业周期", "v": 0.9667, "reading": "扩张", "conf": "强", "change": "维持", "date": "09-30"}]},
@@ -1789,28 +1789,30 @@ details.tt[open] summary::before{content:"▾"}
     $('mc-sub').textContent = m.sub;
     var NS = 'http://www.w3.org/2000/svg';
     function s(tag, attrs, text){ var e = document.createElementNS(NS, tag); for (var k in attrs) e.setAttribute(k, attrs[k]); if (text != null) e.textContent = text; return e; }
-    var svg = s('svg', {viewBox: '0 0 330 262', role: 'img', 'aria-label': '钱货四格：现在在' + q.label + '这一格'});
+    var qpos = q.pos || 'tr';                     // tr: 钱多但贵；r-mid: 右边两格的分界线上；br: 钱少又贵
+    var svg = s('svg', {viewBox: '0 0 330 262', role: 'img', 'aria-label': '钱货四格：' + q.label + (qpos === 'r-mid' ? '，点在钱多但贵和钱少又贵的分界线上' : '')});
     var X0 = 34, Y0 = 8, W = 288, H = 220, mx = X0 + W / 2, my = Y0 + H / 2;
     var cells = [
-      [X0, Y0, '水多又便宜', false], [mx, Y0, q.label, true],
-      [X0, my, '钱少也便宜', false], [mx, my, '钱少又贵', false]
+      [X0, Y0, '水多又便宜', false], [mx, Y0, '钱多但贵', qpos !== 'br'],
+      [X0, my, '钱少也便宜', false], [mx, my, '钱少又贵', qpos !== 'tr']
     ];
     cells.forEach(function(c){
       svg.appendChild(s('rect', {x: c[0] + 2, y: c[1] + 2, width: W / 2 - 4, height: H / 2 - 4, rx: 5, class: 'q-cell' + (c[3] ? ' on' : '')}));
-      svg.appendChild(s('text', {x: c[0] + 12, y: c[1] + 26, class: 'q-lab' + (c[3] ? ' on' : '')}, c[2]));
+      svg.appendChild(s('text', {x: c[0] + 12, y: c[1] + 26, class: 'q-lab' + (c[3] && qpos !== 'r-mid' ? ' on' : '')}, c[2]));
     });
+    var cy = qpos === 'tr' ? 74 : (qpos === 'r-mid' ? my : my + 66);
     if (q.arrow === 'left'){
-      svg.appendChild(s('path', {d: 'M242 74 L 212 74', class: 'q-arrow'}));
-      svg.appendChild(s('path', {d: 'M218 70 L 212 74 L 218 78', class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M242 ' + cy + ' L 212 ' + cy, class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M218 ' + (cy - 4) + ' L 212 ' + cy + ' L 218 ' + (cy + 4), class: 'q-arrow'}));
     } else if (q.arrow === 'down'){
-      svg.appendChild(s('path', {d: 'M252 83 L 252 95', class: 'q-arrow'}));
-      svg.appendChild(s('path', {d: 'M248 90 L 252 95 L 256 90', class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M252 ' + (cy + 9) + ' L 252 ' + (cy + 23), class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M248 ' + (cy + 18) + ' L 252 ' + (cy + 23) + ' L 256 ' + (cy + 18), class: 'q-arrow'}));
     } else if (q.arrow !== 'none'){
-      svg.appendChild(s('path', {d: 'M262 74 L 304 74', class: 'q-arrow'}));
-      svg.appendChild(s('path', {d: 'M298 70 L 304 74 L 298 78', class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M262 ' + cy + ' L 304 ' + cy, class: 'q-arrow'}));
+      svg.appendChild(s('path', {d: 'M298 ' + (cy - 4) + ' L 304 ' + cy + ' L 298 ' + (cy + 4), class: 'q-arrow'}));
     }
-    svg.appendChild(s('circle', {cx: 252, cy: 74, r: 7, class: 'q-dot'}));
-    svg.appendChild(s('text', {x: mx + 12, y: Y0 + 100, class: 'q-note'}, q.note));
+    svg.appendChild(s('circle', {cx: 252, cy: cy, r: 7, class: 'q-dot'}));
+    svg.appendChild(s('text', {x: mx + 12, y: qpos === 'tr' ? Y0 + 100 : (qpos === 'r-mid' ? my + 62 : my + 96), class: 'q-note'}, q.note));
     svg.appendChild(s('text', {x: X0 + W / 2, y: 252, 'text-anchor': 'middle', class: 'q-ax'}, '钱的价：便宜 → 贵'));
     var ylab = s('text', {x: 14, y: my, 'text-anchor': 'middle', class: 'q-ax', transform: 'rotate(-90 14 ' + my + ')'}, '钱的量：少 → 多');
     svg.appendChild(ylab);
