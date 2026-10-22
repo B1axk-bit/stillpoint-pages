@@ -219,7 +219,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   </div>
 
   <section class="pane on" id="p-review">
-    <div class="note">每条上面是中文要点（公司、事件、数字、影响），我按标题和 ARGUS 引用整理，标题看不出的就写“标题没说”；下面是脚本按“四个问题”预填的归类和按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。处理过的条目在每天更新时写进账本，分数自动重算。</div>
+    <div class="note">每条上面是中文要点（公司、事件、数字、影响），我按标题和 ARGUSX 引用整理，标题看不出的就写“标题没说”；下面是脚本按“四个问题”预填的归类和按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。处理过的条目在每天更新时写进账本，分数自动重算。</div>
     <div id="groups"></div>
     <div class="group">
       <div class="ghead"><h3>自己记一条</h3></div>
@@ -269,7 +269,8 @@ const COLOR = {red: "红", amber: "黄", green: "绿", grey: "灰"};
 const ACT = {confirm: "已确认", edit: "已改归类", reject: "已驳回", add: "自己记的"};
 
 const $ = s => document.querySelector(s);
-const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+// 对外统一写 ARGUSX（B1ack 10/22 定）；数据里的原文不改，只改显示
+const esc = s => String(s ?? "").replace(/ARGUS(?!X)/g, "ARGUSX").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
 const md = d => (d || "").slice(5).replace("-", "/");
 
 function points(s) {
