@@ -15,7 +15,7 @@
   --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
   --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
   --f-latin:"Cormorant Garamond","Cormorant","Garamond","Times New Roman",serif;
-  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,"Noto Sans SC","PingFang SC","Microsoft YaHei",monospace;
   --l-red:#d03b3b; --l-amber:#e0a21a; --l-green:#11905c; --l-grey:#9aabae;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
@@ -43,24 +43,24 @@ a{color:inherit}
 .mast{position:sticky;top:0;z-index:30;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
 .mast-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
 .brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;flex:none}
-.brand svg{width:26px;height:26px}
-.brand .wm{font-family:var(--f-display);font-weight:700;font-size:21px;line-height:1;letter-spacing:.1em;margin-right:-.1em}
+.brand svg{width:28px;height:28px}
+.brand .wm{font-family:var(--f-display);font-weight:700;font-size:22px;line-height:1;letter-spacing:.1em;margin-right:-.1em}
 .brand .bh{width:1px;height:16px;background:var(--line)}
-.brand .lb{font-family:var(--f-latin);font-weight:600;font-size:17px;line-height:1;letter-spacing:.03em;color:var(--ink-2)}
-.chip{font-family:var(--f-mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.brand .lb{font-family:var(--f-latin);font-weight:600;font-size:18px;line-height:1;letter-spacing:.03em;color:var(--ink-2)}
+.chip{font-family:var(--f-body);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
 .chip.priv{color:var(--brass);border-color:color-mix(in srgb,var(--brass) 45%,var(--line))}
 .grow{flex:1}
 @media (max-width:640px){.brand .lb,.brand .bh,#asof{display:none}}
 
 /* 结论区 */
 .verdict{padding:28px 0 6px}
-.tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.tag{font-family:var(--f-body);font-size:12px;font-weight:500;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
 .verdict h1{font-family:var(--f-display);font-weight:900;font-size:clamp(1.55rem,4.2vw,2.35rem);line-height:1.3;letter-spacing:.01em;margin-top:8px;text-wrap:balance}
 .verdict h1 .num{font-family:var(--f-mono);font-weight:500;color:var(--brass);letter-spacing:0}
 .verdict .lede{color:var(--ink-2);margin-top:10px;max-width:46em}
-.alert{margin-top:10px;padding:8px 12px;border-radius:6px;background:var(--crit-wash);color:var(--crit);font-size:13.5px}
-.tier{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13.5px}
-.tier b{white-space:nowrap;flex:none;font-family:var(--f-mono);font-weight:500;background:var(--inv-bg);color:var(--inv-fg);border-radius:999px;padding:1px 9px;font-size:12px}
+.alert{margin-top:10px;padding:8px 12px;border-radius:6px;background:var(--crit-wash);color:var(--crit);font-size:14px}
+.tier{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font-size:14px}
+.tier b{white-space:nowrap;flex:none;font-family:var(--f-body);font-weight:500;font-variant-numeric:tabular-nums;background:var(--inv-bg);color:var(--inv-fg);border-radius:999px;padding:1px 9px;font-size:12px}
 
 /* 五盏灯 */
 .lamps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:22px}
@@ -70,8 +70,8 @@ a{color:inherit}
 .lampc{display:flex;flex-direction:column;gap:1px}
 .lampc:hover{border-color:var(--lc)}
 .lampc .nm{font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px}
-.lampc .v{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:2px}
-.lampc .pend{font-size:11.5px;color:var(--warn);margin-top:2px}
+.lampc .v{font-family:var(--f-body);font-size:12px;font-variant-numeric:tabular-nums;color:var(--muted);margin-top:2px}
+.lampc .pend{font-size:12px;color:var(--warn);margin-top:2px}
 .dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--lc);flex:none}
 .c-red{--lc:var(--l-red)}.c-amber{--lc:var(--l-amber)}.c-green{--lc:var(--l-green)}.c-grey{--lc:var(--l-grey)}
 
@@ -96,7 +96,7 @@ details.fold{scroll-margin-top:72px}
 /* 模块页签 */
 .tabs{display:flex;gap:2px;margin-top:30px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
 .tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;padding:10px 12px 9px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;gap:7px;align-items:baseline}
-.tab .no{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted)}
+.tab .no{font-family:var(--f-mono);font-size:11px;letter-spacing:.08em;color:var(--muted)}
 .tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brass);font-weight:700}
 .tab[aria-selected="true"] .no{color:var(--brass)}
 .tab .cnt{font-family:var(--f-mono);font-size:11px;background:var(--brass-wash);color:var(--brass);border-radius:999px;padding:0 6px}
@@ -109,7 +109,7 @@ h2.mh{font-family:var(--f-display);font-weight:900;font-size:18px;margin:26px 0 
 .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
 .ghead h3{font-family:var(--f-display);font-weight:700;font-size:16px}
 .ghead h3 .c{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--muted);margin-left:4px}
-.ghint{font-size:12.5px;color:var(--muted);margin-top:2px}
+.ghint{font-size:13px;color:var(--muted);margin-top:2px}
 .cand{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow);position:relative}
 .cand.done{background:color-mix(in srgb,var(--surface) 55%,var(--bg));box-shadow:none}
 .cand.done .ev{color:var(--ink-2)}
@@ -121,11 +121,11 @@ h2.mh{font-family:var(--f-display);font-weight:900;font-size:18px;margin:26px 0 
 .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .cp{font-size:12px;padding:1px 8px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
 .cp.cls{background:var(--brass-wash);color:var(--brass);font-weight:700}
-.pts{font-family:var(--f-mono);font-size:12.5px;font-weight:500;padding:1px 8px;border-radius:4px;margin-left:auto}
+.pts{font-family:var(--f-mono);font-size:13px;font-weight:500;padding:1px 8px;border-radius:4px;margin-left:auto}
 .pts.pos{background:var(--good-wash);color:var(--good)}.pts.neg{background:var(--crit-wash);color:var(--crit)}.pts.zero{background:var(--surface-2);color:var(--muted)}
 td .pts{margin-left:0}
 .was{font-size:12px;color:var(--muted);width:100%}
-.why{margin:8px 0 0;padding:8px 0 0 18px;border-top:1px dashed var(--line);color:var(--muted);font-size:12.5px}
+.why{margin:8px 0 0;padding:8px 0 0 18px;border-top:1px dashed var(--line);color:var(--muted);font-size:13px}
 .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
 button.b{appearance:none;font:inherit;font-size:13px;border-radius:6px;padding:5px 14px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
 button.b:hover{border-color:var(--brass)}
@@ -139,7 +139,7 @@ button.b:disabled{opacity:.45;cursor:not-allowed}
 .editor.on{display:block}
 .row{display:flex;gap:8px;flex-wrap:wrap}
 label.f{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px;min-width:110px;flex:1}
-select,input,textarea{font:inherit;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+select,input,textarea{font:inherit;font-size:14px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
 textarea{min-height:56px;resize:vertical}
 
 /* 表格、灯、案例 */
@@ -157,7 +157,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .fold summary::after{content:"展开";margin-left:auto;font-size:12px;color:var(--muted)}
 .fold[open] summary::after{content:"收起"}
 .fold .nm{font-weight:700}
-.sub{color:var(--muted);font-size:12.5px}
+.sub{color:var(--muted);font-size:13px}
 .empty{color:var(--muted);font-size:13px;padding:10px 0}
 .md{font-size:14px;overflow-wrap:anywhere;margin-top:8px;border-top:1px solid var(--grid);padding-top:6px}
 .md h1,.md h2{font-family:var(--f-display);font-size:16px;margin:14px 0 6px}.md h3,.md h4{font-size:14px;margin:12px 0 4px}
@@ -166,11 +166,11 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .md blockquote{margin:8px 0;padding:4px 12px;border-left:3px solid var(--brass-wash);color:var(--muted)}
 .md code,.note code{font-family:var(--f-mono);font-size:12px;background:var(--surface-2);padding:0 4px;border-radius:3px}
 .md pre{white-space:pre-wrap;font-family:inherit}
-.tg{font-size:11.5px;padding:0 7px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
+.tg{font-size:12px;padding:0 7px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
 .tg.priv{background:var(--warn-wash);color:var(--warn)}
 .login{margin-top:22px;max-width:640px}
 .login h2{font-family:var(--f-display);font-weight:900;font-size:22px;margin:6px 0 8px}
-.login ol{margin:8px 0 14px;padding-left:20px;color:var(--ink-2);font-size:13.5px}
+.login ol{margin:8px 0 14px;padding-left:20px;color:var(--ink-2);font-size:14px}
 </style>
 
 <header class="mast"><div class="mast-in">
@@ -534,7 +534,7 @@ function loginView(msg) {
   $("#login").innerHTML = `<section class="login">
     <div class="tag">第一次打开</div>
     <h2>连上你的私有仓库</h2>
-    <p class="sub" style="font-size:13.5px">这一页本身不带任何数据。数据和你的复核结果都放在私有仓库 stillpoint-data 里，页面用令牌现读现写。令牌只存在这台设备的浏览器里，不会上传到别处。</p>
+    <p class="sub" style="font-size:14px">这一页本身不带任何数据。数据和你的复核结果都放在私有仓库 stillpoint-data 里，页面用令牌现读现写。令牌只存在这台设备的浏览器里，不会上传到别处。</p>
     <ol>
       <li>打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>。</li>
       <li>Repository access 只选 <b>stillpoint-data</b>。</li>
