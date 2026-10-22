@@ -50,6 +50,9 @@ a{color:inherit}
 .chip{font-family:var(--f-body);font-size:12px;font-variant-numeric:tabular-nums;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
 .chip.priv{color:var(--brass);border-color:color-mix(in srgb,var(--brass) 45%,var(--line))}
 .grow{flex:1}
+.theme-t{flex:none;width:32px;height:32px;border-radius:50%;border:1px solid var(--line);background:var(--surface);color:var(--ink-2);display:grid;place-items:center;cursor:pointer;padding:0}
+.theme-t:hover{color:var(--ink);border-color:var(--brass)}
+.theme-t svg{width:16px;height:16px}
 @media (max-width:640px){.brand .lb,.brand .bh,#asof{display:none}}
 
 /* 结论区 */
@@ -118,6 +121,15 @@ h2.mh{font-family:var(--f-display);font-weight:900;font-size:18px;margin:26px 0 
 .ev{margin:5px 0 8px;font-weight:500;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
 .ev a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
 .ev a:hover{text-decoration-color:var(--brass)}
+.zh{margin:6px 0 8px;font-weight:700;font-size:16px;line-height:1.5}
+.kv{display:grid;grid-template-columns:max-content minmax(0,1fr);gap:4px 14px;margin:0 0 10px;font-size:13px;line-height:1.6}
+.kv dt{color:var(--muted)}
+.kv dd{margin:0;overflow-wrap:anywhere}
+.kv dd.imp{color:var(--ink)}
+.kv dd.auto{color:var(--muted)}
+.orig{font-size:12px;color:var(--muted);margin:0 0 10px;overflow-wrap:anywhere}
+.orig a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.orig a:hover{color:var(--ink);text-decoration-color:var(--brass)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
 .cp{font-size:12px;padding:1px 8px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
 .cp.cls{background:var(--brass-wash);color:var(--brass);font-weight:700}
@@ -182,9 +194,12 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
     </svg>
     <span class="wm">静观</span><i class="bh" aria-hidden="true"></i><span class="lb">Stillpoint</span>
   </a>
-  <span class="chip priv">后台 · 只给你看</span>
+  <span class="chip priv">后台</span>
   <span class="grow"></span>
   <span class="chip" id="asof"></span>
+  <button class="theme-t" id="theme-t" type="button" aria-label="切换深浅色" title="切换深浅色">
+    <svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6.3" fill="none" stroke="currentColor" stroke-width="1.5"/><path d="M8 1.7 A6.3 6.3 0 0 1 8 14.3 Z" fill="currentColor"/></svg>
+  </button>
 </div></header>
 
 <div class="wrap" id="app">
@@ -204,7 +219,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   </div>
 
   <section class="pane on" id="p-review">
-    <div class="note">每条都是脚本按"四个问题"预填的归类，右边是按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。我在每天更新时把你处理过的条目写进账本，分数自动重算。</div>
+    <div class="note">每条上面是中文要点（公司、事件、数字、影响），我按标题和 ARGUS 引用整理，标题看不出的就写“标题没说”；下面是脚本按“四个问题”预填的归类和按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。处理过的条目在每天更新时写进账本，分数自动重算。</div>
     <div id="groups"></div>
     <div class="group">
       <div class="ghead"><h3>自己记一条</h3></div>
@@ -228,6 +243,19 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 
 <script>
 let DATA = /*__DATA__*/null;
+
+// 深浅色切换：和主页同一个按钮、同一个记忆键，只存在这台设备的浏览器里
+(function () {
+  const root = document.documentElement, KEY = "stillpoint-theme";
+  try { const v = localStorage.getItem(KEY); if (v === "light" || v === "dark") root.setAttribute("data-theme", v); } catch (e) {}
+  document.getElementById("theme-t").addEventListener("click", () => {
+    let cur = root.getAttribute("data-theme");
+    if (cur !== "light" && cur !== "dark") cur = matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+    const next = cur === "dark" ? "light" : "dark";
+    root.setAttribute("data-theme", next);
+    try { localStorage.setItem(KEY, next); } catch (e) {}
+  });
+})();
 
 const OPTS = {
   class: ["新独立", "幅度", "记忆", "噪声", "他题"],
@@ -307,11 +335,10 @@ function candHTML(c) {
   const d = decisions[c.id];
   const s = d && d.action !== "reject" ? d : c.suggest;
   const st = synced.has(c.id) ? `<span class="state synced">已入账</span>` : d ? `<span class="state ${d.action}">${ACT[d.action]}</span>` : "";
-  const ev = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.evidence)}</a>` : esc(c.evidence);
   const dis = canWrite ? "" : "disabled";
   return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
     <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
-    <div class="ev">${ev}</div>
+    ${briefHTML(c)}
     <div class="chips">${chips(s)}${ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
     <ul class="why">${c.why.map(w => `<li>${esc(w)}</li>`).join("")}${d && d.note ? `<li>你的备注：${esc(d.note)}</li>` : ""}</ul>
     <div class="acts">${d && !synced.has(c.id)
@@ -319,6 +346,19 @@ function candHTML(c) {
       : synced.has(c.id) ? "" : `<button class="b pri" data-act="confirm" ${dis}>确认</button><button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
     <div class="editor">${editorHTML(c.suggest)}<div class="acts"><button class="b pri" data-act="save">保存</button><button class="b" data-act="cancel">取消</button></div></div>
   </div>`;
+}
+
+// 中文要点：Claude 每天同步时写进 confidence/brief.json；还没写到的，先显示脚本按词表抽出的公司和数字
+function briefHTML(c) {
+  const b = (DATA.brief || {})[c.id], k = c.keys || {};
+  const orig = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.evidence)} ↗</a>` : esc(c.evidence);
+  if (b) return `<div class="zh">${esc(b.zh)}</div>
+    <dl class="kv"><dt>公司</dt><dd>${esc(b.who)}</dd><dt>事件</dt><dd>${esc(b.what)}</dd><dt>数字</dt><dd>${esc(b.figure)}</dd><dt>影响</dt><dd class="imp">${esc(b.impact)}</dd></dl>
+    <div class="orig">原标题：${orig}</div>`;
+  if (c.origin === "lamp") return `<div class="ev">${esc(c.evidence)}</div>`;
+  const who = (k.who || []).join("、"), nums = (k.nums || []).join("、");
+  return `<div class="ev">${orig}</div>
+    <dl class="kv">${who ? `<dt>公司</dt><dd>${esc(who)}</dd>` : ""}${nums ? `<dt>数字</dt><dd>${esc(nums)}</dd>` : ""}<dt>中文要点</dt><dd class="auto">还没整理，每天同步时补上</dd></dl>`;
 }
 
 function editorHTML(s) {
@@ -550,14 +590,16 @@ function loginView(msg) {
 async function ghLoad(remember) {
   $("#login").innerHTML = `<div class="note">正在从私有仓库读数据…</div>`;
   try {
-    const [latest, cand, rubric, reviewed, cases, dec] = await Promise.all([
+    const [latest, cand, rubric, reviewed, cases, dec, brief] = await Promise.all([
       ghFile("confidence/latest.json"), ghFile("confidence/candidates.json"), ghFile("confidence/rubric.json"),
-      ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true)]);
+      ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true),
+      ghFile("confidence/brief.json", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
     DATA = {generated: L.run_at, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates,
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
-      strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null};
+      strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
+      brief: brief.text ? (JSON.parse(brief.text).items || {}) : {}};
     decisions = dec.text ? JSON.parse(dec.text) : {};
     ghSha = dec.sha;
     if (remember) lsSet(GH.key, ghToken);
