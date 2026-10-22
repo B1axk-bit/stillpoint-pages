@@ -578,7 +578,7 @@ function loginView(msg) {
     <ol>
       <li>打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>。</li>
       <li>Repository access 只选 <b>stillpoint-data</b>。</li>
-      <li>Permissions 里 <b>Contents</b> 选 Read and write；想用“立即重算”，再把 <b>Actions</b> 选 Read and write。</li>
+      <li>Permissions 里 <b>Contents</b> 选 Read and write；想用“即刻更新”，再把 <b>Actions</b> 选 Read and write。</li>
     </ol>
     <div class="card"><div class="row"><label class="f" style="flex:4">令牌<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label>
       <div style="display:flex;align-items:flex-end"><button class="b pri" id="tok-save">连接</button></div></div>
@@ -605,7 +605,7 @@ async function ghLoad(remember) {
     if (remember) lsSet(GH.key, ghToken);
     canWrite = true;
     $("#login").innerHTML = "";
-    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">立即重算</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">你确认过的条目，每天自动更新时入账；等不及可以点“立即重算”。</span>`;
+    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">即刻更新</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">你确认过的条目，每天自动更新时入账；等不及可以点“即刻更新”。</span>`;
     $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
     $("#gh-run").onclick = ghRun;
     start();
