@@ -1,105 +1,206 @@
 <!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"></head><body><title>静观后台</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@600&display=swap">
 <style>
+/* 静观后台：和主页同一套品牌变量（墨青底、黄铜点缀、宋体标题）。版式：刊头 → 一句结论 → 五盏灯 → 编号模块 */
 :root{
-  --bg:#f6f5f1;--panel:#ffffff;--ink:#1f1e1b;--muted:#6b6862;--line:#e3e0d8;--soft:#efede6;
-  --red:#b4372f;--red-bg:#f8e4e1;--amber:#9a6a00;--amber-bg:#f7edd3;--green:#2f7a4b;--green-bg:#e0f0e5;--grey:#7b7a76;--grey-bg:#ecebe7;
-  --accent:#2f5d8a;--accent-bg:#e3ecf5;--btn:#1f1e1b;--btn-ink:#fff;
-  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+  --bg:#edf1f0; --surface:#fbfcfc; --surface-2:#e5ebea; --ink:#0f2027; --ink-2:#46595e; --muted:#5f7074;
+  --line:#d3dcdb; --grid:#e1e8e7;
+  --brass:#8a5d0c; --brass-hi:#a8721a; --brass-wash:#f0e2c2; --brass-tint:#f7f0e0;
+  --good:#11905c; --good-wash:#ddeedd; --warn:#a8721a; --warn-wash:#fbeecb; --crit:#c8363b; --crit-wash:#f7dddb;
+  --ser:#2a78d6; --ser-wash:#e1ebf7;
+  --inv-bg:#0f2027; --inv-fg:#f4f7f6;
+  --shadow:0 1px 0 rgba(15,32,39,.03),0 10px 24px -18px rgba(15,32,39,.25);
+  --f-display:"Noto Serif SC","Songti SC","STSong","SimSun",serif;
+  --f-body:"Noto Sans SC","PingFang SC","Hiragino Sans GB","Microsoft YaHei",system-ui,sans-serif;
+  --f-latin:"Cormorant Garamond","Cormorant","Garamond","Times New Roman",serif;
+  --f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,monospace;
+  --l-red:#d03b3b; --l-amber:#e0a21a; --l-green:#11905c; --l-grey:#9aabae;
 }
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
-  --bg:#151513;--panel:#1d1d1a;--ink:#ecebe6;--muted:#a19e96;--line:#34332f;--soft:#262622;
-  --red:#ef8b80;--red-bg:#3a1f1c;--amber:#e3b552;--amber-bg:#352a12;--green:#7cc896;--green-bg:#17301f;--grey:#a3a19b;--grey-bg:#2a2a27;
-  --accent:#8db6e0;--accent-bg:#1c2a38;--btn:#ecebe6;--btn-ink:#151513;
-}}
+  --bg:#0b1316; --surface:#111c1f; --surface-2:#18262a; --ink:#e4ecea; --ink-2:#a6b6b4; --muted:#80918f;
+  --line:#22333a; --grid:#1a282c;
+  --brass:#d8a94f; --brass-hi:#e9c27a; --brass-wash:#3a2e17; --brass-tint:#1e1a12;
+  --good:#25b07a; --good-wash:#12301a; --warn:#e9c27a; --warn-wash:#33290f; --crit:#ee5a5f; --crit-wash:#3a1a1a;
+  --ser:#3987e5; --ser-wash:#16273a; --inv-bg:#1c2b2f; --inv-fg:#e4ecea; --shadow:none;
+  --l-red:#ee5a5f; --l-amber:#e9b949; --l-green:#25b07a; --l-grey:#5c6f73; color-scheme:dark}}
 :root[data-theme="dark"]{
-  --bg:#151513;--panel:#1d1d1a;--ink:#ecebe6;--muted:#a19e96;--line:#34332f;--soft:#262622;
-  --red:#ef8b80;--red-bg:#3a1f1c;--amber:#e3b552;--amber-bg:#352a12;--green:#7cc896;--green-bg:#17301f;--grey:#a3a19b;--grey-bg:#2a2a27;
-  --accent:#8db6e0;--accent-bg:#1c2a38;--btn:#ecebe6;--btn-ink:#151513;
-}
+  --bg:#0b1316; --surface:#111c1f; --surface-2:#18262a; --ink:#e4ecea; --ink-2:#a6b6b4; --muted:#80918f;
+  --line:#22333a; --grid:#1a282c;
+  --brass:#d8a94f; --brass-hi:#e9c27a; --brass-wash:#3a2e17; --brass-tint:#1e1a12;
+  --good:#25b07a; --good-wash:#12301a; --warn:#e9c27a; --warn-wash:#33290f; --crit:#ee5a5f; --crit-wash:#3a1a1a;
+  --ser:#3987e5; --ser-wash:#16273a; --inv-bg:#1c2b2f; --inv-fg:#e4ecea; --shadow:none;
+  --l-red:#ee5a5f; --l-amber:#e9b949; --l-green:#25b07a; --l-grey:#5c6f73; color-scheme:dark}
 *{box-sizing:border-box}
-body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif}
-.wrap{max-width:1040px;margin:0 auto;padding:24px 16px 64px}
-h1{font-size:22px;margin:0 0 2px;letter-spacing:.02em}
-h2{font-size:16px;margin:28px 0 10px}
-.sub{color:var(--muted);font-size:13px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
-.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
-.k{color:var(--muted);font-size:12px}
-.big{font-size:30px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.2}
-.alert{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--red-bg);color:var(--red);font-size:13px}
-.tabs{display:flex;gap:4px;margin-top:24px;border-bottom:1px solid var(--line);overflow-x:auto}
-.tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
-.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
-.pane{display:none}.pane.on{display:block}
-.note{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);margin:12px 0}
-.group{margin-top:18px}
-.ghead{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
-.ghead h3{font-size:14px;margin:0}
-.cand{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:8px}
-.cand.done{opacity:.72}
-.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
-.ev{margin:4px 0 6px;font-weight:550;overflow-wrap:anywhere}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--f-body);font-size:14.5px;line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3,p{margin:0}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--brass);outline-offset:2px;border-radius:3px}
+.wrap{max-width:1080px;margin:0 auto;padding:0 max(16px,env(safe-area-inset-right,0px)) 72px max(16px,env(safe-area-inset-left,0px))}
+
+/* 刊头 */
+.mast{position:sticky;top:0;z-index:30;background:var(--bg);background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.mast-in{max-width:1080px;margin:0 auto;display:flex;align-items:center;gap:12px;min-height:56px;padding:8px max(16px,env(safe-area-inset-right,0px)) 8px max(16px,env(safe-area-inset-left,0px))}
+.brand{display:flex;align-items:center;gap:10px;color:var(--ink);text-decoration:none;flex:none}
+.brand svg{width:26px;height:26px}
+.brand .wm{font-family:var(--f-display);font-weight:700;font-size:21px;line-height:1;letter-spacing:.1em;margin-right:-.1em}
+.brand .bh{width:1px;height:16px;background:var(--line)}
+.brand .lb{font-family:var(--f-latin);font-weight:600;font-size:17px;line-height:1;letter-spacing:.03em;color:var(--ink-2)}
+.chip{font-family:var(--f-mono);font-size:11px;color:var(--ink-2);border:1px solid var(--line);border-radius:4px;padding:2px 7px;white-space:nowrap}
+.chip.priv{color:var(--brass);border-color:color-mix(in srgb,var(--brass) 45%,var(--line))}
+.grow{flex:1}
+@media (max-width:640px){.brand .lb,.brand .bh,#asof{display:none}}
+
+/* 结论区 */
+.verdict{padding:28px 0 6px}
+.tag{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--brass)}
+.verdict h1{font-family:var(--f-display);font-weight:900;font-size:clamp(1.55rem,4.2vw,2.35rem);line-height:1.3;letter-spacing:.01em;margin-top:8px;text-wrap:balance}
+.verdict h1 .num{font-family:var(--f-mono);font-weight:500;color:var(--brass);letter-spacing:0}
+.verdict .lede{color:var(--ink-2);margin-top:10px;max-width:46em}
+.alert{margin-top:10px;padding:8px 12px;border-radius:6px;background:var(--crit-wash);color:var(--crit);font-size:13.5px}
+.tier{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font-size:13.5px}
+.tier b{white-space:nowrap;flex:none;font-family:var(--f-mono);font-weight:500;background:var(--inv-bg);color:var(--inv-fg);border-radius:999px;padding:1px 9px;font-size:12px}
+
+/* 五盏灯 */
+.lamps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:22px}
+@media (max-width:760px){.lamps{grid-template-columns:repeat(2,minmax(0,1fr))}.lamps .lampc:last-child{grid-column:1/-1}}
+.lampc{appearance:none;font:inherit;text-align:left;color:inherit;cursor:pointer;background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:10px 12px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.lampc::before{content:"";position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--lc)}
+.lampc{display:flex;flex-direction:column;gap:1px}
+.lampc:hover{border-color:var(--lc)}
+.lampc .nm{font-weight:700;font-size:14px;display:flex;align-items:center;gap:7px}
+.lampc .v{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);margin-top:2px}
+.lampc .pend{font-size:11.5px;color:var(--warn);margin-top:2px}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--lc);flex:none}
+.c-red{--lc:var(--l-red)}.c-amber{--lc:var(--l-amber)}.c-green{--lc:var(--l-green)}.c-grey{--lc:var(--l-grey)}
+
+/* 数字条 */
+.stats{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));border:1px solid var(--line);border-radius:8px;background:var(--surface);margin-top:12px;box-shadow:var(--shadow)}
+@media (max-width:760px){.stats{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.stat{padding:12px 14px;border-left:1px solid var(--line)}
+.stat:first-child{border-left:0}
+@media (max-width:760px){.stat:nth-child(3){border-left:0}.stat:nth-child(n+3){border-top:1px solid var(--line)}}
+.stat .k{font-size:12px;color:var(--muted)}
+.stat .n{font-family:var(--f-mono);font-size:22px;font-weight:500;line-height:1.3}
+.stat .s{font-size:12px;color:var(--muted)}
+
+.verdict:empty,.lamps:empty,.stats:empty,.tools:empty{display:none}
+@media (max-width:640px){.tier{border-radius:14px;align-items:flex-start}}
+.locked .tabs,.locked .pane{display:none}
+details.fold{scroll-margin-top:72px}
+.tools{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-top:12px}
+.banner{margin-top:14px;padding:10px 12px;border-radius:6px;background:var(--warn-wash);color:var(--warn);font-size:13px;display:none}
+.banner.on{display:block}
+
+/* 模块页签 */
+.tabs{display:flex;gap:2px;margin-top:30px;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;padding:10px 12px 9px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;display:flex;gap:7px;align-items:baseline}
+.tab .no{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.08em;color:var(--muted)}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--brass);font-weight:700}
+.tab[aria-selected="true"] .no{color:var(--brass)}
+.tab .cnt{font-family:var(--f-mono);font-size:11px;background:var(--brass-wash);color:var(--brass);border-radius:999px;padding:0 6px}
+.pane{display:none;padding-top:18px}.pane.on{display:block}
+.note{background:var(--brass-tint);border:1px solid color-mix(in srgb,var(--brass) 18%,var(--line));border-radius:6px;padding:10px 12px;font-size:13px;color:var(--ink-2);margin:0 0 6px}
+h2.mh{font-family:var(--f-display);font-weight:900;font-size:18px;margin:26px 0 10px}
+
+/* 候选证据 */
+.group{margin-top:22px}
+.ghead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ghead h3{font-family:var(--f-display);font-weight:700;font-size:16px}
+.ghead h3 .c{font-family:var(--f-mono);font-weight:500;font-size:13px;color:var(--muted);margin-left:4px}
+.ghint{font-size:12.5px;color:var(--muted);margin-top:2px}
+.cand{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;margin-top:8px;box-shadow:var(--shadow);position:relative}
+.cand.done{background:color-mix(in srgb,var(--surface) 55%,var(--bg));box-shadow:none}
+.cand.done .ev{color:var(--ink-2)}
+.meta{display:flex;gap:10px;flex-wrap:wrap;align-items:center;color:var(--muted);font-size:12px}
+.meta .d{font-family:var(--f-mono)}
+.ev{margin:5px 0 8px;font-weight:500;font-size:15px;line-height:1.5;overflow-wrap:anywhere}
 .ev a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.ev a:hover{text-decoration-color:var(--brass)}
 .chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
-.chip{font-size:12px;padding:1px 8px;border-radius:999px;background:var(--soft);border:1px solid var(--line)}
-.pts{font-family:var(--mono);font-size:13px;font-weight:650;padding:1px 8px;border-radius:6px}
-.pts.pos{background:var(--green-bg);color:var(--green)}.pts.neg{background:var(--red-bg);color:var(--red)}.pts.zero{background:var(--grey-bg);color:var(--grey)}
-.why{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:12.5px}
+.cp{font-size:12px;padding:1px 8px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
+.cp.cls{background:var(--brass-wash);color:var(--brass);font-weight:700}
+.pts{font-family:var(--f-mono);font-size:12.5px;font-weight:500;padding:1px 8px;border-radius:4px;margin-left:auto}
+.pts.pos{background:var(--good-wash);color:var(--good)}.pts.neg{background:var(--crit-wash);color:var(--crit)}.pts.zero{background:var(--surface-2);color:var(--muted)}
+td .pts{margin-left:0}
+.was{font-size:12px;color:var(--muted);width:100%}
+.why{margin:8px 0 0;padding:8px 0 0 18px;border-top:1px dashed var(--line);color:var(--muted);font-size:12.5px}
 .acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
-button.b{appearance:none;font:inherit;font-size:13px;border-radius:7px;padding:4px 12px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
-button.b.pri{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+button.b{appearance:none;font:inherit;font-size:13px;border-radius:6px;padding:5px 14px;cursor:pointer;border:1px solid var(--line);background:var(--surface);color:var(--ink)}
+button.b:hover{border-color:var(--brass)}
+button.b.pri{background:var(--inv-bg);color:var(--inv-fg);border-color:var(--inv-bg)}
+button.b.pri:hover{background:var(--brass);border-color:var(--brass)}
 button.b:disabled{opacity:.45;cursor:not-allowed}
-.state{font-size:12.5px;padding:2px 8px;border-radius:6px}
-.state.confirm{background:var(--green-bg);color:var(--green)}.state.edit{background:var(--accent-bg);color:var(--accent)}.state.reject{background:var(--grey-bg);color:var(--grey)}.state.add{background:var(--accent-bg);color:var(--accent)}
-.state.synced{background:var(--soft);color:var(--muted)}
-.editor{display:none;margin-top:10px;padding:10px;border-radius:8px;background:var(--soft)}
+.state{font-size:12px;padding:1px 8px;border-radius:4px;font-weight:500}
+.state.confirm{background:var(--good-wash);color:var(--good)}.state.edit{background:var(--ser-wash);color:var(--ser)}.state.reject{background:var(--surface-2);color:var(--muted)}.state.add{background:var(--ser-wash);color:var(--ser)}
+.state.synced{background:var(--inv-bg);color:var(--inv-fg)}
+.editor{display:none;margin-top:10px;padding:12px;border-radius:6px;background:var(--surface-2)}
 .editor.on{display:block}
 .row{display:flex;gap:8px;flex-wrap:wrap}
-label.f{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:2px;min-width:110px;flex:1}
-select,input,textarea{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 6px;width:100%}
-textarea{min-height:52px;resize:vertical}
+label.f{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:3px;min-width:110px;flex:1}
+select,input,textarea{font:inherit;font-size:13.5px;color:var(--ink);background:var(--surface);border:1px solid var(--line);border-radius:6px;padding:6px 8px;width:100%}
+textarea{min-height:56px;resize:vertical}
+
+/* 表格、灯、案例 */
+.scroll{overflow-x:auto;background:var(--surface);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow)}
 table{width:100%;border-collapse:collapse;font-size:13px}
-th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
-th{color:var(--muted);font-weight:500;font-size:12px}
-td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
-.scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
-.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
-.c-red{background:var(--red)}.c-amber{background:var(--amber)}.c-green{background:var(--green)}.c-grey{background:var(--grey)}
-.lamp{margin-top:10px}
-.case{margin-top:8px}
-.case summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
-.case summary::-webkit-details-marker{display:none}
-.case summary .nm{font-weight:600}
-.md{font-size:14px;overflow-wrap:anywhere}
-.md h1,.md h2{font-size:15px;margin:14px 0 6px}.md h3,.md h4{font-size:14px;margin:12px 0 4px}
-.md table{margin:8px 0;display:block;overflow-x:auto}
-.md blockquote{margin:8px 0;padding:4px 12px;border-left:3px solid var(--line);color:var(--muted)}
-.md code{font-family:var(--mono);font-size:12.5px;background:var(--soft);padding:0 4px;border-radius:4px}
-.md pre{white-space:pre-wrap;font-family:inherit}
-.tag{font-size:12px;padding:0 7px;border-radius:999px;background:var(--accent-bg);color:var(--accent)}
-.tag.priv{background:var(--amber-bg);color:var(--amber)}
-.lamp summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
-.lamp summary::-webkit-details-marker{display:none}
-.lamp .nm{font-weight:600}
+th,td{text-align:left;padding:8px 10px;border-bottom:1px solid var(--grid);vertical-align:top}
+tr:last-child td{border-bottom:0}
+th{color:var(--muted);font-weight:500;font-size:12px;background:var(--surface-2)}
+td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px;box-shadow:var(--shadow)}
+.card .k{font-size:12px;color:var(--muted)}
+.fold{margin-top:8px}
+.fold summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.fold summary::-webkit-details-marker{display:none}
+.fold summary::after{content:"展开";margin-left:auto;font-size:12px;color:var(--muted)}
+.fold[open] summary::after{content:"收起"}
+.fold .nm{font-weight:700}
+.sub{color:var(--muted);font-size:12.5px}
 .empty{color:var(--muted);font-size:13px;padding:10px 0}
-.banner{margin-top:14px;padding:10px 12px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-size:13px;display:none}
-.banner.on{display:block}
+.md{font-size:14px;overflow-wrap:anywhere;margin-top:8px;border-top:1px solid var(--grid);padding-top:6px}
+.md h1,.md h2{font-family:var(--f-display);font-size:16px;margin:14px 0 6px}.md h3,.md h4{font-size:14px;margin:12px 0 4px}
+.md p{margin:6px 0}
+.md table{margin:8px 0;display:block;overflow-x:auto;border:1px solid var(--line);border-radius:6px}
+.md blockquote{margin:8px 0;padding:4px 12px;border-left:3px solid var(--brass-wash);color:var(--muted)}
+.md code,.note code{font-family:var(--f-mono);font-size:12px;background:var(--surface-2);padding:0 4px;border-radius:3px}
+.md pre{white-space:pre-wrap;font-family:inherit}
+.tg{font-size:11.5px;padding:0 7px;border-radius:4px;background:var(--surface-2);color:var(--ink-2)}
+.tg.priv{background:var(--warn-wash);color:var(--warn)}
+.login{margin-top:22px;max-width:640px}
+.login h2{font-family:var(--f-display);font-weight:900;font-size:22px;margin:6px 0 8px}
+.login ol{margin:8px 0 14px;padding-left:20px;color:var(--ink-2);font-size:13.5px}
 </style>
 
-<div class="wrap">
-  <h1>静观后台</h1>
-  <div class="sub" id="sub"></div>
-  <div class="banner" id="banner"></div>
+<header class="mast"><div class="mast-in">
+  <a class="brand" href="#" aria-label="静观 Stillpoint 后台">
+    <svg viewBox="0 0 32 32" aria-hidden="true">
+      <path d="M16 3 A13 13 0 1 1 3.78 20.45" fill="none" stroke="var(--ink)" stroke-width="1.9" stroke-linecap="round"/>
+      <path d="M16 24 A8 8 0 1 1 18.74 8.48" fill="none" stroke="var(--brass)" stroke-width="1.9" stroke-linecap="round"/>
+      <circle cx="16" cy="16" r="2.6" fill="var(--ink)"/>
+    </svg>
+    <span class="wm">静观</span><i class="bh" aria-hidden="true"></i><span class="lb">Stillpoint</span>
+  </a>
+  <span class="chip priv">后台 · 只给你看</span>
+  <span class="grow"></span>
+  <span class="chip" id="asof"></span>
+</div></header>
 
+<div class="wrap" id="app">
+  <div class="banner" id="banner"></div>
   <div id="login"></div>
-  <div class="grid" id="summary"></div>
+  <section class="verdict" id="verdict"></section>
+  <div class="lamps" id="lampstrip"></div>
+  <div class="stats" id="summary"></div>
+  <div class="tools" id="tools"></div>
 
   <div class="tabs" role="tablist">
-    <button class="tab" role="tab" data-tab="review" aria-selected="true">待复核</button>
-    <button class="tab" role="tab" data-tab="lamps" aria-selected="false">灯</button>
-    <button class="tab" role="tab" data-tab="ledger" aria-selected="false">账本</button>
-    <button class="tab" role="tab" data-tab="cases" aria-selected="false">案例日志</button>
-    <button class="tab" role="tab" data-tab="rules" aria-selected="false">规则</button>
+    <button class="tab" role="tab" data-tab="review" aria-selected="true"><span class="no">01</span>待复核<span class="cnt" id="cnt-review"></span></button>
+    <button class="tab" role="tab" data-tab="lamps" aria-selected="false"><span class="no">02</span>灯</button>
+    <button class="tab" role="tab" data-tab="ledger" aria-selected="false"><span class="no">03</span>账本</button>
+    <button class="tab" role="tab" data-tab="cases" aria-selected="false"><span class="no">04</span>案例日志</button>
+    <button class="tab" role="tab" data-tab="rules" aria-selected="false"><span class="no">05</span>规则</button>
   </div>
 
   <section class="pane on" id="p-review">
@@ -152,8 +253,12 @@ function ptsTag(p) {
   return `<span class="pts ${p > 0 ? "pos" : p < 0 ? "neg" : "zero"}">${p > 0 ? "+" : ""}${p}</span>`;
 }
 function chips(s) {
-  return ["class", "toward", "strength", "layer", "cluster"].filter(k => s[k]).map(k => `<span class="chip" title="${LABEL[k]}">${esc(s[k])}</span>`).join("");
+  return ["class", "toward", "strength", "layer", "cluster"].filter(k => s[k]).map(k => `<span class="cp${k === "class" ? " cls" : ""}" title="${LABEL[k]}">${esc(s[k])}</span>`).join("");
 }
+const CELLNAME = {H1: "融资压力型"};
+const lampOf = cell => DATA.lamps.find(l => l.cell === cell);
+const cellName = cell => CELLNAME[cell] || (lampOf(cell) ? lampOf(cell).name : "");
+const pct = x => x == null ? "—" : Math.round(x * 100) + "%";
 
 // ---------- state ----------
 let decisions = {};          // id -> doc data
@@ -163,24 +268,31 @@ let STORE = DATA ? "claude" : "github";   // 内嵌数据 = Claude 里的私有�
 
 // ---------- header & summary ----------
 function renderHead() {
-  $("#sub").textContent = `数据 ${DATA.generated} · 规则 ${DATA.version} · 候选从 ${md(DATA.since)} 起 · 只在后台，不上主页`;
-  const t = DATA.themes[0];
-  const lampsRed = DATA.lamps.filter(l => l.confirmed === "red").map(l => l.n + l.name).join("、") || "无";
-  const pending = DATA.candidates.filter(c => c.status === "待确认" && !decisions[c.id]).length;
+  const t = DATA.themes[0], dr = t.derisk;
+  $("#asof").textContent = `数据 ${DATA.generated} · ${DATA.version}`;
+  const near = t.closest ? `离 ${t.closest}${lampOf(t.closest) ? `（${lampOf(t.closest).n} ${lampOf(t.closest).name}）` : ""}最近` : "";
+  $("#verdict").innerHTML = `
+    <div class="tag">主线 · ${md(t.since)} 入格 70 分起算</div>
+    <h1>${esc(t.theme)} 停在 ${esc(t.cell)} ${esc(cellName(t.cell))}，<span class="num">${t.score}</span> 分</h1>
+    <p class="lede">${esc(t.band)}。${esc(near)}。每一分的来历都在“账本”里，按固定计分表算，没有人手动给分。</p>
+    ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}
+    ${dr ? `<div class="tier"><b>减仓档 ${dr.tier}</b><span><strong>${esc(dr.name)}</strong> · ${esc(dr.action)}</span></div>
+      <div class="sub" style="margin-top:6px">${esc(dr.why.join("；"))}</div>` : ""}`;
+  $("#lampstrip").innerHTML = DATA.lamps.map(l => `<button class="lampc c-${l.confirmed}" data-lamp="${esc(l.n)}" title="看这盏灯的每一票">
+      <span class="nm"><span class="dot"></span>${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
+      <span class="v">压力 ${+l.stress.toFixed(2)} · 不压力 ${+l.calm.toFixed(2)}</span>
+      <span class="v">一致 ${pct(l.cons)} · 差 ${l.flip ?? "—"} 票翻</span>
+      ${l.raw !== l.confirmed ? `<span class="pend">这期读数${COLOR[l.raw]}，等第二期确认</span>` : ""}</button>`).join("");
+  const pending = DATA.candidates.filter(c => c.status === "待确认" && !decisions[c.id] && !synced.has(c.id)).length;
   const decided = Object.values(decisions).filter(d => d.action !== "add");
   const changed = decided.filter(d => d.changed).length;
   $("#summary").innerHTML = `
-    <div class="card"><div class="k">主线 · ${esc(t.theme)}</div>
-      <div class="big">${t.cell} · ${t.score}</div>
-      <div class="sub">${esc(t.band)}${t.closest ? `；离 ${t.closest} 最近` : ""}</div>
-      ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}</div>
-    ${t.derisk ? `<div class="card"><div class="k">减仓档</div><div class="big">${t.derisk.tier} 档</div>
-      <div class="sub"><b>${esc(t.derisk.name)}</b>：${esc(t.derisk.action)}。${esc(t.derisk.why.join("；"))}</div></div>` : ""}
-    <div class="card"><div class="k">确认红的灯</div><div class="big" style="font-size:20px;margin-top:6px">${esc(lampsRed)}</div>
-      <div class="sub">${DATA.lamps.filter(l => l.raw !== l.confirmed).map(l => `${l.n} 这期读数${COLOR[l.raw]}，待第二期确认`).join("；") || "没有待确认的改色"}</div></div>
-    <div class="card"><div class="k">待复核</div><div class="big">${pending}</div><div class="sub">共 ${DATA.candidates.length} 条候选</div></div>
-    <div class="card"><div class="k">你改过的预填</div><div class="big">${decided.length ? Math.round(changed / decided.length * 100) + "%" : "—"}</div>
-      <div class="sub">${decided.length ? `处理 ${decided.length} 条，改了 ${changed} 条` : "还没有处理"}。比例高说明自动归类靠不住</div></div>`;
+    <div class="stat"><div class="k">待复核</div><div class="n">${pending}</div><div class="s">共 ${DATA.candidates.length} 条候选</div></div>
+    <div class="stat"><div class="k">你改过的预填</div><div class="n">${decided.length ? Math.round(changed / decided.length * 100) + "%" : "—"}</div>
+      <div class="s">${decided.length ? `处理 ${decided.length} 条，改了 ${changed} 条` : "还没有处理"}</div></div>
+    <div class="stat"><div class="k">已入账</div><div class="n">${synced.size}</div><div class="s">后台复核写进账本的</div></div>
+    <div class="stat"><div class="k">规则版本</div><div class="n">${esc(DATA.version)}</div><div class="s">数据 ${esc(String(DATA.generated).slice(5).replace("-", "/"))}</div></div>`;
+  $("#cnt-review").textContent = pending || "";
 }
 
 // ---------- review ----------
@@ -198,9 +310,9 @@ function candHTML(c) {
   const ev = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.evidence)}</a>` : esc(c.evidence);
   const dis = canWrite ? "" : "disabled";
   return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
-    <div class="meta"><span>${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
+    <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
     <div class="ev">${ev}</div>
-    <div class="chips">${chips(s)}${ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="sub">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
+    <div class="chips">${chips(s)}${ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
     <ul class="why">${c.why.map(w => `<li>${esc(w)}</li>`).join("")}${d && d.note ? `<li>你的备注：${esc(d.note)}</li>` : ""}</ul>
     <div class="acts">${d && !synced.has(c.id)
       ? `<button class="b" data-act="undo" ${dis}>撤销</button>`
@@ -219,15 +331,15 @@ function renderReview() {
     const items = DATA.candidates.filter(g.test);
     const open = items.filter(c => !decisions[c.id] && !synced.has(c.id)).length;
     return `<div class="group" data-g="${g.key}">
-      <div class="ghead"><h3>${g.title} · ${items.length}</h3>
+      <div class="ghead"><h3>${g.title}<span class="c">${items.length}</span></h3>
         ${g.bulk && open ? `<button class="b" data-bulk="${g.key}" ${canWrite ? "" : "disabled"}>这一组剩下的 ${open} 条全部${g.bulkAction === "reject" ? "驳回" : "确认"}</button>` : ""}</div>
-      <div class="sub">${g.hint}</div>
+      <div class="ghint">${g.hint}</div>
       ${items.length ? items.map(candHTML).join("") : `<div class="empty">没有</div>`}</div>`;
   }).join("");
   const own = Object.entries(decisions).filter(([, d]) => d.action === "add");
   if (own.length) {
-    $("#groups").insertAdjacentHTML("beforeend", `<div class="group"><div class="ghead"><h3>你自己记的 · ${own.length}</h3></div>${own.map(([id, d]) => `
-      <div class="cand done" data-id="${id}"><div class="meta"><span>${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">等我入账</span>`}</div>
+    $("#groups").insertAdjacentHTML("beforeend", `<div class="group"><div class="ghead"><h3>你自己记的<span class="c">${own.length}</span></h3></div>${own.map(([id, d]) => `
+      <div class="cand done" data-id="${id}"><div class="meta"><span class="d">${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">等我入账</span>`}</div>
       <div class="ev">${esc(d.evidence)}</div><div class="chips">${chips(d)}${ptsTag(points(d))}</div>
       ${synced.has(id) ? "" : `<div class="acts"><button class="b" data-act="undo" ${canWrite ? "" : "disabled"}>删掉</button></div>`}</div>`).join("")}</div>`);
   }
@@ -256,12 +368,19 @@ function record(c, action, s, note) {
   return write(c.id, doc);
 }
 
+function go(tab) {
+  document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === tab));
+  document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "p-" + tab));
+}
+
 document.addEventListener("click", e => {
   const b = e.target.closest("button");
   if (!b) return;
-  if (b.classList.contains("tab")) {
-    document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t === b));
-    document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "p-" + b.dataset.tab));
+  if (b.classList.contains("tab")) { go(b.dataset.tab); return; }
+  if (b.dataset.lamp) {
+    go("lamps");
+    const el = document.querySelector(`#lamps details[data-lamp="${b.dataset.lamp}"]`);
+    if (el) { el.open = true; el.scrollIntoView({behavior: "smooth", block: "start"}); }
     return;
   }
   if (b.dataset.bulk) {
@@ -304,9 +423,9 @@ $("#a-save").addEventListener("click", async () => {
 // ---------- lamps ----------
 function renderLamps() {
   $("#lamps").innerHTML = `<div class="note">每盏灯由几张子信号投票：压力、不压力、弃权（没读数、过期、离线太近都弃权）。同一来源在一盏灯里合起来只算一票，所以会出现小数。多数一方占到三分之二以上才亮红或绿，改色要连续两期一致。</div>` +
-    DATA.lamps.map(l => `<details class="lamp card"><summary>
-      <span class="nm"><span class="dot c-${l.confirmed}"></span>${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
-      <span class="sub">压力 ${l.stress} · 不压力 ${l.calm} · 一致度 ${l.cons == null ? "—" : Math.round(l.cons * 100) + "%"} · 差 ${l.flip ?? "—"} 票翻${l.raw !== l.confirmed ? ` · 这期读数${COLOR[l.raw]}，待确认` : ""}${l.watch ? " · WATCH" : ""}</span></summary>
+    DATA.lamps.map(l => `<details class="fold card" data-lamp="${esc(l.n)}"><summary>
+      <span class="nm"><span class="dot c-${l.confirmed}"></span> ${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
+      <span class="sub">压力 ${+l.stress.toFixed(2)} · 不压力 ${+l.calm.toFixed(2)} · 一致度 ${pct(l.cons)} · 差 ${l.flip ?? "—"} 票翻${l.raw !== l.confirmed ? ` · 这期读数${COLOR[l.raw]}，待确认` : ""}${l.watch ? " · WATCH" : ""}</span></summary>
       <div class="scroll" style="margin-top:10px"><table><tr><th>子信号</th><th>读数</th><th>日期</th><th>票</th><th>权重</th><th>原因</th></tr>
       ${l.votes.map(v => `<tr><td>${esc(v.label)}</td><td class="n">${esc(v.value ?? "—")}</td><td class="n">${esc(v.date || "—")}</td><td>${esc(v.vote)}</td><td class="n">${v.weight ? v.weight : "—"}</td><td class="sub">${esc([v.why, v.edge ? "±0.55 边沿票" : "", v.note].filter(Boolean).join("；"))}</td></tr>`).join("")}
       </table></div></details>`).join("");
@@ -316,7 +435,7 @@ function renderLamps() {
 function renderLedger() {
   const t = DATA.themes[0];
   $("#ledger").innerHTML = `<div class="note">${esc(t.theme)} · ${t.cell} · ${md(t.since)} 入格 70 分。下面每一行就是分数的来历：70 加上各类证据的分，再按衰减规则折算（同一类 10 个交易日没再出现，之后 5 个交易日还回一半）。</div>
-    <div class="card"><div class="k">各类证据现在的净分</div><ul class="why" style="font-size:13px">${t.fading.map(f => `<li>${esc(f)}</li>`).join("")}</ul></div>
+    <div class="card" style="margin-top:12px"><div class="k">各类证据现在的净分</div><ul class="why" style="font-size:13px;border-top:0;padding-top:2px">${t.fading.map(f => `<li>${esc(f)}</li>`).join("")}</ul></div>
     <div class="scroll" style="margin-top:12px"><table><tr><th>日期</th><th>归类</th><th>方向</th><th>强度</th><th>层</th><th>分</th><th>证据</th></tr>
     ${t.items.map(i => `<tr><td class="n">${md(i.date)}</td><td>${esc(i.class)}</td><td>${esc(i.toward)}</td><td>${esc(i.strength || "")}</td><td>${esc(i.layer || "")}</td><td class="n">${ptsTag(i.points)}</td><td>${esc(i.evidence)}</td></tr>`).join("")}
     </table></div>`;
@@ -326,17 +445,17 @@ function renderLedger() {
 function renderRules() {
   const row = (cls, side) => ["S", "M", "L"].map(k => ptsTag((DATA.points[cls + "|" + side] || {})[k] || 0)).join(" ");
   $("#rules").innerHTML = `
-    <h2>固定计分表</h2>
+    <h2 class="mh" style="margin-top:4px">固定计分表</h2>
     <div class="scroll"><table><tr><th>归类</th><th>支持当前格（S · M · L）</th><th>指向相邻格（S · M · L）</th></tr>
       <tr><td>新独立</td><td>${row("新独立", "支持")}</td><td>${row("新独立", "对立")}</td></tr>
       <tr><td>幅度</td><td>${row("幅度", "支持")}</td><td>${row("幅度", "对立")}</td></tr>
       <tr><td>记忆 / 噪声 / 他题</td><td>${ptsTag(0)}（记忆会把衰减时钟拨回 0）</td><td>${ptsTag(0)}</td></tr></table></div>
-    ${DATA.derisk ? `<h2>减仓档</h2><div class="scroll"><table><tr><th>规则</th></tr>${DATA.derisk.rules.map(r => `<tr><td>${esc(r)}</td></tr>`).join("")}</table></div>
+    ${DATA.derisk ? `<h2 class="mh">减仓档</h2><div class="scroll"><table><tr><th>规则</th></tr>${DATA.derisk.rules.map(r => `<tr><td>${esc(r)}</td></tr>`).join("")}</table></div>
       <div class="sub" style="margin-top:6px">2 档：${esc(DATA.derisk.tier2)}；3 档：${esc(DATA.derisk.tier3)}（${esc(DATA.derisk.status)}）</div>` : ""}
-    <h2>强度怎么定</h2>
+    <h2 class="mh">强度怎么定</h2>
     <div class="scroll"><table><tr><th>档</th><th>标准</th><th>账本里的例子</th></tr>
       ${DATA.strength.map(s => `<tr><td>${s.k}</td><td>${esc(s.rule)}</td><td>${s.eg.map(esc).join("<br>")}</td></tr>`).join("")}</table></div>
-    <h2>规则版本</h2>
+    <h2 class="mh">规则版本</h2>
     <div class="scroll"><table><tr><th>版本</th><th>日期</th><th>改了什么、为什么</th></tr>
       ${DATA.changelog.map(c => `<tr><td class="n">${esc(c.v)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.what)}</td></tr>`).join("")}</table></div>`;
 }
@@ -349,18 +468,19 @@ function renderCases() {
   const C = DATA.cases;
   if (!C) { $("#cases").innerHTML = `<div class="empty">这次没有读到案例日志。</div>`; return; }
   const rows = C.cases.slice().reverse();
-  $("#cases").innerHTML = `<div class="note">来自 <code>analysis/案例日志.md</code>（${esc(C.updated)} 的版本），每次刷新后台时重新读取。里面有个人持仓和交易记录，只存在私有仓库和这个后台里，不上主页。标了"含持仓"的条目，培训时不要展示。</div>
+  $("#cases").innerHTML = `<div class="note">来自 <code>analysis/案例日志.md</code>（${esc(C.updated)} 的版本），每次刷新后台时重新读取。里面有个人持仓和交易记录，不上主页。标了"含持仓"的条目，培训时不要展示。</div>
     <div class="scroll"><table><tr><th>案例</th><th>日期</th><th>题目</th><th>到期回看</th></tr>
-    ${rows.map(c => `<tr><td class="n">${esc(c.no)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.title)} ${c.kind ? `<span class="tag">${esc(c.kind)}</span>` : ""}${c.private ? ` <span class="tag priv">含持仓</span>` : ""}</td><td class="n">${esc(c.review || "—")}</td></tr>`).join("")}</table></div>
-    <h2>逐条</h2>
-    ${rows.map((c, i) => `<details class="case card" ${i === 0 ? "open" : ""}><summary><span class="nm">案例 ${esc(c.no)}｜${esc(c.title)}</span><span class="sub">${esc(c.date)}${c.kind ? " · " + esc(c.kind) : ""}</span>${c.private ? `<span class="tag priv">含持仓</span>` : ""}</summary><div class="md">${mdHTML(c)}</div></details>`).join("")}
-    ${C.extra.map(x => `<details class="case card"><summary><span class="nm">${esc(x.title)}</span></summary><div class="md">${mdHTML(x)}</div></details>`).join("")}`;
+    ${rows.map(c => `<tr><td class="n">${esc(c.no)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.title)} ${c.kind ? `<span class="tg">${esc(c.kind)}</span>` : ""}${c.private ? ` <span class="tg priv">含持仓</span>` : ""}</td><td class="n">${esc(c.review || "—")}</td></tr>`).join("")}</table></div>
+    <h2 class="mh">逐条</h2>
+    ${rows.map((c, i) => `<details class="fold card" ${i === 0 ? "open" : ""}><summary><span class="nm">案例 ${esc(c.no)}｜${esc(c.title)}</span><span class="sub">${esc(c.date)}${c.kind ? " · " + esc(c.kind) : ""}</span>${c.private ? `<span class="tg priv">含持仓</span>` : ""}</summary><div class="md">${mdHTML(c)}</div></details>`).join("")}
+    ${C.extra.map(x => `<details class="fold card"><summary><span class="nm">${esc(x.title)}</span></summary><div class="md">${mdHTML(x)}</div></details>`).join("")}`;
 }
 
 function showBanner(t) { const b = $("#banner"); b.textContent = t; b.classList.add("on"); }
 function renderAll() { renderHead(); renderReview(); }
 
 function start() {
+  $("#app").classList.remove("locked");
   synced = new Set(DATA.synced || []);
   renderAll(); renderAdd(); renderLamps(); renderLedger(); renderRules(); renderCases();
 }
@@ -411,13 +531,19 @@ async function ghFile(path, optional) {
 }
 
 function loginView(msg) {
-  $("#login").innerHTML = `<div class="card" style="margin-top:16px">
-    <div class="k">第一次打开：填你的 GitHub 令牌</div>
-    <div class="sub" style="margin:6px 0 10px">这一页本身不带任何数据。数据和你的复核结果都放在私有仓库 stillpoint-data 里，页面用令牌现读现写。令牌只存在这台设备的浏览器里，不会上传到别处。
-      建令牌：<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>，Repository access 只选 <b>stillpoint-data</b>，Permissions 里 <b>Contents</b> 选 Read and write，想用"立即重算"再把 <b>Actions</b> 选 Read and write。</div>
-    <div class="row"><label class="f" style="flex:4">令牌<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+  $("#login").innerHTML = `<section class="login">
+    <div class="tag">第一次打开</div>
+    <h2>连上你的私有仓库</h2>
+    <p class="sub" style="font-size:13.5px">这一页本身不带任何数据。数据和你的复核结果都放在私有仓库 stillpoint-data 里，页面用令牌现读现写。令牌只存在这台设备的浏览器里，不会上传到别处。</p>
+    <ol>
+      <li>打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>。</li>
+      <li>Repository access 只选 <b>stillpoint-data</b>。</li>
+      <li>Permissions 里 <b>Contents</b> 选 Read and write；想用“立即重算”，再把 <b>Actions</b> 选 Read and write。</li>
+    </ol>
+    <div class="card"><div class="row"><label class="f" style="flex:4">令牌<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label>
       <div style="display:flex;align-items:flex-end"><button class="b pri" id="tok-save">连接</button></div></div>
-    ${msg ? `<div class="alert">${esc(msg)}</div>` : ""}</div>`;
+    ${msg ? `<div class="alert">${esc(msg)}</div>` : ""}</div></section>`;
+  $("#tok").addEventListener("keydown", e => { if (e.key === "Enter") $("#tok-save").click(); });
   $("#tok-save").onclick = () => { ghToken = $("#tok").value.trim(); if (ghToken) ghLoad(true); };
 }
 
@@ -436,7 +562,8 @@ async function ghLoad(remember) {
     ghSha = dec.sha;
     if (remember) lsSet(GH.key, ghToken);
     canWrite = true;
-    $("#login").innerHTML = `<div class="acts" style="margin-top:12px"><button class="b" id="gh-run">立即重算（跑一次自动更新，约 3 分钟）</button><button class="b" id="gh-out">退出（清掉这台设备上的令牌）</button><span class="sub" id="gh-msg"></span></div>`;
+    $("#login").innerHTML = "";
+    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">立即重算</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">你确认过的条目，每天自动更新时入账；等不及可以点“立即重算”。</span>`;
     $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
     $("#gh-run").onclick = ghRun;
     start();
@@ -476,6 +603,6 @@ async function ghRun() {
 }
 
 if (STORE === "claude") { start(); connectClaude(); }
-else { ghToken = lsGet(GH.key); ghToken ? ghLoad(false) : loginView(""); }
+else { $("#app").classList.add("locked"); ghToken = lsGet(GH.key); ghToken ? ghLoad(false) : loginView(""); }
 </script>
 </body></html>
