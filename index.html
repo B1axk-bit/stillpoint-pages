@@ -154,8 +154,8 @@ body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset
 .tk{flex:none;display:flex;flex-direction:column;justify-content:center;gap:3px;padding:8px 15px;text-decoration:none;color:inherit;border-left:1px solid color-mix(in srgb,var(--inv-fg) 13%,transparent)}
 .tk:hover{background:color-mix(in srgb,var(--inv-fg) 7%,transparent)}
 .tk:focus-visible{outline-color:var(--inv-tag);outline-offset:-3px}
-.tk-n{font-size:11.5px;line-height:1.2;color:color-mix(in srgb,var(--inv-fg) 64%,transparent);white-space:nowrap}
-.tk-v{display:flex;align-items:baseline;gap:8px;font-family:var(--f-mono);font-size:13.5px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
+.tk-n{font-size:12px;line-height:1.2;color:color-mix(in srgb,var(--inv-fg) 64%,transparent);white-space:nowrap}
+.tk-v{display:flex;align-items:baseline;gap:8px;font-family:var(--f-mono);font-size:14px;font-weight:500;line-height:1.2;font-variant-numeric:tabular-nums;white-space:nowrap}
 .tk-c{font-style:normal;font-size:12px}
 .tk-c.up{color:var(--up-inv)} .tk-c.dn{color:var(--dn-inv)} .tk-c.flat{color:color-mix(in srgb,var(--inv-fg) 62%,transparent)}
 .stat-band{background:var(--surface);border-bottom:1px solid var(--line)}
@@ -169,7 +169,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .sb-mono b{font-family:var(--f-mono);font-weight:500;letter-spacing:.03em}
 .sb-end{margin-left:auto}
 .lmp{display:inline-flex;align-items:center;gap:1px}
-.lmp-b{display:inline-flex;align-items:center;gap:3px;padding:2px 4px;border-radius:4px;text-decoration:none;color:var(--ink-2);font-family:var(--f-mono);font-size:11.5px;line-height:1.2}
+.lmp-b{display:inline-flex;align-items:center;gap:3px;padding:2px 4px;border-radius:4px;text-decoration:none;color:var(--ink-2);font-family:var(--f-mono);font-size:12px;line-height:1.2}
 .lmp-b:hover{background:var(--surface-2);color:var(--ink)}
 .lmp-b .lamp{width:10px;height:10px}
 @media (max-width:760px){
@@ -192,15 +192,15 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .mg-h{display:flex;flex-direction:column;gap:5px;text-decoration:none;color:inherit}
 .mg-h b{font-size:14.5px;line-height:1.45;text-wrap:balance}
 .mg-h:hover b{color:var(--brass)}
-.mg-p{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.mg-p{font-size:13px;color:var(--ink-2);line-height:1.6}
 .mg-l{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.mg-l a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1px 10px;padding:6px 0;border-top:1px dashed var(--line);text-decoration:none;color:inherit;font-size:12.5px;line-height:1.4}
+.mg-l a{display:grid;grid-template-columns:minmax(0,1fr) auto;align-items:center;gap:1px 10px;padding:6px 0;border-top:1px dashed var(--line);text-decoration:none;color:inherit;font-size:13px;line-height:1.4}
 .mg-l a:hover .mg-n{color:var(--brass)}
 .mg-n{font-weight:500;display:flex;align-items:center;gap:6px;min-width:0}
 .mg-v{font-size:12px;color:var(--ink-2);white-space:nowrap;text-align:right}
 .mg-v.num{font-family:var(--f-mono);color:var(--ink)}
 .mg-v.up{color:var(--pos)} .mg-v.dn{color:var(--neg)}
-.mg-s{grid-column:1/-1;font-size:11.5px;color:var(--muted)}
+.mg-s{grid-column:1/-1;font-size:12px;color:var(--muted)}
 @media (max-width:980px){.mega-in{grid-template-columns:minmax(0,1fr);gap:14px}.mg-side{flex-direction:row;flex-wrap:wrap;align-items:baseline;gap:4px 12px}.mg-side .tag{display:none}.mg-go{margin-top:0}}
 @media (max-width:700px){.mg-grid,.mg-grid.n2,.mg-grid.n4{grid-template-columns:minmax(0,1fr)}.mg-side h3{font-size:1.25rem}}
 
@@ -208,7 +208,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .chg-p{position:absolute;top:100%;right:max(16px,calc((100% - 1200px) / 2 + 16px));z-index:3;width:min(460px,calc(100% - 32px));background:var(--surface);border:1px solid var(--line);border-top:0;border-radius:0 0 10px 10px;box-shadow:var(--pop-shadow);padding:14px 16px 6px}
 .cp-h{display:flex;flex-direction:column;gap:3px;padding-bottom:10px;border-bottom:1px solid var(--line)}
 .cp-h b{font-size:14px}
-.cp-h span{font-size:12.5px;color:var(--ink-2)}
+.cp-h span{font-size:13px;color:var(--ink-2)}
 .cp-l{list-style:none;margin:0;padding:0}
 .cp-l a{display:grid;grid-template-columns:10px 6.4em minmax(0,1fr);align-items:baseline;gap:4px 10px;padding:9px 0;border-bottom:1px dashed var(--line);text-decoration:none;color:inherit;font-size:13px;line-height:1.5}
 .cp-l li:last-child a{border-bottom:0}
@@ -233,7 +233,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .sr span{grid-column:1;font-size:12px;color:var(--ink-2);overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .sr em{grid-column:2;grid-row:1/span 2;font-style:normal;font-family:var(--f-mono);font-size:12px;color:var(--ink);white-space:nowrap}
 .sr-none{padding:18px 10px;font-size:13px;color:var(--ink-2)}
-.srch-foot{display:flex;gap:16px;padding:8px 14px;border-top:1px solid var(--line);font-size:11.5px;color:var(--muted)}
+.srch-foot{display:flex;gap:16px;padding:8px 14px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
 @media (max-width:760px){.srch{padding-top:calc(env(safe-area-inset-top,0px) + 12px)}.srch-foot{display:none}}
 
 /* install: one box (download + how to install), then prompts to copy */
@@ -255,15 +255,15 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .in-dl.off{background:var(--surface-2);color:var(--ink-2);font-weight:500;cursor:default}
 .in-ins{align-self:flex-start;font-size:13px;color:var(--brass);text-decoration:none;border-bottom:1px solid var(--brass-wash)}
 .in-ins:hover{border-bottom-color:var(--brass)}
-.in-sha{margin-top:auto;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);overflow-wrap:anywhere;line-height:1.5}
+.in-sha{margin-top:auto;font-family:var(--f-mono);font-size:11px;color:var(--muted);overflow-wrap:anywhere;line-height:1.5}
 .in-how{min-width:0;display:flex;flex-direction:column}
 .in-tabs{display:flex;gap:2px;padding:6px 6px 0;border-bottom:1px solid var(--line);overflow-x:auto;scrollbar-width:none}
 .in-tabs::-webkit-scrollbar{display:none}
-.in-t{flex:none;font:inherit;font-size:13.5px;line-height:1;color:var(--ink-2);background:none;border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;padding:12px 14px;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
+.in-t{flex:none;font:inherit;font-size:14px;line-height:1;color:var(--ink-2);background:none;border:1px solid transparent;border-bottom:0;border-radius:7px 7px 0 0;padding:12px 14px;margin-bottom:-1px;cursor:pointer;white-space:nowrap}
 .in-t:hover{color:var(--ink)}
 .in-t[aria-selected="true"]{color:var(--ink);font-weight:700;background:var(--surface);border-color:var(--line);box-shadow:inset 0 2px 0 var(--brass)}
 .in-p{padding:18px 22px 20px;display:flex;flex-direction:column;gap:12px}
-.in-fit{font-size:12.5px;color:var(--muted)}
+.in-fit{font-size:13px;color:var(--muted)}
 .in-steps{list-style:none;margin:0;padding:0;counter-reset:st;display:flex;flex-direction:column;gap:11px}
 .in-steps li{counter-increment:st;display:grid;grid-template-columns:24px minmax(0,1fr);gap:4px 10px;font-size:14px;line-height:1.65}
 .in-steps li::before{content:counter(st);width:22px;height:22px;border-radius:50%;border:1px solid var(--line);display:grid;place-items:center;font-family:var(--f-mono);font-size:11.5px;color:var(--brass);background:var(--bg);margin-top:2px}
@@ -272,19 +272,19 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .in-code pre{margin:0;padding:11px 74px 11px 14px;overflow-x:auto;white-space:pre}
 .in-cp{position:absolute;top:7px;right:7px;font:inherit;font-family:var(--f-body);font-size:12px;line-height:1;padding:6px 9px;border-radius:6px;border:1px solid color-mix(in srgb,var(--inv-fg) 22%,transparent);background:transparent;color:var(--inv-fg);cursor:pointer}
 .in-cp:hover{border-color:var(--inv-tag);color:var(--inv-tag)}
-.in-note{font-size:12.5px;color:var(--ink-2);line-height:1.65;padding:9px 12px;border-left:2px solid var(--brass);background:var(--brass-tint);border-radius:0 6px 6px 0}
+.in-note{font-size:13px;color:var(--ink-2);line-height:1.65;padding:9px 12px;border-left:2px solid var(--brass);background:var(--brass-tint);border-radius:0 6px 6px 0}
 .in-sync{grid-column:1/-1;font-size:12px;color:var(--muted);line-height:1.6;padding:11px 22px 13px;border-top:1px solid var(--line)}
 .in-ht{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 12px;margin-top:34px}
-.in-ht span{font-size:12.5px;font-weight:400;color:var(--muted)}
+.in-ht span{font-size:13px;font-weight:400;color:var(--muted)}
 .in-asks{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
 .in-ask{font:inherit;text-align:left;display:flex;flex-direction:column;gap:7px;padding:13px 14px;border-radius:8px;border:1px solid var(--line);background:var(--surface);color:var(--ink);cursor:pointer;box-shadow:var(--shadow);min-width:0}
 .in-ask:hover{border-color:var(--brass)}
 .in-ask-h{display:flex;justify-content:space-between;align-items:center;gap:8px}
 .in-ask-h b{font-family:var(--f-mono);font-size:11px;font-weight:500;letter-spacing:.08em;color:var(--brass)}
-.in-ask-h i{font-style:normal;font-size:11.5px;color:var(--muted)}
+.in-ask-h i{font-style:normal;font-size:12px;color:var(--muted)}
 .in-ask.ok .in-ask-h i{color:var(--brass);font-weight:700}
-.in-ask-q{font-size:13.5px;line-height:1.65}
-.in-an{margin-top:10px;font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.in-ask-q{font-size:14px;line-height:1.65}
+.in-an{margin-top:10px;font-size:13px;color:var(--ink-2);line-height:1.6}
 @media (max-width:1000px){.in-asks{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:820px){.in-box1{grid-template-columns:minmax(0,1fr)}.in-get{border-right:0;border-bottom:1px solid var(--line)}.in-sha{margin-top:0}}
 @media (max-width:640px){.in-asks{grid-template-columns:minmax(0,1fr)}}
@@ -296,7 +296,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 /* workspace dividers and jump highlight */
 .ws-div{display:flex;flex-wrap:wrap;align-items:baseline;gap:4px 16px;margin-top:76px;padding-top:14px;border-top:2px solid var(--ink)}
 .ws-div b{font-family:var(--f-display);font-weight:900;font-size:1.3rem;letter-spacing:.04em}
-.ws-div span{color:var(--ink-2);font-size:13.5px}
+.ws-div span{color:var(--ink-2);font-size:14px}
 .ws-div + .mod{padding-top:30px}
 @keyframes jumpflash{0%,55%{box-shadow:0 0 0 3px var(--brass)}100%{box-shadow:0 0 0 3px transparent}}
 .flash{animation:jumpflash 1.8s ease-out}
@@ -318,7 +318,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .big-stance b{font-family:var(--f-display);font-size:1.9rem;line-height:1.1;color:var(--brass)}
 .chip2{display:flex;flex-direction:column;justify-content:center;padding:8px 14px;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
 .chip2 b{font-size:1rem}
-.v-data{font-family:var(--f-mono);font-size:11.5px;color:var(--muted);line-height:1.6;max-width:60em}
+.v-data{font-family:var(--f-mono);font-size:12px;color:var(--muted);line-height:1.6;max-width:60em}
 .hero-side{padding:18px 18px 14px;display:flex;flex-direction:column;gap:12px;min-width:0}
 .side-h{display:flex;flex-direction:column;gap:4px}
 .side-h b{font-family:var(--f-display);font-size:1.15rem}
@@ -343,13 +343,13 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .ss-dot.lv4,.ss-dot.lv5{background:var(--brass-hi)}
 .ss-dot.prev{width:11px;height:11px;background:var(--surface);border:2px dashed var(--muted)}
 .ss-move{position:absolute;top:50%;height:2px;transform:translateY(-50%);background:var(--muted)}
-.ss-foot{font-size:11.5px;color:var(--muted)}
+.ss-foot{font-size:12px;color:var(--muted)}
 
 /* kpis */
 .kpis{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));border-block:1px solid var(--line)}
 .kpi{display:flex;flex-direction:column;gap:3px;padding:16px 14px 14px;min-width:0}
 .kpi+.kpi{border-left:1px solid var(--line)}
-.kpi-l{font-size:12.5px;color:var(--ink-2)}
+.kpi-l{font-size:13px;color:var(--ink-2)}
 .kpi-v{font-size:2rem;font-weight:700;line-height:1.1;letter-spacing:-.01em;margin-top:2px}
 .kpi-v.up{color:var(--pos)} .kpi-v.dn{color:var(--neg)}
 .kpi-c{font-family:var(--f-mono);font-weight:500;margin-right:6px;white-space:nowrap}
@@ -357,7 +357,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .kpi-v small{font-size:.8rem;font-weight:500;color:var(--ink-2);margin-left:3px;letter-spacing:0}
 .kpi-d{font-size:12px;color:var(--ink-2);line-height:1.45}
 .kpi-r{font-size:13px;font-weight:700;margin-top:4px;padding-top:6px;border-top:1px dashed var(--line)}
-.kpi-s{font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.kpi-s{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 @media (max-width:1100px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.kpi:nth-child(4){border-left:0}.kpi:nth-child(n+4){border-top:1px solid var(--line)}}
 @media (max-width:620px){.kpis{grid-template-columns:repeat(2,minmax(0,1fr))}.kpi:nth-child(odd){border-left:0}.kpi:nth-child(4){border-left:1px solid var(--line)}.kpi:nth-child(n+3){border-top:1px solid var(--line)}.kpi-v{font-size:1.7rem}}
 
@@ -380,7 +380,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .meter i{width:18px;height:8px;border-radius:2px;background:var(--surface-2)}
 .meter i.on.crit{background:var(--crit)} .meter i.on.warn{background:var(--warn)}
 .diag-lv{font-weight:700;font-size:14px}
-.diag-c p{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.diag-c p{font-size:13px;color:var(--ink-2);line-height:1.55}
 @media (max-width:980px){.diag{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.diag-grid{grid-template-columns:minmax(0,1fr)}}
 
@@ -398,7 +398,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .lamp.lg{width:16px;height:16px}
 .lamp.lg.red{box-shadow:0 0 0 4px var(--crit-wash)} .lamp.lg.amber{box-shadow:0 0 0 4px var(--warn-wash)} .lamp.lg.green{box-shadow:0 0 0 4px var(--good-wash)}
 .lamp.sm{width:9px;height:9px}
-.lp-fact{font-size:12.5px;line-height:1.55}
+.lp-fact{font-size:13px;line-height:1.55}
 .lp-unlock{font-size:12px;color:var(--ink-2);line-height:1.5;margin-top:auto;padding-top:8px;border-top:1px dashed var(--line)}
 .lp-unlock span{display:block;font-size:11px;color:var(--muted)}
 @media (max-width:1000px){
@@ -421,7 +421,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .themes.measure>.th{align-self:start}
 .th-body.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:64px;background:linear-gradient(color-mix(in srgb,var(--surface) 0%,transparent),var(--surface));pointer-events:none}
 .th-body.open::after{display:none}
-.th-more{align-self:center;display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:12.5px;color:var(--brass);background:var(--brass-tint);border:1px solid var(--brass-wash);border-radius:999px;padding:4px 12px;cursor:pointer;margin-top:-4px}
+.th-more{align-self:center;display:inline-flex;align-items:center;gap:6px;font:inherit;font-size:13px;color:var(--brass);background:var(--brass-tint);border:1px solid var(--brass-wash);border-radius:999px;padding:4px 12px;cursor:pointer;margin-top:-4px}
 .th-more:hover{border-color:var(--brass)}
 .th-more::after{content:"";width:5px;height:5px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:translateY(-2px) rotate(45deg)}
 .th-more[aria-expanded="true"]::after{transform:translateY(1px) rotate(225deg)}
@@ -439,10 +439,10 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .tn-l li{display:grid;grid-template-columns:minmax(0,1fr) 3.6em 4.8em 4.4em;align-items:baseline;gap:8px;padding:5px 0;border-top:1px dashed var(--line);font-size:13px;line-height:1.35}
 .tn-l b{font-weight:500;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .tn-t{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
-.tn-p{font-family:var(--f-mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
-.tn-c{font-style:normal;font-family:var(--f-mono);font-size:12.5px;text-align:right;font-variant-numeric:tabular-nums}
+.tn-p{font-family:var(--f-mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
+.tn-c{font-style:normal;font-family:var(--f-mono);font-size:13px;text-align:right;font-variant-numeric:tabular-nums}
 .tn-c.up{color:var(--pos)} .tn-c.dn{color:var(--neg)} .tn-c.flat{color:var(--muted)}
-.th-f{margin-top:auto;display:flex;flex-direction:column;gap:4px;padding-top:10px;border-top:1px dashed var(--line);font-size:12.5px;line-height:1.5}
+.th-f{margin-top:auto;display:flex;flex-direction:column;gap:4px;padding-top:10px;border-top:1px dashed var(--line);font-size:13px;line-height:1.5}
 .th-f div{display:grid;grid-template-columns:2.6em minmax(0,1fr);gap:6px}
 @media (max-width:1100px){.themes{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media (max-width:700px){.themes{grid-template-columns:minmax(0,1fr)}}
@@ -457,7 +457,7 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 
 .ladder{display:flex;flex-direction:column;gap:5px}
 .ladder ol{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:3px}
-.ladder li{font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;text-align:center;padding:4px 2px;background:var(--surface-2);color:var(--muted);border-radius:3px;display:flex;flex-direction:column;line-height:1.3}
+.ladder li{font-family:var(--f-mono);font-size:11px;letter-spacing:.04em;text-align:center;padding:4px 2px;background:var(--surface-2);color:var(--muted);border-radius:3px;display:flex;flex-direction:column;line-height:1.3}
 .ladder li.on{background:var(--crit-wash);color:var(--ink);box-shadow:inset 0 -3px 0 var(--crit);font-weight:500}
 .ladder li small{font-size:10px;color:var(--ink-2)}
 
@@ -471,8 +471,8 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .bc-grid i.zero{background:var(--axis)}
 .bc-row{position:relative;display:grid;grid-template-columns:var(--nw) minmax(0,1fr) var(--vw);column-gap:var(--gap);align-items:center;min-height:28px;padding-block:2px;border-radius:4px}
 .bc-row:hover,.bc-row:focus-visible{background:color-mix(in srgb,var(--surface-2) 55%,transparent)}
-.bc-name{font-size:12.5px;line-height:1.3;min-width:0}
-.bc-name small{display:block;font-size:10.5px;color:var(--muted)}
+.bc-name{font-size:13px;line-height:1.3;min-width:0}
+.bc-name small{display:block;font-size:11px;color:var(--muted)}
 .bc-track{position:relative;height:16px}
 .bc-val{font-family:var(--f-mono);font-size:12px;text-align:right;font-variant-numeric:tabular-nums;white-space:nowrap}
 .bc-axis{display:grid;grid-template-columns:var(--nw) minmax(0,1fr) var(--vw);column-gap:var(--gap);height:var(--axh)}
@@ -489,10 +489,10 @@ a.sb:hover b{text-decoration:underline;text-underline-offset:3px;text-decoration
 .bc.twin .bc-track{height:24px}
 .bar.t1,.bar.t2{transform:none;height:9px}
 .bar.t1{top:2px} .bar.t2{top:13px}
-.bc.twin .bc-val{display:flex;flex-direction:column;align-items:flex-end;gap:1px;line-height:1.2;font-size:11.5px}
+.bc.twin .bc-val{display:flex;flex-direction:column;align-items:flex-end;gap:1px;line-height:1.2;font-size:12px}
 .bc.twin .bc-val b{font-weight:500}
 .bc.twin .bc-val small{font-size:11px;color:var(--muted)}
-em.ai{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing:.04em;color:var(--brass);border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:1.4}
+em.ai{font-style:normal;font-family:var(--f-mono);font-size:10.5px;letter-spacing:.04em;color:var(--brass);border:1px solid currentColor;border-radius:3px;padding:0 3px;line-height:1.4}
 .bc-name em.ai{margin-left:5px;vertical-align:1px}
 .bc-row:hover .bar,.bc-row:focus-visible .bar{filter:brightness(1.08) saturate(1.1)}
 .db-line{position:absolute;top:50%;height:2px;transform:translateY(-50%);background:var(--ser)}
@@ -505,25 +505,25 @@ em.ai{font-style:normal;font-family:var(--f-mono);font-size:9.5px;letter-spacing
 .legend i.sw2{width:16px;height:9px}
 .legend i.sw2.t1{background:linear-gradient(90deg,var(--neg) 50%,var(--pos) 50%)}
 .legend i.sw2.t2{background:linear-gradient(90deg,var(--neg-soft) 50%,var(--pos-soft) 50%)}
-.legend.sm{font-size:11.5px;margin:2px 0 6px}
+.legend.sm{font-size:12px;margin:2px 0 6px}
 
 .rg{position:relative;padding-top:22px}
 .rg-track{position:relative;height:14px;background:var(--surface-2);border-radius:3px}
 .rg-band{position:absolute;top:0;bottom:0;background:var(--brass-wash);border-left:2px solid var(--brass);border-right:2px solid var(--brass)}
 .rg-dot{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--ser);transform:translate(-50%,-50%);box-shadow:0 0 0 2px var(--surface)}
-.rg-l{position:absolute;top:0;transform:translateX(-50%);font-size:11.5px;white-space:nowrap;color:var(--ink-2)}
+.rg-l{position:absolute;top:0;transform:translateX(-50%);font-size:12px;white-space:nowrap;color:var(--ink-2)}
 .rg-l b{color:var(--ink)}
 .ticks{position:relative;height:18px}
 
 .conds{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px}
 .cond{display:flex;flex-direction:column;gap:3px;padding:8px 9px;border:1px solid var(--line);border-radius:6px;min-width:0}
 .cond-t{display:flex;align-items:center;gap:6px;font-size:11px;color:var(--muted)}
-.cond b{font-size:12.5px;line-height:1.35}
-.cond small{font-family:var(--f-mono);font-size:10.5px;color:var(--ink-2)}
+.cond b{font-size:13px;line-height:1.35}
+.cond small{font-family:var(--f-mono);font-size:11px;color:var(--ink-2)}
 .flows{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
 .flows li{display:grid;grid-template-columns:22px 3.4em minmax(0,1fr);align-items:center;gap:8px;padding:6px 0;font-size:13px}
 .flows li+li{border-top:1px solid var(--grid)}
-.flows li span:last-child{color:var(--ink-2);font-size:12.5px}
+.flows li span:last-child{color:var(--ink-2);font-size:13px}
 .ic{width:20px;height:20px;border-radius:50%;display:grid;place-items:center;font-size:11px;font-weight:700;line-height:1}
 .ic.ok{background:var(--good-wash);color:var(--ink)} .ic.no{background:var(--surface-2);color:var(--muted)}
 .ic.ok::before{content:"✓";color:var(--good)} .ic.no::before{content:"✕"}
@@ -571,8 +571,8 @@ details.tt[open] summary::before{content:"▾"}
 .q-ax{fill:var(--ink-2);font-size:12px}
 .q-dot{fill:var(--brass);stroke:var(--surface);stroke-width:2.5}
 .q-arrow{stroke:var(--brass);stroke-width:1.5;fill:none}
-.q-note{fill:var(--ink-2);font-size:11.5px}
-.q-ev{display:flex;flex-direction:column;gap:10px;font-size:12.5px;min-width:0}
+.q-note{fill:var(--ink-2);font-size:12px}
+.q-ev{display:flex;flex-direction:column;gap:10px;font-size:13px;min-width:0}
 .q-ev b{font-family:var(--f-display);font-size:1.15rem;display:block}
 .q-ev ul{margin:0;padding-left:1.1em;color:var(--ink-2);line-height:1.6}
 .q-ev .k{display:block;margin-bottom:2px}
@@ -589,13 +589,13 @@ details.tt[open] summary::before{content:"▾"}
 .mc-row.item:hover,.mc-row.item:focus-visible{background:color-mix(in srgb,var(--surface-2) 45%,transparent)}
 .mc-name{display:flex;flex-direction:column;justify-content:center;padding-block:4px;min-width:0}
 .mc-name b{font-size:13px;font-weight:500;display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.mc-name small{font-size:10.5px;color:var(--muted);line-height:1.3}
+.mc-name small{font-size:11px;color:var(--muted);line-height:1.3}
 .turn{font-style:normal;font-size:10px;font-weight:700;padding:0 5px;border-radius:3px;background:var(--brass);color:var(--surface)}
 .mc-track{position:relative;background:linear-gradient(to right,var(--z-strong) 0 10%,var(--z-mid) 10% 20%,var(--z-edge) 20% 40%,transparent 40% 60%,var(--z-edge) 60% 80%,var(--z-mid) 80% 90%,var(--z-strong) 90% 100%)}
 .mc-track::after{content:"";position:absolute;left:50%;top:0;bottom:0;width:1px;background:var(--axis)}
 .mc-track .bar{height:10px}
 .mc-val{display:flex;align-items:center;justify-content:flex-end;gap:6px;font-family:var(--f-mono);font-size:12px;font-variant-numeric:tabular-nums}
-.conf{font-style:normal;font-family:var(--f-body);font-size:10.5px;padding:0 5px;border-radius:3px;border:1px solid var(--line);color:var(--ink-2);min-width:2.6em;text-align:center}
+.conf{font-style:normal;font-family:var(--f-body);font-size:11px;padding:0 5px;border-radius:3px;border:1px solid var(--line);color:var(--ink-2);min-width:2.6em;text-align:center}
 .conf.c-s{border-color:var(--ink-2);color:var(--ink)}
 .conf.c-e{border-style:dashed}
 .mc-row.pair{box-shadow:inset 3px 0 0 var(--brass)}
@@ -611,7 +611,7 @@ details.tt[open] summary::before{content:"▾"}
 /* watch gauges */
 .gauges{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
 .gg{padding:15px 16px 13px;display:flex;flex-direction:column;gap:9px;min-width:0}
-.gg-h{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:13.5px}
+.gg-h{display:flex;justify-content:space-between;align-items:center;gap:8px;font-size:14px}
 .gg-link{font-family:var(--f-mono);font-size:11px;color:var(--brass);border:1px solid var(--brass);border-radius:999px;padding:0 7px;white-space:nowrap}
 .gg-v{display:flex;align-items:center;justify-content:space-between;gap:10px;flex-wrap:wrap}
 .gg-num{font-size:1.75rem;font-weight:700;line-height:1.1}
@@ -643,7 +643,7 @@ details.tt[open] summary::before{content:"▾"}
 .p-counter{display:flex;flex-direction:column;gap:6px;margin-top:4px;padding:14px 15px;border-radius:8px;background:var(--inv-bg);color:var(--inv-fg)}
 .p-counter .pc-tag{align-self:flex-start;font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--inv-bg);background:var(--inv-tag);border-radius:4px;padding:2px 8px}
 .p-counter b{font-family:var(--f-display);font-size:16px;line-height:1.5}
-.p-counter p{font-size:12.5px;line-height:1.65;color:color-mix(in srgb,var(--inv-fg) 78%,transparent)}
+.p-counter p{font-size:13px;line-height:1.65;color:color-mix(in srgb,var(--inv-fg) 78%,transparent)}
 .paths{display:grid;grid-template-columns:minmax(0,1.6fr) minmax(0,1fr);gap:14px}
 .paths-fig{padding:12px 8px 8px}
 .scroll-x{overflow-x:auto}
@@ -657,14 +657,14 @@ details.tt[open] summary::before{content:"▾"}
 .p-t{font-family:var(--f-body);fill:var(--ink);font-size:15px;font-weight:700}
 .p-s{font-family:var(--f-body);font-size:12px;font-weight:700}
 .p-s.base{fill:var(--brass)} .p-s.out{fill:var(--muted)} .p-s.risk{fill:var(--crit)}
-.p-d{font-family:var(--f-body);fill:var(--ink-2);font-size:12.5px}
-.p-g{font-family:var(--f-body);fill:var(--muted);font-size:11.5px}
+.p-d{font-family:var(--f-body);fill:var(--ink-2);font-size:13px}
+.p-g{font-family:var(--f-body);fill:var(--muted);font-size:12px}
 .p-o{font-family:var(--f-mono);fill:var(--muted);font-size:11px}
 .trig{padding:16px 18px;display:flex;flex-direction:column;gap:10px}
 .trig h3{font-size:15px}
 .trig ul{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:8px}
 .trig li{display:grid;grid-template-columns:auto minmax(0,1fr);gap:10px;align-items:start;font-size:13px;line-height:1.55}
-.dir{font-size:11.5px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
+.dir{font-size:12px;font-weight:700;padding:1px 8px;border-radius:999px;white-space:nowrap}
 .dir.good{background:var(--good-wash);box-shadow:inset 0 0 0 1px var(--good)}
 .dir.crit{background:var(--crit-wash);box-shadow:inset 0 0 0 1px var(--crit)}
 @media (max-width:980px){.paths{grid-template-columns:minmax(0,1fr)}}
@@ -674,23 +674,23 @@ details.tt[open] summary::before{content:"▾"}
 .tl-h{position:relative;min-width:780px;height:196px}
 .tl-axis{position:absolute;left:2%;right:2%;top:100px;height:2px;background:var(--axis)}
 .tl-ev{position:absolute;top:0;height:100px}
-.tl-ev .lbl{position:absolute;left:0;white-space:nowrap;font-size:12.5px;padding-left:7px;border-left:1px solid var(--axis);line-height:1.3}
+.tl-ev .lbl{position:absolute;left:0;white-space:nowrap;font-size:13px;padding-left:7px;border-left:1px solid var(--axis);line-height:1.3}
 .tl-ev.key .lbl{font-weight:700}
-.tl-ev .lbl small{display:block;font-family:var(--f-mono);font-size:10.5px;color:var(--muted);font-weight:400}
+.tl-ev .lbl small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--muted);font-weight:400}
 .tl-dot{position:absolute;top:96px;width:10px;height:10px;border-radius:50%;background:var(--ink);transform:translateX(-50%);box-shadow:0 0 0 2px var(--surface)}
 .tl-range{position:absolute;top:97px;height:8px;border-radius:4px;background:var(--ink)}
 .tl-today{position:absolute;top:88px;width:2px;height:26px;background:var(--brass);transform:translateX(-50%)}
 .tl-wk.tl-today-l{color:var(--brass);white-space:nowrap}
 .tl-rv{position:absolute;top:116px;display:flex;gap:2px;transform:translateX(-50%)}
 .tl-rv i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:10px;background:var(--brass);color:var(--surface);font-weight:500}
-.tl-wk{position:absolute;top:166px;transform:translateX(-50%);font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.tl-wk{position:absolute;top:166px;transform:translateX(-50%);font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .tl-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink-2);padding-top:6px;border-top:1px solid var(--grid)}
 .tl-legend span{display:inline-flex;align-items:center;gap:6px}
 .tl-legend i{display:inline-block}
 .tl-v{display:none;list-style:none;margin:0;padding:0}
 .tl-v li{display:grid;grid-template-columns:4.8em minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--grid);font-size:13px}
-.tl-v li b{font-family:var(--f-mono);font-size:12.5px}
-.tl-v .rv{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;font-size:11.5px;color:var(--muted)}
+.tl-v li b{font-family:var(--f-mono);font-size:13px}
+.tl-v .rv{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;font-size:12px;color:var(--muted)}
 .tl-v .rv i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:10px;background:var(--brass);color:var(--surface)}
 @media (max-width:640px){.agenda .scroll-x{display:none}.tl-v{display:block}.tl-legend{display:none}}
 
@@ -701,9 +701,9 @@ details.tt[open] summary::before{content:"▾"}
 .cs+.cs{border-top:1px solid var(--grid)}
 .cs-n{font-family:var(--f-mono);font-size:13px;color:var(--brass)}
 .cs-t{display:flex;flex-direction:column;min-width:0}
-.cs-t b{font-size:13.5px}
-.cs-t span{font-size:11.5px;color:var(--muted)}
-.cs-v{font-size:12.5px;color:var(--ink-2);line-height:1.5}
+.cs-t b{font-size:14px}
+.cs-t span{font-size:12px;color:var(--muted)}
+.cs-v{font-size:13px;color:var(--ink-2);line-height:1.5}
 .cs-r{display:block;margin-top:6px;padding-left:8px;border-left:2px solid var(--brass);font-size:12px;color:var(--ink-2);line-height:1.55}
 .cs-r b{color:var(--brass);font-weight:600;margin-right:6px}
 .cs-next{display:flex;gap:4px;flex-wrap:wrap;justify-content:flex-end}
@@ -714,7 +714,7 @@ details.tt[open] summary::before{content:"▾"}
 .calib-big strong{font-size:2.4rem;line-height:1}
 .calib-big span{color:var(--ink-2);font-size:13px}
 .layers{display:flex;flex-direction:column;gap:7px}
-.layer{display:grid;grid-template-columns:4em minmax(0,1fr) 1.6em;gap:8px;align-items:center;font-size:12.5px}
+.layer{display:grid;grid-template-columns:4em minmax(0,1fr) 1.6em;gap:8px;align-items:center;font-size:13px}
 .layer .trk{height:8px;background:var(--surface-2);border-radius:2px;position:relative}
 .layer .trk i{position:absolute;left:0;top:0;bottom:0;border-radius:2px;background:var(--crit)}
 .layer b{font-family:var(--f-mono);text-align:right}
@@ -725,7 +725,7 @@ details.tt[open] summary::before{content:"▾"}
 /* china lens */
 .cn-ft{display:flex;flex-wrap:wrap;gap:4px 12px;align-items:baseline;margin-bottom:10px}
 .cn-ft b{font-size:15px}
-.cn-ft span{font-size:12.5px;color:var(--ink-2)}
+.cn-ft span{font-size:13px;color:var(--ink-2)}
 .cn-row{display:grid;gap:14px}
 .cn-g{grid-template-columns:repeat(3,minmax(0,1fr))}
 .cn-2{grid-template-columns:minmax(0,1fr) minmax(0,1fr);margin-top:14px}
@@ -743,13 +743,13 @@ details.tt[open] summary::before{content:"▾"}
 .gg-dir{display:flex;justify-content:space-between;gap:8px;font-size:11px;color:var(--muted);margin-top:-4px}
 .sw{display:flex;flex-direction:column;gap:6px;padding-top:12px;border-top:1px solid var(--grid)}
 .sw-h{display:flex;justify-content:space-between;gap:8px;align-items:baseline}
-.sw-h b{font-size:13.5px}
+.sw-h b{font-size:14px}
 .sw-h span{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .sw-seg{display:grid;grid-template-columns:1fr 1fr;gap:3px;padding:3px;border-radius:999px;background:var(--surface-2)}
 .sw-seg span{text-align:center;font-size:13px;padding:5px 8px;border-radius:999px;color:var(--muted);white-space:nowrap}
 .sw-seg span.on{background:var(--brass);color:var(--surface);font-weight:700}
 .sw-seg span.on::before{content:"●";font-size:8px;margin-right:6px;vertical-align:2px}
-.sw-cons{display:grid;grid-template-columns:1fr 1fr;gap:3px;font-size:11.5px;color:var(--muted);text-align:center;line-height:1.4}
+.sw-cons{display:grid;grid-template-columns:1fr 1fr;gap:3px;font-size:12px;color:var(--muted);text-align:center;line-height:1.4}
 .sw-cons span.on{color:var(--ink);font-weight:700}
 .sw-fact{font-size:12px;color:var(--ink-2);line-height:1.55}
 .ph{display:flex;flex-direction:column;gap:6px;padding-top:2px}
@@ -760,7 +760,7 @@ details.tt[open] summary::before{content:"▾"}
 .ph-z{display:block;height:100%}
 .lc-head{display:flex;flex-direction:column;gap:6px}
 .lc-leg{margin:0}
-.lc-leg b{font-family:var(--f-mono);font-weight:500;font-size:11.5px}
+.lc-leg b{font-family:var(--f-mono);font-weight:500;font-size:12px}
 .lc-leg b.up{color:var(--pos)} .lc-leg b.dn{color:var(--neg)}
 .lc-sw{width:16px!important;height:0!important;border-radius:0!important;border-top:2px solid var(--muted)}
 .lc-sw.sh{border-top:2.5px solid var(--brass)} .lc-sw.bj{border-top-color:var(--ink)} .lc-sw.t1{border-top:1.5px dashed var(--muted)}
@@ -804,15 +804,15 @@ details.tt[open] summary::before{content:"▾"}
 .ph-zl{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:3px;text-align:center;font-size:12px;color:var(--muted);line-height:1.4}
 .ph-zl b{display:block;font-size:13px;color:var(--ink-2)}
 .ph-zl span.on,.ph-zl span.on b{color:var(--brass);font-weight:700}
-.ev-list{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:12.5px;color:var(--ink-2);line-height:1.55}
-.loop{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:12.5px}
+.ev-list{margin:0;padding-left:1.1em;display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--ink-2);line-height:1.55}
+.loop{display:flex;flex-wrap:wrap;align-items:center;gap:6px;font-size:13px}
 .loop span{padding:3px 9px;border-radius:4px;background:var(--surface-2)}
 .loop i{font-style:normal;color:var(--muted)}
 .loop i.back{color:var(--crit);font-weight:700}
 .sig{list-style:none;margin:0;padding:0;display:flex;flex-direction:column;gap:7px}
-.sig li{display:grid;grid-template-columns:auto 7.6em minmax(0,1fr) auto;gap:8px;align-items:center;font-size:12.5px}
+.sig li{display:grid;grid-template-columns:auto 7.6em minmax(0,1fr) auto;gap:8px;align-items:center;font-size:13px}
 .sig li span{color:var(--ink-2)}
-.sig li em{font-style:normal;font-size:11.5px;color:var(--ink-2);white-space:nowrap}
+.sig li em{font-style:normal;font-size:12px;color:var(--ink-2);white-space:nowrap}
 @media (max-width:560px){.sig li{grid-template-columns:auto minmax(0,1fr) auto}.sig li span{grid-column:2 / -1;grid-row:2}}
 .callout{font-size:13px;line-height:1.6;padding:10px 12px;border-left:3px solid var(--brass);background:var(--brass-tint);border-radius:0 6px 6px 0;display:flex;flex-direction:column;gap:2px}
 .callout b{font-weight:700}
@@ -827,22 +827,22 @@ details.tt[open] summary::before{content:"▾"}
 .lg-row+.lg-row{border-top:1px solid var(--grid)}
 .lg-hd{padding-top:0;font-size:12px;color:var(--ink-2);font-weight:700}
 .lg-hd span{display:inline-flex;align-items:center;gap:6px}
-.lg-name{font-size:13.5px;line-height:1.4}
+.lg-name{font-size:14px;line-height:1.4}
 .lg-cell{display:flex;flex-direction:column;gap:6px;min-width:0}
-.lg-k{font-size:12.5px;line-height:1.45}
+.lg-k{font-size:13px;line-height:1.45}
 .lg-k em{font-style:normal;font-family:var(--f-mono);font-size:11px;color:var(--muted);margin-left:6px;white-space:nowrap}
 .lg-dots{display:flex;flex-wrap:wrap;gap:4px}
-.lg-d{font-family:var(--f-mono);font-size:10.5px;padding:1px 6px 1px 8px;border-radius:3px;cursor:default;font-variant-numeric:tabular-nums}
+.lg-d{font-family:var(--f-mono);font-size:11px;padding:1px 6px 1px 8px;border-radius:3px;cursor:default;font-variant-numeric:tabular-nums}
 .lg-cell.ok .lg-d{background:var(--good-wash);box-shadow:inset 3px 0 0 var(--good)}
 .lg-cell.no .lg-d{background:var(--crit-wash);box-shadow:inset 3px 0 0 var(--crit)}
 .ic.bad{background:var(--crit-wash);color:var(--ink)} .ic.bad::before{content:"✕";color:var(--crit)}
 .lg-verdict{margin-top:8px}
 .lg-open{display:flex;flex-direction:column;gap:8px;min-width:0}
 .lg-open ol{list-style:none;margin:0;padding:0;display:flex;flex-direction:column}
-.lg-open li{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:8px;padding:8px 0;border-top:1px solid var(--grid);font-size:12.5px;line-height:1.5}
-.lg-open li b{font-family:var(--f-mono);font-size:11.5px;color:var(--brass);font-weight:500}
-.lg-open li small{display:block;color:var(--muted);font-size:11.5px}
-.lg-notes{margin:0;padding-left:1.1em;font-size:12.5px;color:var(--ink-2);line-height:1.65;display:flex;flex-direction:column;gap:4px;max-width:62em}
+.lg-open li{display:grid;grid-template-columns:3.4em minmax(0,1fr);gap:8px;padding:8px 0;border-top:1px solid var(--grid);font-size:13px;line-height:1.5}
+.lg-open li b{font-family:var(--f-mono);font-size:12px;color:var(--brass);font-weight:500}
+.lg-open li small{display:block;color:var(--muted);font-size:12px}
+.lg-notes{margin:0;padding-left:1.1em;font-size:13px;color:var(--ink-2);line-height:1.65;display:flex;flex-direction:column;gap:4px;max-width:62em}
 @media (max-width:980px){.lg{grid-template-columns:minmax(0,1fr)}}
 @media (max-width:640px){.lg-row{grid-template-columns:minmax(0,1fr);gap:10px}.lg-hd{display:none}
   .lg-cell.ok .lg-k::before{content:"✓ 准 · ";color:var(--good);font-weight:700}
@@ -853,7 +853,7 @@ details.tt[open] summary::before{content:"▾"}
 .mt{padding:16px 16px;display:flex;flex-direction:column;gap:4px;min-width:0}
 .mt+.mt{border-left:1px solid var(--line)}
 .mt b{font-family:var(--f-display);font-size:15px}
-.mt span{font-size:12.5px;color:var(--ink-2);line-height:1.55}
+.mt span{font-size:13px;color:var(--ink-2);line-height:1.55}
 .mt .srcs{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
 .srcs i{font-style:normal;font-size:12px;padding:2px 8px;border-radius:4px;background:var(--brass-wash);color:var(--ink);white-space:nowrap}
 .srcs i.todo{background:transparent;border:1px dashed var(--muted);color:var(--muted)}
@@ -868,12 +868,12 @@ details.tt[open] summary::before{content:"▾"}
 .lens-h .new{font-size:11px;font-weight:700;padding:1px 8px;border-radius:999px;background:var(--brass);color:var(--surface);white-space:nowrap}
 .lens-role{font-size:13px;font-weight:700}
 .lens .srcs{display:flex;flex-wrap:wrap;gap:5px}
-.lens-q{font-size:12.5px;color:var(--ink-2);line-height:1.6}
+.lens-q{font-size:13px;color:var(--ink-2);line-height:1.6}
 .lens-used{display:flex;flex-wrap:wrap;gap:4px 10px;align-items:center;font-size:12px}
 .lens-used a{color:var(--brass);text-decoration:none;border-bottom:1px solid var(--brass-wash)}
 .lens-used a:hover{border-bottom-color:var(--brass)}
 .lens-models{margin:8px 0 0;padding-left:1.5em;display:flex;flex-direction:column;gap:5px;font-size:12px;line-height:1.5}
-.lens-models li::marker{font-family:var(--f-mono);font-size:10.5px;color:var(--muted)}
+.lens-models li::marker{font-family:var(--f-mono);font-size:11px;color:var(--muted)}
 .lens-models span{color:var(--ink-2)}
 .route{margin-top:14px;font-size:13px;color:var(--ink-2);line-height:1.7;max-width:60em}
 @media (max-width:1000px){.lenses{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -889,6 +889,156 @@ details.tt[open] summary::before{content:"▾"}
 
 .tip{position:fixed;z-index:50;pointer-events:none;background:var(--ink);color:var(--surface);padding:7px 10px;border-radius:6px;font-size:12px;line-height:1.45;max-width:260px;display:flex;flex-direction:column;gap:1px;box-shadow:0 10px 26px -12px rgba(0,0,0,.45)}
 .tip b{font-family:var(--f-mono);font-size:14px;font-weight:500}
+/* funnel:css */
+/* funnel restructure (10/22) */
+.derisk{padding:14px 16px;margin-bottom:12px;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,2fr);gap:12px 18px;align-items:start}
+.dr-h{display:flex;flex-direction:column;gap:6px}
+.dr-k{font-size:12px;color:var(--muted)}
+.dr-h b{font-family:var(--f-display);font-size:1.15rem;line-height:1.35}
+.dr-why{font-size:13px;color:var(--ink-2);line-height:1.6}
+.dr-l{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px}
+.dr-l li{border:1px solid var(--line);border-radius:6px;padding:9px 10px;display:flex;flex-direction:column;gap:4px;background:var(--bg);min-width:0}
+.dr-l li.on{border-color:var(--brass);background:var(--brass-tint);box-shadow:inset 0 0 0 1px var(--brass)}
+.dr-t{font-family:var(--f-mono);font-size:11px;color:var(--brass)}
+.dr-l b{font-size:14px;line-height:1.35}
+.dr-c{font-size:12px;color:var(--ink-2);line-height:1.5}
+.lp-tally{grid-column:1 / -1;display:flex;flex-wrap:wrap;gap:4px 12px;align-items:center;font-size:12px;line-height:1.5;padding-top:8px;margin-top:2px;border-top:1px dashed var(--line);color:var(--ink-2)}
+.lt-k{font-size:11px;color:var(--muted)}
+.lt-v{display:inline-flex;align-items:center;gap:6px;color:var(--ink);font-variant-numeric:tabular-nums}
+.lt-n{color:var(--brass)}
+.ml{padding:16px 18px;margin-bottom:12px;display:flex;flex-direction:column;gap:10px}
+.ml-top{display:flex;gap:16px;align-items:center}
+.ml-n{display:flex;align-items:baseline;gap:4px}
+.ml-n b{font-family:var(--f-display);font-size:2.4rem;line-height:1;font-variant-numeric:tabular-nums}
+.ml-n span{color:var(--muted);font-size:13px}
+.ml-t{display:flex;flex-direction:column;gap:4px;min-width:0}
+.ml-t b{font-size:15px}
+.ml-t span{font-size:13px;color:var(--ink-2);line-height:1.55}
+.ml-bar{position:relative;height:10px;display:grid;grid-template-columns:1fr 1fr 1fr;gap:2px;margin-top:4px}
+.ml-z{display:block;height:100%;border-radius:2px}
+.ml-z.lo{background:var(--crit-wash)}
+.ml-z.mid{background:var(--warn-wash)}
+.ml-z.hi{background:var(--good-wash)}
+.ml-dot{position:absolute;top:50%;width:16px;height:16px;margin:-8px 0 0 -8px;border-radius:50%;background:var(--ink);box-shadow:0 0 0 3px var(--surface)}
+.ml-ticks{position:relative;height:16px;font-family:var(--f-mono);font-size:11px;color:var(--muted)}
+.ml-ticks span{position:absolute;transform:translateX(-50%)}
+.ml-ticks span:first-child{transform:none}
+.ml-ticks span:last-child{transform:translateX(-100%)}
+.ml-bands{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
+.ml-bands li{display:flex;flex-direction:column;gap:2px;font-size:12px;color:var(--ink-2);line-height:1.5}
+.ml-bands b{font-size:13px;color:var(--ink)}
+.ml-bands li.on b{color:var(--brass)}
+.ml-alert{font-size:13px;color:var(--crit);font-weight:700}
+.ml-check{font-size:13px;color:var(--ink-2);line-height:1.6;padding-top:8px;border-top:1px dashed var(--line)}
+.fn-note{margin:-4px 0 16px}
+.fn{display:flex;flex-direction:column;gap:6px;--s:7%}
+.fn-r{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.5fr);gap:10px 26px;align-items:stretch}
+.fn-band{display:flex;flex-direction:column;justify-content:center;gap:3px;min-height:112px;padding:14px 0;text-align:center}
+.fn-r.w0 .fn-band{clip-path:polygon(0 0,100% 0,calc(100% - var(--s)) 100%,var(--s) 100%);background:var(--surface-2);color:var(--ink);padding-inline:calc(var(--s) + 12px)}
+.fn-r.w1 .fn-band{clip-path:polygon(var(--s) 0,calc(100% - var(--s)) 0,calc(100% - 2 * var(--s)) 100%,calc(2 * var(--s)) 100%);background:var(--brass-wash);color:var(--ink);padding-inline:calc(2 * var(--s) + 12px)}
+.fn-r.w2 .fn-band{clip-path:polygon(calc(2 * var(--s)) 0,calc(100% - 2 * var(--s)) 0,calc(100% - 3 * var(--s)) 100%,calc(3 * var(--s)) 100%);background:var(--inv-bg);color:var(--inv-fg);padding-inline:calc(3 * var(--s) + 12px)}
+.fn-n{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--brass)}
+.fn-r.w2 .fn-n{color:var(--inv-tag)}
+.fn-band b{font-family:var(--f-display);font-weight:900;font-size:1.25rem;letter-spacing:.06em;line-height:1.3}
+.fn-q{font-size:13px;line-height:1.5;opacity:.85}
+.fn-qty{font-family:var(--f-mono);font-size:11px;line-height:1.5;opacity:.7;margin-top:2px}
+.fn-spout{justify-self:center;width:calc(100% - 6 * var(--s) - 2 * var(--s));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:10px 12px;background:var(--brass);color:var(--on-dir);border-radius:0 0 10px 10px;text-align:center}
+.fn-spout span{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;opacity:.85}
+.fn-spout b{font-family:var(--f-display);font-weight:900;font-size:1.1rem;letter-spacing:.04em}
+.fn-r.out{margin-bottom:8px}
+.fn-back{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;padding:14px 12px;border:1.5px dashed var(--brass);border-radius:10px;background:var(--brass-tint);color:var(--ink);text-align:center}
+.fn-back b{font-family:var(--f-display);font-weight:900;font-size:1.15rem;letter-spacing:.06em}
+.fn-arrow{font-size:20px;line-height:1;color:var(--brass);font-weight:700}
+.fn-band,.fn-spout,.fn-back{text-decoration:none;cursor:pointer;transition:filter .15s,transform .15s}
+.fn-band:hover,.fn-spout:hover,.fn-back:hover{filter:brightness(.94) saturate(1.1)}
+.fn-band:active,.fn-spout:active,.fn-back:active{transform:translateY(1px)}
+.fn-band:focus-visible,.fn-spout:focus-visible,.fn-back:focus-visible{outline:2px solid var(--brass);outline-offset:3px}
+.fn-go{font-size:12px;font-weight:700;margin-top:4px;color:var(--brass);opacity:.8}
+.fn-r.w2 .fn-go{color:var(--inv-tag)}
+.fn-spout .fn-go{color:var(--on-dir);margin-top:2px}
+.fn-band:hover .fn-go,.fn-spout:hover .fn-go,.fn-back:hover .fn-go{opacity:1;text-decoration:underline;text-underline-offset:3px}
+@media (prefers-reduced-motion:reduce){.fn-band,.fn-spout,.fn-back{transition:none}}
+.fn-body{display:flex;flex-direction:column;gap:6px;justify-content:center;min-width:0;padding:6px 0}
+.fn-body p{font-size:13px;color:var(--ink-2);line-height:1.65}
+.fn-thing{display:inline-block;font-weight:700;color:var(--ink);margin-right:8px}
+.fn-r + .fn-r .fn-body{border-top:1px dashed var(--line)}
+.c-head{display:flex;flex-direction:column;gap:4px}
+.c-eb{font-family:var(--f-mono);font-size:11px;letter-spacing:.14em;color:var(--brass)}
+.c-head h3{font-family:var(--f-display);font-weight:900;font-size:1.12rem;line-height:1.45;text-wrap:balance}
+.c-head p{font-size:13px;color:var(--ink-2);line-height:1.6}
+.paths-fig{padding:18px;display:flex;flex-direction:column;gap:10px}
+.trig{padding:18px}
+.quad{padding:18px;align-items:start}
+.quad .c-head{grid-column:1 / -1}
+.quad svg{align-self:center}
+.pair-note{padding:18px 18px 18px 15px}
+.ev .panel>.src{margin-top:auto}
+.trig .p-counter{margin-top:auto}
+.pair-note .gg-note{margin-top:auto}
+.q-ev .src{margin-top:auto}
+.q-ev{align-self:stretch}
+.cf{padding:16px 18px;margin-top:14px}
+.cf h3{font-size:15px;margin:0 0 10px}
+.cf dl{margin:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px}
+.cf dt{font-weight:700;font-size:13px}
+.cf dd{margin:2px 0 0;font-size:13px;color:var(--ink-2);line-height:1.6}
+.cf .src{margin-top:10px}
+@media (max-width:860px){
+  .derisk{grid-template-columns:minmax(0,1fr)}
+  .dr-l{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .fn-r{grid-template-columns:minmax(0,1fr);gap:4px}
+  .fn-r + .fn-r .fn-body{border-top:0}
+  .fn-band{min-height:96px}
+  .cf dl,.ml-bands{grid-template-columns:minmax(0,1fr)}}
+/* /funnel:css */
+/* polish:css */
+:root{--f-mono:"JetBrains Mono",ui-monospace,"SF Mono",Menlo,Consolas,"Noto Sans SC","PingFang SC","Microsoft YaHei",monospace}
+.tag,.c-eb{font-size:11.5px}
+.src{font-family:var(--f-body);font-size:12px;line-height:1.6;letter-spacing:0}
+.v-data{font-family:var(--f-body);font-size:12.5px;line-height:1.75}
+.kpi-s,body .fr,.gg-link,.fn-qty,.in-ask-h b{font-family:var(--f-body);font-size:12px;letter-spacing:.02em}
+.p-counter .pc-tag{font-family:var(--f-body);font-size:12px;letter-spacing:.08em;font-weight:700}
+.mc-g{font-family:var(--f-body);font-size:12px;font-weight:700;letter-spacing:.1em}
+.cond small{font-family:var(--f-body);font-size:12px}
+.lt-k,.lp-unlock span,.cond-t,.dr-k{font-size:12px}
+.mc-zl em,.turn{font-size:11px}
+.conf{white-space:nowrap}
+@media (max-width:560px){.mc-zl em{font-size:10px}.mc-zl em:nth-child(4){visibility:hidden}.conf{font-size:10.5px;min-width:0}}
+.lamps{align-items:start}
+.lp{display:grid;grid-row:span 5;grid-template-rows:subgrid;row-gap:8px;align-content:start}
+.lp-unlock{margin-top:0}
+.mod{padding-block:34px 0}
+.mod-h{gap:6px;margin-bottom:16px}
+.ws-div{margin-top:52px;padding-top:12px}
+.ws-div + .mod{padding-top:20px}
+.hero{padding-block:28px 20px}
+.lenses{align-items:stretch}
+.gg .src,.lens>.src{margin-top:auto}
+.fold-b{position:relative;overflow:hidden}
+.fold-b.clip::after{content:"";position:absolute;left:0;right:0;bottom:0;height:56px;background:linear-gradient(color-mix(in srgb,var(--surface) 0%,transparent),var(--surface));pointer-events:none}
+.fold-more{margin-top:2px}
+.cases{display:flex;flex-direction:column}
+.cases>.fold-more{margin-block:6px 10px}
+.fold-measure{align-items:start!important}
+.fold-measure>*{align-self:start!important}
+#cn-sw .sw{flex:0 0 auto;justify-content:flex-start}
+#cn-sw .sw+.sw{margin-top:auto}
+@media (min-width:901px){.cn-2{grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr)}}
+.lp-tally{align-content:flex-start}
+.lp-state{align-self:start}
+.pair-note .gg-note,.q-ev .src{margin-top:0}
+@media (min-width:981px){
+  .macro-top{grid-template-columns:minmax(0,1fr)}
+  .quad{grid-template-columns:minmax(0,300px) minmax(0,1fr);column-gap:28px}
+  .q-ev{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 28px;align-content:start}
+  .q-ev>p:first-child{grid-row:span 2}
+  .q-ev>.src{grid-column:1 / -1}
+  .pair-note{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,.85fr) minmax(0,1.25fr);gap:10px 28px;align-items:center}
+  .pair-note>.c-head{grid-column:1;grid-row:1;align-self:end}
+  .pair-note>.gg-note{grid-column:1;grid-row:2;align-self:start}
+  .pair-note>.pair-vals{grid-column:2;grid-row:1 / 3}
+  .pair-note>.bc{grid-column:3;grid-row:1 / 3}}
+/* /polish:css */
 /* extras:css */
 /* freshness tags */
 .fr{display:inline-flex;align-items:center;gap:5px;margin-right:8px;padding:0 6px;border-radius:3px;font-family:var(--f-mono);font-size:10.5px;line-height:1.7;color:var(--ink-2);background:var(--surface-2);white-space:nowrap;vertical-align:1px;cursor:default}
@@ -1017,26 +1167,39 @@ details.tt[open] summary::before{content:"▾"}
 
   <section class="kpis" id="kpis" aria-label="六个关键数字"></section>
 
+  <div class="ws-div" id="ws-decision"></div>
+
   <section class="mod" id="signals">
     <header class="mod-h"><span class="tag">01 · Signals 止跌清单</span><h2 id="sig-h"></h2><p class="sub" id="sig-sub"></p></header>
-    <div class="diag" id="diag"></div>
+    <div class="derisk card" id="derisk"></div>
     <div class="lamps" id="lamps"></div>
   </section>
 
-  <div class="ws-div" id="ws-themes"></div>
-
-  <section class="mod" id="themes">
-    <header class="mod-h"><span class="tag">02 · Themes 主题判断</span><h2 id="th-h"></h2><p class="sub" id="th-sub"></p></header>
-    <div class="themes" id="theme-grid"></div>
-  </section>
-
   <section class="mod" id="watch">
-    <header class="mod-h"><span class="tag">03 · Watch 序参量</span><h2 id="w-h"></h2><p class="sub" id="w-sub"></p></header>
+    <header class="mod-h"><span class="tag">02 · Watch 序参量</span><h2 id="w-h"></h2><p class="sub" id="w-sub"></p></header>
     <div class="gauges" id="gauges"></div>
   </section>
 
+  <section class="mod" id="agenda">
+    <header class="mod-h"><span class="tag">03 · Agenda 下一检查点</span><h2 id="a-h"></h2><p class="sub" id="a-sub"></p></header>
+    <div class="agenda card" id="agenda-box"></div>
+  </section>
+
+  <div class="ws-div" id="ws-mechanism"></div>
+
+  <section class="mod" id="mainline">
+    <header class="mod-h"><span class="tag">04 · Mainline 主线和三分法</span><h2 id="ml-h"></h2><p class="sub" id="ml-sub"></p></header>
+    <div class="ml card" id="ml-score"></div>
+    <div class="diag" id="diag"></div>
+  </section>
+
+  <section class="mod" id="themes">
+    <header class="mod-h"><span class="tag">05 · Themes 主题判断</span><h2 id="th-h"></h2><p class="sub" id="th-sub"></p></header>
+    <div class="themes" id="theme-grid"></div>
+  </section>
+
   <section class="mod" id="paths">
-    <header class="mod-h"><span class="tag">04 · Paths 路径</span><h2 id="p-h"></h2><p class="sub" id="p-sub"></p></header>
+    <header class="mod-h"><span class="tag">06 · Paths 路径</span><h2 id="p-h"></h2><p class="sub" id="p-sub"></p></header>
     <div class="paths">
       <div class="paths-fig card"><div class="scroll-x" id="p-fig"></div></div>
       <div class="trig card" id="trig"></div>
@@ -1046,7 +1209,7 @@ details.tt[open] summary::before{content:"▾"}
   <div class="ws-div" id="ws-evidence"></div>
 
   <section class="mod" id="evidence">
-    <header class="mod-h"><span class="tag">05 · Evidence 证据</span><h2 id="ev-h"></h2><p class="sub" id="ev-sub"></p></header>
+    <header class="mod-h"><span class="tag">07 · Evidence 证据</span><h2 id="ev-h"></h2><p class="sub" id="ev-sub"></p></header>
     <div class="ev">
       <div class="panel card" id="ev-trade"></div>
       <div class="panel card" id="ev-ashare"></div>
@@ -1054,7 +1217,7 @@ details.tt[open] summary::before{content:"▾"}
   </section>
 
   <section class="mod" id="macro">
-    <header class="mod-h"><span class="tag">06 · Macro 宏观状态</span><h2 id="mc-h"></h2><p class="sub" id="mc-sub"></p></header>
+    <header class="mod-h"><span class="tag">08 · Macro 宏观状态</span><h2 id="mc-h"></h2><p class="sub" id="mc-sub"></p></header>
     <div class="macro-top">
       <div class="quad card" id="quad"></div>
       <div class="pair-note card" id="pair-note"></div>
@@ -1064,7 +1227,7 @@ details.tt[open] summary::before{content:"▾"}
   </section>
 
   <section class="mod" id="china">
-    <header class="mod-h"><span class="tag">07 · China 中国视角 · 沧海一土狗</span><h2 id="cn-h"></h2><p class="sub" id="cn-sub"></p></header>
+    <header class="mod-h"><span class="tag">09 · China 中国视角 · 沧海一土狗</span><h2 id="cn-h"></h2><p class="sub" id="cn-sub"></p></header>
     <div class="cn-ft"><b id="cn-ft"></b><span id="cn-fn"></span></div>
     <div class="cn-row cn-g" id="cn-gauges"></div>
     <div class="cn-row cn-2"><div class="panel card" id="cn-sw"></div><div class="panel card" id="cn-ph"></div></div>
@@ -1072,21 +1235,7 @@ details.tt[open] summary::before{content:"▾"}
     <a class="cn-more" id="cn-more" href="#ledger"></a>
   </section>
 
-  <section class="mod" id="method">
-    <header class="mod-h"><span class="tag">08 · Method 框架</span><h2 id="m-h"></h2></header>
-    <div class="method" id="method-box"></div>
-    <h3 class="lens-t" id="lens-t"></h3>
-    <div class="lenses" id="lenses"></div>
-    <p class="route" id="route"></p>
-    <p class="foot" id="foot"></p>
-  </section>
-
   <div class="ws-div" id="ws-review"></div>
-
-  <section class="mod" id="agenda">
-    <header class="mod-h"><span class="tag">09 · Agenda 下一检查点</span><h2 id="a-h"></h2><p class="sub" id="a-sub"></p></header>
-    <div class="agenda card" id="agenda-box"></div>
-  </section>
 
   <section class="mod" id="log">
     <header class="mod-h"><span class="tag">10 · Review 中途回看</span><h2 id="l-h"></h2><p class="sub" id="l-sub"></p></header>
@@ -1100,8 +1249,19 @@ details.tt[open] summary::before{content:"▾"}
 
   <div class="ws-div" id="ws-install"></div>
 
+  <section class="mod" id="method">
+    <header class="mod-h"><span class="tag">11 · Method 框架</span><h2 id="m-h"></h2></header>
+    <p class="sub fn-note" id="fn-note"></p>
+    <div class="fn" id="method-box"></div>
+    <div class="cf card" id="conf-box"></div>
+    <h3 class="lens-t" id="lens-t"></h3>
+    <div class="lenses" id="lenses"></div>
+    <p class="route" id="route"></p>
+    <p class="foot" id="foot"></p>
+  </section>
+
   <section class="mod" id="install">
-    <header class="mod-h"><span class="tag">11 · Install 安装</span><h2 id="in-h"></h2><p class="sub" id="in-sub"></p><ul class="in-spec" id="in-spec"></ul></header>
+    <header class="mod-h"><span class="tag">12 · Install 安装</span><h2 id="in-h"></h2><p class="sub" id="in-sub"></p><ul class="in-spec" id="in-spec"></ul></header>
     <div class="method in-feats" id="in-feats"></div>
     <div class="in-box1 card" id="in-pkg">
       <div class="in-get" id="in-get"></div>
@@ -1135,96 +1295,98 @@ details.tt[open] summary::before{content:"▾"}
     "en": "Stillpoint",
     "about": "静观把市场噪音收成一句结论、一个现在能做的动作、一条改主意的线。研究框架，不是投资建议。",
     "tagline": "行情转得再快，先看清再动。",
-    "meta": "数据截至 2026-10-22 09:24 · 框架 v0.5.1 · 研究框架的观点展示，不是投资建议，不对应任何买卖点位"
+    "meta": "数据截至 2026-10-23 00:24 · 框架 v0.5.1 · 研究框架的观点展示，不是投资建议，不对应任何买卖点位"
   },
-  "edition": {"label": "研究档案 2026-10-22 早 · 快照 09:24 · 框架 v0.5.1", "due": "10/22"},
+  "edition": {"label": "研究档案 2026-10-22 晚 · 快照 00:24 · 框架 v0.5.1", "due": "10/23"},
   "verdict": {
-    "headline": "股票在修复，融资还没松。",
+    "headline": "修复没站住，融资还没松。",
     "highlight": "融资还没松",
-    "sub": "周三美股科技领涨：纳指 +1.05%，费城半导体 +1.97%。SpaceX 首次盈利，说算力能出租好几倍；Meta 把 2026 年资本开支下限上调到 1,350 亿美元，盘后涨约 3%–6%。韩国外资 10/21 净买 6,462 亿韩元，KOSPI 收涨 3.29%，按规则再净买一天①就转绿。CoreWeave 的债只是止跌一天，收益率还在 15% 左右，融资这盏红灯不变，继续等。",
+    "sub": "周四亚洲 AI 硬件被集中卖出：KOSPI −3.52%，恒生科技 −5.03%，A 股近 5,000 只下跌，上证收 3,658，跌破 3700。美股盘中费城半导体 −5.4%：Lam Research 说零部件和洁净室供给卡住出货，指引低于市场的高预期，但它说的是供给不够，不是需求变差。CoreWeave 盘中再跌 8.5%，美元债比美债高约 1,000bp，融资这盏红灯不变。韩国外资连两天净买，但计票时KOSPI −3.52%、恒生科技 −5.03% 两票压力，外资净买一票，①还是红。①②都确认红，又出现指向 H3 的跳格提示，减仓档按事先写的规则从 1 档升到 2 档。立场继续等。",
     "stance": "等待",
-    "chips": [{"k": "信心", "v": "中"}, {"k": "研究周期", "v": "1–3 个月"}, {"k": "和 10/21 早上比", "v": "主线没换，立场不变"}],
-    "dataNote": "美股、VIX、CoreWeave、道指、10 年期美债是 10/21 收盘；美元、黄金、布伦特期货是快照 10/22 09:24，布伦特结算价是 10/21（Nation Thailand）；日韩台港是 10/22 上午盘中；A 股判断用 10/21 收盘（9:24 只有集合竞价），涨跌家数和行业是万得 10/21（这一档万得没连上，用的是 08:17 那次）；韩国外资 10/21 是 Naver 确定数，10/22 是盘中数；高收益债利差这期没取到，还是 10/19；加息概率是 FXEmpire 10/20 引 CME，10/21 只有预测市场的数；CoreWeave CDS 最新是 10/19（Benzinga 转述）；北京挂牌量是土狗 10/21 复盘。",
+    "chips": [{"k": "信心", "v": "中"}, {"k": "研究周期", "v": "1–3 个月"}, {"k": "和 10/22 早上比", "v": "主线没换，立场不变"}],
+    "dataNote": "美股、VIX、CoreWeave、10 年期美债是 10/22 盘中（北京 10/23 00:24，美东 12:24），明早那期换成收盘数；日韩台港和 A 股是 10/22 收盘；涨跌家数和行业是万得 10/22；韩国外资 10/22 是 Naver 数；美元、黄金、布伦特期货是快照 00:14–00:24，布伦特结算价还是 10/21；CoreWeave、甲骨文、软银的债券利差是 TradingView 债券成交价（10/23 00:24 扫描，减 5 年期美债 10/20）；CDS 最新还是 10/19（报道转述）；加息概率是 CME 10/20（Mitrade 转述），路透 10/16–20 调查 100 位经济学家都预计 12 月加息；高收益债利差 10/21；北京挂牌量是土狗 10/21 复盘。",
     "stanceTitle": "七个主题：三个维持，三个等待，一个回避"
   },
   "stanceScale": ["回避", "减", "等待", "有条件维持", "有条件建立", "加"],
   "stances": [
-    {"theme": "AI 瓶颈层", "stance": "有条件维持", "note": "不追，等①确认"},
-    {"theme": "A 股半导体设备", "stance": "有条件维持", "note": "不追，10/21 设备回落"},
+    {"theme": "AI 瓶颈层", "stance": "有条件维持", "note": "①②都红、减仓档 2 档：主题仓位减三分之一"},
+    {"theme": "A 股半导体设备", "stance": "有条件维持", "note": "10/22 设备跌 3%–4%，不追"},
     {"theme": "防守端", "stance": "有条件维持", "note": "银行、红利、黄金"},
-    {"theme": "存储 · 韩国", "stance": "等待", "note": "外资转回净买，还差一天"},
-    {"theme": "A 股光模块", "stance": "等待", "note": "等融资缓解和放量止跌"},
-    {"theme": "美元拐点", "stance": "等待", "note": "101.71，在线下方 0.13"},
+    {"theme": "存储 · 韩国", "stance": "等待", "note": "外资连两天净买，但 KOSPI −3.5%"},
+    {"theme": "A 股光模块", "stance": "等待", "note": "10/22 光模块跌 8%–12%，等融资缓解和放量止跌"},
+    {"theme": "美元拐点", "stance": "等待", "note": "101.66，在线下方 0.18"},
     {"theme": "杠杆 AI 基建", "stance": "回避", "prev": "等待", "prevDate": "10/14", "note": "10/15 从等待收紧到回避"}
   ],
   "kpis": [
-    {"label": "纳斯达克", "value": "+1.05", "unit": "%", "delta": "费城半导体 +1.97%，英伟达 +2.5%，ASML +2.8%；标普 +0.58%，道指 +0.69%，罗素 2000 +0.27%", "read": "科技领涨，钱回到芯片", "src": "快照 09:24 · 10/21 收盘"},
-    {"label": "CoreWeave 股价", "value": "−0.5", "unit": "%", "delta": "收盘 61.82 美元，没跟芯片涨；2031 年债收益率约 15%（10/20 15.58%），2032 年债约 80.5 美分，和 10/20 持平；CDS 约 1,100bp（10/19）", "read": "股价横着，债止跌一天", "src": "补充读数 · Yahoo · 10/21 收盘"},
-    {"label": "VIX", "value": "16.68", "unit": "", "delta": "前值 17.31（10/20 收盘）；10/15 是 16.46；警戒线 25", "read": "回到大跌前的水平", "src": "快照 09:24 · Yahoo 16:15 ET 收盘", "dir": "dn", "chg": "−3.6%"},
-    {"label": "布伦特原油", "value": "110.0", "unit": "美元", "delta": "10/22 早上 109.99；10/21 盘中涨超 2 美元后回落，结算 108.82（+0.03）；胡塞武装的无人机袭击沙特 Shaybah 油田，沙特说生产没受影响", "read": "又贴着 110，通胀压力没退", "src": "快照 09:24 · 东方财富 · 期货；结算价 Nation Thailand 10/21", "dir": "up", "chg": "+1.1%"},
-    {"label": "12 月加息概率", "value": "93.6", "unit": "%", "delta": "个百分点（对比 10/16 的 74.3%，AP 引 CME）；这是 12/9 前至少加息一次的累计概率；10 月约 17%，10/21 预测市场给 10 月约 12%", "read": "加息往后挪，而且更确定了", "src": "FXEmpire 引 CME FedWatch · 10/20", "dir": "up", "chg": "+19.3"},
-    {"label": "韩国外资净买卖", "value": "+6,462", "unit": "亿韩元", "delta": "10/21 收盘后确定数（Naver）；10/22 上午盘中又净买 1,090；10/20 净卖 4,884", "read": "转回净买，还差一天", "src": "补充读数 · Naver · 10/21 确定数"}
+    {"label": "纳斯达克", "value": "−2.01", "unit": "%", "delta": "10/22 盘中（美东 12:24）：费城半导体 −5.4%，ASML −5.0%，英伟达 −3.6%；标普 −1.0%，道指持平", "read": "芯片又被卖，大盘股撑住一点", "src": "快照 10/23 00:24 · 10/22 盘中"},
+    {"label": "CoreWeave 股价", "value": "−8.5", "unit": "%", "delta": "盘中 56.58 美元；美元债比 5 年期美债高约 1,000bp，价格中位数约 81 美分（成交价）；CDS 最新 10/19 约 1,100bp", "read": "股价再跌，债没松", "src": "快照 00:24 · 东方财富 · 10/22 盘中"},
+    {"label": "VIX", "value": "18.36", "unit": "", "delta": "前值 16.68（10/21 收盘）；警戒线 25", "read": "升了，离 25 还远", "src": "快照 00:24 · Yahoo · 10/22 盘中", "dir": "up", "chg": "+10.1%"},
+    {"label": "布伦特原油", "value": "111.7", "unit": "美元", "delta": "期货 10/23 00:14；10/21 结算 108.82；报道说美以可能在中期选举后打击伊朗，油价到五个月新高", "read": "过了 110，通胀压力在加", "src": "快照 00:24 · 东方财富 · 期货；AOL 10/22", "dir": "up", "chg": "+2.7%"},
+    {"label": "12 月加息概率", "value": "93.6", "unit": "%", "delta": "个百分点（对比 10/16 的 74.3%，AP 引 CME）；12/9 前至少加息一次的累计概率；路透 10/16–20 调查，100 位经济学家都预计 12 月加息", "read": "加息往后挪，而且更确定了", "src": "FXEmpire 引 CME FedWatch · 10/20", "dir": "up", "chg": "+19.3"},
+    {"label": "韩国外资净买卖", "value": "+505", "unit": "亿韩元", "delta": "10/22 Naver；10/21 +6,462；连两天净买，但当天 KOSPI −3.52%", "read": "连买两天，但计票①还是红", "src": "补充读数 · Naver · 10/22"}
   ],
   "signals": {
-    "head": "灯没变：韩国还差一天，CoreWeave 的债止跌一天",
-    "sub": "①转绿，瓶颈层可以重新评估；②转绿，杠杆 AI 才解禁。10/21 外资净买、KOSPI 收涨 3.29%，①还差一天；CoreWeave 债持平一天，②没动。",
-    "diagnosis": {"verdict": "还是融资压力型下跌，股票在修复，债只止跌了一天", "rule": "只有真正的流动性冲击，才是乱中取利的入场信号。融资压力和经营恶化，对应的是等待或回避。", "rows": [{"name": "流动性压力", "level": 2, "tone": "warn", "levelLabel": "市场平静，美元在收", "fact": "VIX 收 16.68；SOFR−IORB −3bp（10/19），高收益债利差 3.29%（10/19）；吸引子美元流动性 −0.62，连续 4 个观测日为负"}, {"name": "融资压力", "level": 3, "tone": "crit", "levelLabel": "主线，债止跌一天", "fact": "CoreWeave 10/21 收 61.82（−0.5%），没跟芯片涨；2032 年债约 80.5 美分、收益率约 14.7%，和 10/20 持平；CDS 约 1,100bp（10/19）；软银 CDS 432bp，四年新高"}, {"name": "经营恶化", "level": 0, "tone": "good", "levelLabel": "瓶颈层没有，存储有问号", "fact": "Meta 把 2026 年资本开支下限上调到 1,350 亿美元；SpaceX 说算力能出租好几倍；超微上调收入预期；HBM4 推迟仍未证实"}]},
+    "head": "①②都红，减仓档升到 2 档",
+    "sub": "①转绿，瓶颈层可以重新评估；②转绿，杠杆 AI 才解禁。韩国外资连两天净买、KOSPI 没破 5,488，旧路标的两个条件满足了；但计票时KOSPI −3.52%、恒生科技 −5.03% 两票压力，外资净买一票，①还是红。CoreWeave 盘中 −8.5%，②没动。",
+    "diagnosis": {"verdict": "还是融资压力型下跌：芯片因为供给受限和拥挤交易又跌，债没止跌", "rule": "只有真正的流动性冲击，才是乱中取利的入场信号。融资压力和经营恶化，对应的是等待或回避。", "rows": [{"name": "流动性压力", "level": 2, "tone": "warn", "levelLabel": "紧了一点，美元在收", "fact": "VIX 10/22 盘中 18.36；SOFR−IORB −2bp（10/20），高收益债利差 3.27%（10/21）；吸引子美元流动性 −0.62，连续 4 个观测日为负"}, {"name": "融资压力", "level": 3, "tone": "crit", "levelLabel": "主线，股价又跌", "fact": "CoreWeave 10/22 盘中 −8.5%，美元债比 5 年期美债高约 1,000bp；甲骨文约 245bp，软银约 483bp；CDS 最新 10/19 约 1,100bp"}, {"name": "经营恶化", "level": 0, "tone": "good", "levelLabel": "瓶颈层没有，供给卡住", "fact": "Lam 指引没下修，说的是供给不够；2027 年设备开支预估 +30%；台积电 Q3 收入超指引。Meta 盘后涨、10/22 盘中反而跌约 6%，原因报道没写清"}]},
     "checks": [
-      {"n": "①", "name": "踩踏", "state": "amber", "prev": "amber", "trend": "转回净买 1 天，还差 1 天", "fact": "10/21 外资净买 6,462 亿韩元（Naver 确定数），KOSPI 收 5,735.66（+3.29%）；10/22 上午 5,669（−1.16%），外资盘中仍净买 1,090 亿。10/20、10/21 两天都没破 5,488，这一半已经到了", "unlock": "外资重新停止净卖出，KOSPI 连续两天不跌破 10/19 的低点 5,488"},
-      {"n": "②", "name": "融资", "state": "red", "prev": "red", "trend": "债价持平一天，还没止跌", "fact": "CoreWeave 10/21 收 61.82 美元（−0.5%）；2032 年债约 80.5 美分、收益率约 14.7%，和 10/20 持平，2031 年债约 15%（10/20 是 15.58%，Benzinga 10/21）；CDS 约 1,100bp（10/19，Benzinga）；软银 5 年 CDS 432bp，四年新高（10/20）", "unlock": "CoreWeave 债券止跌，或 AI 借款人新融资顺利"},
-      {"n": "③", "name": "利率", "state": "green", "prev": "green", "trend": "不变", "fact": "10 月加息概率约 17%（FXEmpire 引 CME，10/20），10/21 预测市场约 12%（Kalshi、Polymarket）；12 月前累计约 94%；10 年期美债 5.15%（10/21，+3bp），2 年期 4.79%（10/20）；布伦特 10/21 结算 108.82", "unlock": "10 月加息概率留在 25% 以下，直到 10/27–28 的 FOMC"},
-      {"n": "④", "name": "系统流动性", "state": "green", "prev": "green", "trend": "不变", "fact": "SOFR−IORB −3bp（10/19），OFR −0.946（10/16）；VIX 收 16.68（前值 17.31），警戒线 25", "unlock": "SOFR−IORB 留在 0 以下，OFR 不回到 0 附近，VIX 不持续高于 25"},
-      {"n": "⑤", "name": "基本面", "state": "green", "prev": "green", "trend": "需求证据加了一条", "fact": "Meta 2026 年资本开支指引收窄到 1,350–1,450 亿美元，下限上调 50 亿；SpaceX 说算力需求能租出去好几倍；ARGUS AI 基建 10/21 仍是 STRESSED（87%）", "unlock": "瓶颈层指引不下修"}
+      {"n": "①", "name": "踩踏", "state": "red", "prev": "amber", "trend": "外资连买，价格两票压力", "fact": "外资 10/21 净买 6,462 亿、10/22 净买 505 亿韩元（Naver），连两天净买；KOSPI 10/21 收 5,735.66、10/22 收 5,533.77（−3.52%），两天都没破 5,488，旧路标的两个条件都满足。但计票时同一天 KOSPI −3.52%、恒生科技 −5.03% 各算一票压力，外资净买算一票不压力，2 比 1，①还是红。旧路标和计票说法不一致，回看时专门检验", "unlock": "外资重新停止净卖出，KOSPI 连续两天不跌破 10/19 的低点 5,488"},
+      {"n": "②", "name": "融资", "state": "red", "prev": "red", "trend": "股价再跌，债利差约 1,000bp", "fact": "CoreWeave 10/22 盘中 56.58 美元（−8.5%）；6 只 2028–2034 年美元债价格中位数约 81.2 美分，比 5 年期美债高约 1,000bp（TradingView 成交价，10/23 00:24）；甲骨文约 245bp，软银约 483bp；CDS 最新还是 10/19 约 1,100bp（Benzinga）", "unlock": "CoreWeave 债券止跌，或 AI 借款人新融资顺利"},
+      {"n": "③", "name": "利率", "state": "green", "prev": "green", "trend": "不变", "fact": "10 年期美债 10/22 盘中回落到约 5.00%（10/21 5.15%），股跌债涨；10 月加息概率约 17%（CME，10/20）；路透 10/16–20 调查，94 位经济学家预计 10/28 不动，100 位都预计 12 月加息；10 年期实际利率 2.76%（10/21）", "unlock": "10 月加息概率留在 25% 以下，直到 10/27–28 的 FOMC"},
+      {"n": "④", "name": "系统流动性", "state": "green", "prev": "green", "trend": "VIX 升了，还远", "fact": "SOFR−IORB −2bp（10/20），OFR −0.947（10/19）；VIX 10/22 盘中 18.36（+10%），警戒线 25；高收益债利差 3.27%（10/21）", "unlock": "SOFR−IORB 留在 0 以下，OFR 不回到 0 附近，VIX 不持续高于 25"},
+      {"n": "⑤", "name": "基本面", "state": "green", "prev": "green", "trend": "需求没坏，供给卡住", "fact": "Lam Research 9 月季收入 82.2 亿美元，超预期；12 月季指引 86 亿 ± 4 亿，略高于一致预期 85.5 亿，低于市场传的 89 亿。管理层说是零部件和洁净室供给受限，部分出货挪到 3 月季；2027 年晶圆设备开支预估约 2,000 亿美元（今年约 1,550 亿）。瓶颈层指引没有下修", "unlock": "瓶颈层指引不下修"}
     ],
-    "prevLabel": "10/21 早"
+    "prevLabel": "10/22 早",
+    "tally": {"asof": "10/23 00:27", "version": "v1.3.1", "lamps": {"①": {"confirmed": "red", "raw": "red", "stress": 2.0, "calm": 1.0, "abst": 0, "cons": 0.667, "flip": 1, "watch": false, "thin": false}, "②": {"confirmed": "red", "raw": "red", "stress": 4.0, "calm": 0, "abst": 3, "cons": 1.0, "flip": 3, "watch": false, "thin": false}, "③": {"confirmed": "green", "raw": "red", "stress": 2.0, "calm": 1.0, "abst": 0, "cons": 0.667, "flip": 1, "watch": false, "thin": false}, "④": {"confirmed": "green", "raw": "green", "stress": 1.0, "calm": 3.0, "abst": 2, "cons": 0.75, "flip": 2, "watch": false, "thin": false}, "⑤": {"confirmed": "green", "raw": "green", "stress": 0, "calm": 2.0, "abst": 0, "cons": 1.0, "flip": 2, "watch": false, "thin": false}}, "note": "新规则计票，和上面的人工判断并排跑：每盏灯底下几个子信号，阈值事先写死，只投压力、不压力、弃权；同一来源只算一票；改色要连续两期一致。"},
+    "derisk": {"tier": 2, "raw": 2, "theme": "美股 AI", "why": ["主线 H1 对应的 ② 灯确认红", "① 踩踏灯也确认红，并且出现跳格提示（指向 H3）"], "ladder": [{"t": 0, "name": "照常", "cond": "主线自己的灯不是红"}, {"t": 1, "name": "不加仓、不加杠杆", "cond": "主线自己的灯确认红"}, {"t": 2, "name": "主题仓位减三分之一", "cond": "再加上踩踏灯确认红，并且主线分数跌破 60 或出现跳格提示"}, {"t": 3, "name": "主题仓位减到一半以下", "cond": "跳格条件满足而且对应的灯也确认红，或者主线分数跌破 50"}], "asof": "10/23 00:27", "note": "条件和动作都是事先写死的。升档当期生效，降档要连续两期。"}
   },
   "themesHead": "瓶颈层维持，借钱扩张的回避，其余在等",
   "themesSub": "每张卡片：一句判断、一张证据图、解除条件。立场按 1–3 个月的研究周期给出，是研究判断，不是买卖指令。",
   "themes": [
-    {"name": "AI 瓶颈层", "scope": "芯片、代工和设备，卡住 AI 算力供给的环节", "stances": [{"stance": "有条件维持"}], "verdict": "10/21 美股芯片领涨：费城半导体 +1.97%，英伟达 +2.5%，ASML +2.8%，AMD +3.4%。SpaceX 说算力能出租好几倍，Meta 把 2026 年资本开支下限上调到 1,350 亿美元，需求这头又多了一条证据。①还差一天确认，不追。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "87%"}, "unlock": "①转绿，且没有订单下修", "change": "不变；需求证据加了一条（Meta、SpaceX），等①", "names": {"title": "代表公司 · 10/21 收盘", "src": "补充读数 · Yahoo · 10/22 09:25 取数", "rows": [{"n": "英伟达", "tk": "NVDA", "px": "221.97", "pct": 2.54}, {"n": "台积电 ADR", "tk": "TSM", "px": "431.89", "pct": 1.6}, {"n": "博通", "tk": "AVGO", "px": "337.80", "pct": 1.03}, {"n": "AMD", "tk": "AMD", "px": "552.72", "pct": 3.36}, {"n": "迈威尔", "tk": "MRVL", "px": "244.76", "pct": 1.81}, {"n": "Arm", "tk": "ARM", "px": "226.59", "pct": 2.5}, {"n": "ASML", "tk": "ASML", "px": "1,676.69", "pct": 2.81}, {"n": "应用材料", "tk": "AMAT", "px": "408.94", "pct": 0.98}, {"n": "泛林", "tk": "LRCX", "px": "260.81", "pct": -1.0}]}},
-    {"name": "杠杆 AI 基建", "scope": "CoreWeave、Nebius 这类靠借债扩张的算力租赁和数据中心", "stances": [{"stance": "回避"}], "verdict": "CoreWeave 10/21 收 61.82（−0.5%），没跟着芯片涨。它的债止跌了一天：2032 年债约 80.5 美分、收益率约 14.7%，和 10/20 持平；2031 年债约 15%。CDS 约 1,100bp（10/19），软银 CDS 432bp 创四年新高。SpaceX 说算力需求很旺，但债主担心的是借钱的成本，不是需求。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是最新", "min": 0, "max": 1300, "ticks": [0, 400, 800, 1200], "rows": [{"name": "CoreWeave", "from": 1194.5, "fromLabel": "10/15 纪录", "to": 1100, "toLabel": "10/19", "val": "1,195→1,100"}, {"name": "甲骨文", "from": 288, "fromLabel": "10/15", "to": 295, "toLabel": "10/19", "val": "288→295"}, {"name": "软银", "from": 424, "fromLabel": "上周", "to": 432, "toLabel": "10/20", "val": "424→432"}], "foot": "都是报道转述，不是成交报价：CoreWeave 10/19 约 1,100bp（Benzinga），甲骨文 295bp（10/19），软银 432bp 是 2022 年以来最高（10/20，Bloomberg 等）。2031 年债收益率 10/20 是 15.58%，10/21 约 15%（Benzinga）。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "回避不变；债止跌一天，股价没跟芯片涨", "names": {"title": "代表公司 · 10/21 收盘（软银是 10/22 上午）", "src": "补充读数 · Yahoo · 10/22 09:25 取数", "rows": [{"n": "CoreWeave", "tk": "CRWV", "px": "61.82", "pct": -0.5}, {"n": "Nebius", "tk": "NBIS", "px": "171.57", "pct": 0.07}, {"n": "IREN", "tk": "IREN", "px": "27.84", "pct": 4.58, "note": "SpaceX 财报后小型算力租赁股反弹"}, {"n": "Applied Digital", "tk": "APLD", "px": "20.98", "pct": 8.54}, {"n": "甲骨文", "tk": "ORCL", "px": "129.13", "pct": -1.53}, {"n": "软银", "tk": "9984.T", "px": "¥4,504", "pct": -2.55, "note": "东京 10/22 上午盘中；10/21 收盘 +1.5%"}]}},
-    {"name": "存储 · 韩国", "scope": "三星、SK 海力士、KOSPI", "stances": [{"stance": "等待"}], "verdict": "10/21 外资净买 6,462 亿韩元，KOSPI 收涨 3.29%，SK 海力士 +5.8%、三星 +5.7%。10/22 上午回吐 1.2%，外资盘中仍净买 1,090 亿。按规则还差一天：今天收盘外资再净买，①就转绿。", "viz": {"type": "bars", "title": "两天涨跌（%），10/22 是上午盘中", "l1": "10/21", "l2": "10/22", "min": -6, "max": 6, "ticks": [-6, -4, -2, 0, 2, 4, 6], "rows": [{"name": "SK 海力士", "v": 5.81, "v2": -1.62}, {"name": "三星电子", "v": 5.67, "v2": -1.12}, {"name": "KOSPI", "v": 3.29, "v2": -1.16, "note": "10/22 9:24 盘中；10/20、10/21 都没破 5,488"}], "foot": "外资 10/21 净买 6,462 亿韩元（Naver 确定数），10/22 上午盘中净买 1,090 亿。美光 10/21 收涨 2.0%。HBM4 后段设备订单推迟还是只有韩媒报道。"}, "unlock": "①转绿，HBM4 推迟被证伪，长鑫竞争有更多证据", "change": "不变；外资转回净买 1 天"},
-    {"name": "A 股 AI 链", "scope": "光模块 vs 半导体设备", "stances": [{"stance": "等待", "label": "光模块"}, {"stance": "有条件维持", "label": "设备"}], "verdict": "10/21 设备回落：中芯国际 −1.7%，中微 −1.6%，北方华创 −1.0%；光模块里天孚通信 +5.1%，新易盛 −1.4%。两边内部都还在分化，不追。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/20", "l2": "10/21", "min": -8, "max": 4, "ticks": [-8, -4, 0, 4], "rows": [{"name": "北方华创", "v": -1.15, "v2": -0.97, "t": "设备"}, {"name": "中芯国际", "v": 2.29, "v2": -1.71, "t": "设备"}, {"name": "中微公司", "v": 0.44, "v2": -1.62, "t": "设备"}, {"name": "天孚通信", "v": 0.61, "v2": 5.1, "t": "光模块"}, {"name": "中际旭创", "v": -1.94, "v2": -0.17, "t": "光模块"}, {"name": "新易盛", "v": -3.19, "v2": -1.36, "t": "光模块"}], "foot": "从 10/15 算起五天：北方华创约 −4.3%，中际旭创约 −6.7%，天孚通信约 −6.1%，新易盛约 −11%。设备仍比光模块强一点。美国对中国光模块设限的传闻还没核实。"}, "unlock": "光模块：②缓解，加上 A 股放量止跌。设备：不因一天强就追", "change": "不变；10/21 设备回落、天孚大涨"},
-    {"name": "美元拐点", "scope": "美元指数 101.71（案例 3）", "stances": [{"stance": "等待"}], "verdict": "美元指数 101.71，在 101.84 下方多了一点；布伦特还贴着 110，12 月前加息的概率约 94%。六条里还是只有⑥转了。", "viz": {"type": "conds", "title": "六个拐点条件，10/22 早上的状态", "rows": [{"n": "①", "name": "美联储停止加息", "s": "amber", "v": "10 月约 17%（10/20），12 月前加息约 94%"}, {"n": "②", "name": "欧元止跌", "s": "amber", "v": "1.1232"}, {"n": "③", "name": "日元止跌", "s": "amber", "v": "158.14"}, {"n": "④", "name": "布伦特跌破 95", "s": "red", "v": "109.99，10/21 结算 108.82"}, {"n": "⑤", "name": "避险需求退潮", "s": "amber", "v": "VIX 收 16.68，回到 10/15 的 16.46 附近"}, {"n": "⑥", "name": "跌破 101.84", "s": "green", "v": "101.71，在线下方 0.13"}], "foot": "美元指数 10/16 一度跌到 101.78，10/19 回到 101.84 上方，10/20 晚又跌回去，10/22 早上 101.71。三四条同时转向才算拐点。"}, "unlock": "六条里三四条同时转向", "change": "回看 10/30、11/12"},
-    {"name": "防守端", "scope": "银行、红利、黄金", "stances": [{"stance": "有条件维持"}], "verdict": "10/21 美股钱回到科技：纳指 +1.05%，费城半导体 +1.97%，罗素 2000 只涨 0.27%；10 年期美债收益率回到 5.15%。A 股银行 −0.7%（万得）。只是一天，融资还没松，防守端继续拿着。", "viz": {"type": "flows", "title": "10/21 钱去了哪：回到科技，防守端歇了一天", "rows": [{"name": "科技股", "fact": "纳指 +1.05%，费城半导体 +1.97%，SpaceX +7.8%", "ok": true}, {"name": "小盘股", "fact": "罗素 2000 +0.27%，跑输纳指", "ok": false}, {"name": "美债", "fact": "10 年期收益率 5.15%（+3bp），20 年期拍卖 5.469%", "ok": false}, {"name": "黄金", "fact": "COMEX 4,131.7，10/22 早上 −0.4%", "ok": false}, {"name": "美元", "fact": "美元指数 101.71，在 101.84 下方", "ok": false}]}, "unlock": "继续有效：杠铃的防守端", "change": "不变；钱一天回到科技"}
+    {"name": "AI 瓶颈层", "scope": "芯片、代工和设备，卡住 AI 算力供给的环节", "stances": [{"stance": "有条件维持"}], "verdict": "10/22 芯片又跌：费城半导体盘中 −5.4%，ASML −5.0%，台积电 ADR −4.2%，英伟达 −3.6%。导火索是 Lam Research 说零部件和洁净室供给卡住出货，12 月季指引 86 亿美元，略高于一致预期、低于市场传的 89 亿。它说的是供给不够，不是需求变差，2027 年设备开支预估 +30%。①②都确认红，减仓档升到 2 档：主题仓位减三分之一。", "viz": {"type": "range", "title": "台积电 Q3 收入：实际 vs 指引（亿美元）", "min": 440, "max": 475, "ticks": [440, 450, 460, 470], "lo": 446, "hi": 458, "actual": 467.2, "bandLabel": "指引", "actualLabel": "实际", "foot": "全年增长上调到约 44%，Q4 指引 523–543 亿美元。"}, "state": {"label": "ARGUS AI 基建状态", "steps": ["NORMAL", "STRESSED", "CASCADE", "RECOVERY"], "active": 1, "conf": "87%"}, "unlock": "①转绿，且没有订单下修", "change": "不变；供给受限是新证据，指引没下修", "names": {"title": "代表公司 · 10/22 盘中（北京 00:24）", "src": "补充读数 · Yahoo · 10/23 00:24 取数", "rows": [{"n": "英伟达", "tk": "NVDA", "px": "214.10", "pct": -3.54}, {"n": "台积电 ADR", "tk": "TSM", "px": "414.08", "pct": -4.12}, {"n": "博通", "tk": "AVGO", "px": "325.71", "pct": -3.58}, {"n": "AMD", "tk": "AMD", "px": "517.28", "pct": -6.41}, {"n": "迈威尔", "tk": "MRVL", "px": "227.19", "pct": -7.18}, {"n": "Arm", "tk": "ARM", "px": "212.56", "pct": -6.19}, {"n": "ASML", "tk": "ASML", "px": "1,593.83", "pct": -4.94}, {"n": "应用材料", "tk": "AMAT", "px": "383.03", "pct": -6.34}, {"n": "泛林", "tk": "LRCX", "px": "235.62", "pct": -9.66}]}},
+    {"name": "杠杆 AI 基建", "scope": "CoreWeave、Nebius 这类靠借债扩张的算力租赁和数据中心", "stances": [{"stance": "回避"}], "verdict": "CoreWeave 10/22 盘中 56.58 美元（−8.5%），比芯片跌得更多。债这头：6 只 2028–2034 年美元债价格中位数约 81 美分，比 5 年期美债高约 1,000bp（成交价）；甲骨文约 245bp，软银约 483bp。CDS 最新还是 10/19 约 1,100bp。借钱的成本没降，回避不变。", "viz": {"type": "dumbbell", "title": "5 年 CDS（bp），空心是之前，实心是最新", "min": 0, "max": 1300, "ticks": [0, 400, 800, 1200], "rows": [{"name": "CoreWeave", "from": 1194.5, "fromLabel": "10/15 纪录", "to": 1100, "toLabel": "10/19", "val": "1,195→1,100"}, {"name": "甲骨文", "from": 288, "fromLabel": "10/15", "to": 295, "toLabel": "10/19", "val": "288→295"}, {"name": "软银", "from": 424, "fromLabel": "上周", "to": 432, "toLabel": "10/20", "val": "424→432"}], "foot": "都是报道转述，不是成交报价：CoreWeave 10/19 约 1,100bp（Benzinga），甲骨文 295bp（10/19），软银 432bp 是 2022 年以来最高（10/20，Bloomberg 等）。2031 年债收益率 10/20 是 15.58%，10/21 约 15%（Benzinga）。"}, "unlock": "②转绿：CDS 回到 600bp 以下，或新融资顺利", "change": "回避不变；股价再跌，债利差约 1,000bp", "names": {"title": "代表公司 · 10/22 盘中（软银是东京 10/22 收盘）", "src": "补充读数 · Yahoo · 10/23 00:24 取数", "rows": [{"n": "CoreWeave", "tk": "CRWV", "px": "56.70", "pct": -8.28}, {"n": "Nebius", "tk": "NBIS", "px": "160.63", "pct": -6.38}, {"n": "IREN", "tk": "IREN", "px": "25.65", "pct": -7.88}, {"n": "Applied Digital", "tk": "APLD", "px": "19.19", "pct": -8.53}, {"n": "甲骨文", "tk": "ORCL", "px": "126.36", "pct": -2.14}, {"n": "软银", "tk": "9984.T", "px": "¥4,305", "pct": -6.86}]}},
+    {"name": "存储 · 韩国", "scope": "三星、SK 海力士、KOSPI", "stances": [{"stance": "等待"}], "verdict": "10/22 KOSPI −3.52%，SK 海力士 −5.5%、三星 −4.0%。外资却还是净买 505 亿韩元，连两天净买，KOSPI 也没破 5,488。但计票时价格两票压力，①还是红；卖的不是外资。HBM4 推迟和长鑫竞争还没新证据，继续等。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/21", "l2": "10/22", "min": -6, "max": 6, "ticks": [-6, -4, -2, 0, 2, 4, 6], "rows": [{"name": "SK 海力士", "v": 5.81, "v2": -5.49}, {"name": "三星电子", "v": 5.67, "v2": -4.03}, {"name": "KOSPI", "v": 3.29, "v2": -3.52, "note": "10/21、10/22 都没破 5,488"}], "foot": "外资 10/21 净买 6,462 亿、10/22 净买 505 亿韩元（Naver）。美光 10/22 盘中约 −4.8%（Yahoo）。HBM4 后段设备订单推迟还是只有韩媒报道。"}, "unlock": "①转绿，HBM4 推迟被证伪，长鑫竞争有更多证据", "change": "不变；外资连买，但①计票还是红"},
+    {"name": "A 股 AI 链", "scope": "光模块 vs 半导体设备", "stances": [{"stance": "等待", "label": "光模块"}, {"stance": "有条件维持", "label": "设备"}], "verdict": "10/22 光模块领跌：新易盛 −12.3%，中际旭创 −8.8%，天孚通信 −8.4%；设备跌得少一些：中微 −3.6%，北方华创 −3.4%，中芯国际 −0.2%。通信行业 −6.2%，是申万一级里跌得最多的。设备仍比光模块强，两边都不追。", "viz": {"type": "bars", "title": "两天涨跌（%）", "l1": "10/21", "l2": "10/22", "min": -14, "max": 6, "ticks": [-12, -8, -4, 0, 4], "rows": [{"name": "北方华创", "v": -0.97, "v2": -3.39, "t": "设备"}, {"name": "中芯国际", "v": -1.71, "v2": -0.15, "t": "设备"}, {"name": "中微公司", "v": -1.62, "v2": -3.58, "t": "设备"}, {"name": "天孚通信", "v": 5.1, "v2": -8.36, "t": "光模块"}, {"name": "中际旭创", "v": -0.17, "v2": -8.76, "t": "光模块"}, {"name": "新易盛", "v": -1.36, "v2": -12.28, "t": "光模块"}], "foot": "通信 −6.17%、电子 −3.60%（申万一级，万得 10/22）。美国对中国光模块设限的传闻还没核实。"}, "unlock": "光模块：②缓解，加上 A 股放量止跌。设备：不因一天强就追", "change": "不变；10/22 光模块领跌"},
+    {"name": "美元拐点", "scope": "美元指数 101.71（案例 3）", "stances": [{"stance": "等待"}], "verdict": "美元指数 101.66，在 101.84 下方 0.18；布伦特冲到 111.7，五个月新高；路透调查 100 位经济学家都预计 12 月加息。六条里还是只有⑥转了。", "viz": {"type": "conds", "title": "六个拐点条件，10/23 凌晨的状态", "rows": [{"n": "①", "name": "美联储停止加息", "s": "amber", "v": "10 月约 17%（CME 10/20）；路透调查 100 位都预计 12 月加息"}, {"n": "②", "name": "欧元止跌", "s": "amber", "v": "1.1218"}, {"n": "③", "name": "日元止跌", "s": "amber", "v": "157.06，10/22 日元走强约 0.7%"}, {"n": "④", "name": "布伦特跌破 95", "s": "red", "v": "111.72（期货），10/21 结算 108.82"}, {"n": "⑤", "name": "避险需求退潮", "s": "amber", "v": "VIX 盘中 18.36，比 10/21 升 10%"}, {"n": "⑥", "name": "跌破 101.84", "s": "green", "v": "101.66，在线下方 0.18"}], "foot": "美元指数 10/16 一度跌到 101.78，10/19 回到 101.84 上方，10/20 晚又跌回去，10/23 凌晨 101.66。三四条同时转向才算拐点。"}, "unlock": "六条里三四条同时转向", "change": "回看 10/30、11/12"},
+    {"name": "防守端", "scope": "银行、红利、黄金", "stances": [{"stance": "有条件维持"}], "verdict": "10/22 芯片又被卖：纳指盘中 −2.0%，费城半导体 −5.4%；接住的是美债和红利：10 年期收益率回落到约 5.00%，A 股银行只跌 0.27%（大盘 −2.45%）。黄金跌了 2.1%，这一天没起作用。防守端继续拿着。", "viz": {"type": "flows", "title": "10/22 钱去了哪：芯片又被卖，美债和银行接住了", "rows": [{"name": "科技股", "fact": "纳指盘中 −2.0%，费城半导体 −5.4%", "ok": false}, {"name": "美债", "fact": "10 年期收益率盘中约 5.00%，比 10/21 低约 15bp", "ok": true}, {"name": "A 股银行", "fact": "银行 −0.27%、家电 +0.08%，万得全 A −2.45%（万得）", "ok": true}, {"name": "黄金", "fact": "COMEX 4,063，−2.1%", "ok": false}, {"name": "美元", "fact": "美元指数 101.66，基本持平", "ok": false}]}, "unlock": "继续有效：杠铃的防守端", "change": "不变；美债和银行接住了这一跌"}
   ],
-  "evidenceHead": "同一笔交易：亚洲先反弹，美股 10/21 跟上，亚洲 10/22 早上回吐",
-  "evidenceSub": "跌幅排序看的是指数里 AI 硬件占多少、外资仓位有多挤。10/21 KOSPI 先涨 3.3%，当晚美股芯片跟上（费城半导体 +2.0%），10/22 上午 KOSPI 反而回吐 1.2%；外资仓位重的地方，来回都最猛。这笔交易还没拆完。",
+  "evidenceHead": "同一笔交易：亚洲 10/22 集中卖出，美股芯片盘中跟跌",
+  "evidenceSub": "跌幅排序看的是指数里 AI 硬件占多少、外资仓位有多挤。10/22 KOSPI −3.5%、恒生科技 −5.0%、创业板 −4.4%，A 股光模块跌 8%–12%；当晚美股费城半导体盘中 −5.4%，导火索是 Lam 说供给卡住出货。这笔交易还没拆完。",
   "sameTrade": {
-    "title": "美股周三科技领涨，亚洲周四早上回吐",
-    "sub": "每个市场两根：上面是上一个交易日，下面是最新一个交易日（美股 10/21 收盘；日韩台港 10/22 上午盘中；A 股 10/21 收盘，10/22 还没开盘）。",
+    "title": "亚洲 10/22 集中卖出 AI 硬件，美股芯片盘中跟跌",
+    "sub": "每个市场两根：上面是上一个交易日，下面是最新一个交易日（日韩台港和 A 股 10/22 收盘；美股 10/22 盘中，北京 00:24）。",
     "l1": "上一交易日",
     "l2": "最新",
-    "min": -4,
+    "min": -6,
     "max": 4,
-    "ticks": [-4, -2, 0, 2, 4],
+    "ticks": [-6, -4, -2, 0, 2, 4],
     "rows": [
-      {"name": "韩国 KOSPI", "v": 3.29, "ai": true, "v2": -1.16, "t": "10/22 9:24 盘中"},
-      {"name": "日经 225", "v": 0.85, "ai": true, "v2": -0.45, "t": "10/22 9:24 盘中"},
-      {"name": "台湾加权", "v": 1.28, "ai": true, "v2": 0.25, "t": "10/22 9:24 盘中"},
-      {"name": "创业板指", "v": -0.26, "v2": -1.62, "t": "10/21 收盘（10/22 还没开盘）"},
-      {"name": "科创 50", "v": 1.0, "v2": 0.06, "ai": true, "t": "10/21 收盘（10/22 还没开盘）"},
-      {"name": "上证指数", "v": 0.12, "v2": -0.6, "t": "10/21 收盘（10/22 还没开盘）"},
-      {"name": "恒生科技", "v": -1.26, "t": "10/22 9:24 盘中", "v2": -1.15},
-      {"name": "恒生指数", "v": -0.9, "t": "10/22 9:24 盘中", "v2": -0.58},
-      {"name": "费城半导体", "v": -0.29, "ai": true, "t": "10/21 收盘", "v2": 1.97},
-      {"name": "纳斯达克", "v": -0.02, "t": "10/21 收盘", "v2": 1.05},
-      {"name": "标普 500", "v": 0.28, "t": "10/21 收盘", "v2": 0.58},
-      {"name": "道琼斯", "v": 1.02, "t": "10/21 收盘", "v2": 0.69}
+      {"name": "韩国 KOSPI", "v": 3.29, "ai": true, "v2": -3.52, "t": "10/22 收盘"},
+      {"name": "日经 225", "v": 0.85, "ai": true, "v2": -2.65, "t": "10/22 收盘"},
+      {"name": "台湾加权", "v": 1.28, "ai": true, "v2": -1.81, "t": "10/22 收盘"},
+      {"name": "创业板指", "v": -1.62, "v2": -4.37, "t": "10/22 收盘"},
+      {"name": "科创 50", "v": 0.06, "v2": -2.78, "ai": true, "t": "10/22 收盘"},
+      {"name": "上证指数", "v": -0.6, "v2": -1.48, "t": "10/22 收盘"},
+      {"name": "恒生科技", "v": -1.26, "v2": -5.03, "t": "10/22 收盘"},
+      {"name": "恒生指数", "v": -0.9, "v2": -3.03, "t": "10/22 收盘"},
+      {"name": "费城半导体", "v": 1.97, "ai": true, "v2": -5.4, "t": "10/22 盘中"},
+      {"name": "纳斯达克", "v": 1.05, "v2": -2.01, "t": "10/22 盘中"},
+      {"name": "标普 500", "v": 0.58, "v2": -1.02, "t": "10/22 盘中"},
+      {"name": "道琼斯", "v": 0.69, "v2": 0.06, "t": "10/22 盘中"}
     ],
-    "src": "快照 10/22 08:15 和 09:24（东方财富，费城半导体 Yahoo），道指补充读数 Yahoo。美股上面一根是 10/20 收盘，日韩台港上面一根是 10/21 收盘，A 股上面一根是 10/20 收盘。AI 硬件权重高低是报告的判断。"
+    "src": "快照 10/23 00:24（东方财富，费城半导体 Yahoo），道指补充读数 Yahoo。上面一根：日韩台港、A 股、美股都是 10/21 收盘。AI 硬件权重高低是报告的判断。"
   },
   "ashare": {
-    "title": "A 股：大盘回落，创业板收在年内新低，科技硬件撑住",
-    "sub": "10/21 收盘：上证 3,713.03（−0.60%），沪深 300 −0.97%，创业板 −1.62%（年内收盘新低），科创 50 +0.06%；1,979 只上涨、3,360 只下跌。农林牧渔、电子、建材、通信领涨，电力设备 −3.67% 领跌（土狗说是宁德三季报不及预期），美容护理、煤炭、食品饮料跟跌。全天成交约 1.44 万亿元（万得全 A），比 10/20 少一点。一年存单 10/21 1.41%，和 10/20 持平。",
-    "breadth": {"up": 1979, "down": 3360, "note": "平盘 231 · 万得 10/21"},
+    "title": "A 股：近 5,000 只下跌，上证跌破 3700，光模块领跌",
+    "sub": "10/22 收盘：上证 3,658.03（−1.48%），沪深 300 −1.84%，创业板 −4.37%，科创 50 −2.78%；533 只上涨、4,994 只下跌（万得）。通信 −6.17%、传媒 −4.78%、电子 −3.60% 领跌，中际旭创 −8.8%、新易盛 −12.3%；家电、银行、食品饮料跌得最少。成交约 1.54 万亿元（万得全 A），比 10/21 多约 1,000 亿，放量下跌。一年存单 1.4143%，比 10/21 高 0.5bp。",
+    "breadth": {"up": 533, "down": 4994, "note": "平盘 43 · 万得 10/22"},
     "pairs": [
-      {"title": "两市成交额（万亿元）", "max": 2, "ticks": [0, 0.5, 1, 1.5, 2], "rows": [{"label": "10/19", "v": 1.45}, {"label": "10/20", "v": 1.47}, {"label": "10/21", "v": 1.44, "hi": true}], "note": "10/21 比 10/20 少约 300 亿", "src": "10/19：中华网收评（14,488 亿元）；10/20：收评报道；10/21：万得全 A 成交额 14,421 亿元"},
+      {"title": "两市成交额（万亿元）", "max": 2, "ticks": [0, 0.5, 1, 1.5, 2], "rows": [{"label": "10/20", "v": 1.47}, {"label": "10/21", "v": 1.44}, {"label": "10/22", "v": 1.54, "hi": true}], "note": "10/22 比 10/21 多约 1,000 亿，放量下跌", "src": "10/20：收评报道；10/21、10/22：万得全 A 成交额（14,421 亿、15,419 亿元）"},
       {"title": "沪深 300ETF（华泰柏瑞）成交（亿元）", "max": 180, "ticks": [0, 60, 120, 180], "rows": [{"label": "10/15 全天", "v": 66.65}, {"label": "10/16 全天", "v": 161, "approx": true}, {"label": "10/16 尾盘 20 分钟", "v": 125.42, "hi": true}], "note": "上证 50ETF 华夏 24.66 → 54.01 亿；10/15 易方达沪深 300ETF 全天超 190 亿", "src": "每日经济新闻、新浪财经"}
     ],
-    "up": ["农林牧渔 +1.95%（万得）", "电子 +0.79%", "建筑材料 +0.60%", "通信 +0.60%"],
-    "down": ["电力设备 −3.67%（万得）", "美容护理 −1.94%", "煤炭 −1.90%", "食品饮料 −1.65%"],
-    "src": "涨跌家数与行业：万得 10/21（申万一级，10/22 08:17 取数）；成交额：10/19–10/20 收评报道，10/21 万得；ETF：每日经济新闻、新浪财经"
+    "up": ["家用电器 +0.08%（万得）", "银行 −0.27%", "食品饮料 −0.43%", "非银金融 −0.71%"],
+    "down": ["通信 −6.17%（万得）", "传媒 −4.78%", "综合 −4.66%", "电子 −3.60%"],
+    "src": "涨跌家数与行业：万得 10/22（申万一级，10/23 00:25 取数）；成交额：10/20 收评报道，10/21–10/22 万得；ETF：每日经济新闻、新浪财经"
   },
   "macro": {
     "head": "钱在变少，还贵：美元流动性连续 4 个观测日为负",
@@ -1241,37 +1403,37 @@ details.tt[open] summary::before{content:"▾"}
   },
   "china": {
     "head": "央行把短端利率的锚换成隔夜，存单降到 1.41%：土狗读作一次隐性降息，因素一在往他说的方向走",
-    "sub": "沧海一土狗的框架管 A 股、人民币和楼市，补上吸引子和 ARGUS 偏美国的那一半。这里是我们按他的框架读 10/22 早上的数（A 股用 10/21 收盘）；标了“土狗 10/20”“10/21”的是他本人当天复盘里的判断。",
+    "sub": "沧海一土狗的框架管 A 股、人民币和楼市，补上吸引子和 ARGUS 偏美国的那一半。这里是我们按他的框架读 10/22 收盘的数；标了“土狗 10/20”“10/21”的是他本人当天复盘里的判断（10/22 的复盘还没同步）。",
     "factorsTitle": "两因素：A 股 = f(全球无风险利率, 楼市复苏)",
     "factorsNote": "先看人民币强弱选参照利率，再看利率和楼市有没有变。",
     "gauges": [
-      {"name": "参照币种 · 离岸人民币", "link": "选利率", "unit": "", "dec": 2, "min": 6.6, "max": 6.8, "ticks": [6.6, 6.65, 6.7, 6.75, 6.8], "cur": 6.6745, "curLabel": "6.6745", "asof": "10/22 09:24", "ref": {"v": 6.7, "l": "节点 6.70"}, "band": {"from": 6.7, "to": 6.71, "l": "9 月 6.70–6.71"}, "dir": ["← 人民币强", "人民币弱 →"], "state": "info", "stateLabel": "强，看人民币利率", "note": "人民币强时，全球无风险利率看中国一年存单；弱时才看两年美债（10/20 为 4.79%）。", "src": "快照 10/22 09:24 · 东方财富；6.70 节点来自土狗 9–10 月复盘", "ghosts": [{"v": 6.6824, "l": "10/20 早上"}, {"v": 6.6755, "l": "10/20 晚"}, {"v": 6.6761, "l": "10/21 早上"}]},
-      {"name": "因素一 · 一年期存单利率", "link": "准政策利率", "unit": "%", "dec": 2, "min": 1.3, "max": 1.55, "ticks": [1.3, 1.35, 1.4, 1.45, 1.5, 1.55], "cur": 1.4097, "curLabel": "1.4097", "asof": "10/21", "ghosts": [{"v": 1.4428, "l": "10/16"}, {"v": 1.4401, "l": "10/19"}, {"v": 1.4088, "l": "10/20"}], "tgt": {"v": 1.35, "l": "土狗预期 1.35"}, "dir": ["← 更宽松", "更紧 →"], "state": "info", "stateLabel": "降了一天后持平", "note": "货币网一年期 AAA 存单曲线：10/9 1.4645 → 10/19 1.4401 → 10/20 1.4088 → 10/21 1.4097，降了约 3bp 后持平。央行 10/21 起连续 9 个工作日做隔夜逆回购，每天最多 1 万亿元，理由是国庆把税期推后、又碰上月末。官方没有降准降息，LPR 10/20 照旧不变；土狗 10/20 复盘把短端利率的锚从 7 天换成隔夜读作一次隐性降息，他记的存单 10/20 1.40%、10/21 1.405%（和货币网曲线口径略有差别）。土狗 10/14 预期金融街论坛后降到 1.35% 附近，从 1.44% 算起已经走了三分之一。", "src": "补充读数 · 中国货币网收盘收益率曲线 · 10/21；央行公告：21 世纪经济报道 10/20；土狗 10/20、10/21 复盘"},
+      {"name": "参照币种 · 离岸人民币", "link": "选利率", "unit": "", "dec": 2, "min": 6.6, "max": 6.8, "ticks": [6.6, 6.65, 6.7, 6.75, 6.8], "cur": 6.6735, "curLabel": "6.6735", "asof": "10/23 00:24", "ref": {"v": 6.7, "l": "节点 6.70"}, "band": {"from": 6.7, "to": 6.71, "l": "9 月 6.70–6.71"}, "dir": ["← 人民币强", "人民币弱 →"], "state": "info", "stateLabel": "强，看人民币利率", "note": "人民币强时，全球无风险利率看中国一年存单；弱时才看两年美债（10/20 为 4.79%）。", "src": "快照 10/23 00:24 · 东方财富；6.70 节点来自土狗 9–10 月复盘", "ghosts": [{"v": 6.6755, "l": "10/20 晚"}, {"v": 6.6761, "l": "10/21 早上"}, {"v": 6.6745, "l": "10/22 早上"}]},
+      {"name": "因素一 · 一年期存单利率", "link": "准政策利率", "unit": "%", "dec": 2, "min": 1.3, "max": 1.55, "ticks": [1.3, 1.35, 1.4, 1.45, 1.5, 1.55], "cur": 1.4143, "curLabel": "1.4143", "asof": "10/22", "ghosts": [{"v": 1.4401, "l": "10/19"}, {"v": 1.4088, "l": "10/20"}, {"v": 1.4097, "l": "10/21"}], "tgt": {"v": 1.35, "l": "土狗预期 1.35"}, "dir": ["← 更宽松", "更紧 →"], "state": "info", "stateLabel": "降到 1.41% 后横着", "note": "货币网一年期 AAA 存单曲线：10/9 1.4645 → 10/19 1.4401 → 10/20 1.4088 → 10/21 1.4097 → 10/22 1.4143，降了约 3bp 后横着。央行 10/21 起连续 9 个工作日做隔夜逆回购，每天最多 1 万亿元，理由是国庆把税期推后、又碰上月末。官方没有降准降息，LPR 10/20 照旧不变；土狗 10/20 复盘把短端利率的锚从 7 天换成隔夜读作一次隐性降息，他记的存单 10/20 1.40%、10/21 1.405%（和货币网曲线口径略有差别）。土狗 10/14 预期金融街论坛后降到 1.35% 附近，从 1.44% 算起已经走了三分之一。", "src": "补充读数 · 中国货币网收盘收益率曲线 · 10/22；央行公告：21 世纪经济报道 10/20；土狗 10/20、10/21 复盘"},
       {"name": "因素二 · 北京二手房挂牌量", "link": "楼市复苏", "unit": "万套", "min": 9, "max": 13, "ticks": [9, 10, 11, 12, 13], "curLabel": "11.90", "asof": "10/21", "ref": {"v": 10, "l": "均衡线 10 万"}, "band": {"from": 11.4, "to": 11.8, "l": "9 月读数"}, "dir": ["← 挂牌少", "挂牌多 →"], "state": "watch", "stateLabel": "高于均衡线，没往下走", "note": "链家外网挂牌量 11.90 万套（土狗 10/20、10/21 两篇复盘），和上周持平；土狗说三个月都在 11.8 万套上下，还高于他的均衡线 10 万套。上海二手房连涨 8 个月，已确认复苏；北京 9 月环比 +0.1%，偏弱，和挂牌量没降下来对得上。", "src": "土狗 10/21 复盘（链家外网）", "cur": 11.9}
     ],
-    "switches": {"tag": "风格开关", "title": "两个开关都拨向内需和价值", "rows": [{"name": "汇率 · 中美关系", "model": "模型 2", "l": "贬值 · 紧张", "lr": "外需和科技占优（升波牛）", "r": "升值 · 缓和", "rr": "内需占优（降波牛）", "on": "r", "fact": "人民币 6.6745（10/22 早上），守在 6.70 内侧；9/28 中美元首会晤后，双创大跌，内需板块有韧性。"}, {"name": "PPI · 垄断要素", "model": "模型 11", "l": "PPI 弱", "lr": "成长和小微盘占优", "r": "PPI 强", "rr": "价值占优，也撑人民币", "on": "r", "fact": "PPI 同比 +5.0%（9 月，统计局 10/14 公布；8 月 +3.8%）；吸引子中国物价指数 +0.95，强（9/30）。"}], "up": ["农林牧渔 +1.95%", "电子 +0.79%", "科创 50 +0.06%"], "down": ["电力设备 −3.67%", "创业板 −1.62%", "沪深 300 −0.97%"], "check": "10/21 大盘、小盘、红利一起跌，只有科技硬件撑住；一天不算数，开关不动。土狗 10/20 说小微盘仍是反弹主线：内需复苏刚开始，小盘先占优", "foot": "开关位置是定性判断，这里看指数、ETF 和收评报道。土狗的理由：双创 ETF 隐含波动率往下走，科技抱团在散，低波动环境和小盘、内需相容。"},
+    "switches": {"tag": "风格开关", "title": "两个开关都拨向内需和价值", "rows": [{"name": "汇率 · 中美关系", "model": "模型 2", "l": "贬值 · 紧张", "lr": "外需和科技占优（升波牛）", "r": "升值 · 缓和", "rr": "内需占优（降波牛）", "on": "r", "fact": "人民币 6.6735（10/23 凌晨），守在 6.70 内侧；9/28 中美元首会晤后，双创大跌，内需板块有韧性。"}, {"name": "PPI · 垄断要素", "model": "模型 11", "l": "PPI 弱", "lr": "成长和小微盘占优", "r": "PPI 强", "rr": "价值占优，也撑人民币", "on": "r", "fact": "PPI 同比 +5.0%（9 月，统计局 10/14 公布；8 月 +3.8%）；吸引子中国物价指数 +0.95，强（9/30）。"}], "up": ["家用电器 +0.08%", "银行 −0.27%", "食品饮料 −0.43%"], "down": ["通信 −6.17%", "创业板 −4.37%", "沪深 300 −1.84%"], "check": "10/22 大盘、小盘、科技一起跌，家电、银行、食品饮料跌得最少；一天不算数，开关不动。土狗 10/20 说小微盘仍是反弹主线：内需复苏刚开始，小盘先占优", "foot": "开关位置是定性判断，这里看指数、ETF 和收评报道。土狗的理由：双创 ETF 隐含波动率往下走，科技抱团在散，低波动环境和小盘、内需相容。"},
     "phase": {"tag": "大类资产轮动三相", "title": "楼市从过冷走向温和：成长横扫的阶段过去，进入轮动", "zones": [{"k": "过冷", "v": "成长横扫"}, {"k": "温和", "v": "轮动"}, {"k": "过热", "v": "价值横扫"}], "from": {"p": 14, "l": "4–5 月"}, "to": {"p": 42, "l": "10 月 · 推演"}, "ev": ["4/11、5/9 成长创新高，他用“楼市过冷相”解释", "4/30 一线楼市进入右侧；9/18 上海二手房连涨 7 个月", "9/11 哑铃策略“结束了最好的一段时光”，市场陷入混沌"], "hist": "历史对照：2014–15 成长牛 → 2016–17 楼市牛；2017 价值牛 → 2018 债市牛。", "foot": "“成长牛的下一站是楼市牛”是他 5/9 的原话；现在落在哪一相，是我们按他 4–9 月的文章推演的。它和 10/14 的“楼市和长债同一生态位”有出入，用的时候标日期。", "line": {"title": "一线城市二手房价格，每月环比（%）", "months": ["2025-09", "2025-10", "2025-11", "2025-12", "2026-01", "2026-02", "2026-03", "2026-04", "2026-05", "2026-06", "2026-07", "2026-08", "2026-09"], "series": [{"k": "上海", "cls": "sh", "v": [-1.0, -0.9, -0.8, -0.6, -0.4, 0.2, 0.4, 0.7, 0.6, 0.4, 0.3, 0.3, 0.5]}, {"k": "北京", "cls": "bj", "v": [-0.9, -1.1, -1.3, -1.3, -0.2, 0.3, 0.6, 0.4, 0.1, 0.1, 0.0, -0.1, 0.1]}, {"k": "一线平均", "cls": "t1", "v": [-1.0, -0.9, -1.1, -0.9, -0.5, -0.1, 0.4, 0.4, 0.4, 0.3, 0.2, 0.1, 0.2]}], "min": -1.5, "max": 1.0, "ticks": [-1.5, -1.0, -0.5, 0, 0.5, 1.0], "band": {"from": "2026-04", "to": "2026-05", "l": "成长新高"}, "read": "上海连涨 8 个月，9 月涨幅扩大到 0.5%；北京由 8 月的 −0.1% 转为 +0.1%；一线平均 +0.2%，连涨 7 个月。", "src": "国家统计局 70 城二手住宅价格指数，最新为 9 月（10/19 发布，21 世纪经济报道转述）。"}},
-    "bottom": {"title": "3700 点：他说是理论底，不是配置建议", "name": "上证指数 vs 3700", "link": "底部判断", "unit": "", "min": 3600, "max": 3850, "ticks": [3600, 3650, 3700, 3750, 3800, 3850], "cur": 3713.03, "curLabel": "3,713.03", "asof": "10/21 收盘", "ghosts": [{"v": 3681.28, "l": "10/16 盘中低点"}, {"v": 3730.92, "l": "10/19 收盘"}, {"v": 3735.37, "l": "10/20 收盘"}], "ref": {"v": 3700, "l": "土狗的 3700"}, "state": "watch", "stateLabel": "还在 3700 上方，只差 13 点", "note": "10/15 星球原话：“要么已经见底，要么明天上午见底”。10/16 午后一度跌到 3,681.28，收在 3,716.28；10/20 收 3,735.37。10/21 收 3,713.03（−0.60%），1,979 只上涨、3,360 只下跌（万得），沪深 300 −0.97%，创业板收在年内新低；土狗说是宁德三季报不及预期带着白马股回落。土狗 10/20 说全 A 调整幅度接近上一轮，初步见底；宽基 ETF 3 天净流入约 789 亿（10/21 更新为 891 亿），他的判断是主力维稳、市场基本企稳。它和静观的“等待”不冲突：他验证的是理论底，我们等的是融资松开。", "src": "快照 10/22 08:15 · 东方财富（10/21 收盘）；涨跌家数：万得 10/21；10/16 盘中低点来自财经日报（单一报道）；土狗星球 10/15；土狗 10/20、10/21"},
-    "insurance": {"tag": "杠杆负反馈", "title": "10/21 银行和保险没出挑，创业板收在年内新低：三盏灯还亮一盏半", "loop": ["下跌", "保险偿付能力降", "权益仓位上限降", "被动卖出"], "signals": [{"name": "银行股出挑", "fact": "10/21 银行 −0.68%、非银金融 −0.70%（万得），和大盘差不多，没出挑", "state": "暗了", "off": true}, {"name": "长债、TL 出挑", "fact": "10/12 TL 暴涨，10/15 高开低走；10/16 之后没拿到数", "state": "还亮着"}, {"name": "双创继续调整", "fact": "10/21 创业板指 −1.62%，收在年内新低；科创 50 +0.06%", "state": "还亮着一半"}], "rescue": "救援看量：10/15 易方达沪深 300ETF 全天超 190 亿元，10/16 华泰柏瑞沪深 300ETF 尾盘 20 分钟 125 亿元；股票 ETF 9/28 以来连续 9 天净流入，累计 1,408.5 亿元（截至 10/15）。", "verdictTag": "按这套框架推演", "verdict": "10/21 银行、非银跟着大盘跌约 0.7%，没有出挑；创业板又收在年内新低，科创 50 走平。按这套框架，保险调仓的冲击可能在减弱，但双创还在调整，还要再看。"},
+    "bottom": {"title": "3700 点：他说是理论底，不是配置建议", "name": "上证指数 vs 3700", "link": "底部判断", "unit": "", "min": 3600, "max": 3850, "ticks": [3600, 3650, 3700, 3750, 3800, 3850], "cur": 3658.03, "curLabel": "3,658.03", "asof": "10/22 收盘", "ghosts": [{"v": 3681.28, "l": "10/16 盘中低点"}, {"v": 3735.37, "l": "10/20 收盘"}, {"v": 3713.03, "l": "10/21 收盘"}], "ref": {"v": 3700, "l": "土狗的 3700"}, "state": "bad", "stateLabel": "跌破 3700，也低于 10/16 盘中低点", "note": "10/22 收 3,658.03（−1.48%），跌破 3700，也低于 10/16 盘中低点 3,681.28；533 只上涨、4,994 只下跌，成交放大到约 1.54 万亿（万得）。10/15 星球原话：“要么已经见底，要么明天上午见底”。土狗 10/20 说全 A 调整幅度接近上一轮，初步见底；宽基 ETF 3 天净流入约 789 亿（10/21 更新为 891 亿），他的判断是主力维稳、市场基本企稳。跌破之后他怎么说，要等 10/22 复盘同步。它和静观的“等待”不冲突：他验证的是理论底，我们等的是融资松开。", "src": "快照 10/23 00:24 · 东方财富（10/22 收盘）；涨跌家数和成交：万得 10/22；10/16 盘中低点来自财经日报（单一报道）；土狗星球 10/15；土狗 10/20、10/21"},
+    "insurance": {"tag": "杠杆负反馈", "title": "10/22 银行又出挑，创业板 −4.4%：三盏灯亮两盏半", "loop": ["下跌", "保险偿付能力降", "权益仓位上限降", "被动卖出"], "signals": [{"name": "银行股出挑", "fact": "10/22 银行 −0.27%、非银 −0.71%，万得全 A −2.45%（万得），银行跌得最少，又出挑了", "state": "亮了"}, {"name": "长债、TL 出挑", "fact": "10/12 TL 暴涨，10/15 高开低走；10/16 之后没拿到数", "state": "还亮着"}, {"name": "双创继续调整", "fact": "10/22 创业板 −4.37%，科创 50 −2.78%", "state": "还亮着一半"}], "rescue": "救援看量：10/15 易方达沪深 300ETF 全天超 190 亿元，10/16 华泰柏瑞沪深 300ETF 尾盘 20 分钟 125 亿元；股票 ETF 9/28 以来连续 9 天净流入，累计 1,408.5 亿元（截至 10/15）。", "verdictTag": "按这套框架推演", "verdict": "10/22 银行只跌 0.27%，大盘跌 2.45%，银行又出挑了；创业板 −4.37%，双创继续调整。按这套框架，保险调仓的冲击又加强了一点，还要再看。"},
     "ledgerLink": "他哪类判断靠谱，看八年账本"
   },
   "watch": {
     "head": "盯这六个数，不猜底",
     "sub": "越过阈值，才说明状态变了。阈值是我们定的研究规则，不是历史定律。",
     "gauges": [
-      {"name": "CoreWeave 5 年 CDS", "link": "② 融资", "unit": "bp", "min": 0, "max": 1200, "ticks": [0, 300, 600, 900, 1200], "cur": 1100, "curLabel": "≈1,100", "asof": "10/19", "ghosts": [{"v": 600, "l": "10/14"}, {"v": 1038, "l": "10/15 午盘"}, {"v": 1194.5, "l": "10/15 收盘纪录"}], "good": {"to": 600, "l": "缓解 <600"}, "state": "bad", "stateLabel": "比纪录低一点，还在困境区", "note": "恶化：新的 AI 借款人融资失败，或 CDS 继续大幅走阔。10/15 创纪录，约 1,195bp；Benzinga 10/21 的报道说 10/19 约 1,100bp，这个水平通常对应困境借款人。10/21 债价持平。这是唯一提前指向 10/16 美股下跌的路标。", "src": "Benzinga（报道转述）· 10/19；纪录读数 Bloomberg（ICE）10/15"},
-      {"name": "高收益债利差", "link": "信用扩散", "unit": "%", "min": 2.5, "max": 4.0, "ticks": [2.5, 3.0, 3.5, 4.0], "cur": 3.29, "curLabel": "3.29", "asof": "10/19", "good": {"to": 3.2, "l": "缓解 ≤3.2"}, "bad": {"from": 3.5, "l": "恶化 >3.5"}, "state": "watch", "stateLabel": "离开缓解区，没到恶化线", "note": "高过 3.5%，说明压力扩散到整个信用市场。10/19 回落到 3.29%，还在 3.5% 下方。这一期 FRED 没取到新数，沿用 10/19。", "src": "补充读数 · FRED · 10/19", "ghosts": [{"v": 3.25, "l": "10/14"}, {"v": 3.23, "l": "10/15"}, {"v": 3.31, "l": "10/16"}]},
+      {"name": "CoreWeave 5 年 CDS", "link": "② 融资", "unit": "bp", "min": 0, "max": 1200, "ticks": [0, 300, 600, 900, 1200], "cur": 1100, "curLabel": "≈1,100", "asof": "10/19", "ghosts": [{"v": 600, "l": "10/14"}, {"v": 1038, "l": "10/15 午盘"}, {"v": 1194.5, "l": "10/15 收盘纪录"}], "good": {"to": 600, "l": "缓解 <600"}, "state": "bad", "stateLabel": "比纪录低一点，还在困境区", "note": "恶化：新的 AI 借款人融资失败，或 CDS 继续大幅走阔。10/15 创纪录，约 1,195bp；10/19 约 1,100bp（Benzinga），这个水平通常对应困境借款人。CDS 之后没有新读数；10/23 凌晨债券成交价：CoreWeave 美元债比 5 年期美债高约 1,000bp，价格约 81 美分。这是唯一提前指向 10/16 美股下跌的路标。", "src": "Benzinga（报道转述）· 10/19；纪录读数 Bloomberg（ICE）10/15"},
+      {"name": "高收益债利差", "link": "信用扩散", "unit": "%", "min": 2.5, "max": 4.0, "ticks": [2.5, 3.0, 3.5, 4.0], "cur": 3.27, "curLabel": "3.27", "asof": "10/21", "good": {"to": 3.2, "l": "缓解 ≤3.2"}, "bad": {"from": 3.5, "l": "恶化 >3.5"}, "state": "watch", "stateLabel": "离开缓解区，没到恶化线", "note": "高过 3.5%，说明压力扩散到整个信用市场。10/21 是 3.27%，还在 3.5% 下方。", "src": "补充读数 · FRED · 10/21", "ghosts": [{"v": 3.31, "l": "10/16"}, {"v": 3.29, "l": "10/19"}, {"v": 3.33, "l": "10/20"}]},
       {"name": "10 月加息概率", "link": "③ 利率", "unit": "%", "min": 0, "max": 50, "ticks": [0, 10, 20, 30, 40, 50], "cur": 17.2, "curLabel": "≈17", "asof": "10/20", "ghosts": [{"v": 28.2, "l": "10/16 讲话前"}, {"v": 15, "l": "10/16"}, {"v": 20, "l": "10/19"}], "good": {"to": 25, "l": "解除 <25"}, "state": "good", "stateLabel": "在解除线下方", "note": "10/13 22.1% → PPI 后 33.8% → 10/16 约 15% → 10/19 约 20% → 10/20 17.2%。10/21 没拿到 CME 的新数，预测市场（Kalshi、Polymarket）约 12%。12/9 前至少加息一次的累计概率约 94%（10/16 是 74.3%），加息只是往后挪。", "src": "FXEmpire 引 CME FedWatch · 10/20"},
-      {"name": "VIX", "link": "④ 系统", "unit": "", "min": 10, "max": 35, "ticks": [10, 15, 20, 25, 30, 35], "cur": 16.68, "curLabel": "16.68", "asof": "10/21 收盘", "bad": {"from": 25, "l": "流动性阶段 >25"}, "state": "good", "stateLabel": "回到大跌前的水平", "note": "持续高于 25，说明进入流动性阶段，路径 C 才算发生。", "src": "快照 09:24 · Yahoo", "ghosts": [{"v": 19.99, "l": "10/16 收盘"}, {"v": 18.44, "l": "10/19 收盘"}, {"v": 17.31, "l": "10/20 收盘"}]},
-      {"name": "SOFR − IORB", "link": "④ 系统", "unit": "bp", "min": -10, "max": 10, "ticks": [-10, -5, 0, 5, 10], "cur": -3, "curLabel": "−3", "asof": "10/19", "ghosts": [{"v": -2, "l": "10/14"}, {"v": -1, "l": "10/15"}, {"v": -2, "l": "10/16"}], "bad": {"from": 0, "l": "转正 = 恶化"}, "state": "good", "stateLabel": "还在 0 以下", "note": "持续转正，说明美元资金面开始紧张。", "src": "ARGUS · 纽约联储 · 快照 10/22 09:24"},
-      {"name": "韩国外资净买卖", "link": "① 踩踏", "type": "days", "days": 1, "buys": [{"tip": "10/21|外资净买 6,462 亿韩元（Naver 确定数）"}], "next": "10/22|上午盘中外资净买 1,090 亿韩元（Naver），收盘再净买，①就转绿", "unit": "天转回净买", "curLabel": "1", "state": "watch", "stateLabel": "还差一天", "note": "之前连卖 8 天，10/16、10/19 净买两天，10/20 又净卖 4,884 亿韩元。这里从 10/20 重新数：10/21 净买 6,462 亿，KOSPI 收涨 3.29%；10/20、10/21 都没跌破 5,488。按规则要连买两天，10/22 收盘再净买，①就转绿。", "src": "补充读数 · Naver · 10/21 确定数，10/22 盘中"}
+      {"name": "VIX", "link": "④ 系统", "unit": "", "min": 10, "max": 35, "ticks": [10, 15, 20, 25, 30, 35], "cur": 18.36, "curLabel": "18.36", "asof": "10/22 盘中", "bad": {"from": 25, "l": "流动性阶段 >25"}, "state": "good", "stateLabel": "升了，离 25 还远", "note": "持续高于 25，说明进入流动性阶段，路径 C 才算发生。", "src": "快照 10/23 00:24 · Yahoo", "ghosts": [{"v": 18.44, "l": "10/19 收盘"}, {"v": 17.31, "l": "10/20 收盘"}, {"v": 16.68, "l": "10/21 收盘"}]},
+      {"name": "SOFR − IORB", "link": "④ 系统", "unit": "bp", "min": -10, "max": 10, "ticks": [-10, -5, 0, 5, 10], "cur": -2, "curLabel": "−2", "asof": "10/20", "ghosts": [{"v": -1, "l": "10/15"}, {"v": -2, "l": "10/16"}, {"v": -3, "l": "10/19"}], "bad": {"from": 0, "l": "转正 = 恶化"}, "state": "good", "stateLabel": "还在 0 以下", "note": "持续转正，说明美元资金面开始紧张。", "src": "ARGUS · 纽约联储 · 快照 10/23 00:24"},
+      {"name": "韩国外资净买卖", "link": "① 踩踏", "type": "days", "days": 1, "buys": [{"tip": "10/21|外资净买 6,462 亿韩元（Naver 确定数）"}, {"tip": "10/22|外资净买 505 亿韩元（Naver）"}], "unit": "天转回净买", "curLabel": "2", "state": "good", "stateLabel": "连买两天，计票①还是红", "note": "之前连卖 8 天，10/16、10/19 净买两天，10/20 又净卖 4,884 亿韩元。从 10/20 重新数：10/21 净买 6,462 亿、10/22 净买 505 亿，KOSPI 两天都没破 5,488，旧路标满足。但 10/22 KOSPI −3.52%，计票①还是红，回看时专门检验。", "src": "补充读数 · Naver · 10/22"}
     ]
   },
   "paths": {
     "head": "三条路：A 仍是基准，C 的风险在降",
     "sub": "不猜拐点，盯路标。实际走势哪条都不像时，回到机制层重找主要矛盾。",
     "rows": [
-      {"id": "A", "name": "分层消化", "status": "基准", "s": "base", "desc": "踩踏几天内演完，瓶颈层先企稳，存储和杠杆 AI 继续承压", "sign": "路标：①转绿。10/21 外资净买 6,462 亿韩元，再买一天就到"},
+      {"id": "A", "name": "分层消化", "status": "基准", "s": "base", "desc": "踩踏几天内演完，瓶颈层先企稳，存储和杠杆 AI 继续承压", "sign": "路标：①转绿。外资已连买两天，但价格两票压力，①还是红"},
       {"id": "B", "name": "快速 V 型反弹", "status": "暂时排除", "s": "out", "desc": "需要利率松、融资也有好消息", "sign": "美股科技反弹、Meta 上调资本开支，但融资只止跌了一天"},
       {"id": "C", "name": "传染到系统", "status": "没发生，风险在降", "s": "risk", "desc": "抛售从 AI 硬件扩到美股大科技；10/21 美股科技反弹，VIX 16.68；资金面和高收益债还平静", "sign": "路标：VIX 持续 >25，SOFR−IORB 转正，高收益利差 >3.5%"}
     ],
@@ -1285,13 +1447,11 @@ details.tt[open] summary::before{content:"▾"}
     "origin": "10/17"
   },
   "agenda": {
-    "head": "下一个检查点：今天 KOSPI 收盘，外资再买一天①就转绿",
-    "sub": "10/21 外资净买 6,462 亿韩元，今天上午盘中还在净买；收盘确认，明早那期①转绿。CoreWeave 的债止跌一天，收益率还在 15% 左右。金融街论坛今天结束，央行的隔夜逆回购做到第二天。美联储在静默期，下一次表态是 10/28 的 FOMC。",
+    "head": "下一个检查点：10/27–28 FOMC，开完会先查一次灯",
+    "sub": "韩国外资连两天净买，但 KOSPI 当天 −3.5%，计票①还是红；①②都红，减仓档升到 2 档。CoreWeave 盘中再跌 8.5%。金融街论坛 10/22 结束。美联储在静默期，路透调查 94 位经济学家预计 10/28 不动、100 位预计 12 月加息。",
     "start": "2026-10-19",
     "end": "2026-11-13",
     "events": [
-      {"d": "2026-10-22", "label": "KOSPI 收盘", "time": "10/22 周四", "row": 1, "key": true},
-      {"d": "2026-10-19", "d2": "2026-10-22", "label": "金融街论坛", "time": "10/19–22", "row": 0, "short": "土狗看存单 1.35%", "note": "土狗 10/14 预期：一年存单降到 1.35% 附近，公积金贷款利率 1.6% 附近"},
       {"d": "2026-10-27", "d2": "2026-10-28", "label": "FOMC", "time": "10/27–28", "row": 1, "key": true},
       {"d": "2026-10-29", "label": "欧央行", "time": "10/29", "row": 0},
       {"d": "2026-11-10", "label": "美国 CPI", "time": "11/10", "row": 0}
@@ -1343,41 +1503,44 @@ details.tt[open] summary::before{content:"▾"}
     "src": "依据 canghai-tugou-perspective v0.3 的 references/07-calls-ledger.md，只计语料内能看到的结果；按类型归组是我们做的。"
   },
   "method": {
-    "head": "四个视角各管一段，汇成一个带证伪条件的立场",
+    "head": "一个漏斗：事实往下收成主线，主线收成一个动作，错了倒回去查",
     "layers": [
-      {"k": "事实层", "q": "发生了什么，数字是多少", "from": "ARGUS 证据纪律、吸引子状态指数、Mac 定时快照"},
-      {"k": "机制层", "q": "为什么，反馈环怎么转", "from": "吸引子五步法、《金融炼金术》的反身性、土狗的两因素和 PPI"},
-      {"k": "决策层", "q": "做什么，什么情况下改主意", "from": "ARGUS 三分法和证伪条件、案例日志回看打分"}
+      {"k": "事实层", "q": "发生了什么，数字是多少", "thing": "有依据", "do": "每个数字带来源、日期、核验状态；缺值写缺值，过期的数在灯里弃权。口最宽，只管记准，不下结论。", "on": [{"l": "证据", "a": "evidence"}, {"l": "宏观状态", "a": "macro"}, {"l": "中国视角", "a": "china"}], "from": "ARGUSX 证据纪律、吸引子状态指数、定时快照", "qty": "几十个数字 · 几十条新闻"},
+      {"k": "机制层", "q": "为什么，只留一条主线", "thing": "识别原因", "do": "先用三分法分清是流动性、融资还是经营在出问题；再用反转检验和分化检验，从几个说得通的原因里收成一条主线，配一个主线分数。", "on": [{"l": "主线和三分法", "a": "mainline"}, {"l": "主题", "a": "themes"}, {"l": "路径", "a": "paths"}], "from": "吸引子五步法、《金融炼金术》的反身性、土狗的两因素，《情报分析心理学》管收口", "qty": "五六个原因 → 一条主线"},
+      {"k": "决策层", "q": "现在做什么，什么情况下改主意", "thing": "给信号", "do": "不猜底，列五盏止跌灯；行动是封闭选项，等待也是行动；灯红了做什么写成减仓档。", "on": [{"l": "止跌清单", "a": "signals"}, {"l": "序参量", "a": "watch"}, {"l": "下一检查点", "a": "agenda"}], "from": "ARGUSX 三分法和证伪条件", "qty": "五盏灯 → 一个动作"}
     ],
     "lensesTitle": "学自哪里：四个视角都已接入",
     "lenses": [
-      {"name": "ARGUS", "role": "美国流动性、信用和 AI 基建", "line": "先分清是流动性、融资还是经营在出问题。只有流动性冲击，才是乱中取利的入场信号。", "tools": ["三分法", "AI 基建状态机", "证伪条件", "日报和指标库"], "used": [{"l": "止跌清单", "a": "signals"}, {"l": "主题", "a": "themes"}, {"l": "序参量", "a": "watch"}], "meta": "argus-research · argusx.fun 公开只读接口"},
+      {"name": "ARGUSX", "role": "美国流动性、信用和 AI 基建", "line": "先分清是流动性、融资还是经营在出问题。只有流动性冲击，才是乱中取利的入场信号。", "tools": ["三分法", "AI 基建状态机", "证伪条件", "日报和指标库"], "used": [{"l": "止跌清单", "a": "signals"}, {"l": "主题", "a": "themes"}, {"l": "序参量", "a": "watch"}], "meta": "argus-research · argusx.fun 公开只读接口"},
       {"name": "吸引子", "role": "宏观状态和复杂系统", "line": "世界是复杂适应系统：先描述系统，再找主要矛盾，盯序参量，不猜拐点。", "tools": ["五步法", "7 个心智模型", "19 项宏观状态指数", "杠铃"], "used": [{"l": "宏观状态", "a": "macro"}, {"l": "路径", "a": "paths"}], "meta": "shifenxiyin-perspective v1.11 · 节目逐字稿", "modelsLabel": "7 个心智模型", "models": [["系统化洞察", "世界是涌现的复杂适应系统，别线性外推"], ["反脆弱与杠铃", "构造波动越大越受益的不对称结构"], ["周期即认知视角", "周期是视角不是规律，决定命运的是临界态"], ["钱与货双流量", "钱紧货多，现金流为王；货紧钱多，资源品占优"], ["收益来源三分", "动量、Carry、价值，搞不清赚哪种就是击鼓传花"], ["资产负债表 + 正负反馈", "分主体看三张表，分清自我强化和均值回归"], ["人生反脆弱与自我坐标系", "命运 = β + ε，能掌握的是 α"]]},
       {"name": "金融炼金术", "role": "反身性", "line": "价格会通过抵押、融资和股权发行反过来改变基本面，两个方向都会自我强化。", "tools": ["反身性检查", "繁荣—萧条八段", "流行偏见"], "used": [{"l": "结论", "a": "verdict"}, {"l": "主题", "a": "themes"}], "meta": "索罗斯《金融炼金术》"},
       {"name": "沧海一土狗", "role": "A 股、人民币和楼市", "line": "价格是博弈结果的投影：汇率投影中美关系和产业垄断力，波动率投影持仓结构。", "tools": ["两因素", "12 个核心模型", "杠杆负反馈", "八年账本"], "used": [{"l": "中国视角", "a": "china"}, {"l": "账本", "a": "ledger"}], "meta": "canghai-tugou-perspective v0.3 · 2018–2026 公开文 419 篇 + 2026 年星球 49 篇", "fresh": true, "modelsLabel": "12 个核心模型", "models": [["两因素框架", "A 股取决于全球无风险利率和楼市复苏"], ["汇率即中美关系的投影", "产业垄断力定中枢；缓和升值利内需，紧张贬值利外需和科技"], ["两类牛市", "降波牛内需涨，升波牛外需涨；波动率决定估值"], ["出口导向不可能三角 + 账期", "出口份额、杠杆下降、内需增长不可兼得；内需差在账期拉长"], ["寡头博弈与国家安全", "廉价出口在对手国是通胀；油价是“世界货币”"], ["市场定价效率", "相对收益资金多，效率低、趋势强，要看线"], ["波动率语言", "A 股 vix 稳定区间 [10, 20]；科技升波上涨才是好上涨"], ["美国金融条件收紧不可避免", "通胀来自油和 AI 融资，加息治不了，只会压垮非 AI 部位"], ["楼市新范式", "楼市和长债同一生态位；政策先杠杆类、后权益类"], ["准备金框架", "稀缺框架下，两年美债才是真实的政策利率"], ["垄断要素与 PPI", "货币的底色是垄断要素的供给；PPI 是中国资本市场最重要的指标"], ["大类资产轮动三相", "成长牛的下一站是楼市牛，价值牛之后是债市牛"]]}
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
-    "foot": "这是研究框架的观点展示，不是投资建议，不对应任何买卖点位。数字来自 2026-10-17 08:40 的 Mac 快照、当天公开报道和沧海一土狗 9–10 月复盘里的读数；美股 10/16 收盘。中国视角和账本是按土狗公开文章里的框架整理和推演的，不代表他本人的最新观点。依据：静观 Stillpoint v0.5.1、canghai-tugou-perspective v0.3、analysis/2026-10-15-全球市场复盘.md、analysis/案例日志.md。"
+    "foot": "这是研究框架的观点展示，不是投资建议，不对应任何买卖点位。数字来自 2026-10-17 08:40 的 Mac 快照、当天公开报道和沧海一土狗 9–10 月复盘里的读数；美股 10/16 收盘。中国视角和账本是按土狗公开文章里的框架整理和推演的，不代表他本人的最新观点。依据：静观 Stillpoint v0.5.1、canghai-tugou-perspective v0.3、analysis/2026-10-15-全球市场复盘.md、analysis/案例日志.md。",
+    "funnelNote": "这一页是从漏斗出口往回读的：最上面是结论，往下依次是决策层、机制层、事实层，越往下越是\"凭什么\"。",
+    "back": {"k": "回看", "q": "错了，错在哪一层", "thing": "持续记录", "do": "每个判断记进案例日志，到期回看打分，写清错在事实、机制还是决策，再改那一层的规则。", "on": [{"l": "中途回看", "a": "log"}, {"l": "观点时间线", "a": "vtl"}]},
+    "conf": {"head": "灯和分数怎么算：数据数票，人归类，分数查表", "items": [{"k": "灯", "v": "每盏灯底下几个子信号，阈值事先写死，只投压力、不压力、弃权。报颜色、一致度和差几票翻；同一来源只算一票；改色要连续两期一致。"}, {"k": "主线分数", "v": "通过反转检验从 70 分起步。人只给每条新证据归类、定方向和大小，加减分查固定的表，谁算都一样。70 分是刚入格，不是七成会对。"}, {"k": "减仓档", "v": "灯红了做什么事先写死：1 档不加仓、不加杠杆；2 档主题仓位减三分之一；3 档减到一半以下。升档当期生效，降档要连续两期。"}, {"k": "怎么验证", "v": "每天存一行灯色和分数。10/28 FOMC 之后先查一次灯，11/12 第一次正式校准；每次改规则都记版本和理由。"}], "src": "规则全文在静观置信度 v1.3；证据账本和归类只放后台，不在这一页展示。"}
   },
   "header": {
-    "edition": "10/22 早 · 美股收盘版",
+    "edition": "10/22 晚 · 美股盘中版",
     "stanceTag": "不变",
-    "mainline": {"v": "融资压力", "tag": "没换", "tip": "序参量 CoreWeave CDS 10/19 约 1,100bp（Benzinga 转述）；10/21 债价持平，2031 年债收益率约 15%"},
-    "tapeLabel": "10/21 美股收盘 · 10/22 亚洲上午",
+    "mainline": {"v": "融资压力", "tag": "没换", "tip": "序参量 CoreWeave：10/22 盘中 −8.5%；美元债比 5 年期美债高约 1,000bp（成交价，10/23 00:24）；CDS 最新 10/19 约 1,100bp"},
+    "tapeLabel": "10/22 亚洲收盘 · 美股盘中（北京 00:24）",
     "tape": [
-      {"n": "纳斯达克", "v": "26,703", "c": 1.05, "t": "10/21 收盘 · 东方财富", "to": "kpi-0"},
-      {"n": "费城半导体", "v": "11,506", "c": 1.97, "t": "10/21 收盘 · Yahoo", "to": "th-0"},
-      {"n": "道琼斯", "v": "52,856", "c": 0.69, "t": "10/21 收盘 · 补充读数 Yahoo", "to": "evidence"},
-      {"n": "KOSPI", "v": "5,669", "c": -1.16, "t": "10/22 9:24 盘中 · 东方财富；10/21 收盘 5,736（+3.29%）", "to": "th-2"},
-      {"n": "上证指数", "v": "3,713", "c": -0.6, "t": "10/21 收盘；10/22 集合竞价 3,713 · 东方财富", "to": "china"},
-      {"n": "美元指数", "v": "101.71", "c": 0.01, "t": "10/22 09:24 · 东方财富", "to": "th-4"},
-      {"n": "10 年美债", "v": "5.15%", "note": "+3bp", "t": "10/21 收盘 · Yahoo ^TNX", "to": "macro"},
-      {"n": "布伦特", "v": "109.99", "c": 1.08, "t": "10/22 09:14 期货 · 东方财富；10/21 结算 108.82", "to": "macro"},
-      {"n": "COMEX 黄金", "v": "4,131.7", "c": -0.44, "t": "10/22 09:14 · 东方财富", "to": "th-5"},
-      {"n": "VIX", "v": "16.68", "c": -3.64, "t": "10/21 收盘 · Yahoo", "to": "g-3"},
-      {"n": "CoreWeave CDS", "v": "≈1,100bp", "note": "报道", "t": "10/19 · Benzinga 转述", "to": "g-0"}
+      {"n": "纳斯达克", "v": "26,166", "c": -2.01, "t": "10/22 盘中（美东 12:24）· 东方财富", "to": "kpi-0"},
+      {"n": "费城半导体", "v": "10,884", "c": -5.4, "t": "10/22 盘中 · Yahoo", "to": "th-0"},
+      {"n": "道琼斯", "v": "52,887", "c": 0.06, "t": "10/22 盘中 · 补充读数 Yahoo", "to": "evidence"},
+      {"n": "KOSPI", "v": "5,534", "c": -3.52, "t": "10/22 收盘 · 东方财富", "to": "th-2"},
+      {"n": "上证指数", "v": "3,658", "c": -1.48, "t": "10/22 收盘 · 东方财富", "to": "china"},
+      {"n": "美元指数", "v": "101.66", "c": -0.04, "t": "10/23 00:24 · 东方财富", "to": "th-4"},
+      {"n": "10 年美债", "v": "5.00%", "note": "−15bp", "t": "10/22 盘中 · Yahoo ^TNX", "to": "macro"},
+      {"n": "布伦特", "v": "111.72", "c": 2.66, "t": "10/23 00:14 期货 · 东方财富；10/21 结算 108.82", "to": "macro"},
+      {"n": "COMEX 黄金", "v": "4,063.0", "c": -2.1, "t": "10/23 00:14 · 东方财富", "to": "th-5"},
+      {"n": "VIX", "v": "18.36", "c": 10.07, "t": "10/22 盘中 · Yahoo", "to": "g-3"},
+      {"n": "CoreWeave", "v": "56.58", "c": -8.47, "t": "10/22 盘中 · 东方财富", "to": "kpi-1"}
     ],
-    "changes": {"since": "10/21 早", "lead": "立场和主线都没变，比 10/21 早上多了 5 处变化。", "items": [{"k": "美股", "v": "科技领涨：纳指 +1.05%，费城半导体 +1.97%；SpaceX 首次盈利，Meta 上调资本开支下限、盘后涨约 3%–6%", "to": "kpi-0"}, {"k": "① 踩踏", "s": "amber", "v": "10/21 外资净买 6,462 亿韩元、KOSPI 收涨 3.29%；按规则要连买两天，今天收盘再净买就转绿", "to": "chk-0"}, {"k": "② 融资", "s": "red", "v": "CoreWeave 债止跌一天，2031 年债收益率约 15%；CDS 有了 10/19 的读数，约 1,100bp，还在困境区", "to": "chk-1"}, {"k": "美元流动性", "v": "吸引子连续 4 个观测日为负（−0.62，10/21），置信度从边沿升到中", "to": "macro"}, {"k": "A 股", "v": "上证 10/21 收 3,713.03，离 3700 只差 13 点；创业板收在年内新低，电力设备领跌", "to": "china"}]}
+    "changes": {"since": "10/22 早", "lead": "主线没换，减仓档从 1 档升到 2 档：①②都确认红，又出现指向 H3 的跳格提示。", "items": [{"k": "亚洲", "v": "10/22 AI 硬件被集中卖出：KOSPI −3.52%，恒生科技 −5.03%，日经 −2.65%；A 股 533 只涨、4,994 只跌，上证收 3,658.03，跌破 3700", "to": "evidence"}, {"k": "① 踩踏", "s": "green", "v": "外资 10/21、10/22 连两天净买（+6,462、+505 亿韩元），KOSPI 两天没破 5,488，旧路标满足；但计票KOSPI −3.52%、恒生科技 −5.03% 两票压力，外资净买一票，①还是红", "to": "chk-0"}, {"k": "美股盘中", "v": "费城半导体 −5.4%：Lam Research 说零部件和洁净室供给卡住出货，指引低于市场的高预期，设备股领跌；纳指 −2.0%，道指持平", "to": "kpi-0"}, {"k": "② 融资", "s": "red", "v": "CoreWeave 盘中 −8.5% 到 56.58 美元；美元债比 5 年期美债高约 1,000bp，价格约 81 美分（成交价）", "to": "chk-1"}, {"k": "利率和油", "v": "10 年期美债盘中回落到约 5.00%（10/21 5.15%）；布伦特 111.7，五个月新高（美以可能打击伊朗的报道）", "to": "macro"}]}
   },
   "install": {
     "head": "把静观装进你自己的 Claude",
@@ -1405,12 +1568,13 @@ details.tt[open] summary::before{content:"▾"}
     "foot": "研究框架，不是投资建议。装任何第三方 skill 之前，先通读一遍它的 SKILL.md 和脚本。安装步骤核对自 Claude 帮助中心和 Claude Code 文档（2026-10-17）。"
   },
   "alerts": {
-    "since": "10/21 早",
+    "since": "10/22 早",
     "items": [
+      {"lv": "hit", "k": "上证 3700", "v": "收 3,658.03，跌破土狗的 3700 理论底", "to": "cn-bottom", "new": true},
+      {"lv": "hit", "k": "① 踩踏", "v": "黄灯转红灯", "to": "chk-0", "new": true},
       {"lv": "hit", "k": "美元流动性", "v": "吸引子连续 4 个观测日为负（−0.62，10/21），钱多这一格要重看", "to": "macro", "new": false},
-      {"lv": "near", "k": "CoreWeave CDS", "v": "1,100 是 3 个交易日前的读数，② 融资这一票按弃权，灯色要靠债价和别的借款人", "to": "g-0", "new": true},
-      {"lv": "near", "k": "上证 3700", "v": "收 3,713.03，离 3700 只差 13 点", "to": "cn-bottom", "new": false},
-      {"lv": "soon", "k": "韩国外资", "v": "连卖 1 天后转买 1 天，10/22 再买一天，① 踩踏才可能转绿", "to": "g-5", "new": true}
+      {"lv": "clear", "k": "韩国外资", "v": "连卖 1 天后连续 2 天净买，① 踩踏的一半条件到了，还要看 KOSPI 连续两天不创新低", "to": "g-5", "new": true},
+      {"lv": "near", "k": "CoreWeave CDS", "v": "1,100 是 3 个交易日前的读数，② 融资这一票按弃权，灯色要靠债价和别的借款人", "to": "g-0", "new": false}
     ]
   },
   "fresh": {
@@ -1423,8 +1587,8 @@ details.tt[open] summary::before{content:"▾"}
     ]
   },
   "timeline": {
-    "head": "8 期里结论换过 2 次，立场一次没动",
-    "sub": "每次发布记一期：结论、总立场、诊断、止跌清单和七个主题的立场，和前一期比变了的地方都标出来。止跌清单前后变过 2 盏灯。",
+    "head": "9 期里结论换过 3 次，立场一次没动",
+    "sub": "每次发布记一期：结论、总立场、诊断、止跌清单和七个主题的立场，和前一期比变了的地方都标出来。止跌清单前后变过 3 盏灯。",
     "before": ["杠杆 AI 基建：10/14 是等待，首版改成回避"],
     "entries": [
       {"key": "10/15 晚", "snap": "21:42", "head": "好财报不是底，融资松开才是。", "stance": "等待", "diag": "这是融资压力型下跌，不是流动性冲击", "lamps": [["①", "踩踏", "red"], ["②", "融资", "red"], ["③", "利率", "amber"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
@@ -1434,8 +1598,26 @@ details.tt[open] summary::before{content:"▾"}
       {"key": "10/20 早", "snap": "06:07", "head": "融资不松，反弹就站不住。", "stance": "等待", "diag": "还是融资压力型下跌，股票反弹没带上融资", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
       {"key": "10/20 晚", "snap": "23:08", "head": "融资不松，反弹就站不住。", "stance": "等待", "diag": "还是融资压力型下跌，股票反弹没带上债", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
       {"key": "10/21 早", "snap": "09:24", "head": "融资不松，反弹就站不住。", "stance": "等待", "diag": "还是融资压力型下跌，股票反弹没带上债", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
-      {"key": "10/22 早", "snap": "09:24", "head": "股票在修复，融资还没松。", "stance": "等待", "diag": "还是融资压力型下跌，股票在修复，债只止跌了一天", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]}
+      {"key": "10/22 早", "snap": "09:24", "head": "股票在修复，融资还没松。", "stance": "等待", "diag": "还是融资压力型下跌，股票在修复，债只止跌了一天", "lamps": [["①", "踩踏", "amber"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]},
+      {"key": "10/22 晚", "snap": "00:24", "head": "修复没站住，融资还没松。", "stance": "等待", "diag": "还是融资压力型下跌：芯片因为供给受限和拥挤交易又跌，债没止跌", "lamps": [["①", "踩踏", "red"], ["②", "融资", "red"], ["③", "利率", "green"], ["④", "系统流动性", "green"], ["⑤", "基本面", "green"]], "themes": [["AI 瓶颈层", "有条件维持"], ["A 股半导体设备", "有条件维持"], ["防守端", "有条件维持"], ["存储 · 韩国", "等待"], ["A 股光模块", "等待"], ["美元拐点", "等待"], ["杠杆 AI 基建", "回避"]]}
     ]
+  },
+  "mainline": {
+    "head": "美股 AI：融资压力型，72 分",
+    "sub": "主线一通过反转检验就从 70 分起步，之后每条新证据由人归类、定方向和大小，加减分查固定的表。分数不是概率。",
+    "theme": "美股 AI",
+    "cell": "H1",
+    "cellName": "融资压力型",
+    "score": 72.0,
+    "since": "10/15",
+    "band": "照写，但范围收窄，点名离哪一格最近",
+    "closest": "H3",
+    "closestName": "经营恶化型",
+    "alerts": ["指向 H3 的新独立证据已有 2 层、2 天，满足跳格的初步条件，回到选主线重新检验"],
+    "asof": "10/23 00:27",
+    "bands": [{"lo": 80, "k": "80 以上", "v": "照写立场"}, {"lo": 60, "k": "60–80", "v": "照写，但范围收窄，点名离哪一格最近"}, {"lo": 0, "k": "60 以下", "v": "回到选主线第一步，立场改为等待"}],
+    "check": "10/28 FOMC 之后先查一次灯，11/12 第一次正式校准：看说 80 分的那些天，主线是不是真的比说 60 分的那些天更常留在原格。",
+    "src": "静观置信度 v1.3.1 · 10/23 00:27 计算"
   }
 }
 </script>
@@ -1456,6 +1638,9 @@ details.tt[open] summary::before{content:"▾"}
     }
     for (var i = 2; i < arguments.length; i++) add(e, arguments[i]);
     return e;
+  }
+  function cHead(eb, title, sub){
+    return h('div', {class: 'c-head'}, h('span', {class: 'c-eb'}, eb), h('h3', null, title), sub ? h('p', null, sub) : null);
   }
   function add(e, kid){
     if (kid == null || kid === false) return;
@@ -1587,8 +1772,56 @@ details.tt[open] summary::before{content:"▾"}
         h('div', {class: 'lp-state'}, s.prevLabel || '上次', h('i', {class: 'lamp sm ' + c.prev, 'aria-hidden': 'true'}), '→',
           h('i', {class: 'lamp lg ' + c.state, 'aria-hidden': 'true'}), h('span', {class: 'lp-txt'}, LAMP[c.state] + ' · ' + c.trend)),
         h('p', {class: 'lp-fact'}, c.fact),
-        h('p', {class: 'lp-unlock'}, h('span', null, c.state === 'green' ? '保持条件' : '转绿条件'), c.unlock)));
+        h('p', {class: 'lp-unlock'}, h('span', null, c.state === 'green' ? '保持条件' : '转绿条件'), c.unlock),
+        tallyLine(c)));
     });
+    function tallyLine(c){
+      var T = s.tally && s.tally.lamps[c.n];
+      if (!T) return null;
+      var pct = T.cons == null ? '—' : Math.round(T.cons * 100) + '%';
+      var kids = [h('span', {class: 'lt-k'}, '新规则计票 · ' + s.tally.asof),
+        h('span', {class: 'lt-v'}, h('i', {class: 'lamp sm ' + T.confirmed, 'aria-hidden': 'true'}), LAMP[T.confirmed] || '灰',
+          ' · 压力 ' + T.stress + ' · 不压力 ' + T.calm + ' · 弃权 ' + T.abst + ' · 一致度 ' + pct + (T.flip != null ? ' · 差 ' + T.flip + ' 票翻' : ''))];
+      var note = [];
+      if (T.raw !== T.confirmed) note.push('这期读数是' + (LAMP[T.raw] || '灰') + '，等第二期确认');
+      if (T.thin) note.push('有效票不到一半，颜色靠不住');
+      if (T.watch) note.push('WATCH：去掉边沿票多数就保不住');
+      if (T.confirmed !== c.state) note.push('和上面的人工判断不一样，两套并排跑');
+      if (note.length) kids.push(h('span', {class: 'lt-n'}, note.join('；')));
+      return h('p', {class: 'lp-tally'}, kids);
+    }
+    var R = s.derisk, dbox = $('derisk');
+    if (!R) { dbox.hidden = true; return; }
+    dbox.appendChild(h('div', {class: 'dr-h'}, h('span', {class: 'dr-k'}, '减仓档 · ' + R.theme), h('b', null, R.tier + ' 档：' + R.ladder[R.tier].name),
+      h('span', {class: 'dr-why'}, (R.why.length ? '理由：' + R.why.join('；') + '。' : '') + R.note)));
+    dbox.appendChild(h('ol', {class: 'dr-l'}, R.ladder.map(function(x){
+      return h('li', {class: x.t === R.tier ? 'on' : null, 'aria-current': x.t === R.tier ? 'step' : null},
+        h('span', {class: 'dr-t'}, x.t + ' 档'), h('b', null, x.name), h('span', {class: 'dr-c'}, x.cond));
+    })));
+  })();
+
+  /* mainline score: sits above the 三分法 diagnosis in the 机制层 */
+  (function(){
+    var M = D.mainline, box = $('ml-score');
+    if (!M) { $('mainline').hidden = true; return; }
+    $('ml-h').textContent = M.head;
+    $('ml-sub').textContent = M.sub;
+    var pos = Math.max(0, Math.min(100, (M.score - 40) / 60 * 100));
+    box.appendChild(h('div', {class: 'ml-top'},
+      h('div', {class: 'ml-n'}, h('b', null, String(M.score)), h('span', null, '分')),
+      h('div', {class: 'ml-t'}, h('b', null, M.theme + ' · ' + M.cell + ' ' + M.cellName),
+        h('span', null, M.since + ' 入格。' + (M.closest ? '离 ' + M.closest + ' ' + M.closestName + '最近，这一格的证据要多盯。' : '')))));
+    var bar = h('div', {class: 'ml-bar', role: 'img', 'aria-label': '主线分数 ' + M.score + '，60 以下回到选主线，80 以上照写立场'},
+      h('i', {class: 'ml-z lo'}), h('i', {class: 'ml-z mid'}), h('i', {class: 'ml-z hi'}), h('i', {class: 'ml-dot', style: 'left:' + pos + '%'}));
+    box.appendChild(bar);
+    box.appendChild(h('div', {class: 'ml-ticks'}, h('span', {style: 'left:0'}, '40'), h('span', {style: 'left:' + (20 / 60 * 100) + '%'}, '60'),
+      h('span', {style: 'left:' + (40 / 60 * 100) + '%'}, '80'), h('span', {style: 'left:100%'}, '100')));
+    box.appendChild(h('ul', {class: 'ml-bands'}, M.bands.slice().reverse().map(function(x, i, a){
+      var hi = i + 1 < a.length ? a[i + 1].lo : 101, on = M.score >= x.lo && M.score < hi;
+      return h('li', {class: on ? 'on' : null}, h('b', null, x.k + (on ? ' · 现在' : '')), h('span', null, x.v)); })));
+    M.alerts.forEach(function(a){ box.appendChild(h('p', {class: 'ml-alert'}, '⚠ ' + a)); });
+    box.appendChild(h('p', {class: 'ml-check'}, M.check));
+    box.appendChild(h('p', {class: 'src'}, M.src));
   })();
 
   /* themes */
@@ -1735,7 +1968,7 @@ details.tt[open] summary::before{content:"▾"}
     $('ev-h').textContent = D.evidenceHead;
     $('ev-sub').textContent = D.evidenceSub;
     var s = D.sameTrade, box = $('ev-trade');
-    box.appendChild(h('div', {class: 'panel-h'}, h('h3', null, s.title), h('p', null, s.sub)));
+    box.appendChild(cHead('亚太和美股', s.title, s.sub));
     var twin = !!s.l2;
     box.appendChild(h('div', {class: 'legend'}, twin ? [
       h('span', null, h('i', {class: 'sw2 t1'}), s.l1 + '（上）'),
@@ -1758,7 +1991,7 @@ details.tt[open] summary::before{content:"▾"}
       : tableToggle(['市场', '涨跌', '时点', 'AI 硬件权重'], s.rows.map(function(r){ return [r.name, sgn(r.v) + '%', r.t, r.ai ? '高' : '—']; })));
 
     var a = D.ashare, ab = $('ev-ashare');
-    ab.appendChild(h('div', {class: 'panel-h'}, h('h3', null, a.title), h('p', null, a.sub)));
+    ab.appendChild(cHead('A 股', a.title, a.sub));
     var tot = a.breadth.up + a.breadth.down;
     if (a.breadth.down == null) ab.appendChild(h('div', {class: 'mini'},
       h('div', {class: 'mini-h'}, h('b', null, '涨跌家数'), h('span', null, a.breadth.note)),
@@ -1819,17 +2052,16 @@ details.tt[open] summary::before{content:"▾"}
     var ylab = s('text', {x: 14, y: my, 'text-anchor': 'middle', class: 'q-ax', transform: 'rotate(-90 14 ' + my + ')'}, '钱的量：少 → 多');
     svg.appendChild(ylab);
     var qb = $('quad');
+    qb.appendChild(cHead('钱货四格', q.label, null));
     qb.appendChild(svg);
     qb.appendChild(h('div', {class: 'q-ev'},
-      h('div', null, h('span', {class: 'tag'}, '钱货四格'), h('b', null, q.label)),
       h('p', null, q.read),
       h('div', null, h('span', {class: 'k'}, q.qtyLabel || '量：钱多'), h('ul', null, q.qty.map(function(x){ return h('li', null, x); }))),
       h('div', null, h('span', {class: 'k'}, '价：钱贵'), h('ul', null, q.price.map(function(x){ return h('li', null, x); }))),
       h('p', {class: 'src'}, '位置是定性判断，不是刻度读数')));
 
     var p = m.pair, pn = $('pair-note');
-    pn.appendChild(h('span', {class: 'tag'}, '背离'));
-    pn.appendChild(h('b', null, p.title));
+    pn.appendChild(cHead('背离', p.title, null));
     pn.appendChild(h('div', {class: 'pair-vals'},
       h('div', null, h('strong', null, p.a.v), h('span', null, p.a.label + ' · ' + p.a.read)),
       h('div', null, h('strong', null, p.b.v), h('span', null, p.b.label + ' · ' + p.b.read))));
@@ -2071,8 +2303,10 @@ details.tt[open] summary::before{content:"▾"}
     svg.appendChild(s('circle', {cx: ox, cy: oy, r: 8, class: 'p-node'}));
     svg.appendChild(s('text', {x: ox, y: oy + 28, 'text-anchor': 'middle', class: 'p-o'}, p.origin));
     $('p-fig').appendChild(svg);
+    var pf = $('p-fig').parentNode;
+    pf.insertBefore(cHead('路径图', '从 ' + p.origin + ' 出发的三条路', null), pf.firstChild);
     var t = $('trig');
-    t.appendChild(h('h3', null, p.triggersTitle));
+    t.appendChild(cHead('路标', p.triggersTitle, null));
     t.appendChild(h('ul', null, p.triggers.map(function(x){ return h('li', null, h('span', {class: 'dir ' + x.tone}, x.dir), h('span', null, x.sign)); })));
     var ct = p.counter.replace(/^最强的反方是/, ''), cut = ct.indexOf('。') + 1;
     t.appendChild(h('div', {class: 'p-counter'}, h('span', {class: 'pc-tag'}, '最强反方'),
@@ -2089,7 +2323,9 @@ details.tt[open] summary::before{content:"▾"}
     function md(d){ var p = d.split('-'); return (+p[1]) + '/' + (+p[2]); }
     var box = h('div', {class: 'tl-h', role: 'img', 'aria-label': md(a.start) + ' 到 ' + md(a.end) + ' 的事件和回看日程'});
     box.appendChild(h('div', {class: 'tl-axis'}));
-    box.appendChild(h('i', {class: 'tl-today', style: 'left:' + xp(a.start) + '%'}));
+    var tdy = (function(){ var m = /(\d{4}-\d{2}-\d{2})/.exec((D.edition && D.edition.label) || ''); var d = m ? m[1] : a.start;
+      return d < a.start ? a.start : (d > a.end ? a.end : d); })();
+    box.appendChild(h('i', {class: 'tl-today', style: 'left:' + xp(tdy) + '%'}));
     a.events.forEach(function(e){
       var x = xp(e.d), top = e.row === 0 ? 50 : 14;
       box.appendChild(h('div', {class: 'tl-ev' + (e.key ? ' key' : ''), style: 'left:' + x + '%'},
@@ -2103,8 +2339,9 @@ details.tt[open] summary::before{content:"▾"}
       box.appendChild(h('div', {class: 'tl-rv', style: 'left:' + x + '%;' + anchor, tabindex: '0', 'data-tip': md(r.d) + '|回看案例 ' + r.cases.join('、')},
         r.cases.map(function(c){ return h('i', null, String(c)); })));
     });
-    box.appendChild(h('span', {class: 'tl-wk tl-today-l', style: 'left:' + xp(a.start) + '%;transform:none'}, '今天 ' + md(a.start)));
+    box.appendChild(h('span', {class: 'tl-wk tl-today-l', style: 'left:' + xp(tdy) + '%' + (tdy === a.start ? ';transform:none' : '')}, '今天 ' + md(tdy)));
     ['2026-10-22', '2026-10-29', '2026-11-05', '2026-11-12'].forEach(function(d){
+      if (d === tdy) return;
       box.appendChild(h('span', {class: 'tl-wk', style: 'left:' + xp(d) + '%'}, md(d)));
     });
     var ab = $('agenda-box');
@@ -2175,7 +2412,33 @@ details.tt[open] summary::before{content:"▾"}
     var m = D.method;
     $('m-h').textContent = m.head;
     var box = $('method-box');
-    m.layers.forEach(function(x, i){ box.appendChild(h('div', {class: 'mt'}, h('span', {class: 'mt-n'}, '0' + (i + 1)), h('b', null, x.k), h('span', null, x.q), h('span', {class: 'src'}, x.from))); });
+    if (m.funnelNote) $('fn-note').textContent = m.funnelNote;
+    function fnBody(x){
+      return h('div', {class: 'fn-body'}, h('p', null, h('span', {class: 'fn-thing'}, x.thing), x.do),
+        h('div', {class: 'lens-used'}, h('span', {class: 'k'}, '本页在'), x.on.map(function(u){ return h('a', {href: '#' + u.a}, u.l); })),
+        x.from ? h('p', {class: 'src'}, '学自：' + x.from) : null);
+    }
+    var GO = ['ws-evidence', 'ws-mechanism', 'ws-decision'];
+    m.layers.forEach(function(x, i){
+      box.appendChild(h('div', {class: 'fn-r w' + i},
+        h('a', {class: 'fn-band', href: '#' + GO[i], 'data-go': GO[i], 'aria-label': '跳到' + x.k + '：' + x.q},
+          h('span', {class: 'fn-n'}, '0' + (i + 1)), h('b', null, x.k), h('span', {class: 'fn-q'}, x.q), x.qty ? h('span', {class: 'fn-qty'}, x.qty) : null,
+          h('span', {class: 'fn-go'}, '看这一层 →')),
+        fnBody(x)));
+    });
+    box.appendChild(h('div', {class: 'fn-r out'},
+      h('a', {class: 'fn-spout', href: '#verdict', 'data-go': 'verdict', 'aria-label': '跳到今日结论'}, h('span', null, '出口'), h('b', null, '今天：' + D.verdict.stance), h('span', {class: 'fn-go'}, '看结论 →')),
+      h('div', {class: 'fn-body'}, h('p', null, h('span', {class: 'fn-thing'}, '一个动作'), '漏斗只出一个立场，外加一条什么情况下改主意的线。'),
+        h('div', {class: 'lens-used'}, h('span', {class: 'k'}, '本页在'), h('a', {href: '#verdict'}, '今日结论')))));
+    if (m.back) box.appendChild(h('div', {class: 'fn-r back'},
+      h('a', {class: 'fn-back', href: '#ws-review', 'data-go': 'ws-review', 'aria-label': '跳到回看'}, h('span', {class: 'fn-arrow', 'aria-hidden': 'true'}, '↑'), h('b', null, m.back.k), h('span', {class: 'fn-q'}, m.back.q), h('span', {class: 'fn-go'}, '看回看 →')),
+      fnBody(m.back)));
+    var cf = $('conf-box');
+    if (m.conf){
+      cf.appendChild(h('h3', null, m.conf.head));
+      cf.appendChild(h('dl', null, m.conf.items.map(function(x){ return h('div', null, h('dt', null, x.k), h('dd', null, x.v)); })));
+      cf.appendChild(h('p', {class: 'src'}, m.conf.src));
+    } else cf.hidden = true;
     $('lens-t').textContent = m.lensesTitle;
     m.lenses.forEach(function(l){
       $('lenses').appendChild(h('article', {class: 'lens card' + (l.fresh ? ' fresh' : '')},
@@ -2263,16 +2526,17 @@ details.tt[open] summary::before{content:"▾"}
   (function(){
     var H = D.header, V = D.verdict, mast = $('mast');
     var still = matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var SEC = {verdict: '今日结论', kpis: '关键数字', signals: '止跌清单', themes: '主题判断', watch: '序参量', paths: '路径',
+    var SEC = {verdict: '今日结论', kpis: '关键数字', signals: '止跌清单', mainline: '主线和三分法', themes: '主题判断', watch: '序参量', paths: '路径',
       evidence: '证据', macro: '宏观状态', china: '中国视角', agenda: '下一检查点', log: '中途回看', vtl: '观点时间线', alerts: '路标提醒', method: '框架', install: '安装', 'in-pkg': '下载', 'in-cl': '装在哪里', 'in-asks': '怎么问'};
-    var HEAD = {verdict: V.headline, kpis: '六个关键数字', signals: D.signals.head, themes: D.themesHead, watch: D.watch.head, paths: D.paths.head,
+    var HEAD = {verdict: V.headline, kpis: '六个关键数字', signals: D.signals.head, mainline: D.mainline ? D.mainline.head : '主线', themes: D.themesHead, watch: D.watch.head, paths: D.paths.head,
       evidence: D.evidenceHead, macro: D.macro.head, china: D.china.head, agenda: D.agenda.head, log: D.log.head, vtl: D.timeline.head, method: D.method.head, install: D.install.head};
     var WS = [
-      {id: 'today', name: '总览', start: 'verdict', p: '现在怎么判断，该做什么。', secs: ['verdict', 'kpis', 'signals']},
-      {id: 'themes', name: '主题', start: 'ws-themes', p: '每个方向的立场，盯哪些读数，可能怎么走。', secs: ['themes', 'watch', 'paths']},
-      {id: 'evidence', name: '依据', start: 'ws-evidence', p: '判断背后的数据、机制和框架。', secs: ['evidence', 'macro', 'china', 'method']},
-      {id: 'review', name: '复盘', start: 'ws-review', p: '下一个检查点在哪，上次的判断看对没有，每期结论怎么变的。', secs: ['agenda', 'log', 'vtl']},
-      {id: 'install', name: '安装', start: 'ws-install', p: '把静观装进你自己的 Claude：下载、四种装法、装好怎么问。', secs: ['install']}];
+      {id: 'today', name: '总览', full: '总览 · 今天的结论', start: 'verdict', p: '漏斗的出口：一句结论、一个立场、六个关键数字。往下越读越是"凭什么"。', secs: ['verdict', 'kpis']},
+      {id: 'decision', name: '决策', full: '决策层 · 给信号', start: 'ws-decision', p: '现在做什么，什么情况下改主意：五盏止跌灯、减仓档、序参量、下一个检查点。', secs: ['signals', 'watch', 'agenda']},
+      {id: 'mechanism', name: '机制', full: '机制层 · 识别原因', start: 'ws-mechanism', p: '为什么跌、主线是哪一条、有几成把握，每个主题怎么判断、可能怎么走。', secs: ['mainline', 'themes', 'paths']},
+      {id: 'evidence', name: '事实', full: '事实层 · 有依据', start: 'ws-evidence', p: '判断背后的数字：每个都带来源、日期、核验状态。', secs: ['evidence', 'macro', 'china']},
+      {id: 'review', name: '回看', full: '回看 · 持续记录', start: 'ws-review', p: '上次的判断看对没有，错在哪一层，每期结论怎么变的。', secs: ['log', 'vtl']},
+      {id: 'install', name: '框架', full: '框架和安装', start: 'ws-install', p: '这个漏斗是怎么搭的，灯和分数怎么算；把静观装进你自己的 Claude。', secs: ['method', 'install']}];
     var checks = D.signals.checks, ev = D.agenda.events, K = D.kpis, G = D.watch.gauges;
     var nxt = ev.filter(function(e){ return e.key; })[0] || ev[0];
     var fomc = ev.filter(function(e){ return /FOMC/.test(e.label); })[0];
@@ -2299,7 +2563,7 @@ details.tt[open] summary::before{content:"▾"}
 
     /* global bar */
     $('ed-chip').textContent = H.edition;
-    WS.forEach(function(w){ var d = $(w.start); if (d && d.classList.contains('ws-div')) add(d, [h('b', null, w.name), h('span', null, w.p)]); });
+    WS.forEach(function(w){ var d = $(w.start); if (d && d.classList.contains('ws-div')) add(d, [h('b', null, w.full || w.name), h('span', null, w.p)]); });
     var tabs = WS.map(function(w){
       var b = h('button', {class: 'ws-t', type: 'button', 'aria-expanded': 'false', 'aria-controls': 'mega', 'data-ws': w.id}, w.name);
       $('ws').appendChild(b);
@@ -2363,34 +2627,35 @@ details.tt[open] summary::before{content:"▾"}
       today: [
         mgCard('verdict', V.headline, '总立场' + V.stance + '；' + V.chips.map(function(c){ return c.k + '：' + c.v; }).join('；')),
         mgCard('kpis', '六个数字，都标了来源和时点', null, K.map(function(k, i){
-          return {to: 'kpi-' + i, n: k.label, v: k.value + unit(k.unit), m: true, d: dir(k.value), s: k.read}; })),
+          return {to: 'kpi-' + i, n: k.label, v: k.value + unit(k.unit), m: true, d: dir(k.value), s: k.read}; }))],
+      decision: [
         mgCard('signals', D.signals.head, null, checks.map(function(c, i){
-          return {to: 'chk-' + i, n: [h('i', {class: 'lamp sm ' + c.state, 'aria-hidden': 'true'}), c.n + ' ' + c.name], v: LAMP[c.state] + ' · ' + c.trend}; }))],
-      themes: [
-        mgCard('themes', V.stanceTitle, null, D.stances.map(function(s){
-          var i = themeIdx(s.theme); return {to: i >= 0 ? 'th-' + i : 'themes', n: s.theme, v: pill(s.stance), s: s.note}; })),
+          return {to: 'chk-' + i, n: [h('i', {class: 'lamp sm ' + c.state, 'aria-hidden': 'true'}), c.n + ' ' + c.name], v: LAMP[c.state] + ' · ' + c.trend}; })),
         mgCard('watch', D.watch.head, null, G.map(function(g, i){
           return {to: 'g-' + i, n: g.name, v: g.curLabel + unit(g.unit), m: true, s: g.stateLabel}; })),
+        mgCard('agenda', D.agenda.head, null, ev.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; }))],
+      mechanism: [
+        mgCard('mainline', D.mainline ? D.mainline.head : '主线', D.mainline ? D.mainline.band + '。' + D.signals.diagnosis.verdict + '。' : D.signals.diagnosis.verdict),
+        mgCard('themes', V.stanceTitle, null, D.stances.map(function(s){
+          var i = themeIdx(s.theme); return {to: i >= 0 ? 'th-' + i : 'themes', n: s.theme, v: pill(s.stance), s: s.note}; })),
         mgCard('paths', D.paths.head, null, D.paths.rows.map(function(r){ return {to: 'paths', n: r.id + ' ' + r.name, v: r.status}; }))],
       evidence: [
         mgCard('evidence', D.evidenceHead, D.sameTrade.title),
         mgCard('macro', D.macro.head, D.macro.quadrant.note),
-        mgCard('china', D.china.head, null),
-        mgCard('method', D.method.head, '视角：' + D.method.lenses.map(function(l){ return l.name; }).join('、') + '。')],
+        mgCard('china', D.china.head, null)],
       review: [
-        mgCard('agenda', D.agenda.head, null, ev.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; })),
         mgCard('log', D.log.head, '已回看 ' + CB.reviewed + '/' + CB.total + '；失误记在' + CB.layers.map(function(l){ return l.k + ' ' + l.v + ' 次'; }).join('、') + '；下次完整回看 ' + D.edition.due + '。'),
         mgCard('vtl', D.timeline.head, null, D.timeline.entries.slice(-4).reverse().map(function(e){ return {to: 'vtl', n: e.key, v: e.stance, s: e.head}; }))],
       install: [
+        mgCard('method', D.method.head, '视角：' + D.method.lenses.map(function(l){ return l.name; }).join('、') + '。'),
         mgCard('in-pkg', D.install.pkg.name + ' ' + D.install.pkg.ver, D.install.spec.slice(1).join('；') + '。' + (D.install.pkg.zip ? '' : '安装包还没放到公开地址。'), [
           {to: 'in-pkg', n: D.install.pkg.zip ? '下载安装包' : '安装包', v: D.install.pkg.size, m: true}]),
-        mgCard('in-cl', '四种装法，都写了怎么确认装好', null, D.install.clients.map(function(c){ return {to: 'inst-' + c.k, n: c.name, s: c.fit}; })),
-        mgCard('in-asks', '装好以后这样问', null, D.install.asks.map(function(a){ return {to: 'in-asks', n: a.k, s: a.q.length > 26 ? a.q.slice(0, 26) + '…' : a.q}; }))]
+        mgCard('in-cl', '四种装法，都写了怎么确认装好', null, D.install.clients.map(function(c){ return {to: 'inst-' + c.k, n: c.name, s: c.fit}; }))]
     };
     var mega = $('mega'), panes = {};
     WS.forEach(function(w){
       var pane = h('div', {class: 'mega-in', hidden: ''},
-        h('div', {class: 'mg-side'}, h('span', {class: 'tag'}, '工作区'), h('h3', null, w.name), h('p', null, w.p), link(w.start, 'mg-go', '跳到' + w.name + '开头')),
+        h('div', {class: 'mg-side'}, h('span', {class: 'tag'}, '工作区'), h('h3', null, w.full || w.name), h('p', null, w.p), link(w.start, 'mg-go', '跳到' + w.name + '开头')),
         h('div', {class: 'mg-grid n' + BODY[w.id].length}, BODY[w.id]));
       panes[w.id] = pane;
       mega.appendChild(pane);
@@ -2555,6 +2820,87 @@ details.tt[open] summary::before{content:"▾"}
       try { localStorage.setItem(KEY, next); } catch (e) {}
     }
     [].forEach.call(document.querySelectorAll('.theme-t'), function(b){ b.addEventListener('click', flip); });
+  })();
+
+  /* paired cards: titles in one row get the same height, so what follows starts on one line */
+  (function(){
+    function eq(){
+      [].forEach.call(document.querySelectorAll('.paths, .ev, .macro-top'), function(g){
+        var hs = [].slice.call(g.querySelectorAll('.c-head h3'));
+        hs.forEach(function(x){ x.style.minHeight = ''; });
+        if (hs.length < 2) return;
+        var top = hs[0].getBoundingClientRect().top;
+        if (hs.some(function(x){ return Math.abs(x.getBoundingClientRect().top - top) > 4; })) return;
+        var mx = Math.max.apply(null, hs.map(function(x){ return x.offsetHeight; }));
+        hs.forEach(function(x){ x.style.minHeight = mx + 'px'; });
+      });
+    }
+    eq();
+    addEventListener('resize', eq);
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(eq);
+  })();
+
+
+  /* rows of cards end on one line: a card much taller than the rest of its row folds to the row's height, and opens with a button */
+  (function(){
+    var SLACK = 60, MIN = 60;
+    function setup(card, pick){
+      if (card._fold) return card._fold;
+      var b = pick(card);
+      if (!b) return null;
+      if (b === card){
+        b = h('div', {class: 'fold-b'});
+        while (card.firstChild) b.appendChild(card.firstChild);
+        card.appendChild(b);
+      } else b.classList.add('fold-b');
+      var m = h('button', {class: 'th-more fold-more', type: 'button', 'aria-expanded': 'false', hidden: ''}, '展开全部');
+      b.parentNode.insertBefore(m, b.nextSibling);
+      m.addEventListener('click', function(){
+        var open = b.classList.toggle('open');
+        b.style.maxHeight = open ? 'none' : b.getAttribute('data-mh');
+        b.classList.toggle('clip', !open);
+        m.setAttribute('aria-expanded', open ? 'true' : 'false');
+        m.textContent = open ? '收起' : '展开全部';
+        var top = card.getBoundingClientRect().top;
+        if (!open && top < 0) scrollBy(0, top - 76);
+      });
+      return (card._fold = {b: b, m: m});
+    }
+    function fit(grid, pick){
+      var cards = [].filter.call(grid.children, function(c){ return c.offsetParent && c.classList.contains('card'); });
+      var F = cards.map(function(c){ return setup(c, pick); });
+      grid.classList.add('fold-measure');
+      F.forEach(function(x){ if (x && !x.b.classList.contains('open')){ x.b.style.maxHeight = ''; x.b.classList.remove('clip'); x.m.hidden = true; } });
+      var rows = {};
+      cards.forEach(function(c, i){ (rows[c.offsetTop] = rows[c.offsetTop] || []).push({c: c, f: F[i], H: c.offsetHeight}); });
+      Object.keys(rows).forEach(function(k){
+        var row = rows[k];
+        if (row.length < 2 || row.some(function(x){ return x.f && x.f.b.classList.contains('open'); })) return;
+        var hs = row.map(function(x){ return x.H; }).sort(function(a, b){ return a - b; }), R = hs[0];
+        for (var i = 1; i < hs.length && hs[i] - R <= SLACK; i++) R = hs[i];
+        row.forEach(function(x){ if (x.H > R && x.f) R = Math.max(R, x.H - x.f.b.offsetHeight + MIN + 40); });
+        row.forEach(function(x){
+          if (x.H <= R || !x.f) return;
+          x.f.m.hidden = false;
+          var mh = Math.max(MIN, Math.round(x.f.b.offsetHeight - (x.H - R) - x.f.m.offsetHeight - 10)) + 'px';
+          x.f.b.style.maxHeight = mh; x.f.b.setAttribute('data-mh', mh); x.f.b.classList.add('clip');
+        });
+      });
+      grid.classList.remove('fold-measure');
+    }
+    var SPECS = [
+      ['cn-gauges', function(c){ return c.querySelector('.gg-note'); }],
+      ['cases', null]
+    ];
+    SPECS.forEach(function(sp){
+      var el = $(sp[0]);
+      if (!el) return;
+      var grid = sp[1] ? el : el.parentNode, pick = sp[1] || function(c){ return c.id === sp[0] ? c : null; }, lastW = -1;
+      function check(){ var w = grid.clientWidth; if (w && w !== lastW){ lastW = w; fit(grid, pick); } }
+      if (window.ResizeObserver) new ResizeObserver(check).observe(grid); else addEventListener('resize', check);
+      setTimeout(check, 0);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(function(){ lastW = -1; check(); });
+    });
   })();
 
   /* extras:js */
