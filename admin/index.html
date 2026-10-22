@@ -1,0 +1,481 @@
+<!doctype html><html lang="zh-CN"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"><meta name="robots" content="noindex,nofollow"><meta name="referrer" content="no-referrer"></head><body><title>静观后台</title>
+<style>
+:root{
+  --bg:#f6f5f1;--panel:#ffffff;--ink:#1f1e1b;--muted:#6b6862;--line:#e3e0d8;--soft:#efede6;
+  --red:#b4372f;--red-bg:#f8e4e1;--amber:#9a6a00;--amber-bg:#f7edd3;--green:#2f7a4b;--green-bg:#e0f0e5;--grey:#7b7a76;--grey-bg:#ecebe7;
+  --accent:#2f5d8a;--accent-bg:#e3ecf5;--btn:#1f1e1b;--btn-ink:#fff;
+  --mono:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#151513;--panel:#1d1d1a;--ink:#ecebe6;--muted:#a19e96;--line:#34332f;--soft:#262622;
+  --red:#ef8b80;--red-bg:#3a1f1c;--amber:#e3b552;--amber-bg:#352a12;--green:#7cc896;--green-bg:#17301f;--grey:#a3a19b;--grey-bg:#2a2a27;
+  --accent:#8db6e0;--accent-bg:#1c2a38;--btn:#ecebe6;--btn-ink:#151513;
+}}
+:root[data-theme="dark"]{
+  --bg:#151513;--panel:#1d1d1a;--ink:#ecebe6;--muted:#a19e96;--line:#34332f;--soft:#262622;
+  --red:#ef8b80;--red-bg:#3a1f1c;--amber:#e3b552;--amber-bg:#352a12;--green:#7cc896;--green-bg:#17301f;--grey:#a3a19b;--grey-bg:#2a2a27;
+  --accent:#8db6e0;--accent-bg:#1c2a38;--btn:#ecebe6;--btn-ink:#151513;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.6 -apple-system,BlinkMacSystemFont,"PingFang SC","Hiragino Sans GB","Noto Sans SC","Microsoft YaHei",sans-serif}
+.wrap{max-width:1040px;margin:0 auto;padding:24px 16px 64px}
+h1{font-size:22px;margin:0 0 2px;letter-spacing:.02em}
+h2{font-size:16px;margin:28px 0 10px}
+.sub{color:var(--muted);font-size:13px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:18px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:14px 16px}
+.k{color:var(--muted);font-size:12px}
+.big{font-size:30px;font-weight:650;font-variant-numeric:tabular-nums;line-height:1.2}
+.alert{margin-top:8px;padding:8px 10px;border-radius:8px;background:var(--red-bg);color:var(--red);font-size:13px}
+.tabs{display:flex;gap:4px;margin-top:24px;border-bottom:1px solid var(--line);overflow-x:auto}
+.tab{appearance:none;border:0;background:none;color:var(--muted);font:inherit;padding:8px 12px;cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap}
+.tab[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--ink);font-weight:600}
+.pane{display:none}.pane.on{display:block}
+.note{background:var(--soft);border-radius:8px;padding:10px 12px;font-size:13px;color:var(--muted);margin:12px 0}
+.group{margin-top:18px}
+.ghead{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.ghead h3{font-size:14px;margin:0}
+.cand{background:var(--panel);border:1px solid var(--line);border-radius:10px;padding:12px 14px;margin-top:8px}
+.cand.done{opacity:.72}
+.meta{display:flex;gap:8px;flex-wrap:wrap;color:var(--muted);font-size:12px}
+.ev{margin:4px 0 6px;font-weight:550;overflow-wrap:anywhere}
+.ev a{color:inherit;text-decoration:underline;text-decoration-color:var(--line);text-underline-offset:3px}
+.chips{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.chip{font-size:12px;padding:1px 8px;border-radius:999px;background:var(--soft);border:1px solid var(--line)}
+.pts{font-family:var(--mono);font-size:13px;font-weight:650;padding:1px 8px;border-radius:6px}
+.pts.pos{background:var(--green-bg);color:var(--green)}.pts.neg{background:var(--red-bg);color:var(--red)}.pts.zero{background:var(--grey-bg);color:var(--grey)}
+.why{margin:6px 0 0;padding-left:18px;color:var(--muted);font-size:12.5px}
+.acts{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px;align-items:center}
+button.b{appearance:none;font:inherit;font-size:13px;border-radius:7px;padding:4px 12px;cursor:pointer;border:1px solid var(--line);background:var(--panel);color:var(--ink)}
+button.b.pri{background:var(--btn);color:var(--btn-ink);border-color:var(--btn)}
+button.b:disabled{opacity:.45;cursor:not-allowed}
+.state{font-size:12.5px;padding:2px 8px;border-radius:6px}
+.state.confirm{background:var(--green-bg);color:var(--green)}.state.edit{background:var(--accent-bg);color:var(--accent)}.state.reject{background:var(--grey-bg);color:var(--grey)}.state.add{background:var(--accent-bg);color:var(--accent)}
+.state.synced{background:var(--soft);color:var(--muted)}
+.editor{display:none;margin-top:10px;padding:10px;border-radius:8px;background:var(--soft)}
+.editor.on{display:block}
+.row{display:flex;gap:8px;flex-wrap:wrap}
+label.f{display:flex;flex-direction:column;font-size:12px;color:var(--muted);gap:2px;min-width:110px;flex:1}
+select,input,textarea{font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:6px;padding:4px 6px;width:100%}
+textarea{min-height:52px;resize:vertical}
+table{width:100%;border-collapse:collapse;font-size:13px}
+th,td{text-align:left;padding:6px 8px;border-bottom:1px solid var(--line);vertical-align:top}
+th{color:var(--muted);font-weight:500;font-size:12px}
+td.n{font-family:var(--mono);font-variant-numeric:tabular-nums;white-space:nowrap}
+.scroll{overflow-x:auto;background:var(--panel);border:1px solid var(--line);border-radius:10px}
+.dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:6px;vertical-align:-1px}
+.c-red{background:var(--red)}.c-amber{background:var(--amber)}.c-green{background:var(--green)}.c-grey{background:var(--grey)}
+.lamp{margin-top:10px}
+.case{margin-top:8px}
+.case summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.case summary::-webkit-details-marker{display:none}
+.case summary .nm{font-weight:600}
+.md{font-size:14px;overflow-wrap:anywhere}
+.md h1,.md h2{font-size:15px;margin:14px 0 6px}.md h3,.md h4{font-size:14px;margin:12px 0 4px}
+.md table{margin:8px 0;display:block;overflow-x:auto}
+.md blockquote{margin:8px 0;padding:4px 12px;border-left:3px solid var(--line);color:var(--muted)}
+.md code{font-family:var(--mono);font-size:12.5px;background:var(--soft);padding:0 4px;border-radius:4px}
+.md pre{white-space:pre-wrap;font-family:inherit}
+.tag{font-size:12px;padding:0 7px;border-radius:999px;background:var(--accent-bg);color:var(--accent)}
+.tag.priv{background:var(--amber-bg);color:var(--amber)}
+.lamp summary{cursor:pointer;list-style:none;display:flex;gap:10px;align-items:baseline;flex-wrap:wrap}
+.lamp summary::-webkit-details-marker{display:none}
+.lamp .nm{font-weight:600}
+.empty{color:var(--muted);font-size:13px;padding:10px 0}
+.banner{margin-top:14px;padding:10px 12px;border-radius:8px;background:var(--amber-bg);color:var(--amber);font-size:13px;display:none}
+.banner.on{display:block}
+</style>
+
+<div class="wrap">
+  <h1>静观后台</h1>
+  <div class="sub" id="sub"></div>
+  <div class="banner" id="banner"></div>
+
+  <div id="login"></div>
+  <div class="grid" id="summary"></div>
+
+  <div class="tabs" role="tablist">
+    <button class="tab" role="tab" data-tab="review" aria-selected="true">待复核</button>
+    <button class="tab" role="tab" data-tab="lamps" aria-selected="false">灯</button>
+    <button class="tab" role="tab" data-tab="ledger" aria-selected="false">账本</button>
+    <button class="tab" role="tab" data-tab="cases" aria-selected="false">案例日志</button>
+    <button class="tab" role="tab" data-tab="rules" aria-selected="false">规则</button>
+  </div>
+
+  <section class="pane on" id="p-review">
+    <div class="note">每条都是脚本按"四个问题"预填的归类，右边是按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。我在每天更新时把你处理过的条目写进账本，分数自动重算。</div>
+    <div id="groups"></div>
+    <div class="group">
+      <div class="ghead"><h3>自己记一条</h3></div>
+      <div class="cand">
+        <div class="row">
+          <label class="f" style="flex:3">证据（一句话）<input id="a-ev" placeholder="例如：Meta 上调 2026 资本开支下限"></label>
+          <label class="f">日期<input id="a-date" type="date"></label>
+          <label class="f">来源<input id="a-src" placeholder="Reuters / 财报"></label>
+        </div>
+        <div class="row" id="a-fields" style="margin-top:8px"></div>
+        <div class="acts"><button class="b pri" id="a-save">记下</button><span class="sub" id="a-msg"></span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="pane" id="p-lamps"><div id="lamps"></div></section>
+  <section class="pane" id="p-ledger"><div id="ledger"></div></section>
+  <section class="pane" id="p-cases"><div id="cases"></div></section>
+  <section class="pane" id="p-rules"><div id="rules"></div></section>
+</div>
+
+<script>
+let DATA = /*__DATA__*/null;
+
+const OPTS = {
+  class: ["新独立", "幅度", "记忆", "噪声", "他题"],
+  toward: ["", "支持", "H0", "H2", "H3", "失效"],
+  strength: ["", "S", "M", "L"],
+  layer: ["", "融资", "部署", "订单", "回报", "利率", "流动性", "分化"],
+  cluster: ["", "融资压力", "部署受阻", "订单实证", "终端回报", "利率", "系统流动性", "分化"],
+};
+const LABEL = {class: "归类", toward: "方向", strength: "强度", layer: "层", cluster: "类"};
+const COLOR = {red: "红", amber: "黄", green: "绿", grey: "灰"};
+const ACT = {confirm: "已确认", edit: "已改归类", reject: "已驳回", add: "自己记的"};
+
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+const md = d => (d || "").slice(5).replace("-", "/");
+
+function points(s) {
+  const side = s.toward === "支持" ? "支持" : "对立";
+  const t = (DATA.points[s.class + "|" + side]) || {};
+  return t[s.strength] || 0;
+}
+function ptsTag(p) {
+  return `<span class="pts ${p > 0 ? "pos" : p < 0 ? "neg" : "zero"}">${p > 0 ? "+" : ""}${p}</span>`;
+}
+function chips(s) {
+  return ["class", "toward", "strength", "layer", "cluster"].filter(k => s[k]).map(k => `<span class="chip" title="${LABEL[k]}">${esc(s[k])}</span>`).join("");
+}
+
+// ---------- state ----------
+let decisions = {};          // id -> doc data
+let db = null, canWrite = false, me = null;
+let synced = new Set();
+let STORE = DATA ? "claude" : "github";   // 内嵌数据 = Claude 里的私有版；没有数据 = GitHub Pages 版，用令牌现读
+
+// ---------- header & summary ----------
+function renderHead() {
+  $("#sub").textContent = `数据 ${DATA.generated} · 规则 ${DATA.version} · 候选从 ${md(DATA.since)} 起 · 只在后台，不上主页`;
+  const t = DATA.themes[0];
+  const lampsRed = DATA.lamps.filter(l => l.confirmed === "red").map(l => l.n + l.name).join("、") || "无";
+  const pending = DATA.candidates.filter(c => c.status === "待确认" && !decisions[c.id]).length;
+  const decided = Object.values(decisions).filter(d => d.action !== "add");
+  const changed = decided.filter(d => d.changed).length;
+  $("#summary").innerHTML = `
+    <div class="card"><div class="k">主线 · ${esc(t.theme)}</div>
+      <div class="big">${t.cell} · ${t.score}</div>
+      <div class="sub">${esc(t.band)}${t.closest ? `；离 ${t.closest} 最近` : ""}</div>
+      ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}</div>
+    ${t.derisk ? `<div class="card"><div class="k">减仓档</div><div class="big">${t.derisk.tier} 档</div>
+      <div class="sub"><b>${esc(t.derisk.name)}</b>：${esc(t.derisk.action)}。${esc(t.derisk.why.join("；"))}</div></div>` : ""}
+    <div class="card"><div class="k">确认红的灯</div><div class="big" style="font-size:20px;margin-top:6px">${esc(lampsRed)}</div>
+      <div class="sub">${DATA.lamps.filter(l => l.raw !== l.confirmed).map(l => `${l.n} 这期读数${COLOR[l.raw]}，待第二期确认`).join("；") || "没有待确认的改色"}</div></div>
+    <div class="card"><div class="k">待复核</div><div class="big">${pending}</div><div class="sub">共 ${DATA.candidates.length} 条候选</div></div>
+    <div class="card"><div class="k">你改过的预填</div><div class="big">${decided.length ? Math.round(changed / decided.length * 100) + "%" : "—"}</div>
+      <div class="sub">${decided.length ? `处理 ${decided.length} 条，改了 ${changed} 条` : "还没有处理"}。比例高说明自动归类靠不住</div></div>`;
+}
+
+// ---------- review ----------
+const GROUPS = [
+  {key: "score", title: "会动分的", hint: "新独立、幅度，确认后进账本就会加减分", test: c => c.status === "待确认" && ["新独立", "幅度"].includes(c.suggest.class)},
+  {key: "memory", title: "不动分、只拨衰减时钟的", hint: "记忆：同类的后续报道", test: c => c.status === "待确认" && c.suggest.class === "记忆"},
+  {key: "noise", title: "机器判成噪声或他题的", hint: "抽查一下就行，没问题可以整组确认", test: c => c.status === "待确认" && ["噪声", "他题"].includes(c.suggest.class), bulk: true},
+  {key: "dup", title: "账本里已经有的", hint: "和账本某一条是同一件事，默认不再记", test: c => c.status === "已记过", bulk: true, bulkAction: "reject"},
+];
+
+function candHTML(c) {
+  const d = decisions[c.id];
+  const s = d && d.action !== "reject" ? d : c.suggest;
+  const st = synced.has(c.id) ? `<span class="state synced">已入账</span>` : d ? `<span class="state ${d.action}">${ACT[d.action]}</span>` : "";
+  const ev = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.evidence)}</a>` : esc(c.evidence);
+  const dis = canWrite ? "" : "disabled";
+  return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
+    <div class="meta"><span>${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
+    <div class="ev">${ev}</div>
+    <div class="chips">${chips(s)}${ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="sub">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
+    <ul class="why">${c.why.map(w => `<li>${esc(w)}</li>`).join("")}${d && d.note ? `<li>你的备注：${esc(d.note)}</li>` : ""}</ul>
+    <div class="acts">${d && !synced.has(c.id)
+      ? `<button class="b" data-act="undo" ${dis}>撤销</button>`
+      : synced.has(c.id) ? "" : `<button class="b pri" data-act="confirm" ${dis}>确认</button><button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
+    <div class="editor">${editorHTML(c.suggest)}<div class="acts"><button class="b pri" data-act="save">保存</button><button class="b" data-act="cancel">取消</button></div></div>
+  </div>`;
+}
+
+function editorHTML(s) {
+  return `<div class="row">${["class", "toward", "strength", "layer", "cluster"].map(k => `<label class="f">${LABEL[k]}<select data-f="${k}">${OPTS[k].map(o => `<option ${o === (s[k] || "") ? "selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`).join("")}</div>
+    <label class="f" style="margin-top:8px">备注（为什么改）<textarea data-f="note"></textarea></label>`;
+}
+
+function renderReview() {
+  $("#groups").innerHTML = GROUPS.map(g => {
+    const items = DATA.candidates.filter(g.test);
+    const open = items.filter(c => !decisions[c.id] && !synced.has(c.id)).length;
+    return `<div class="group" data-g="${g.key}">
+      <div class="ghead"><h3>${g.title} · ${items.length}</h3>
+        ${g.bulk && open ? `<button class="b" data-bulk="${g.key}" ${canWrite ? "" : "disabled"}>这一组剩下的 ${open} 条全部${g.bulkAction === "reject" ? "驳回" : "确认"}</button>` : ""}</div>
+      <div class="sub">${g.hint}</div>
+      ${items.length ? items.map(candHTML).join("") : `<div class="empty">没有</div>`}</div>`;
+  }).join("");
+  const own = Object.entries(decisions).filter(([, d]) => d.action === "add");
+  if (own.length) {
+    $("#groups").insertAdjacentHTML("beforeend", `<div class="group"><div class="ghead"><h3>你自己记的 · ${own.length}</h3></div>${own.map(([id, d]) => `
+      <div class="cand done" data-id="${id}"><div class="meta"><span>${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">等我入账</span>`}</div>
+      <div class="ev">${esc(d.evidence)}</div><div class="chips">${chips(d)}${ptsTag(points(d))}</div>
+      ${synced.has(id) ? "" : `<div class="acts"><button class="b" data-act="undo" ${canWrite ? "" : "disabled"}>删掉</button></div>`}</div>`).join("")}</div>`);
+  }
+}
+
+async function write(id, data) {
+  if (STORE === "github") return ghWrite(id, data);
+  if (!db) return;
+  try {
+    if (data === null) await db.collection("decisions").doc(id).delete();
+    else await db.collection("decisions").doc(id).set(data);
+  } catch (e) {
+    if (e && e.code === "invalid_argument") { canWrite = false; showBanner("这个视图不能写入，复核结果存不下来。"); renderAll(); }
+    else showBanner("没存上（" + (e && e.code || "unknown") + "），稍后再点一次。");
+  }
+}
+
+function record(c, action, s, note) {
+  const keys = ["class", "toward", "strength", "layer", "cluster"];
+  const changed = action === "reject" ? false : keys.some(k => (s[k] || "") !== (c.suggest[k] || ""));
+  const doc = {cid: c.id, action: action === "confirm" && changed ? "edit" : action, changed, note: note || "",
+    date: c.date, evidence: c.evidence, source: c.source, url: c.url || "", theme: c.theme,
+    machine: c.suggest, at: new Date().toISOString(), by: me || STORE};
+  keys.forEach(k => doc[k] = action === "reject" ? "" : (s[k] || ""));
+  decisions[c.id] = doc; renderAll();
+  return write(c.id, doc);
+}
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button");
+  if (!b) return;
+  if (b.classList.contains("tab")) {
+    document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t === b));
+    document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "p-" + b.dataset.tab));
+    return;
+  }
+  if (b.dataset.bulk) {
+    const g = GROUPS.find(x => x.key === b.dataset.bulk);
+    const todo = DATA.candidates.filter(g.test).filter(c => !decisions[c.id] && !synced.has(c.id));
+    (async () => { for (const c of todo) await record(c, g.bulkAction || "confirm", c.suggest, "整组处理"); })();
+    return;
+  }
+  const card = b.closest(".cand"); if (!card) return;
+  const id = card.dataset.id, c = DATA.candidates.find(x => x.id === id), act = b.dataset.act;
+  if (act === "undo") { delete decisions[id]; renderAll(); write(id, null); }
+  else if (act === "confirm") record(c, "confirm", c.suggest);
+  else if (act === "reject") record(c, "reject", c.suggest);
+  else if (act === "edit") card.querySelector(".editor").classList.add("on");
+  else if (act === "cancel") card.querySelector(".editor").classList.remove("on");
+  else if (act === "save") {
+    const s = {}; card.querySelectorAll(".editor [data-f]").forEach(x => s[x.dataset.f] = x.value);
+    record(c, "confirm", s, s.note);
+  }
+});
+
+// ---------- add own ----------
+function renderAdd() {
+  $("#a-fields").innerHTML = editorHTML({class: "新独立", toward: "支持", strength: "S"}).replace(/<label class="f" style="margin-top:8px">[\s\S]*$/, "");
+  $("#a-date").value = new Date().toISOString().slice(0, 10);
+}
+$("#a-save").addEventListener("click", async () => {
+  const ev = $("#a-ev").value.trim();
+  if (!ev) { $("#a-msg").textContent = "先写一句证据"; return; }
+  if (!canWrite) { $("#a-msg").textContent = "这个视图不能写入"; return; }
+  const s = {}; document.querySelectorAll("#a-fields [data-f]").forEach(x => s[x.dataset.f] = x.value);
+  const id = "u-" + Date.now().toString(36);
+  const doc = Object.assign({action: "add", changed: false, evidence: ev, date: $("#a-date").value, source: $("#a-src").value.trim(),
+    theme: DATA.themes[0].theme, at: new Date().toISOString(), by: me || STORE, note: ""}, s);
+  decisions[id] = doc; renderAll();
+  await write(id, doc);
+  $("#a-ev").value = ""; $("#a-src").value = ""; $("#a-msg").textContent = "记下了，下次更新时入账";
+});
+
+// ---------- lamps ----------
+function renderLamps() {
+  $("#lamps").innerHTML = `<div class="note">每盏灯由几张子信号投票：压力、不压力、弃权（没读数、过期、离线太近都弃权）。同一来源在一盏灯里合起来只算一票，所以会出现小数。多数一方占到三分之二以上才亮红或绿，改色要连续两期一致。</div>` +
+    DATA.lamps.map(l => `<details class="lamp card"><summary>
+      <span class="nm"><span class="dot c-${l.confirmed}"></span>${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
+      <span class="sub">压力 ${l.stress} · 不压力 ${l.calm} · 一致度 ${l.cons == null ? "—" : Math.round(l.cons * 100) + "%"} · 差 ${l.flip ?? "—"} 票翻${l.raw !== l.confirmed ? ` · 这期读数${COLOR[l.raw]}，待确认` : ""}${l.watch ? " · WATCH" : ""}</span></summary>
+      <div class="scroll" style="margin-top:10px"><table><tr><th>子信号</th><th>读数</th><th>日期</th><th>票</th><th>权重</th><th>原因</th></tr>
+      ${l.votes.map(v => `<tr><td>${esc(v.label)}</td><td class="n">${esc(v.value ?? "—")}</td><td class="n">${esc(v.date || "—")}</td><td>${esc(v.vote)}</td><td class="n">${v.weight ? v.weight : "—"}</td><td class="sub">${esc([v.why, v.edge ? "±0.55 边沿票" : "", v.note].filter(Boolean).join("；"))}</td></tr>`).join("")}
+      </table></div></details>`).join("");
+}
+
+// ---------- ledger ----------
+function renderLedger() {
+  const t = DATA.themes[0];
+  $("#ledger").innerHTML = `<div class="note">${esc(t.theme)} · ${t.cell} · ${md(t.since)} 入格 70 分。下面每一行就是分数的来历：70 加上各类证据的分，再按衰减规则折算（同一类 10 个交易日没再出现，之后 5 个交易日还回一半）。</div>
+    <div class="card"><div class="k">各类证据现在的净分</div><ul class="why" style="font-size:13px">${t.fading.map(f => `<li>${esc(f)}</li>`).join("")}</ul></div>
+    <div class="scroll" style="margin-top:12px"><table><tr><th>日期</th><th>归类</th><th>方向</th><th>强度</th><th>层</th><th>分</th><th>证据</th></tr>
+    ${t.items.map(i => `<tr><td class="n">${md(i.date)}</td><td>${esc(i.class)}</td><td>${esc(i.toward)}</td><td>${esc(i.strength || "")}</td><td>${esc(i.layer || "")}</td><td class="n">${ptsTag(i.points)}</td><td>${esc(i.evidence)}</td></tr>`).join("")}
+    </table></div>`;
+}
+
+// ---------- rules ----------
+function renderRules() {
+  const row = (cls, side) => ["S", "M", "L"].map(k => ptsTag((DATA.points[cls + "|" + side] || {})[k] || 0)).join(" ");
+  $("#rules").innerHTML = `
+    <h2>固定计分表</h2>
+    <div class="scroll"><table><tr><th>归类</th><th>支持当前格（S · M · L）</th><th>指向相邻格（S · M · L）</th></tr>
+      <tr><td>新独立</td><td>${row("新独立", "支持")}</td><td>${row("新独立", "对立")}</td></tr>
+      <tr><td>幅度</td><td>${row("幅度", "支持")}</td><td>${row("幅度", "对立")}</td></tr>
+      <tr><td>记忆 / 噪声 / 他题</td><td>${ptsTag(0)}（记忆会把衰减时钟拨回 0）</td><td>${ptsTag(0)}</td></tr></table></div>
+    ${DATA.derisk ? `<h2>减仓档</h2><div class="scroll"><table><tr><th>规则</th></tr>${DATA.derisk.rules.map(r => `<tr><td>${esc(r)}</td></tr>`).join("")}</table></div>
+      <div class="sub" style="margin-top:6px">2 档：${esc(DATA.derisk.tier2)}；3 档：${esc(DATA.derisk.tier3)}（${esc(DATA.derisk.status)}）</div>` : ""}
+    <h2>强度怎么定</h2>
+    <div class="scroll"><table><tr><th>档</th><th>标准</th><th>账本里的例子</th></tr>
+      ${DATA.strength.map(s => `<tr><td>${s.k}</td><td>${esc(s.rule)}</td><td>${s.eg.map(esc).join("<br>")}</td></tr>`).join("")}</table></div>
+    <h2>规则版本</h2>
+    <div class="scroll"><table><tr><th>版本</th><th>日期</th><th>改了什么、为什么</th></tr>
+      ${DATA.changelog.map(c => `<tr><td class="n">${esc(c.v)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.what)}</td></tr>`).join("")}</table></div>`;
+}
+
+// ---------- case log ----------
+function mdHTML(x) {  // build.py 已经把 markdown 转成 HTML；没转的退回原文
+  return x.html || `<pre>${esc(x.body)}</pre>`;
+}
+function renderCases() {
+  const C = DATA.cases;
+  if (!C) { $("#cases").innerHTML = `<div class="empty">这次没有读到案例日志。</div>`; return; }
+  const rows = C.cases.slice().reverse();
+  $("#cases").innerHTML = `<div class="note">来自 <code>analysis/案例日志.md</code>（${esc(C.updated)} 的版本），每次刷新后台时重新读取。里面有个人持仓和交易记录，只存在私有仓库和这个后台里，不上主页。标了"含持仓"的条目，培训时不要展示。</div>
+    <div class="scroll"><table><tr><th>案例</th><th>日期</th><th>题目</th><th>到期回看</th></tr>
+    ${rows.map(c => `<tr><td class="n">${esc(c.no)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.title)} ${c.kind ? `<span class="tag">${esc(c.kind)}</span>` : ""}${c.private ? ` <span class="tag priv">含持仓</span>` : ""}</td><td class="n">${esc(c.review || "—")}</td></tr>`).join("")}</table></div>
+    <h2>逐条</h2>
+    ${rows.map((c, i) => `<details class="case card" ${i === 0 ? "open" : ""}><summary><span class="nm">案例 ${esc(c.no)}｜${esc(c.title)}</span><span class="sub">${esc(c.date)}${c.kind ? " · " + esc(c.kind) : ""}</span>${c.private ? `<span class="tag priv">含持仓</span>` : ""}</summary><div class="md">${mdHTML(c)}</div></details>`).join("")}
+    ${C.extra.map(x => `<details class="case card"><summary><span class="nm">${esc(x.title)}</span></summary><div class="md">${mdHTML(x)}</div></details>`).join("")}`;
+}
+
+function showBanner(t) { const b = $("#banner"); b.textContent = t; b.classList.add("on"); }
+function renderAll() { renderHead(); renderReview(); }
+
+function start() {
+  synced = new Set(DATA.synced || []);
+  renderAll(); renderAdd(); renderLamps(); renderLedger(); renderRules(); renderCases();
+}
+
+// ---------- Claude 里的私有版：复核结果存在 Artifact 数据库 ----------
+async function connectClaude() {
+  const [d, user] = await Promise.all([claude.use("db"), claude.use("user")]);
+  if (!d) { showBanner("这个视图连不上后台数据库：可以看，但点确认存不下来。请在 Claude 里打开这个页面。"); return; }
+  db = d;
+  try {
+    const w = user ? await user.can("data.write") : null;
+    canWrite = w !== false;
+    if (user) me = await user.id();
+  } catch (e) { canWrite = true; }
+  if (!canWrite) showBanner("你在这个页面只有查看权限，复核结果存不下来。");
+  db.collection("decisions").onSnapshot(snap => {
+    decisions = {};
+    snap.docs.forEach(x => { if (x.exists) decisions[x.id] = x.data(); });
+    renderAll();
+  }, err => showBanner("读取复核记录失败（" + err.code + "）。"));
+  renderAll();
+}
+
+// ---------- GitHub Pages 版：页面本身不带数据，用你的令牌从私有仓库现读现写 ----------
+const GH = {repo: "B1axk-bit/stillpoint-data", branch: "main", key: "stillpoint-admin-token", decisions: "confidence/decisions.json"};
+let ghToken = "", ghSha = null, ghQueue = Promise.resolve();
+const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
+const lsSet = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
+const b64 = str => { const u = new TextEncoder().encode(str); let s = ""; u.forEach(c => s += String.fromCharCode(c)); return btoa(s); };
+const unb64 = str => new TextDecoder().decode(Uint8Array.from(atob(str.replace(/\s/g, "")), c => c.charCodeAt(0)));
+
+async function gh(path, opt = {}) {
+  const r = await fetch(`https://api.github.com/repos/${GH.repo}/${path}`, Object.assign({}, opt, {
+    headers: Object.assign({Authorization: "Bearer " + ghToken, Accept: "application/vnd.github+json", "X-GitHub-Api-Version": "2022-11-28"}, opt.headers || {}),
+  }));
+  return r;
+}
+async function ghFile(path, optional) {
+  const r = await gh(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`);
+  if (r.status === 404 && optional) return {text: null, sha: null};
+  if (!r.ok) throw new Error(path + "：HTTP " + r.status);
+  const j = await r.json();
+  if (j.content == null || j.encoding !== "base64") {   // 超过 1 MB 的文件走 raw
+    const raw = await gh(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`, {headers: {Accept: "application/vnd.github.raw+json"}});
+    return {text: await raw.text(), sha: j.sha};
+  }
+  return {text: unb64(j.content), sha: j.sha};
+}
+
+function loginView(msg) {
+  $("#login").innerHTML = `<div class="card" style="margin-top:16px">
+    <div class="k">第一次打开：填你的 GitHub 令牌</div>
+    <div class="sub" style="margin:6px 0 10px">这一页本身不带任何数据。数据和你的复核结果都放在私有仓库 stillpoint-data 里，页面用令牌现读现写。令牌只存在这台设备的浏览器里，不会上传到别处。
+      建令牌：<a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>，Repository access 只选 <b>stillpoint-data</b>，Permissions 里 <b>Contents</b> 选 Read and write，想用"立即重算"再把 <b>Actions</b> 选 Read and write。</div>
+    <div class="row"><label class="f" style="flex:4">令牌<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label>
+      <div style="display:flex;align-items:flex-end"><button class="b pri" id="tok-save">连接</button></div></div>
+    ${msg ? `<div class="alert">${esc(msg)}</div>` : ""}</div>`;
+  $("#tok-save").onclick = () => { ghToken = $("#tok").value.trim(); if (ghToken) ghLoad(true); };
+}
+
+async function ghLoad(remember) {
+  $("#login").innerHTML = `<div class="note">正在从私有仓库读数据…</div>`;
+  try {
+    const [latest, cand, rubric, reviewed, cases, dec] = await Promise.all([
+      ghFile("confidence/latest.json"), ghFile("confidence/candidates.json"), ghFile("confidence/rubric.json"),
+      ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true)]);
+    const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
+    const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
+    DATA = {generated: L.run_at, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates,
+      points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
+      strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null};
+    decisions = dec.text ? JSON.parse(dec.text) : {};
+    ghSha = dec.sha;
+    if (remember) lsSet(GH.key, ghToken);
+    canWrite = true;
+    $("#login").innerHTML = `<div class="acts" style="margin-top:12px"><button class="b" id="gh-run">立即重算（跑一次自动更新，约 3 分钟）</button><button class="b" id="gh-out">退出（清掉这台设备上的令牌）</button><span class="sub" id="gh-msg"></span></div>`;
+    $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
+    $("#gh-run").onclick = ghRun;
+    start();
+  } catch (e) {
+    ghToken = ""; loginView("连不上：" + e.message + "。检查令牌是不是只给了 stillpoint-data、Contents 有没有读写权限、有没有过期。");
+  }
+}
+
+function ghWrite(id, data) {
+  ghQueue = ghQueue.then(async () => {
+    for (let attempt = 0; attempt < 2; attempt++) {
+      const body = {message: "后台复核：" + (data ? (data.action + " " + (data.evidence || "").slice(0, 40)) : "撤销 " + id),
+        content: b64(JSON.stringify(decisions, null, 1)), branch: GH.branch};
+      if (ghSha) body.sha = ghSha;
+      const r = await gh(`contents/${GH.decisions}`, {method: "PUT", body: JSON.stringify(body)});
+      if (r.ok) { ghSha = (await r.json()).content.sha; return; }
+      if (r.status === 409 || r.status === 422) {          // 别处改过：取回最新的，把这一条合进去再写
+        const cur = await ghFile(GH.decisions, true);
+        const server = cur.text ? JSON.parse(cur.text) : {};
+        if (data === null) delete server[id]; else server[id] = data;
+        decisions = server; ghSha = cur.sha; renderAll();
+        continue;
+      }
+      showBanner(r.status === 403 || r.status === 404 ? "没存上：令牌没有写入权限（Contents 要选 Read and write）。" : "没存上（HTTP " + r.status + "），稍后再点一次。");
+      return;
+    }
+    showBanner("没存上：仓库里的复核记录刚被改过，请刷新页面再点一次。");
+  });
+  return ghQueue;
+}
+
+async function ghRun() {
+  $("#gh-msg").textContent = "正在请求…";
+  const r = await gh("actions/workflows/snapshot.yml/dispatches", {method: "POST", body: JSON.stringify({ref: GH.branch})});
+  $("#gh-msg").textContent = r.status === 204 ? "已经开始跑了。大约 3 分钟后刷新页面，你确认过的条目会入账、分数会重算。"
+    : r.status === 403 ? "令牌没有 Actions 权限，这个按钮用不了；每天的自动运行照样会入账。" : "没跑起来（HTTP " + r.status + "）。";
+}
+
+if (STORE === "claude") { start(); connectClaude(); }
+else { ghToken = lsGet(GH.key); ghToken ? ghLoad(false) : loginView(""); }
+</script>
+</body></html>
