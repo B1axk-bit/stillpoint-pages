@@ -169,6 +169,8 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .fold summary::after{content:"展开";margin-left:auto;font-size:12px;color:var(--muted)}
 .fold[open] summary::after{content:"收起"}
 .fold .nm{font-weight:700}
+.cds-source table{min-width:700px}
+.cds-source th{white-space:nowrap}
 .sub{color:var(--muted);font-size:13px}
 .empty{color:var(--muted);font-size:13px;padding:10px 0}
 .md{font-size:14px;overflow-wrap:anywhere;margin-top:8px;border-top:1px solid var(--grid);padding-top:6px}
@@ -271,6 +273,12 @@ const ACT = {confirm: "已确认", edit: "已改归类", reject: "已驳回", ad
 const $ = s => document.querySelector(s);
 // 对外统一写 ARGUSX（B1ack 10/22 定）；数据里的原文不改，只改显示
 const esc = s => String(s ?? "").replace(/ARGUS(?!X)/g, "ARGUSX").replace(/[&<>"']/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;"}[c]));
+function sourceURL(value) {
+  try {
+    const url = new URL(value);
+    return url.origin === "https://pddata.dtcc.com" && url.pathname.startsWith("/ppd/") ? url.href : "https://pddata.dtcc.com/ppd/secdashboard";
+  } catch (_) { return "https://pddata.dtcc.com/ppd/secdashboard"; }
+}
 const md = d => (d || "").slice(5).replace("-", "/");
 
 function points(s) {
@@ -488,6 +496,19 @@ function renderLamps() {
       <div class="scroll" style="margin-top:10px"><table><tr><th>子信号</th><th>读数</th><th>日期</th><th>票</th><th>权重</th><th>原因</th></tr>
       ${l.votes.map(v => `<tr><td>${esc(v.label)}</td><td class="n">${esc(v.value ?? "—")}</td><td class="n">${esc(v.date || "—")}</td><td>${esc(v.vote)}</td><td class="n">${v.weight ? v.weight : "—"}</td><td class="sub">${esc([v.why, v.edge ? "±0.55 边沿票" : "", v.note].filter(Boolean).join("；"))}</td></tr>`).join("")}
       </table></div></details>`).join("");
+  const cds = Object.values(DATA.cds || {});
+  if (cds.length) {
+    $("#lamps").innerHTML += `<h2 class="mh">CDS 公开成交</h2><div class="note">DTCC SEC 免费公开日文件，按实际成交日、币种和到期日显示。直接报告利差才以 bp 进入原融资灯；前端付款与固定票息单列，不换算为利差。单日少量成交不能代表收盘综合报价。</div>` +
+      cds.map(feed => {
+        const latest = (feed.observations || [])[0];
+        return `<details class="fold card cds-source" open><summary><span class="nm">${esc(feed.who)}</span><span class="sub">采集 ${esc(feed.collected_at)} · 日文件至 ${esc(feed.latest_report_date)}</span></summary>
+          ${feed.error_now || (feed.source_errors || []).length ? `<p class="sub">部分文件本次未取得；有缓存时沿用原日期，无缓存时缺失。${esc(feed.error_now || feed.source_errors.map(e => e.date).join("、"))}</p>` : ""}
+          ${latest ? `<div class="scroll" style="margin-top:10px"><table><tr><th>成交日 / 币种 / 到期日</th><th>直接报告利差</th><th>前端付款占本金</th><th>固定票息</th><th>样本 / 来源</th></tr>
+            ${(feed.observations || []).map(o => `<tr><td>${esc(o.date)} · ${esc(o.currency)}<br>到期 ${esc(o.maturity)} · Senior</td><td class="n">${o.spread_bp == null ? "—" : esc(o.spread_bp) + " bp"}</td><td class="n">${o.upfront_pct == null ? "—" : esc(Number(o.upfront_pct).toFixed(2)) + "%"}</td><td class="n">${o.upfront_coupon_bp == null ? esc((o.coupons_bp || []).join(" / ") || "—") : esc(o.upfront_coupon_bp)} bp</td><td>利差 ${o.spread_samples} 笔 / 前端付款 ${o.upfront_samples} 笔<br><a href="${esc(sourceURL(o.source_url))}" target="_blank" rel="noopener noreferrer">DTCC 日文件</a></td></tr>`).join("")}
+            </table></div>` : `<p class="empty">没有符合口径的约五年期成交。</p>`}
+          <p class="sub">${esc(feed.note)}</p></details>`;
+      }).join("");
+  }
 }
 
 // ---------- ledger ----------
@@ -615,7 +636,7 @@ async function ghLoad(remember) {
       ghFile("confidence/brief.json", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
-    DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates,
+    DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates, cds: L.cds || {},
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
       strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
       brief: brief.text ? (JSON.parse(brief.text).items || {}) : {}};
