@@ -221,7 +221,8 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   </div>
 
   <section class="pane on" id="p-review">
-    <div class="note">每条上面是中文要点（公司、事件、数字、影响），我按标题和 ARGUSX 引用整理，标题看不出的就写“标题没说”；下面是脚本按“四个问题”预填的归类和按固定计分表算出的分。你只需要看归类对不对：对就点<b>确认</b>，不对就点<b>改</b>，不该记就点<b>驳回</b>。处理过的条目在每天更新时写进账本，分数自动重算。</div>
+    <div class="note">先看核验后的事实、来源与“四个问题”，再复核建议。分数由原固定表计算，表示对当前 H1 主线的支持程度；你<b>确认</b>或<b>改</b>后，下一次更新才会入账。重复报道集中列出；有具体来源缺口的保留待核实。更改归类时可即时预览加减分，预览不会保存。</div>
+    <div class="sub" id="prepared-info"></div>
     <div id="groups"></div>
     <div class="group">
       <div class="ghead"><h3>自己记一条</h3></div>
@@ -330,7 +331,7 @@ function renderHead() {
       <span class="v">压力 ${+l.stress.toFixed(2)} · 不压力 ${+l.calm.toFixed(2)}</span>
       <span class="v">一致 ${pct(l.cons)} · 差 ${l.flip ?? "—"} 票翻</span>
       ${l.raw !== l.confirmed ? `<span class="pend">这期读数${COLOR[l.raw]}，等第二期确认</span>` : ""}</button>`).join("");
-  const pending = DATA.candidates.filter(c => c.status === "待确认" && !decisions[c.id] && !synced.has(c.id)).length;
+  const pending = DATA.candidates.filter(c => c.status !== "已记过" && !decisions[c.id] && !synced.has(c.id)).length;
   const decided = Object.values(decisions).filter(d => d.action !== "add");
   const changed = decided.filter(d => d.changed).length;
   $("#summary").innerHTML = `
@@ -344,11 +345,12 @@ function renderHead() {
 
 // ---------- review ----------
 const GROUPS = [
-  {key: "verify", title: "待核实方向的", hint: "标题不足以判断、或同时包含改善与恶化。核实事实后点“改”，补齐归类、方向和强度；暂不预填分数。", test: c => c.status === "待确认" && !c.suggest.class},
-  {key: "score", title: "会动分的", hint: "新独立、幅度，确认后进账本就会加减分", test: c => c.status === "待确认" && ["新独立", "幅度"].includes(c.suggest.class)},
+  {key: "score", title: "会动分的", hint: "新独立、幅度：正负建议均按原表计算；请连同反面限制和独立性理由复核。", test: c => c.status === "待确认" && ["新独立", "幅度"].includes(c.suggest.class)},
   {key: "memory", title: "不动分、只拨衰减时钟的", hint: "记忆：同类的后续报道", test: c => c.status === "待确认" && c.suggest.class === "记忆"},
-  {key: "noise", title: "机器判成噪声或他题的", hint: "抽查一下就行，没问题可以整组确认", test: c => c.status === "待确认" && ["噪声", "他题"].includes(c.suggest.class), bulk: true},
+  {key: "noise", title: "建议不计分的", hint: "观点、计划、股价、成交量等按原清单判断；核验程度逐条注明。", test: c => c.status === "待确认" && ["噪声", "他题"].includes(c.suggest.class), bulk: true},
+  {key: "repeat", title: "本批同一事件的重复报道", hint: "核验事实已合入主条；重复条不另计分，也不拨衰减时钟。", test: c => c.status === "重复候选", bulk: true, bulkAction: "reject"},
   {key: "dup", title: "账本里已经有的", hint: "和账本某一条是同一件事，默认不再记", test: c => c.status === "已记过", bulk: true, bulkAction: "reject"},
+  {key: "verify", title: "仍需补来源的", hint: "具体缺口见每条说明。补齐事实再点“改”；当前不建议分数。", test: c => c.status === "待确认" && !c.suggest.class},
 ];
 
 function candHTML(c) {
@@ -356,22 +358,26 @@ function candHTML(c) {
   const s = d && d.action !== "reject" ? d : c.suggest;
   const st = synced.has(c.id) ? `<span class="state synced">已入账</span>` : d ? `<span class="state ${d.action}">${ACT[d.action]}</span>` : "";
   const dis = canWrite ? "" : "disabled";
+  const duplicate = ["重复候选", "已记过"].includes(c.status);
+  const error = reviewError(s);
   return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
     <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
     ${briefHTML(c)}
+    ${verificationHTML(c)}
     <div class="chips">${chips(s)}${!s.class && !(d && d.action === "reject") ? '<span class="cp">待核实 · 未计分</span>' : ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
     <ul class="why">${c.why.map(w => `<li>${esc(w)}</li>`).join("")}${d && d.note ? `<li>你的备注：${esc(d.note)}</li>` : ""}</ul>
     <div class="acts">${d && !synced.has(c.id)
       ? `<button class="b" data-act="undo" ${dis}>撤销</button>`
-      : synced.has(c.id) ? "" : `<button class="b pri" data-act="confirm" ${!s.class ? 'disabled title="先核实并补齐归类"' : dis}>确认</button><button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
-    <div class="editor">${editorHTML(c.suggest)}<div class="acts"><button class="b pri" data-act="save">保存</button><button class="b" data-act="cancel">取消</button></div></div>
+      : synced.has(c.id) ? "" : `${duplicate ? '' : `<button class="b pri" data-act="confirm" ${error ? `disabled title="${esc(error)}"` : dis}>确认</button>`}<button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
+    <div class="editor">${editorHTML(c.suggest)}<div class="acts"><button class="b pri" data-act="save" ${error || !canWrite ? 'disabled' : ''}>保存</button><button class="b" data-act="cancel">取消</button></div></div>
   </div>`;
 }
 
-// 中文要点：Claude 每天同步时写进 confidence/brief.json；还没写到的，先显示脚本按词表抽出的公司和数字
+// 人工/AI 研究预填优先于旧标题摘要；定时行情刷新不覆盖已核验事实。
 function briefHTML(c) {
-  const b = (DATA.brief || {})[c.id], k = c.keys || {};
-  const orig = c.url ? `<a href="${esc(c.url)}" target="_blank" rel="noopener">${esc(c.evidence)} ↗</a>` : esc(c.evidence);
+  const b = c.brief || (DATA.brief || {})[c.id], k = c.keys || {};
+  const title = c.original_title || c.evidence, url = c.original_url || c.url;
+  const orig = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)} ↗</a>` : esc(title);
   if (b) return `<div class="zh">${esc(b.zh)}</div>
     <dl class="kv"><dt>公司</dt><dd>${esc(b.who)}</dd><dt>事件</dt><dd>${esc(b.what)}</dd><dt>数字</dt><dd>${esc(b.figure)}</dd><dt>影响</dt><dd class="imp">${esc(b.impact)}</dd></dl>
     <div class="orig">原标题：${orig}</div>`;
@@ -381,12 +387,25 @@ function briefHTML(c) {
     <dl class="kv">${who ? `<dt>公司</dt><dd>${esc(who)}</dd>` : ""}${nums ? `<dt>数字</dt><dd>${esc(nums)}</dd>` : ""}<dt>中文要点</dt><dd class="auto">还没整理，每天同步时补上</dd></dl>`;
 }
 
+function verificationHTML(c) {
+  const names = {primary: "公告正文已核对", news_body: "新闻正文已核对 · 转引口径", title_type: "按标题类型筛除 · 未核全文", ledger_match: "与旧账本对照", gap: "来源有缺口", rule_signal: "规则信号", title_only: "仅标题预填"};
+  const sources = (c.sources || []).map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>（${esc(s.date)}${s.observation_date ? '，观测 '+esc(s.observation_date) : ''}）`).join("；");
+  return `<div class="orig"><b>${esc(names[c.verification] || "待核验")}</b>${c.prepared_at ? ' · 整理 '+esc(c.prepared_at) : ''}${c.collected_date && c.collected_date !== c.date ? '<br>原候选日期 '+esc(c.collected_date)+'；事实日期 '+esc(c.date) : ''}${sources ? '<br>核验来源：'+sources : ''}${c.duplicate_of ? '<br>对应主条：<a href="#candidate-'+esc(c.duplicate_of)+'" data-related="'+esc(c.duplicate_of)+'">'+esc(c.duplicate_of)+'</a>' : ''}${c.gap ? '<br><b>待补：</b>'+esc(c.gap) : ''}</div>`;
+}
+
+function previewHTML(s) {
+  const error = reviewError(s);
+  return error ? `<span class="sub">待补齐：${esc(error)}</span>` : `建议分数 ${ptsTag(points(s))}<span class="sub">确认保存后，下一次更新入账</span>`;
+}
 function editorHTML(s) {
   return `<div class="row">${["class", "toward", "strength", "layer", "cluster"].map(k => `<label class="f">${LABEL[k]}<select data-f="${k}">${OPTS[k].map(o => `<option ${o === (s[k] || "") ? "selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`).join("")}</div>
+    <div class="score-preview acts" aria-live="polite">${previewHTML(s)}</div>
     <label class="f" style="margin-top:8px">备注（为什么改）<textarea data-f="note"></textarea></label>`;
 }
 
 function renderReview() {
+  const times = DATA.candidates.map(c => c.prepared_at).filter(Boolean).sort();
+  $("#prepared-info").textContent = times.length ? `研究预填：${times.at(-1)} · ${times.length} 条已整理；日期与行情快照分开。` : "当前为标题预填，核实后再确认。";
   $("#groups").innerHTML = GROUPS.map(g => {
     const items = DATA.candidates.filter(g.test);
     const open = items.filter(c => !decisions[c.id] && !synced.has(c.id)).length;
@@ -427,7 +446,9 @@ function record(c, action, s, note) {
   const changed = action === "reject" ? false : keys.some(k => (s[k] || "") !== (c.suggest[k] || ""));
   const doc = {cid: c.id, action: action === "confirm" && changed ? "edit" : action, changed, note: note || "",
     date: c.date, evidence: c.evidence, source: c.source, url: c.url || "", theme: c.theme,
-    machine: c.suggest, at: new Date().toISOString(), by: me || STORE};
+    machine: c.suggest, original_title: c.original_title || c.evidence, verification: c.verification,
+    sources: c.sources || [], prepared_at: c.prepared_at || "", event_key: c.event_key || "",
+    at: new Date().toISOString(), by: me || STORE};
   keys.forEach(k => doc[k] = action === "reject" ? "" : (s[k] || ""));
   decisions[c.id] = doc; renderAll();
   return write(c.id, doc);
@@ -439,6 +460,13 @@ function go(tab) {
 }
 
 document.addEventListener("click", e => {
+  const related = e.target.closest("[data-related]");
+  if (related) {
+    e.preventDefault();
+    const card = document.querySelector(`.cand[data-id="${related.dataset.related}"]`);
+    if (card) card.scrollIntoView({behavior: "smooth", block: "center"});
+    return;
+  }
   const b = e.target.closest("button");
   if (!b) return;
   if (b.classList.contains("tab")) { go(b.dataset.tab); return; }
@@ -465,6 +493,16 @@ document.addEventListener("click", e => {
     const s = {}; card.querySelectorAll(".editor [data-f]").forEach(x => s[x.dataset.f] = x.value);
     record(c, "confirm", s, s.note);
   }
+});
+
+document.addEventListener("change", e => {
+  if (!e.target.matches("select[data-f]")) return;
+  const box = e.target.closest(".editor, #a-fields");
+  if (!box) return;
+  const s = {}; box.querySelectorAll("[data-f]").forEach(x => s[x.dataset.f] = x.value);
+  box.querySelector(".score-preview").innerHTML = previewHTML(s);
+  const save = box.querySelector('[data-act="save"]');
+  if (save) save.disabled = !canWrite || !!reviewError(s);
 });
 
 // ---------- add own ----------
