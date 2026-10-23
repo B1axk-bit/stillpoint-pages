@@ -505,7 +505,7 @@ function renderLamps() {
           ${feed.error_now || (feed.source_errors || []).length ? `<p class="sub">部分文件本次未取得；有缓存时沿用原日期，无缓存时缺失。${esc(feed.error_now || feed.source_errors.map(e => e.date).join("、"))}</p>` : ""}
           ${latest ? `<div class="scroll" style="margin-top:10px"><table><tr><th>成交日 / 币种 / 到期日</th><th>直接报告利差</th><th>前端付款占本金</th><th>固定票息</th><th>样本 / 来源</th></tr>
             ${(feed.observations || []).map(o => `<tr><td>${esc(o.date)} · ${esc(o.currency)}<br>到期 ${esc(o.maturity)} · Senior</td><td class="n">${o.spread_bp == null ? "—" : esc(o.spread_bp) + " bp"}</td><td class="n">${o.upfront_pct == null ? "—" : esc(Number(o.upfront_pct).toFixed(2)) + "%"}</td><td class="n">${o.upfront_coupon_bp == null ? esc((o.coupons_bp || []).join(" / ") || "—") : esc(o.upfront_coupon_bp)} bp</td><td>利差 ${o.spread_samples} 笔 / 前端付款 ${o.upfront_samples} 笔<br><a href="${esc(sourceURL(o.source_url))}" target="_blank" rel="noopener noreferrer">DTCC 日文件</a></td></tr>`).join("")}
-            </table></div>` : `<p class="empty">没有符合口径的约五年期成交。</p>`}
+            </table></div><p class="sub">最新合约 UPI：${esc(latest.upi || "未注明")}；不同识别码分组，不混合均值。</p>` : `<p class="empty">没有符合口径的约五年期成交。</p>`}
           <p class="sub">${esc(feed.note)}</p></details>`;
       }).join("");
   }
