@@ -258,7 +258,7 @@ let DATA = /*__DATA__*/null;
 })();
 
 const OPTS = {
-  class: ["新独立", "幅度", "记忆", "噪声", "他题"],
+  class: ["", "新独立", "幅度", "记忆", "噪声", "他题"],
   toward: ["", "支持", "H0", "H2", "H3", "失效"],
   strength: ["", "S", "M", "L"],
   layer: ["", "融资", "部署", "订单", "回报", "利率", "流动性", "分化"],
@@ -274,9 +274,19 @@ const esc = s => String(s ?? "").replace(/ARGUS(?!X)/g, "ARGUSX").replace(/[&<>"
 const md = d => (d || "").slice(5).replace("-", "/");
 
 function points(s) {
+  if (!s.toward) return 0;
   const side = s.toward === "支持" ? "支持" : "对立";
   const t = (DATA.points[s.class + "|" + side]) || {};
   return t[s.strength] || 0;
+}
+function reviewError(s) {
+  if (!OPTS.class.includes(s.class) || !s.class) return "先选择证据归类。";
+  if (["新独立", "幅度", "记忆"].includes(s.class)) {
+    if (!OPTS.toward.includes(s.toward) || !s.toward) return "先核实它支持当前主线，还是指向其他状态。";
+    if (!s.layer || !s.cluster) return "先选择证据所在的层和类。";
+    if (s.class !== "记忆" && !["S", "M", "L"].includes(s.strength)) return "先选择证据强度 S、M 或 L。";
+  }
+  return "";
 }
 function ptsTag(p) {
   return `<span class="pts ${p > 0 ? "pos" : p < 0 ? "neg" : "zero"}">${p > 0 ? "+" : ""}${p}</span>`;
@@ -298,12 +308,12 @@ let STORE = DATA ? "claude" : "github";   // 内嵌数据 = Claude 里的私有�
 // ---------- header & summary ----------
 function renderHead() {
   const t = DATA.themes[0], dr = t.derisk;
-  $("#asof").textContent = `数据 ${DATA.generated} · ${DATA.version}`;
+  $("#asof").textContent = `计分 ${DATA.generated} · 新闻候选 ${DATA.candidatesGenerated || DATA.generated} · ${DATA.version}`;
   const near = t.closest ? `离 ${t.closest}${lampOf(t.closest) ? `（${lampOf(t.closest).n} ${lampOf(t.closest).name}）` : ""}最近` : "";
   $("#verdict").innerHTML = `
     <div class="tag">主线 · ${md(t.since)} 入格 70 分起算</div>
     <h1>${esc(t.theme)} 停在 ${esc(t.cell)} ${esc(cellName(t.cell))}，<span class="num">${t.score}</span> 分</h1>
-    <p class="lede">${esc(t.band)}。${esc(near)}。每一分的来历都在“账本”里，按固定计分表算，没有人手动给分。</p>
+    <p class="lede">${esc(t.band)}。${esc(near)}。每一分的来历都在“账本”里，由人归类、按固定表计算。加减分表示证据对当前主线的支持程度；标题只是候选，核实后再确认。</p>
     ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}
     ${dr ? `<div class="tier"><b>减仓档 ${dr.tier}</b><span><strong>${esc(dr.name)}</strong> · ${esc(dr.action)}</span></div>
       <div class="sub" style="margin-top:6px">${esc(dr.why.join("；"))}</div>` : ""}`;
@@ -326,6 +336,7 @@ function renderHead() {
 
 // ---------- review ----------
 const GROUPS = [
+  {key: "verify", title: "待核实方向的", hint: "标题不足以判断、或同时包含改善与恶化。核实事实后点“改”，补齐归类、方向和强度；暂不预填分数。", test: c => c.status === "待确认" && !c.suggest.class},
   {key: "score", title: "会动分的", hint: "新独立、幅度，确认后进账本就会加减分", test: c => c.status === "待确认" && ["新独立", "幅度"].includes(c.suggest.class)},
   {key: "memory", title: "不动分、只拨衰减时钟的", hint: "记忆：同类的后续报道", test: c => c.status === "待确认" && c.suggest.class === "记忆"},
   {key: "noise", title: "机器判成噪声或他题的", hint: "抽查一下就行，没问题可以整组确认", test: c => c.status === "待确认" && ["噪声", "他题"].includes(c.suggest.class), bulk: true},
@@ -340,11 +351,11 @@ function candHTML(c) {
   return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
     <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
     ${briefHTML(c)}
-    <div class="chips">${chips(s)}${ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
+    <div class="chips">${chips(s)}${!s.class && !(d && d.action === "reject") ? '<span class="cp">待核实 · 未计分</span>' : ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
     <ul class="why">${c.why.map(w => `<li>${esc(w)}</li>`).join("")}${d && d.note ? `<li>你的备注：${esc(d.note)}</li>` : ""}</ul>
     <div class="acts">${d && !synced.has(c.id)
       ? `<button class="b" data-act="undo" ${dis}>撤销</button>`
-      : synced.has(c.id) ? "" : `<button class="b pri" data-act="confirm" ${dis}>确认</button><button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
+      : synced.has(c.id) ? "" : `<button class="b pri" data-act="confirm" ${!s.class ? 'disabled title="先核实并补齐归类"' : dis}>确认</button><button class="b" data-act="edit" ${dis}>改</button><button class="b" data-act="reject" ${dis}>驳回</button>`}</div>
     <div class="editor">${editorHTML(c.suggest)}<div class="acts"><button class="b pri" data-act="save">保存</button><button class="b" data-act="cancel">取消</button></div></div>
   </div>`;
 }
@@ -399,6 +410,11 @@ async function write(id, data) {
 }
 
 function record(c, action, s, note) {
+  if (!canWrite) return;
+  if (action !== "reject") {
+    const error = reviewError(s);
+    if (error) { showBanner(error); return; }
+  }
   const keys = ["class", "toward", "strength", "layer", "cluster"];
   const changed = action === "reject" ? false : keys.some(k => (s[k] || "") !== (c.suggest[k] || ""));
   const doc = {cid: c.id, action: action === "confirm" && changed ? "edit" : action, changed, note: note || "",
@@ -453,6 +469,8 @@ $("#a-save").addEventListener("click", async () => {
   if (!ev) { $("#a-msg").textContent = "先写一句证据"; return; }
   if (!canWrite) { $("#a-msg").textContent = "这个视图不能写入"; return; }
   const s = {}; document.querySelectorAll("#a-fields [data-f]").forEach(x => s[x.dataset.f] = x.value);
+  const error = reviewError(s);
+  if (error) { $("#a-msg").textContent = error; return; }
   const id = "u-" + Date.now().toString(36);
   const doc = Object.assign({action: "add", changed: false, evidence: ev, date: $("#a-date").value, source: $("#a-src").value.trim(),
     theme: DATA.themes[0].theme, at: new Date().toISOString(), by: me || STORE, note: ""}, s);
@@ -597,7 +615,7 @@ async function ghLoad(remember) {
       ghFile("confidence/brief.json", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
-    DATA = {generated: L.run_at, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates,
+    DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates,
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
       strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
       brief: brief.text ? (JSON.parse(brief.text).items || {}) : {}};
