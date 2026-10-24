@@ -526,6 +526,19 @@ $("#a-save").addEventListener("click", async () => {
 });
 
 // ---------- lamps ----------
+function parseAttractorReport(text) {
+  if (!text) return null;
+  try {
+    const report = JSON.parse(text);
+    if (!report || !["ok", "review", "partial", "failed"].includes(report.status) || !Array.isArray(report.rows) ||
+        (report.missing != null && !Array.isArray(report.missing)) ||
+        report.rows.some(row => !row || !row.quality || !Array.isArray(row.quality.reasons))) throw new Error("invalid report");
+    return report;
+  } catch (error) {
+    return {status: "failed", rows: [], error: "吸引子校验记录无法读取，需要重新采集；其余后台数据仍可查看。"};
+  }
+}
+
 function renderLamps() {
   $("#lamps").innerHTML = `<div class="note">每盏灯由几张子信号投票：压力、不压力、弃权（没读数、过期、离线太近都弃权）。同一来源在一盏灯里合起来只算一票，所以会出现小数。多数一方占到三分之二以上才亮红或绿，改色要连续两期一致。</div>` +
     DATA.lamps.map(l => `<details class="fold card" data-lamp="${esc(l.n)}"><summary>
@@ -534,6 +547,17 @@ function renderLamps() {
       <div class="scroll" style="margin-top:10px"><table><tr><th>子信号</th><th>读数</th><th>日期</th><th>票</th><th>权重</th><th>原因</th></tr>
       ${l.votes.map(v => `<tr><td>${esc(v.label)}</td><td class="n">${esc(v.value ?? "—")}</td><td class="n">${esc(v.date || "—")}</td><td>${esc(v.vote)}</td><td class="n">${v.weight ? v.weight : "—"}</td><td class="sub">${esc([v.why, v.edge ? "±0.55 边沿票" : "", v.note].filter(Boolean).join("；"))}</td></tr>`).join("")}
       </table></div></details>`).join("");
+  const attractor = DATA.attractor;
+  if (attractor) {
+    const pending = (attractor.rows || []).filter(row => row.quality && row.quality.status !== "ok");
+    const status = {ok: "采集完成", review: "采集完成，部分指标待核实", partial: "指标返回不完整", failed: "本次采集失败"}[attractor.status] || "待核实";
+    $("#lamps").innerHTML += `<h2 class="mh">吸引子数据校验</h2><details class="fold card attractor-quality" open><summary><span class="nm">${esc(status)}</span><span class="sub">采集 ${esc(attractor.collected_at || "—")} · 返回 ${esc(attractor.returned_count ?? 0)}/${esc(attractor.expected_count ?? 51)} · 日期及格式检查通过 ${esc(attractor.usable_count ?? 0)} 项</span></summary>
+      <p class="sub">状态指数按原始观测日期显示，采集时间与观测日期分开。未来日期暂不计票；过期仍按各灯原有时效规则弃权。归一化指数不等于预测正确率，指数幅度与静观的投票一致度、主线分数分别解释。</p>
+      ${attractor.error ? `<p class="sub">${esc(attractor.error)}</p>` : ""}
+      ${(attractor.missing || []).length ? `<p class="sub">本次缺失：${esc(attractor.missing.join("、"))}</p>` : ""}
+      ${pending.length ? `<div class="scroll"><table style="min-width:680px"><tr><th style="width:24%">待核实指标</th><th style="width:18%">源站日期</th><th style="width:14%">原始指数</th><th>原因</th></tr>${pending.map(row => `<tr><td>${esc(row.secName || row.secId || "未知指标")}</td><td class="n">${esc(row.tradeDate || "—")}</td><td class="n">${esc(row.value ?? "—")}</td><td class="sub">${esc((row.quality.reasons || []).join("；"))}</td></tr>`).join("")}</table></div>` : ""}
+      <p class="sub">60 个自然日是人工复核提示窗口，不是服务方更新频率；通过日期检查也不表示已核实全部底层数据。</p></details>`;
+  }
   const cds = Object.values(DATA.cds || {});
   if (cds.length) {
     $("#lamps").innerHTML += `<h2 class="mh">CDS 公开成交</h2><div class="note">DTCC SEC 免费公开日文件，按实际成交日、币种和到期日显示。直接报告利差才以 bp 进入原融资灯；前端付款与固定票息单列，不换算为利差。单日少量成交不能代表收盘综合报价。</div>` +
@@ -668,16 +692,17 @@ function loginView(msg) {
 async function ghLoad(remember) {
   $("#login").innerHTML = `<div class="note">正在从私有仓库读数据…</div>`;
   try {
-    const [latest, cand, rubric, reviewed, cases, dec, brief] = await Promise.all([
+    const [latest, cand, rubric, reviewed, cases, dec, brief, attractor] = await Promise.all([
       ghFile("confidence/latest.json"), ghFile("confidence/candidates.json"), ghFile("confidence/rubric.json"),
       ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true),
-      ghFile("confidence/brief.json", true)]);
+      ghFile("confidence/brief.json", true), ghFile("archive/attractor/latest-quality.json", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
     DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates, cds: L.cds || {},
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
       strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
-      brief: brief.text ? (JSON.parse(brief.text).items || {}) : {}};
+      brief: brief.text ? (JSON.parse(brief.text).items || {}) : {},
+      attractor: parseAttractorReport(attractor.text)};
     decisions = dec.text ? JSON.parse(dec.text) : {};
     ghSha = dec.sha;
     if (remember) lsSet(GH.key, ghToken);
