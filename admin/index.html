@@ -147,6 +147,7 @@ button.b:disabled{opacity:.45;cursor:not-allowed}
 .state{font-size:12px;padding:1px 8px;border-radius:4px;font-weight:500}
 .state.confirm{background:var(--good-wash);color:var(--good)}.state.edit{background:var(--ser-wash);color:var(--ser)}.state.reject{background:var(--surface-2);color:var(--muted)}.state.add{background:var(--ser-wash);color:var(--ser)}
 .state.synced{background:var(--inv-bg);color:var(--inv-fg)}
+.state.pending{background:var(--warn-wash);color:var(--warn)}.state.saved{background:var(--good-wash);color:var(--good)}.state.failed{background:var(--crit-wash);color:var(--crit)}
 .editor{display:none;margin-top:10px;padding:12px;border-radius:6px;background:var(--surface-2)}
 .editor.on{display:block}
 .row{display:flex;gap:8px;flex-wrap:wrap}
@@ -361,7 +362,7 @@ function candHTML(c) {
   const duplicate = ["重复候选", "已记过"].includes(c.status);
   const error = reviewError(s);
   return `<div class="cand ${d ? "done" : ""}" data-id="${c.id}">
-    <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}</div>
+    <div class="meta"><span class="d">${md(c.date)}</span><span>${esc(c.source)}</span>${st}${ghSaveHTML(c.id)}</div>
     ${briefHTML(c)}
     ${verificationHTML(c)}
     <div class="chips">${chips(s)}${!s.class && !(d && d.action === "reject") ? '<span class="cp">待核实 · 未计分</span>' : ptsTag(d && d.action === "reject" ? 0 : points(s))}${d && d.changed ? `<span class="was">机器原来填的：${esc([c.suggest.class, c.suggest.toward, c.suggest.strength].filter(Boolean).join(" "))}</span>` : ""}</div>
@@ -418,7 +419,7 @@ function renderReview() {
   const own = Object.entries(decisions).filter(([, d]) => d.action === "add");
   if (own.length) {
     $("#groups").insertAdjacentHTML("beforeend", `<div class="group"><div class="ghead"><h3>你自己记的<span class="c">${own.length}</span></h3></div>${own.map(([id, d]) => `
-      <div class="cand done" data-id="${id}"><div class="meta"><span class="d">${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">等我入账</span>`}</div>
+      <div class="cand done" data-id="${id}"><div class="meta"><span class="d">${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">自己记的</span>`}${ghSaveHTML(id)}</div>
       <div class="ev">${esc(d.evidence)}</div><div class="chips">${chips(d)}${ptsTag(points(d))}</div>
       ${synced.has(id) ? "" : `<div class="acts"><button class="b" data-act="undo" ${canWrite ? "" : "disabled"}>删掉</button></div>`}</div>`).join("")}</div>`);
   }
@@ -426,13 +427,15 @@ function renderReview() {
 
 async function write(id, data) {
   if (STORE === "github") return ghWrite(id, data);
-  if (!db) return;
+  if (!db) return false;
   try {
     if (data === null) await db.collection("decisions").doc(id).delete();
     else await db.collection("decisions").doc(id).set(data);
+    return true;
   } catch (e) {
     if (e && e.code === "invalid_argument") { canWrite = false; showBanner("这个视图不能写入，复核结果存不下来。"); renderAll(); }
     else showBanner("没存上（" + (e && e.code || "unknown") + "），稍后再点一次。");
+    return false;
   }
 }
 
@@ -469,6 +472,11 @@ document.addEventListener("click", e => {
   }
   const b = e.target.closest("button");
   if (!b) return;
+  if (b.dataset.retrySave) {
+    const op = ghSaves.get(b.dataset.retrySave);
+    if (op && op.state === "failed") ghWrite(op.id, op.data);
+    return;
+  }
   if (b.classList.contains("tab")) { go(b.dataset.tab); return; }
   if (b.dataset.lamp) {
     go("lamps");
@@ -479,7 +487,9 @@ document.addEventListener("click", e => {
   if (b.dataset.bulk) {
     const g = GROUPS.find(x => x.key === b.dataset.bulk);
     const todo = DATA.candidates.filter(g.test).filter(c => !decisions[c.id] && !synced.has(c.id));
-    (async () => { for (const c of todo) await record(c, g.bulkAction || "confirm", c.suggest, "整组处理"); })();
+    // GitHub 写入本身已串行：先把整组操作入队，后来的手动改动才能最后生效。
+    if (STORE === "github") for (const c of todo) record(c, g.bulkAction || "confirm", c.suggest, "整组处理");
+    else (async () => { for (const c of todo) await record(c, g.bulkAction || "confirm", c.suggest, "整组处理"); })();
     return;
   }
   const card = b.closest(".cand"); if (!card) return;
@@ -521,8 +531,13 @@ $("#a-save").addEventListener("click", async () => {
   const doc = Object.assign({action: "add", changed: false, evidence: ev, date: $("#a-date").value, source: $("#a-src").value.trim(),
     theme: DATA.themes[0].theme, at: new Date().toISOString(), by: me || STORE, note: ""}, s);
   decisions[id] = doc; renderAll();
-  await write(id, doc);
-  $("#a-ev").value = ""; $("#a-src").value = ""; $("#a-msg").textContent = "记下了，下次更新时入账";
+  $("#a-msg").textContent = "待保存…"; $("#a-save").disabled = true;
+  let saved;
+  try { saved = await write(id, doc); } finally { $("#a-save").disabled = false; }
+  if (!saved) { $("#a-msg").textContent = STORE === "github" ? "内容已保留，请查看上方保存状态并重试。" : "保存失败，输入内容已保留，请稍后重试。"; return; }
+  if ($("#a-ev").value.trim() === ev) $("#a-ev").value = "";
+  if ($("#a-src").value.trim() === doc.source) $("#a-src").value = "";
+  $("#a-msg").textContent = "保存成功，下次更新时入账";
 });
 
 // ---------- lamps ----------
@@ -619,7 +634,7 @@ function renderCases() {
 }
 
 function showBanner(t) { const b = $("#banner"); b.textContent = t; b.classList.add("on"); }
-function renderAll() { renderHead(); renderReview(); }
+function renderAll() { renderHead(); renderReview(); renderGhSaveStatus(); }
 
 function start() {
   $("#app").classList.remove("locked");
@@ -649,6 +664,9 @@ async function connectClaude() {
 // ---------- GitHub Pages 版：页面本身不带数据，用你的令牌从私有仓库现读现写 ----------
 const GH = {repo: "B1axk-bit/stillpoint-data", branch: "main", key: "stillpoint-admin-token", decisions: "confidence/decisions.json"};
 let ghToken = "", ghSha = null, ghQueue = Promise.resolve();
+let ghRunning = false;
+let ghSaved = {};                         // 已确认的远端基线；不混入待保存/失败的操作
+const ghSaves = new Map();                 // 每个 id 的最新操作及保存状态（包括撤销）
 const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
 const lsSet = (k, v) => { try { v ? localStorage.setItem(k, v) : localStorage.removeItem(k); } catch (e) {} };
 const b64 = str => { const u = new TextEncoder().encode(str); let s = ""; u.forEach(c => s += String.fromCharCode(c)); return btoa(s); };
@@ -667,6 +685,7 @@ async function ghFile(path, optional) {
   const j = await r.json();
   if (j.content == null || j.encoding !== "base64") {   // 超过 1 MB 的文件走 raw
     const raw = await gh(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`, {headers: {Accept: "application/vnd.github.raw+json"}});
+    if (!raw.ok) throw new Error(path + "：HTTP " + raw.status);
     return {text: await raw.text(), sha: j.sha};
   }
   return {text: unb64(j.content), sha: j.sha};
@@ -704,11 +723,12 @@ async function ghLoad(remember) {
       brief: brief.text ? (JSON.parse(brief.text).items || {}) : {},
       attractor: parseAttractorReport(attractor.text)};
     decisions = dec.text ? JSON.parse(dec.text) : {};
+    ghSaved = {...decisions}; ghSaves.clear();
     ghSha = dec.sha;
     if (remember) lsSet(GH.key, ghToken);
     canWrite = true;
     $("#login").innerHTML = "";
-    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">即刻更新</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">你确认过的条目，每天自动更新时入账；等不及可以点“即刻更新”。</span>`;
+    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">即刻更新</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">保存成功的条目，每天自动更新时入账；等不及可以点“即刻更新”。</span><div id="gh-save-status" role="status" aria-live="polite" style="width:100%"></div>`;
     $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
     $("#gh-run").onclick = ghRun;
     start();
@@ -717,34 +737,92 @@ async function ghLoad(remember) {
   }
 }
 
+function ghApply(base, op) {
+  const next = {...base};
+  if (op.data === null) delete next[op.id]; else next[op.id] = op.data;
+  return next;
+}
+function ghRefreshView() {
+  decisions = {...ghSaved};
+  for (const op of ghSaves.values()) if (op.state !== "saved") decisions = ghApply(decisions, op);
+  renderAll();
+}
+function ghSaveHTML(id) {
+  if (STORE !== "github") return "";
+  const op = ghSaves.get(id), state = op ? op.state : decisions[id] ? "saved" : "";
+  return state ? `<span class="state ${state}">${op && op.data === null ? "撤销 · " : ""}${{pending: "待保存", saved: "保存成功", failed: "保存失败"}[state]}</span>` : "";
+}
+function renderGhSaveStatus() {
+  const el = $("#gh-save-status");
+  if (STORE !== "github" || !el) return;
+  const ops = [...ghSaves.values()], count = state => ops.filter(op => op.state === state).length;
+  el.innerHTML = `<span class="sub">待保存 ${count("pending")} 项 · 保存成功 ${count("saved")} 项 · 保存失败 ${count("failed")} 项</span>` +
+    (ops.some(op => op.state !== "saved") ? `<div class="sub">未保存的操作仅保留在本页，关闭或刷新前请等待保存成功，失败时点“重试保存”。</div>` : "") +
+    ops.filter(op => op.state === "failed").map(op => `<div class="acts">${ghSaveHTML(op.id)}<span class="sub">${esc(op.label)}：${esc(op.error)}</span><button class="b" data-retry-save="${esc(op.id)}">重试保存</button></div>`).join("");
+}
 function ghWrite(id, data) {
-  ghQueue = ghQueue.then(async () => {
-    for (let attempt = 0; attempt < 2; attempt++) {
-      const body = {message: "后台复核：" + (data ? (data.action + " " + (data.evidence || "").slice(0, 40)) : "撤销 " + id),
-        content: b64(JSON.stringify(decisions, null, 1)), branch: GH.branch};
-      if (ghSha) body.sha = ghSha;
-      const r = await gh(`contents/${GH.decisions}`, {method: "PUT", body: JSON.stringify(body)});
-      if (r.ok) { ghSha = (await r.json()).content.sha; return; }
-      if (r.status === 409 || r.status === 422) {          // 别处改过：取回最新的，把这一条合进去再写
-        const cur = await ghFile(GH.decisions, true);
-        const server = cur.text ? JSON.parse(cur.text) : {};
-        if (data === null) delete server[id]; else server[id] = data;
-        decisions = server; ghSha = cur.sha; renderAll();
-        continue;
+  // 捕获单条操作；后续点击和冲突重读都不能改变它的内容。
+  const op = {id, data: data === null ? null : JSON.parse(JSON.stringify(data)), state: "pending", error: "",
+    label: ((data || decisions[id] || ghSaved[id] || (ghSaves.get(id) || {}).data || {}).evidence || id).slice(0, 60)};
+  ghSaves.set(id, op); ghRefreshView();
+  const task = ghQueue.then(async () => {
+    try {
+      for (let attempt = 0; attempt < 3; attempt++) {
+        const next = ghApply(ghSaved, op);  // 每次重试都从远端基线重放这一条，绝不序列化乐观视图
+        const body = {message: "后台复核：" + (op.data ? (op.data.action + " " + (op.data.evidence || "").slice(0, 40)) : "撤销 " + id),
+          content: b64(JSON.stringify(next, null, 1)), branch: GH.branch};
+        if (ghSha) body.sha = ghSha;
+        const r = await gh(`contents/${GH.decisions}`, {method: "PUT", body: JSON.stringify(body)});
+        if (r.ok) {
+          const sha = (await r.json()).content.sha;
+          if (!sha) throw new Error("写入响应缺少 SHA，保存结果未确认，请重试。");
+          ghSaved = next; ghSha = sha; op.state = "saved"; ghRefreshView();
+          return true;
+        }
+        if (r.status === 409 || r.status === 422) {
+          const cur = await ghFile(GH.decisions, true);
+          const server = cur.text ? JSON.parse(cur.text) : {};
+          if (!server || Array.isArray(server) || typeof server !== "object") throw new Error("远端复核记录格式错误。");
+          ghSaved = server; ghSha = cur.sha; ghRefreshView();
+          if (attempt < 2) continue;
+          throw new Error("冲突重试已达上限，请重试保存。");
+        }
+        throw new Error(r.status === 403 || r.status === 404 ? "令牌没有写入权限（Contents 要选 Read and write）。" : "HTTP " + r.status);
       }
-      showBanner(r.status === 403 || r.status === 404 ? "没存上：令牌没有写入权限（Contents 要选 Read and write）。" : "没存上（HTTP " + r.status + "），稍后再点一次。");
-      return;
+    } catch (e) {
+      op.state = "failed"; op.error = e.message || "保存结果未确认，请重试。";
+      ghRefreshView();
+      return false;
     }
-    showBanner("没存上：仓库里的复核记录刚被改过，请刷新页面再点一次。");
   });
-  return ghQueue;
+  ghQueue = task.catch(() => false);        // 单条异常不阻断后续任务
+  return task;
 }
 
+window.addEventListener("beforeunload", e => {
+  if (STORE === "github" && [...ghSaves.values()].some(op => op.state !== "saved")) { e.preventDefault(); e.returnValue = ""; }
+});
+
 async function ghRun() {
-  $("#gh-msg").textContent = "正在请求…";
-  const r = await gh("actions/workflows/snapshot.yml/dispatches", {method: "POST", body: JSON.stringify({ref: GH.branch})});
-  $("#gh-msg").textContent = r.status === 204 ? "已经开始跑了。大约 3 分钟后刷新页面，你确认过的条目会入账、分数会重算。"
-    : r.status === 403 ? "令牌没有 Actions 权限，这个按钮用不了；每天的自动运行照样会入账。" : "没跑起来（HTTP " + r.status + "）。";
+  if (ghRunning) return;
+  ghRunning = true; $("#gh-run").disabled = true;
+  try {
+    $("#gh-msg").textContent = "正在等待复核记录保存…";
+    let tail;
+    do { tail = ghQueue; await tail; } while (tail !== ghQueue);
+    if ([...ghSaves.values()].some(op => op.state !== "saved")) {
+      $("#gh-msg").textContent = "还有未保存的复核操作，请先重试保存成功，再即刻更新。";
+      return;
+    }
+    $("#gh-msg").textContent = "正在请求…";
+    const r = await gh("actions/workflows/snapshot.yml/dispatches", {method: "POST", body: JSON.stringify({ref: GH.branch})});
+    $("#gh-msg").textContent = r.status === 204 ? "更新请求已受理，任务是否成功请查看运行记录；完成后刷新页面查看入账结果。"
+      : r.status === 403 ? "令牌没有 Actions 权限，这个按钮用不了；每天的自动运行照样会入账。" : "没跑起来（HTTP " + r.status + "）。";
+  } catch (e) {
+    $("#gh-msg").textContent = "更新请求结果未确认，请先查看运行记录，避免重复启动。";
+  } finally {
+    ghRunning = false; $("#gh-run").disabled = false;
+  }
 }
 
 if (STORE === "claude") { start(); connectClaude(); }
