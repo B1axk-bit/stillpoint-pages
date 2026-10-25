@@ -1,10 +1,12 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
   <title>静观复核</title>
-  <rect width="512" height="512" fill="#d8a94f"/>
-  <rect x="142" y="122" width="224" height="268" rx="24" fill="#f7f0e0" stroke="#0f2027" stroke-width="18"/>
-  <rect x="181" y="166" width="82" height="54" rx="5" fill="#0f2027"/>
-  <path d="M290 176h37m-37 30h37M181 254h146M181 288h94M181 322h66" fill="none" stroke="#0f2027" stroke-width="14" stroke-linecap="round"/>
-  <circle cx="341" cy="346" r="65" fill="#d8a94f"/>
-  <circle cx="341" cy="346" r="54" fill="#0f2027"/>
-  <path d="m315 346 18 18 34-37" fill="none" stroke="#f4f7f6" stroke-width="13" stroke-linecap="round" stroke-linejoin="round"/>
+  <rect width="512" height="512" fill="#0f2027"/>
+  <g transform="translate(64 64) scale(12)" fill="none" stroke-linecap="round" stroke-width="1.9">
+    <path d="M16 3 A13 13 0 1 1 3.78 20.45" stroke="#f4f7f6"/>
+    <path d="M16 24 A8 8 0 1 1 18.74 8.48" stroke="#d8a94f"/>
+    <circle cx="16" cy="16" r="2.6" fill="#f4f7f6" stroke="none"/>
+  </g>
+  <circle cx="366" cy="366" r="48" fill="#0f2027"/>
+  <circle cx="366" cy="366" r="36" fill="#d8a94f"/>
+  <path d="m348 366 12 12 23-25" fill="none" stroke="#0f2027" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"/>
 </svg>
