@@ -1,0 +1,15 @@
+{
+  "id": "./",
+  "name": "静观 Stillpoint",
+  "short_name": "静观",
+  "lang": "zh-CN",
+  "start_url": "./",
+  "scope": "./",
+  "display": "browser",
+  "background_color": "#0f2027",
+  "theme_color": "#0f2027",
+  "icons": [
+    {"src": "assets/icons/stillpoint-home-v1-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any maskable"},
+    {"src": "assets/icons/stillpoint-home-v1-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable"}
+  ]
+}

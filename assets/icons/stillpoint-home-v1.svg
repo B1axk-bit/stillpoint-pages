@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="512" height="512" viewBox="0 0 512 512">
+  <title>静观</title>
+  <rect width="512" height="512" fill="#0f2027"/>
+  <g transform="translate(64 64) scale(12)" fill="none" stroke-linecap="round" stroke-width="1.9">
+    <path d="M16 3 A13 13 0 1 1 3.78 20.45" stroke="#f4f7f6"/>
+    <path d="M16 24 A8 8 0 1 1 18.74 8.48" stroke="#d8a94f"/>
+    <circle cx="16" cy="16" r="2.6" fill="#f4f7f6" stroke="none"/>
+  </g>
+</svg>
