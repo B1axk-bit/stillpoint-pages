@@ -180,6 +180,11 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
 .cds-source table{min-width:700px}
 .cds-source th{white-space:nowrap}
 .sub{color:var(--muted);font-size:13px}
+.execution-boundary{margin-top:10px;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.execution-boundary p{margin:6px 0}
+.review-evidence{margin-top:10px;font-size:13px;overflow-wrap:anywhere}
+.review-evidence h3{font-size:14px;margin:12px 0 5px}
+.review-evidence p{margin:6px 0}
 .empty{color:var(--muted);font-size:13px;padding:10px 0}
 .md{font-size:14px;overflow-wrap:anywhere;margin-top:8px;border-top:1px solid var(--grid);padding-top:6px}
 .md h1,.md h2{font-family:var(--f-display);font-size:16px;margin:14px 0 6px}.md h3,.md h4{font-size:14px;margin:12px 0 4px}
@@ -322,18 +327,53 @@ let db = null, canWrite = false, me = null;
 let synced = new Set();
 let STORE = DATA ? "claude" : "github";   // 内嵌数据 = Claude 里的私有版；没有数据 = GitHub Pages 版，用令牌现读
 
+// Display the existing calculation's triggers; this does not recalculate a jump or change the ledger.
+function reviewEvidenceGroups(theme) {
+  const targets = Array.isArray(theme.jumps) ? [...new Set(theme.jumps)] : [];
+  const items = Array.isArray(theme.jump_evidence) ? theme.jump_evidence : (Array.isArray(theme.items) ? theme.items : []);
+  return targets.map(target => {
+    const rows = items.filter(item => item.class === "新独立" && item.toward === target)
+      .slice().sort((a, b) => String(a.date || "").localeCompare(String(b.date || "")));
+    const layers = [...new Set(rows.map(item => String(item.layer || "").trim()).filter(Boolean))];
+    const dates = [...new Set(rows.map(item => String(item.date || "").slice(0, 10))
+      .filter(date => /^\d{4}-\d{2}-\d{2}$/.test(date)))].sort();
+    return {target, layers, dates, rows};
+  });
+}
+function reviewEvidenceHTML(theme) {
+  const groups = reviewEvidenceGroups(theme);
+  if (!groups.length) return "";
+  return `<details class="fold card review-evidence"><summary><span class="nm">复检触发依据 · 层与日期</span><span class="sub">从本主题已入账证据展开</span></summary>
+    <p class="sub">下面列示已有跳格提示对应的“新独立”原账本记录，不在前端重新计算条件。两层、两日期只解释为何触发复检；事实、独立性及是否改格以复检记录为准，尚未自动判失效。</p>
+    ${groups.map(group => `<section><h3>指向 ${esc(group.target)} · ${group.layers.length} 层、${group.dates.length} 个日期</h3>
+      <p class="sub">层：${esc(group.layers.join("、") || "未注明")}；日期：${esc(group.dates.join("、") || "未注明")}</p>
+      ${group.rows.length ? `<div class="scroll"><table><tr><th>日期</th><th>层</th><th>原账本证据</th></tr>${group.rows.map(item => `<tr><td class="n">${esc(item.date || "未注明")}</td><td>${esc(item.layer || "未注明")}</td><td>${esc(item.evidence || "未注明")}</td></tr>`).join("")}</table></div>` : `<p class="sub">本次没有读到可列示的匹配记录；保留警报，回到账本核对。</p>`}</section>`).join("")}</details>`;
+}
+function executionBoundaryHTML() {
+  return `<details class="fold card execution-boundary"><summary><span class="nm">执行边界 · 主题预案，不是个人成交记录</span></summary>
+    <p>2档是规则触发的风控预案。减仓比例尚未完成效果验证，不等同高胜率卖单；适用范围是对应主题仓位，不是全部资产。</p>
+    <p>本页尚无本档个人执行记录，不代表已下单或已完成减仓。执行前需明确本轮主题仓位基准，并核对已经执行的部分。</p>
+    <p><strong>档位持续不等于每天新增一次指令，不得每天对余仓重复减1/3。</strong>若已有执行，先核对记录与本轮基准，再判断是否仍有待执行部分。</p></details>`;
+}
+
 // ---------- header & summary ----------
 function renderHead() {
   const t = DATA.themes[0], dr = t.derisk;
+  const research = t.research_review;
+  const reviewDone = research && research.review_complete && !research.has_new_ledger_evidence;
   $("#asof").textContent = `计分 ${DATA.generated} · 新闻候选 ${DATA.candidatesGenerated || DATA.generated} · ${DATA.version}`;
   const near = t.closest ? `离 ${t.closest}${lampOf(t.closest) ? `（${lampOf(t.closest).n} ${lampOf(t.closest).name}）` : ""}最近` : "";
   $("#verdict").innerHTML = `
     <div class="tag">主线 · ${md(t.since)} 入格 70 分起算</div>
     <h1>${esc(t.theme)} 停在 ${esc(t.cell)} ${esc(cellName(t.cell))}，<span class="num">${t.score}</span> 分</h1>
-    <p class="lede">${esc(t.band)}。${esc(near)}。每一分的来历都在“账本”里，由人归类、按固定表计算。加减分表示证据对当前主线的支持程度；标题只是候选，核实后再确认。</p>
+    <p class="lede">${esc(t.band)}。${esc(near)}。每一分的来历都在“账本”里，由人归类、按固定表计算。${esc(t.score)}分是证据支持分，不是正确率或预测概率；标题只是候选，核实后再确认。</p>
+    ${t.alerts.length ? `<div class="alert"><strong>${reviewDone ? '原账本仍触发警报，本轮复检已完成' : '触发复检，尚未自动判失效'}</strong><br>当前展示主线仍为 ${esc(t.cell)}；原规则提示与有日期的复检结论分别保留，不由提示自动改格。</div>` : ""}
     ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}
+    ${research ? `<div class="note research-review"><b>${esc(research.headline || '主线复检记录')}</b><p>${esc(research.summary || '')}</p><p class="sub">复检 ${esc(research.asof || '未注明')}；${research.has_new_ledger_evidence ? '此后账本已有新证据，需要继续核验。' : '原账本与规则计算保留，研究结论与计分分别解释。'}</p></div>` : ''}
+    ${reviewEvidenceHTML(t)}
     ${dr ? `<div class="tier"><b>减仓档 ${dr.tier}</b><span><strong>${esc(dr.name)}</strong> · ${esc(dr.action)}</span></div>
-      <div class="sub" style="margin-top:6px">${esc(dr.why.join("；"))}</div>` : ""}`;
+      <div class="sub" style="margin-top:6px">${esc(dr.why.join("；"))}</div>
+      <p class="sub">规则触发的主题风控预案 · 比例效果待验证 · 本页尚无本档个人执行记录。<strong>不得每天对余仓重复减1/3。</strong></p>${executionBoundaryHTML()}` : ""}`;
   $("#lampstrip").innerHTML = DATA.lamps.map(l => `<button class="lampc c-${l.confirmed}" data-lamp="${esc(l.n)}" title="看这盏灯的每一票">
       <span class="nm"><span class="dot"></span>${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
       <span class="v">压力 ${+l.stress.toFixed(2)} · 不压力 ${+l.calm.toFixed(2)}</span>
@@ -396,9 +436,9 @@ function briefHTML(c) {
 }
 
 function verificationHTML(c) {
-  const names = {primary: "公告正文已核对", news_body: "新闻正文已核对 · 转引口径", title_type: "按标题类型筛除 · 未核全文", ledger_match: "与旧账本对照", gap: "来源有缺口", rule_signal: "规则信号", title_only: "仅标题预填"};
+  const names = {primary: "公告正文已核对", news_body: "新闻正文已核对 · 转引口径", public_mirror: "公开文件镜像已核读 · 原件访问受限", title_type: "按标题类型筛除 · 未核全文", ledger_match: "与旧账本对照", gap: "来源有缺口", rule_signal: "规则信号", title_only: "仅标题预填"};
   const sources = (c.sources || []).map(s => `<a href="${esc(s.url)}" target="_blank" rel="noopener noreferrer">${esc(s.title)} ↗</a>（${esc(s.date)}${s.observation_date ? '，观测 '+esc(s.observation_date) : ''}）`).join("；");
-  return `<div class="orig"><b>${esc(names[c.verification] || "待核验")}</b>${c.prepared_at ? ' · 整理 '+esc(c.prepared_at) : ''}${c.collected_date && c.collected_date !== c.date ? '<br>原候选日期 '+esc(c.collected_date)+'；事实日期 '+esc(c.date) : ''}${sources ? '<br>核验来源：'+sources : ''}${c.duplicate_of ? '<br>对应主条：<a href="#candidate-'+esc(c.duplicate_of)+'" data-related="'+esc(c.duplicate_of)+'">'+esc(c.duplicate_of)+'</a>' : ''}${c.gap ? '<br><b>待补：</b>'+esc(c.gap) : ''}</div>`;
+  return `<div class="orig"><b>${esc(names[c.verification] || "待核验")}</b>${c.prepared_at ? ' · 整理 '+esc(c.prepared_at) : ''}${c.collected_date && c.collected_date !== c.date ? '<br>原候选日期 '+esc(c.collected_date)+'；事实日期 '+esc(c.date) : ''}${sources ? '<br>核验来源：'+sources : ''}${c.duplicate_of ? '<br>对应主条：<a href="#candidate-'+esc(c.duplicate_of)+'" data-related="'+esc(c.duplicate_of)+'">'+esc(c.duplicate_of)+'</a>' : ''}${c.gap ? '<br><b>待补：</b>'+esc(c.gap) : ''}${c.source_limit ? '<br><b>口径限制：</b>'+esc(c.source_limit) : ''}</div>`;
 }
 
 function previewHTML(s) {
@@ -572,13 +612,22 @@ function renderLamps() {
   const attractor = DATA.attractor;
   if (attractor) {
     const pending = (attractor.rows || []).filter(row => row.quality && row.quality.status !== "ok");
-    const status = {ok: "采集完成", review: "采集完成，部分指标待核实", partial: "指标返回不完整", failed: "本次采集失败"}[attractor.status] || "待核实";
+    const handling = attractor.handling || {};
+    const status = handling.background_count && !handling.unresolved_count ? `采集完成，${handling.background_count}项源站旧观测已隔离为背景` : {ok: "采集完成", review: "采集完成，部分指标待核实", partial: "指标返回不完整", failed: "本次采集失败"}[attractor.status] || "待核实";
     $("#lamps").innerHTML += `<h2 class="mh">吸引子数据校验</h2><details class="fold card attractor-quality" open><summary><span class="nm">${esc(status)}</span><span class="sub">采集 ${esc(attractor.collected_at || "—")} · 返回 ${esc(attractor.returned_count ?? 0)}/${esc(attractor.expected_count ?? 51)} · 日期及格式检查通过 ${esc(attractor.usable_count ?? 0)} 项</span></summary>
       <p class="sub">状态指数按原始观测日期显示，采集时间与观测日期分开。未来日期暂不计票；过期仍按各灯原有时效规则弃权。归一化指数不等于预测正确率，指数幅度与静观的投票一致度、主线分数分别解释。</p>
       ${attractor.error ? `<p class="sub">${esc(attractor.error)}</p>` : ""}
       ${(attractor.missing || []).length ? `<p class="sub">本次缺失：${esc(attractor.missing.join("、"))}</p>` : ""}
-      ${pending.length ? `<div class="scroll"><table style="min-width:680px"><tr><th style="width:24%">待核实指标</th><th style="width:18%">源站日期</th><th style="width:14%">原始指数</th><th>原因</th></tr>${pending.map(row => `<tr><td>${esc(row.secName || row.secId || "未知指标")}</td><td class="n">${esc(row.tradeDate || "—")}</td><td class="n">${esc(row.value ?? "—")}</td><td class="sub">${esc((row.quality.reasons || []).join("；"))}</td></tr>`).join("")}</table></div>` : ""}
+      ${pending.length ? `<div class="scroll"><table style="min-width:680px"><tr><th style="width:24%">非当前有效指标</th><th style="width:18%">源站日期</th><th style="width:14%">原始指数</th><th>原因与处理</th></tr>${pending.map(row => `<tr><td>${esc(row.secName || row.secId || "未知指标")}</td><td class="n">${esc(row.tradeDate || "—")}</td><td class="n">${esc(row.value ?? "—")}</td><td class="sub">${esc(row.handling ? row.handling.label + '；' + row.handling.action : (row.quality.reasons || []).join("；"))}</td></tr>`).join("")}</table></div>` : ""}
       <p class="sub">60 个自然日是人工复核提示窗口，不是服务方更新频率；通过日期检查也不表示已核实全部底层数据。</p></details>`;
+  }
+  const health = DATA.sourceHealth;
+  if (health && Array.isArray(health.items)) {
+    const sourceLinks = x => {
+      const links = Array.isArray(x.links) && x.links.length ? x.links : [{label: '查看来源', url: x.source_url}];
+      return links.filter(a => a && /^https?:\/\//.test(a.url || '')).map(a => `<br><a href="${esc(a.url)}" target="_blank" rel="noopener noreferrer">${esc(a.label || '查看来源')} ↗</a>`).join('');
+    };
+    $("#lamps").innerHTML += `<h2 class="mh">数据更新状态</h2><details class="fold card source-health"><summary><span class="nm">来源与处理方式</span><span class="sub">${esc(health.note || "")}</span></summary>${health.items.map(x => `<p><b>${esc(x.name)} · ${esc(x.label)}</b><br><span class="sub">${esc(x.date || '未取得新日期')} · ${esc(x.detail || '')}</span>${sourceLinks(x)}</p>`).join('')}</details>`;
   }
   const cds = Object.values(DATA.cds || {});
   if (cds.length) {
@@ -633,7 +682,7 @@ function renderCases() {
   if (!C) { $("#cases").innerHTML = `<div class="empty">这次没有读到案例日志。</div>`; return; }
   const rows = C.cases.slice().reverse();
   $("#cases").innerHTML = `<div class="note">来自 <code>analysis/案例日志.md</code>（${esc(C.updated)} 的版本），每次刷新后台时重新读取。里面有个人持仓和交易记录，不上主页。标了"含持仓"的条目，培训时不要展示。</div>
-    <div class="scroll"><table><tr><th>案例</th><th>日期</th><th>题目</th><th>到期回看</th></tr>
+    <div class="scroll"><table><tr><th>案例</th><th>日期</th><th>题目</th><th>回看状态与下一窗口</th></tr>
     ${rows.map(c => `<tr><td class="n">${esc(c.no)}</td><td class="n">${esc(c.date)}</td><td>${esc(c.title)} ${c.kind ? `<span class="tg">${esc(c.kind)}</span>` : ""}${c.private ? ` <span class="tg priv">含持仓</span>` : ""}</td><td class="n">${esc(c.review || "—")}</td></tr>`).join("")}</table></div>
     <h2 class="mh">逐条</h2>
     ${rows.map((c, i) => `<details class="fold card" ${i === 0 ? "open" : ""}><summary><span class="nm">案例 ${esc(c.no)}｜${esc(c.title)}</span><span class="sub">${esc(c.date)}${c.kind ? " · " + esc(c.kind) : ""}</span>${c.private ? `<span class="tg priv">含持仓</span>` : ""}</summary><div class="md">${mdHTML(c)}</div></details>`).join("")}
@@ -728,7 +777,7 @@ async function ghLoad(remember) {
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
       strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
       brief: brief.text ? (JSON.parse(brief.text).items || {}) : {},
-      attractor: parseAttractorReport(attractor.text)};
+      attractor: parseAttractorReport(attractor.text), sourceHealth: L.source_health || null};
     decisions = dec.text ? JSON.parse(dec.text) : {};
     ghSaved = {...decisions}; ghSaves.clear();
     ghSha = dec.sha;
