@@ -1310,7 +1310,8 @@ details.tt[open] summary::before{content:"▾"}
   </footer>
 </main>
 
-<script type="application/json" id="page-data">{
+<script type="application/json" id="page-data">
+{
   "brand": {
     "name": "静观",
     "en": "Stillpoint",
@@ -2895,7 +2896,7 @@ details.tt[open] summary::before{content:"▾"}
         ],
         "good": {
           "to": 25,
-          "l": "解除 \u003c25"
+          "l": "解除 <25"
         },
         "state": "good",
         "stateLabel": "低于原25%线，原近线弃权与两期规则不变",
@@ -3882,12 +3883,12 @@ details.tt[open] summary::before{content:"▾"}
     }
   },
   "install": {
-    "head": "把静观装进你自己的 Claude",
-    "sub": "静观是一个 Claude skill。装好以后问市场问题，Claude 会照这页的框架回答：先记账，再拆机制，最后给一个带证伪条件的立场。",
+    "head": "把静观装进你的研究助手",
+    "sub": "静观是一个可安装的 skill：先记账，再拆机制、选主线，最后形成带证伪条件的研究立场；维护现有项目时，按完整数据与发布流程执行。",
     "spec": [
-      "v0.6",
-      "压缩包 46 KB",
-      "主文件 12 KB",
+      "v0.7.0",
+      "压缩包 43.6 KB",
+      "主文件 13.4 KB",
       "核心分析不用 API Key（吸引子指标要）",
       "只读，不下单"
     ],
@@ -3907,11 +3908,11 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "pkg": {
       "name": "stillpoint",
-      "ver": "v0.6",
-      "size": "46 KB",
+      "ver": "v0.7.0",
+      "size": "43.6 KB",
       "zip": "https://b1axk-bit.github.io/stillpoint-pages/skill/stillpoint.zip",
       "skillUrl": "https://github.com/B1axk-bit/stillpoint-pages/blob/main/skill/stillpoint/SKILL.md",
-      "sha256": "57a824b896561918ceb396e0f1a405e9780ada650861d53bc22d4f296f797cc1"
+      "sha256": "e5a5c1139497000640122dfeb42711f3f1d8d9153ecc3067dc1b7f4a6f88a776"
     },
     "clients": [
       {
@@ -3940,7 +3941,7 @@ details.tt[open] summary::before{content:"▾"}
           "at": 0,
           "text": "mkdir -p ~/.claude/skills\nunzip stillpoint.zip -d ~/.claude/skills/"
         },
-        "note": "快照脚本在 Claude Code 里能直接运行；联网和执行命令时，Claude Code 会照常请你批准。"
+        "note": "研究框架可独立使用；项目采集入口需要现有私有数据仓库及已配置的数据授权。执行权限依客户端实际设置。"
       },
       {
         "k": "api",
@@ -3955,16 +3956,21 @@ details.tt[open] summary::before{content:"▾"}
       },
       {
         "k": "other",
-        "name": "其他智能体",
-        "fit": "Codex 等支持 Agent Skills 的客户端",
+        "name": "Codex 与其他智能体",
+        "fit": "完整目录安装，支持脚本的客户端可运行预检",
         "steps": [
-          "支持 Agent Skills 标准的客户端，把 stillpoint 文件夹放进它文档里写的 skills 目录，比如 Codex 是 .agents/skills/stillpoint/。",
-          "不支持 skill 的助手，可以把 SKILL.md 全文贴在对话开头。框架照样能用，只是不会自动触发，脚本也跑不了。"
+          "Codex个人安装：将完整stillpoint目录放到 ~/.agents/skills/stillpoint/。",
+          "用 $stillpoint 或“更新静观”调用；本机维护需指定包含两份项目仓库的工作区。",
+          "其他支持Agent Skills的客户端按其文档安装完整目录；只有SKILL.md可使用研究框架，但不能运行完整维护。"
         ],
-        "note": "这几种客户端我们都没有实测，按各自的官方文档整理。"
+        "note": "本机Codex已完成目录安装与隔离脚本检查；不代表其他宿主、网络权限或自动定时任务已经验证。",
+        "code": {
+          "at": 0,
+          "text": "mkdir -p ~/.agents/skills\nunzip stillpoint.zip -d ~/.agents/skills/"
+        }
       }
     ],
-    "verify": "已实测：Claude 网页版（v0.5，10/16）和 Mac 快照脚本；v0.6 只拆结构没改规则，重跑 10/16 结论一致。Claude Code、API 和其他智能体按官方文档整理，还没实测。",
+    "verify": "v0.7.0：本机完整技能目录、隔离预检和正式采集定位入口、结构与下载包同步已检查；保留历史Claude v0.5使用记录。未把技术验证当回测，其他客户端与自动定时状态分别核验。",
     "sync": "这几处的 skill 互不同步：网页上传的，Claude Code 和 API 里看不到，要分别装。",
     "asks": [
       {
@@ -3992,8 +3998,8 @@ details.tt[open] summary::before{content:"▾"}
         "q": "用静观写一份完整报告，附事实账本、反转检验表和情景。"
       }
     ],
-    "askNote": "数字都带日期、来源和核验状态，拿不到的会写明缺了什么。快照脚本本身不调用模型，但助手回答照常消耗 token。",
-    "foot": "研究框架，不是投资建议。装任何第三方 skill 之前，先通读一遍它的 SKILL.md 和脚本。安装步骤核对自 Claude 帮助中心和 Claude Code 文档（2026-10-17）。"
+    "askNote": "数字带日期、来源和核验状态，缺值不补造。采集入口调用项目正式脚本；安装skill不创建定时任务，也不自动确认新闻或执行交易。",
+    "foot": "研究框架，不是投资建议。安装前请审阅SKILL.md与脚本；Codex个人目录按OpenAI官方技能文档核对（2026-10-28），其他客户端历史说明需按实际版本确认。"
   },
   "alerts": {
     "since": "10/27上午页面",
@@ -5016,7 +5022,8 @@ details.tt[open] summary::before{content:"▾"}
       "若已有执行，先核对记录与本轮基准，再判断是否仍有待执行部分；不因同一档每天保持而对余仓反复减三分之一。"
     ]
   }
-}</script>
+}
+</script>
 
 <script>
 (function(){
@@ -5986,7 +5993,7 @@ details.tt[open] summary::before{content:"▾"}
       {id: 'mechanism', name: '机制', full: '机制层 · 识别原因', start: 'ws-mechanism', p: '为什么跌、主线是哪一条、有几成把握，每个主题怎么判断、可能怎么走。', secs: ['mainline', 'themes', 'paths']},
       {id: 'evidence', name: '事实', full: '事实层 · 有依据', start: 'ws-evidence', p: '判断背后的数字：每个都带来源、日期、核验状态。', secs: ['evidence', 'macro', 'china']},
       {id: 'review', name: '回看', full: '回看 · 持续记录', start: 'ws-review', p: '上次的判断看对没有，错在哪一层，每期结论怎么变的。', secs: ['log', 'vtl']},
-      {id: 'install', name: '框架', full: '框架和安装', start: 'ws-install', p: '这个漏斗是怎么搭的，灯和分数怎么算；把静观装进你自己的 Claude。', secs: ['method', 'install']}];
+      {id: 'install', name: '框架', full: '框架和安装', start: 'ws-install', p: '这个漏斗是怎么搭的，灯和分数怎么算；把静观装进你自己的研究助手。', secs: ['method', 'install']}];
     var checks = D.signals.checks, ev = D.agenda.events, K = D.kpis, G = D.watch.gauges;
     var nxt = ev.filter(function(e){ return e.key; })[0] || ev[0];
     var fomc = ev.filter(function(e){ return /FOMC/.test(e.label); })[0];

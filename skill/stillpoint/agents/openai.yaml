@@ -1,0 +1,6 @@
+interface:
+  display_name: "静观 Stillpoint"
+  short_description: "沿用静观三层投研框架，维护数据、新闻、主线、案例、页面和发布检查"
+  default_prompt: "使用 $stillpoint 沿用现行框架处理静观研究或维护，先核当前状态与来源，完成适用检查并如实报告缺口。"
+policy:
+  allow_implicit_invocation: true

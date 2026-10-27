@@ -1,51 +1,42 @@
-# 静观 · Stillpoint
+# 静观 · Stillpoint v0.7.0
 
-B1ack 自己的投资研究框架：先把账记清楚，再拆机制、只选一条主线，最后落到一个带证伪条件的研究立场。研究框架，不是投资建议。
+沿用事实—机制—决策三层研究，补上现有静观项目维护入口。skill版本与项目研究规则分开；本次不修改固定计分表、用户记录或灯规则。
 
-## 三件事
+## 安装与入口
 
-- **记清账**：每个数字带来源、日期和核验状态，并和上次快照比出变化。
-- **选主线**：机制拆完用反转检验，只留一条进结论。
-- **敢回看**：每个立场带证伪条件，记进案例日志，到期打分。
+将完整stillpoint目录安装到Codex个人技能目录`~/.agents/skills/stillpoint/`（或宿主提供的技能目录），用`$stillpoint`或“更新静观”调用。包含SKILL、references、scripts和agents元数据，只有主文件的旧卡片不能运行完整维护。Claude Code可用其既有`~/.claude/skills/stillpoint/`目录；其他宿主是否支持脚本/网络须实际检查，不能因ZIP可解压就声称全端验证。
 
-## 文件
+建议沿用已安装argus-research、shifenxiyin-perspective、canghai-tugou；维护既有项目时以工作区AGENTS与正式私有采集代码为准。key不在包中。没有私有项目也能按框架研究，但不能假装完成项目采集或发布。
 
-| 文件 | 内容 | 什么时候读 |
-|---|---|---|
-| `SKILL.md` | 主文件：三层框架、选主线、决策、输出模板、自检 | 每次都读 |
-| `references/data.md` | 快照怎么触发和排错、各数据源的地址和指标 ID、吸引子读法词典、账本格式 | 要拉数据或数据有问题时 |
-| `references/mechanisms.md` | 钱货四格、反身性、三分法、生态位的细节；美元、黄金、A 股、存储专题；土狗四问 | 拆机制时 |
-| `references/main-line.md` | 选主线的完整规则，10/14 和 10/16 两个例子 | 选主线拿不准时 |
-| `references/review.md` | 回看打分的步骤和阈值 | 回看时 |
-| `scripts/invest_snapshot.py` | 快照脚本，只依赖 Python 3.8+ 标准库 | 在 Mac 上运行 |
-| `scripts/auto/` | Mac 定时任务的运行和安装脚本 | 安装定时快照时 |
-| `evals/evals.json` | 6 个评测用例 | 改完 skill 后检查 |
+本机目录按[OpenAI官方技能文档](https://learn.chatgpt.com/docs/build-skills)的个人技能路径安装；其他宿主路径按其实际配置。
 
-这样拆是照 ARGUS 的做法：主文件只放每次都要用的规则，细节按需读，每次少读一大半。
+## 文件与检查
 
-## 安装
+- SKILL.md：模式路由、三层方法、输出与自检；agents/openai.yaml：Codex发现信息。
+- references：data/source-contracts管取数；maintenance管更新/发布/调度；research-controls/review管复检/执行边界/回看；main-line/mechanisms保留原方法。
+- scripts/preflight.py：只读本机结构、研究状态和自动化记录，不联网、不写账本、不证明数据已最新或任务已启用。Python3.11+可安全读取TOML元数据，旧Python只报候选未解析，不输出正文。
+- scripts/invest_snapshot.py：定位正式私有采集器的兼容入口，`--resolve-only`不执行。
+- scripts/test_preflight.py：临时夹具行为测试；evals/evals.json：研究与维护场景，预期不等于执行成绩。
 
-- **Claude 账户**（网页、桌面和手机 App）：在对话里保存 Claude 发来的 skill 卡片。卡片只保存 `SKILL.md`；参考文件在项目文件 `skills/stillpoint/` 里，在这个项目里用时 Claude 会去读。
-- **Claude Code**：把整个 `stillpoint` 文件夹放到 `~/.claude/skills/stillpoint/`（个人）或项目里的 `.claude/skills/stillpoint/`，用 `/stillpoint` 调用，或者直接问市场问题。
-- **建议一起装**：argus-research、shifenxiyin-perspective、canghai-tugou-perspective。静观把它们当数据源和工具箱，缺了就退回公开报道。
-- **Mac 自动快照**（可选，B1ack 自己的数据管道）：在终端运行 `bash ~/学习/install_auto_snapshot.sh` 安装，加 `uninstall` 卸载。吸引子指标需要 key，读环境变量 `ATTRACTOR_API_KEY` 或 shifenxiyin-perspective 目录里的 `macro_apikey.txt`。key 不在任何压缩包里，也不要放进来。
+在项目工作区运行：
 
-## 装上之后不会做什么
+```text
+python3 <skill>/scripts/preflight.py --workspace <工作区>
+python3 -B <skill>/scripts/test_preflight.py
+```
 
-不会自己调接口，不会装定时任务，不下单，不给仓位比例。定时任务只能由用户自己在终端安装。
+旧scripts/auto仅在源码历史中保留，不进入v0.7下载/安装包，不是当前默认调度。安装skill不创建自动化；用户授权后的任务仍须真实保存、核时区与运行。固定北京时间04/16的任务状态以真实记录为准，不以建议卡或此文件为准。
 
-## 网络
+## v0.7变化与验证边界
 
-Claude 云端常常连不上 argusx.fun、吸引子接口、东方财富和 Yahoo（返回 403）。只装 skill 不会让云端能取数。连不上时读 Mac 上的快照，或用公开报道，并写明缺了什么。
+接入正式采集源码、来源身份/日期门禁、失败隔离、主线复检完成状态、风险计划与交易适配、旧案例评分限制、两仓发布和自动化状态证据。更正吸引子幅度被当概率的解释。保留原三层方法、main-line/mechanisms与历史记录。
 
-## 验证情况
-
-- v0.5 在 10/16 通过保存卡片装进 B1ack 的 Claude，并用过。
-- 快照脚本从 10/15 起在 B1ack 的 Mac 上定时运行。
-- v0.6 只拆结构、没改规则。拆完让另一个助手只读新版主文件重跑 10/16：结论、美股主线和三个立场都和原来一致，简报也只用了 3 条事实。次要机制的角色有出入，原因见下面"待定的规则问题"。
-- Claude Code 和其他 agent 没有测过。
+验证包括本机预检/委托入口、夹具行为、包结构与同步、技术发布检查；不等于回测或预测胜率。安装无需新凭据。未来维护仍需核远端、正文、当前源日期与实际Pages结果。
 
 ## 版本记录
+
+**v0.7.0**（2026-10-28）：固化已修复的来源契约与维护流程；退出旧默认采集/launchd路径，加入只读预检和正式采集定位器。本机Codex完整目录安装，网页下载同步。
+
 
 **v0.6**（10/17）：照 ARGUS 的做法拆成薄主文件加参考文件，规则没改。主文件从 39.7 KB 降到约 12 KB：快照运维和数据源移到 `data.md`，机制工具和资产专题移到 `mechanisms.md`，选主线的完整规则和例子移到 `main-line.md`，回看打分移到 `review.md`，版本记录移到这里。起因是保存卡片太长，没法审。对照见项目文件 `analysis/ARGUS为什么能收束-拆解与对照.md`。
 
@@ -76,7 +67,7 @@ Claude 云端常常连不上 argusx.fun、吸引子接口、东方财富和 Yaho
 
 **v0.3**：价格数据源（见 2.1 ③）。
 
-## 下一步候选
+## v0.6历史候选与未决问题（非当前任务清单）
 
 按优先级：
 1. **第一批回看**：10/16、10/22、10/28–10/30、11/12，按案例日志打分，看框架最常错在哪一层。
