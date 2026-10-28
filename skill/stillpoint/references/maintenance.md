@@ -44,7 +44,71 @@ python3 scripts/check_publish_data.py --data-root ../stillpoint-data
 - 04:00在美国夏令时接近常规收盘，冬令时为美东15:00盘中；16:00港股可能仍在收市竞价。核实际市场/交易日/节假日后再标收盘，整点是启动而非发布完成时刻。
 - 新建前查既有记录，优先更新匹配任务，保留未要求改变字段。沿用线程heartbeat及既有GitHub保底，不另建重复cron、launchd或PAT。
 - `suggested_create`只生成建议卡；真实ID/持久记录出现前标“未启用/未核实”。本机未检出不等于全账户不存在。ACTIVE还要核原线程、持久时区锚、next_run，并比较跨美国冬夏令时的两个未来日期都为北京04/16。
-- 未锚定RRULE使用宿主时区；不可把洛杉矶换算写死。依受支持工具契约保存固定Asia/Shanghai时区；工具若要求原生保存，就使用原生入口，不手改automation.toml、不改系统时区、不先create再update绕校验。锁屏不等于休眠；CLI/API能否继续按实际回执判断。屏幕操作或交互登录被锁屏阻断时请用户手动解锁，不尝试凭据。
+- 未锚定RRULE使用宿主时区；不可把洛杉矶换算写死。依受支持工具契约保存固定北京时间（可用已核验的等价UTC锚）；工具若要求原生保存，就使用原生入口，不手改automation.toml、不改系统时区、不先create再update绕校验。锁屏不等于休眠；CLI/API能否继续按实际回执判断。屏幕操作或交互登录被锁屏阻断时请用户手动解锁，不尝试凭据。
 - 状态分开记录：未找到/建议已展示/校验拒绝/已保存待核/ACTIVE且时区已核/本次运行中/部分更新/运行失败/发布已核/已暂停。建议卡不能跳为ACTIVE，ACTIVE不能跳为已发布；工具校验失败不能叫自动审批拒绝。
-- 同一北京时间日期+04/16时段为幂等批次；检查operations/automation-runs，重试续做，不重复追加案例/发布空提交。并发时只由一个维护批次发布，等待已有采集run并核远端新提交。记录计划、实际开始、结束及run/发布SHA。
+- 同一北京时间日期+04/16时段为幂等批次；每轮及恢复在线时先执行下方漏跑扫描，未运行、失败和部分更新均持续留队至发布已核。重试续做，不重复追加案例/发布空提交。并发时只由一个维护批次发布，等待已有采集run并核远端新提交。记录计划、实际开始、结束及run/发布SHA。
 - 本机项目任务依赖电脑在线、应用运行和原授权可用。首次实际执行后再验来源/研究/发布，不把任务completed当全源更新。没有保存证据时，完成清单明确保留这一缺口。
+
+## 漏跑登记与补跑
+
+用户要求每次没运行都记着补运行。正式队列由 `scripts/run_registry.py` 维护，默认存工作区 `operations/automation-runs/registry.json`；它是本机运维回执，不进入公开skill包。北京时间固定从 **2026-10-28 04:00 +08:00** 枚举每天04/16已到批次，不追造授权前任务，不把未来批次提前执行。宿主离线时脚本无法唤醒自己，恢复在线后的首次扫描仍能派生所有漏跑批次。
+
+```text
+# 只读；登记簿不存在也能列漏跑，不创建目录/锁/回执
+python3 <skill>/scripts/run_registry.py scan --workspace <工作区>
+python3 <skill>/scripts/run_registry.py list --workspace <工作区>
+# 显式开始一个批次；run-id是本次实际尝试的唯一键
+python3 <skill>/scripts/run_registry.py start --workspace <工作区> --slot 20261028-04 --run-id <唯一实际运行ID>
+# 跨多个漏跑时可合并一次最新合法数据抓取；使用另一唯一run-id
+python3 <skill>/scripts/run_registry.py start --workspace <工作区> --all-due --run-id <唯一补跑ID>
+python3 <skill>/scripts/run_registry.py heartbeat --workspace <工作区> --run-id <当前运行ID>
+python3 <skill>/scripts/run_registry.py complete --workspace <工作区> --run-id <当前运行ID> --receipt <本轮JSON回执>
+python3 <skill>/scripts/run_registry.py fail --workspace <工作区> --run-id <当前运行ID> --reason <实际失败原因及续做线索>
+```
+
+`scan`列 `pending_slots`（全部未验证）、`missed_slots`（无实际尝试）、`retry_slots`（failed/partial）和活动运行。状态为 planned/started/failed/partial/published_verified；只有最后一种从待补队列清除。名义 `planned_at` 与实际开始/结束时间分存。命令默认用真实时钟；`--now`只允许scan/list观察，不允许给写回执命令倒填历史时点。`--registry`只用于显式隔离测试或受控迁移，不能换空文件绕过已有活动运行。
+
+同run-id重复start或同回执重复complete幂等，不增加尝试、案例或发布。新尝试使用新run-id，`retry_of`与各批次的attempts保留旧失败。先查旧证据及远端状态，复用已完成检查/采集并从实际失败点续做，不能因为start就重复触发已在运行的workflow或空提交。多个批次合并时都引用同一个实际补跑ID和覆盖范围，实际数据截止按这次真实抓取填写；不能分别伪装成各历史整点快照，也不重复追加研究案例。
+
+### 完成回执契约
+
+`complete`必须读实际JSON文件，run_id与covered_slots须精确匹配start输出（含顺序）。下例为格式说明，不是成功证据；实际值须由本次检查/部署产生：
+
+```json
+{
+  "run_id": "本次start的ID",
+  "covered_slots": ["20261028-04"],
+  "actual_data_cutoff": "2026-10-28T07:20:00+08:00",
+    "blocking_gaps": [],
+    "disclosed_limits": [],
+    "required_checks": {"passed": true, "evidence": ["本轮必要检查文件路径"]},
+  "publication": {
+    "private_sha": "完整私有提交SHA",
+    "public_sha": "完整公开提交SHA",
+    "pages_status": "success",
+    "pages_run_id": "目标提交对应的真实运行ID",
+    "online_bytes_match": true,
+    "readonly_verified": true,
+    "verified_at": "2026-10-28T07:30:00+08:00",
+    "evidence": ["线上字节及只读验证文件路径"]
+  }
+}
+```
+
+工具校验回执关联、日期和必要字段，不联网独立验证这些声明；执行者仍须完成发布门禁，禁止为了清队列编造true或SHA。无回执、未start或异批次回执不能完成。必要工作未做、必要检查失败、未取得Pages/字节/只读验证或未来数据截止属于blocking_gaps，记partial继续留队；源确实缺必要凭据而无法完成本轮必要工作时亦如此，不因“已隔离”误清。
+
+已登记published_verified的本地回执文件须持续保留且SHA256与存档一致；scan/list及后续写事务会核其存在与哈希。缺失/修改时明确报错，不把批次当已验成功跳过，也不覆盖登记簿；先恢复/核实原回执，不能另建空登记簿绕过。扫描核的是本地完成证据，不自证线上此刻仍正常。partial回执缺失不清队列，保留重试状态，后续仍可按实际情况新建尝试。
+
+合格降级、旧值隔离、原件403及未对齐总额已经如实披露且未冒充核实值，可记录disclosed_limits；它们继续露出，但不等于本轮漏执行。required_checks通过、blocking_gaps为空且发布确验后可published_verified，不能为了取得每个源的新值永远反复补跑。旧值仍按原日期/时效处理，不为清队列变成新有效票。
+
+无新交易日或本轮检查确认内容无变化时，不造空提交；publication.outcome可为`verified_no_change`，另需`no_changes: true`与`last_usable_verified: true`，其余必要检查、真实现有两仓SHA、已有目标Pages成功记录、本次线上字节和只读验证及证据仍须齐备。该结果登记为published_verified，保留“无变化已核”的结果，不能只凭休市猜测跳过检查。
+
+JSON事务采用内核flock和同目录原子替换，进程退出后内核释放事务锁，不按文件年龄删锁。整轮执行另有活动租约：默认owner未知，**不使用短CLI进程PID冒充长任务PID**。仅确有稳定长期执行进程时才传 `--owner-pid`，并以heartbeat续期。默认TTL六小时；过期只提示待核，不证明运行死亡。`start --recover-stale`还必须同时满足同机、已记录PID确证不存在和TTL已过，才保留旧failed并接手；活进程、跨主机或owner未知均拒绝抢占。遗留started且owner未知时，自动批次应主动核同任务/对应线程run已结束或失败、无其他维护活跃及远端状态；有真实终态证据即可 `fail --run-id <旧ID> --reason <状态证据与续做线索>`，再用新ID续做，不默认再次询问用户。核不到活性则保留队列并报告具体阻断，不能仅凭TTL、无限重试或绕过活动租约。
+
+### 已验证的时区与提前唤醒边界
+
+2026-10-28本机验证发现，当前安装版在洛杉矶宿主上处理Asia/Shanghai TZID会重定位偏移；原生高级审阅保存的UTC锚08/20可稳定对应北京16/次日04，跨美国冬夏令时保持一致。更新保留原任务id，经受支持高级规则入口保存，再读实际nextRunNominalAt；不能仅凭规则包含时区名称就称正确，也不能换成固定洛杉矶01/13。此为当前实现核验，不保证未来版本实现不变。
+
+调度器有前后约5分钟的唤醒抖动。若提前，先做只读准备，等本轮北京时间04/16整点后再正式取数；延迟如实记录。名义时点、实际唤醒、完成和市场报价分列，收市竞价/冬令时盘中仍按真实状态标注。
+
+提前唤醒时，第一次scan为空不能据此跳过即将到达的本轮：等北京04/16整点后重新scan并start本轮，再正式采集。未到期批次不能提前标完成。

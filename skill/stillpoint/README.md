@@ -1,4 +1,4 @@
-# 静观 · Stillpoint v0.7.0
+# 静观 · Stillpoint v0.7.1
 
 沿用事实—机制—决策三层研究，补上现有静观项目维护入口。skill版本与项目研究规则分开；本次不修改固定计分表、用户记录或灯规则。
 
@@ -16,13 +16,17 @@
 - references：data/source-contracts管取数；maintenance管更新/发布/调度；research-controls/review管复检/执行边界/回看；main-line/mechanisms保留原方法。
 - scripts/preflight.py：只读本机结构、研究状态和自动化记录，不联网、不写账本、不证明数据已最新或任务已启用。Python3.11+可安全读取TOML元数据，旧Python只报候选未解析，不输出正文。
 - scripts/invest_snapshot.py：定位正式私有采集器的兼容入口，`--resolve-only`不执行。
+- scripts/run_registry.py：Python3.9+离线漏跑登记；scan/list纯只读，start/complete/fail/heartbeat显式更新回执，macOS/Linux以flock和原子写防并发覆盖。起点固定为用户授权的2026-10-28北京04:00；不创建调度、不抓数据、不代替部署验证。命令与回执格式见[维护与发布](references/maintenance.md#漏跑登记与补跑)。
 - scripts/test_preflight.py：临时夹具行为测试；evals/evals.json：研究与维护场景，预期不等于执行成绩。
+- scripts/test_run_registry.py：漏跑、幂等、跨批补跑、凭据缺口、并发和死活租约测试，全部使用临时目录，不读写真实回执。
 
 在项目工作区运行：
 
 ```text
 python3 <skill>/scripts/preflight.py --workspace <工作区>
+python3 <skill>/scripts/run_registry.py scan --workspace <工作区>
 python3 -B <skill>/scripts/test_preflight.py
+python3 -B <skill>/scripts/test_run_registry.py
 ```
 
 旧scripts/auto仅在源码历史中保留，不进入v0.7下载/安装包，不是当前默认调度。安装skill不创建自动化；用户授权后的任务仍须真实保存、核时区与运行。固定北京时间04/16的任务状态以真实记录为准，不以建议卡或此文件为准。
@@ -34,6 +38,8 @@ python3 -B <skill>/scripts/test_preflight.py
 验证包括本机预检/委托入口、夹具行为、包结构与同步、技术发布检查；不等于回测或预测胜率。安装无需新凭据。未来维护仍需核远端、正文、当前源日期与实际Pages结果。
 
 ## 版本记录
+
+**v0.7.1**（2026-10-28）：按用户要求将“每次没运行要记着补运行”固定为漏跑登记与补跑队列。保存名义批次、实际运行、失败/部分更新和已验证发布，支持离线多批合并一次实际补跑；无回执不认成功、partial不清队列、重试不重造历史快照。安装仍不创建或修改调度。
 
 **v0.7.0**（2026-10-28）：固化已修复的来源契约与维护流程；退出旧默认采集/launchd路径，加入只读预检和正式采集定位器。本机Codex完整目录安装，网页下载同步。
 

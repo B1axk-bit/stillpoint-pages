@@ -3,7 +3,7 @@ name: stillpoint
 description: 静观 Stillpoint 的三层投研与项目维护。用于静观数据更新、新闻预填、主线复检、案例回看、前后台修复、上线和定时维护，以及沿用用户框架的市场归因与条件研究；只查询其他指定视角时按其技能处理。
 ---
 
-# 静观 · Stillpoint v0.7.0
+# 静观 · Stillpoint v0.7.1
 
 > "静观其变"：不慌、不猜，等信号出来再动。Stillpoint 出自艾略特的诗，指旋转世界里静止的那一点。
 
@@ -20,7 +20,7 @@ description: 静观 Stillpoint 的三层投研与项目维护。用于静观数�
 ## 先选工作模式
 
 - **研究**：事件归因、市场状态、条件立场或回看，沿用下方三层框架；主线/置信度/减仓问题同时读 [研究控制](references/research-controls.md)。
-- **维护**：用户要求更新静观、抓取数据、新闻复核、改页面、上线、固化技能或自动化时，先读 [维护与发布](references/maintenance.md)，运行 `python3 scripts/preflight.py --workspace <工作区>`。只修颜色等展示问题不强制重抓全部行情。
+- **维护**：用户要求更新静观、抓取数据、新闻复核、改页面、上线、固化技能或自动化时，先读 [维护与发布](references/maintenance.md)，运行 `python3 scripts/preflight.py --workspace <工作区>`。日常刷新及恢复在线时，先用 `scripts/run_registry.py scan` 检查北京时间04/16漏跑队列，显式登记执行与发布回执；未验证成功的批次持续留队。只修颜色等展示问题不强制重抓全部行情。
 - **取数**：读 [数据](references/data.md)；CME、北京挂牌量、TL、行业、信用或吸引子问题再按需读 [来源契约](references/source-contracts.md)。项目已在维护时使用其正式脚本，不启动旧包的独立采集副本或旧launchd计划。
 
 skill版本与研究规则版本分别管理；更新本文件不改固定计分表、灯阈值、同源权重或两期确认。私有项目当前规则、人工复核与最新源日期是依据，不能把本文历史例子的数字当当前值。
