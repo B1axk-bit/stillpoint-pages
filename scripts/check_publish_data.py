@@ -33,19 +33,34 @@ def validate(page, latest, snapshot, extra, production=True):
         if any(public.get(k) != lamp.get(k) for k in ['raw', 'confirmed', 'stress', 'calm']):
             issues.append(lamp['n'] + '计票/确认色不一致')
     prices = {p.get('name'): p for p in snapshot.get('prices', [])}
+    public_review = mainline.get('review') or {}
+    private_review = theme.get('research_review') or {}
+    if public_review and any(public_review.get(k) != private_review.get(k)
+                             for k in ['asof', 'status', 'review_complete', 'summary']):
+        issues.append('前后台复检日期或结论未同步')
     feeds = extra.get('feeds', {})
     # Representative companies are a separately dated Yahoo batch. The public
     # CRWV card uses that batch, not necessarily the earlier standalone quote.
     crwv = feeds.get('names', {}).get('names', {}).get('CRWV') or feeds.get('crwv', {})
+    cme = feeds.get('cme') or {}
+    year_end = cme.get('year_end') or {}
+    kpis = page.get('kpis', [])
+    cme_scope = kpis[4].get('probabilityScope', 'year_end') if len(kpis) > 4 else 'year_end'
+    if cme_scope not in ('year_end', 'nearest_meeting'):
+        issues.append('CME关键数字的概率范围不明')
+    cme_value = cme.get('value') if cme_scope == 'nearest_meeting' else year_end.get('probability')
+    if cme_scope == 'nearest_meeting' and kpis[4].get('meeting') != cme.get('next_meeting'):
+        issues.append('CME关键数字的会议日期不一致')
+    if len(kpis) > 4 and cme_value is None and number(kpis[4].get('value')) is not None:
+        issues.append('CME缺合格读数时仍显示数字')
     expected_kpis = {
         0: prices.get('纳斯达克综合', {}).get('pct'),
         1: crwv.get('pct'),
         2: prices.get('VIX 波动率', {}).get('price'),
         3: prices.get('布伦特原油', {}).get('price'),
-        4: feeds.get('cme', {}).get('year_end', {}).get('probability'),
+        4: cme_value,
         5: feeds.get('kr', {}).get('value'),
     }
-    kpis = page.get('kpis', [])
     if len(kpis) != 6:
         issues.append('关键数字应保留六项')
     else:
