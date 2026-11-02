@@ -698,29 +698,30 @@ details.tt[open] summary::before{content:"▾"}
 @media (max-width:980px){.paths{grid-template-columns:minmax(0,1fr)}}
 
 /* agenda */
-.agenda{padding:14px 16px 10px}
-.tl-h{position:relative;min-width:780px;height:196px}
-.tl-axis{position:absolute;left:2%;right:2%;top:100px;height:2px;background:var(--axis)}
-.tl-ev{position:absolute;top:0;height:100px}
-.tl-ev .lbl{position:absolute;left:0;white-space:nowrap;font-size:13px;padding-left:7px;border-left:1px solid var(--axis);line-height:1.3}
-.tl-ev.key .lbl{font-weight:700}
-.tl-ev .lbl small{display:block;font-family:var(--f-mono);font-size:11px;color:var(--muted);font-weight:400}
-.tl-dot{position:absolute;top:96px;width:10px;height:10px;border-radius:50%;background:var(--ink);transform:translateX(-50%);box-shadow:0 0 0 2px var(--surface)}
-.tl-range{position:absolute;top:97px;height:8px;border-radius:4px;background:var(--ink)}
-.tl-today{position:absolute;top:88px;width:2px;height:26px;background:var(--brass);transform:translateX(-50%)}
-.tl-wk.tl-today-l{color:var(--brass);white-space:nowrap}
-.tl-rv{position:absolute;top:116px;display:flex;gap:2px;transform:translateX(-50%)}
-.tl-rv i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:10px;background:var(--brass);color:var(--surface);font-weight:500}
-.tl-wk{position:absolute;top:166px;transform:translateX(-50%);font-family:var(--f-mono);font-size:11px;color:var(--muted)}
-.tl-legend{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:12px;color:var(--ink-2);padding-top:6px;border-top:1px solid var(--grid)}
-.tl-legend span{display:inline-flex;align-items:center;gap:6px}
-.tl-legend i{display:inline-block}
-.tl-v{display:none;list-style:none;margin:0;padding:0}
-.tl-v li{display:grid;grid-template-columns:4.8em minmax(0,1fr);gap:10px;padding:9px 0;border-bottom:1px solid var(--grid);font-size:13px}
-.tl-v li b{font-family:var(--f-mono);font-size:13px}
-.tl-v .rv{display:flex;gap:3px;flex-wrap:wrap;margin-top:4px;align-items:center;font-size:12px;color:var(--muted)}
-.tl-v .rv i{width:18px;height:18px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-family:var(--f-mono);font-size:10px;background:var(--brass);color:var(--surface)}
-@media (max-width:640px){.agenda .scroll-x{display:none}.tl-v{display:block}.tl-legend{display:none}}
+.agenda{padding:18px}
+.ag-window{display:flex;flex-wrap:wrap;gap:6px 14px;align-items:baseline;justify-content:space-between;margin-bottom:14px;color:var(--muted);font-size:12px}
+.ag-window b{color:var(--ink-2);font-weight:600}
+.ag-days{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;list-style:none;margin:0;padding:0}
+.ag-day{min-width:0;padding:14px;border:1px solid var(--grid);border-radius:8px;background:var(--surface)}
+.ag-day.is-today{border-color:var(--brass);background:var(--brass-wash)}
+.ag-day-h{display:flex;align-items:baseline;gap:8px;margin:0 0 10px;padding-bottom:8px;border-bottom:1px solid var(--grid);font-size:13px}
+.ag-day-h time{font:600 16px var(--f-mono);color:var(--ink)}
+.ag-day-h span{font-size:11px;font-weight:400;color:var(--muted)}
+.ag-day-h .ag-today{color:var(--brass);font-weight:700}
+.ag-events{display:flex;flex-direction:column;gap:12px;list-style:none;margin:0;padding:0}
+.ag-events li{min-width:0;line-height:1.55;overflow-wrap:anywhere}
+.ag-event-label{display:block;font-size:14px;font-weight:500;color:var(--ink)}
+.ag-events .key .ag-event-label{font-weight:700}
+.ag-event-time,.ag-event-note{display:block;font-size:12px;color:var(--muted);line-height:1.6;margin-top:2px}
+.ag-reviews{display:flex;flex-wrap:wrap;align-items:center;gap:5px;font-size:12px;color:var(--muted);margin-top:12px}
+.ag-reviews a{display:grid;place-items:center;min-width:22px;height:22px;border-radius:50%;background:var(--brass);color:var(--surface);font-family:var(--f-mono);text-decoration:none}
+.ag-reviews a:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+.ag-archive{margin-top:16px;padding-top:12px;border-top:1px solid var(--grid)}
+.ag-archive summary{font-size:12px;color:var(--ink-2);cursor:pointer}
+.ag-archive .ag-days{margin-top:12px}
+.ag-empty{padding:18px 0;font-size:13px;color:var(--muted)}
+@media (max-width:1000px){.ag-days{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:640px){.agenda{padding:14px}.ag-days{grid-template-columns:minmax(0,1fr)}.ag-day{padding:12px}.ag-day-h{margin-bottom:8px}}
 
 /* log */
 .log{display:grid;grid-template-columns:minmax(0,2.2fr) minmax(0,1fr);gap:14px}
@@ -3406,7 +3407,7 @@ details.tt[open] summary::before{content:"▾"}
   },
   "agenda": {
     "head": "下一检查：新交易日承接、同口径信用与回款",
-    "sub": "BOJ展望全文今日已发，非新利率决定。美股常规盘今晚22:30；本周美国数据均按冬令时换算，微软债11/4预计交割仍待实证。",
+    "sub": "BOJ展望全文11/2已发，非新利率决定。美股11/2北京时间22:30开盘；11/2—6美国数据按冬令时换算，微软债11/4预计交割仍待实证。",
     "start": "2026-10-19",
     "end": "2026-11-13",
     "events": [
@@ -6778,53 +6779,94 @@ details.tt[open] summary::before{content:"▾"}
       h('b', null, cut > 0 ? ct.slice(0, cut) : ct), cut > 0 && cut < ct.length ? h('p', null, ct.slice(cut)) : null));
   })();
 
+  /* agenda helpers */
+  function agendaDateKey(now){
+    return new Date(new Date(now).getTime() + 8 * 3600000).toISOString().slice(0, 10);
+  }
+  function agendaModel(a, now){
+    var today = agendaDateKey(now), span = 86400000;
+    var end = new Date(Date.parse(today + 'T00:00:00Z') + 13 * span).toISOString().slice(0, 10);
+    var map = {}, futureEvents = [];
+    function valid(d){
+      if (typeof d !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(d)) return false;
+      var n = Date.parse(d + 'T00:00:00Z');
+      return isFinite(n) && new Date(n).toISOString().slice(0, 10) === d;
+    }
+    function group(d){ return map[d] || (map[d] = {date: d, events: [], reviews: []}); }
+    (a.events || []).forEach(function(e){
+      if (!valid(e.d) || (e.d2 && (!valid(e.d2) || e.d2 < e.d))) return;
+      var last = e.d2 || e.d, d = e.d < today && last >= today ? today : e.d;
+      group(d).events.push(e);
+      if (last >= today) futureEvents.push(e);
+    });
+    (a.reviews || []).forEach(function(r){
+      if (!valid(r.d) || !Array.isArray(r.cases) || !r.cases.length) return;
+      var g = group(r.d);
+      r.cases.forEach(function(n){ if (g.reviews.indexOf(n) < 0) g.reviews.push(n); });
+    });
+    futureEvents.sort(function(a, b){ return a.d.localeCompare(b.d); });
+    var groups = Object.keys(map).sort().map(function(d){ return map[d]; });
+    var nextEvent = futureEvents.filter(function(e){ return e.key; })[0] || futureEvents[0];
+    var next = nextEvent ? {date: nextEvent.d < today ? today : nextEvent.d, label: nextEvent.label, time: nextEvent.time || '', kind: 'event'} : null;
+    var review = groups.filter(function(g){ return g.date >= today && g.reviews.length; })[0];
+    if (review && (!next || review.date < next.date)) next = {date: review.date, label: '案例回看 ' + review.reviews.join('、'), time: review.date, kind: 'review'};
+    return {today: today, end: end, upcoming: groups.filter(function(g){ return g.date >= today && g.date <= end; }),
+      past: groups.filter(function(g){ return g.date < today; }), later: groups.filter(function(g){ return g.date > end; }), futureEvents: futureEvents, next: next};
+  }
+  function agendaMD(d){ var p = d.split('-'); return (+p[1]) + '/' + (+p[2]); }
+  function renderAgenda(a, now){
+    var m = agendaModel(a, now), root = h('div', {class: 'ag-content', 'data-today': m.today});
+    function days(groups){
+      return h('ol', {class: 'ag-days'}, groups.map(function(g){
+        var today = g.date === m.today;
+        var weekday = ['日', '一', '二', '三', '四', '五', '六'][new Date(g.date + 'T00:00:00Z').getUTCDay()];
+        return h('li', {class: 'ag-day' + (today ? ' is-today' : ''), 'data-date': g.date},
+          h('h3', {class: 'ag-day-h'}, h('time', {datetime: g.date}, agendaMD(g.date)), h('span', null, '周' + weekday),
+            today ? h('span', {class: 'ag-today'}, '今天') : null),
+          g.events.length ? h('ul', {class: 'ag-events'}, g.events.map(function(e){
+            return h('li', {class: e.key ? 'key' : ''}, h('b', {class: 'ag-event-label'}, e.label),
+              h('span', {class: 'ag-event-time'}, e.time || (e.d2 ? e.d + ' — ' + e.d2 : e.d)),
+              e.short ? h('span', {class: 'ag-event-note'}, e.short) : null,
+              e.note ? h('span', {class: 'ag-event-note'}, e.note) : null);
+          })) : null,
+          g.reviews.length ? h('div', {class: 'ag-reviews'}, h('span', null, '案例回看'), g.reviews.map(function(n){
+            return h('a', {href: '#log', 'data-go': 'log', 'aria-label': g.date + ' 回看案例 ' + n}, String(n));
+          })) : null);
+      }));
+    }
+    root.appendChild(h('div', {class: 'ag-window'}, h('b', null, '今天起 · 未来两周'), h('span', null, m.today + ' — ' + m.end + ' · 北京时间')));
+    root.appendChild(m.upcoming.length ? days(m.upcoming) : h('p', {class: 'ag-empty'}, '未来两周暂无已登记安排'));
+    if (m.later.length) root.appendChild(h('details', {class: 'ag-archive'}, h('summary', null, '更远安排 · ' + m.later.length + '天'), days(m.later)));
+    if (m.past.length) root.appendChild(h('details', {class: 'ag-archive'}, h('summary', null, '此前日程 · ' + m.past.length + '天'), days(m.past)));
+    return root;
+  }
+  /* end agenda helpers */
+
   /* agenda */
+  var agendaView, onAgendaRefresh = null;
   (function(){
-    var a = D.agenda;
-    $('a-h').textContent = a.head;
-    $('a-sub').textContent = a.sub;
-    var day = 86400000, t0 = Date.parse(a.start + 'T00:00:00Z'), t1 = Date.parse(a.end + 'T00:00:00Z');
-    function xp(d){ return 2 + (Date.parse(d + 'T00:00:00Z') - t0) / (t1 - t0) * 96; }
-    function md(d){ var p = d.split('-'); return (+p[1]) + '/' + (+p[2]); }
-    var box = h('div', {class: 'tl-h', role: 'img', 'aria-label': md(a.start) + ' 到 ' + md(a.end) + ' 的事件和回看日程'});
-    box.appendChild(h('div', {class: 'tl-axis'}));
-    var tdy = (function(){ var m = /(\d{4}-\d{2}-\d{2})/.exec((D.edition && D.edition.label) || ''); var d = m ? m[1] : a.start;
-      return d < a.start ? a.start : (d > a.end ? a.end : d); })();
-    box.appendChild(h('i', {class: 'tl-today', style: 'left:' + xp(tdy) + '%'}));
-    a.events.forEach(function(e){
-      var x = xp(e.d), top = e.row === 0 ? 50 : 14;
-      box.appendChild(h('div', {class: 'tl-ev' + (e.key ? ' key' : ''), style: 'left:' + x + '%'},
-        h('span', {class: 'lbl', style: 'top:' + top + 'px;height:' + (100 - top) + 'px'}, e.label, h('small', null, e.time + (e.short ? ' · ' + e.short : '')))));
-      var etip = e.time + '|' + e.label + (e.note ? '|' + e.note : '');
-      if (e.d2) box.appendChild(h('i', {class: 'tl-range', style: 'left:' + x + '%;width:' + (xp(e.d2) - x) + '%', tabindex: e.note ? '0' : null, 'data-tip': etip}));
-      else box.appendChild(h('i', {class: 'tl-dot', style: 'left:' + x + '%', 'data-tip': etip}));
-    });
-    a.reviews.forEach(function(r){
-      var x = xp(r.d), anchor = x > 90 ? 'transform:translateX(calc(-100% + 9px))' : '';
-      box.appendChild(h('div', {class: 'tl-rv', style: 'left:' + x + '%;' + anchor, tabindex: '0', 'data-tip': md(r.d) + '|回看案例 ' + r.cases.join('、')},
-        r.cases.map(function(c){ return h('i', null, String(c)); })));
-    });
-    box.appendChild(h('span', {class: 'tl-wk tl-today-l', style: 'left:' + xp(tdy) + '%' + (tdy === a.start ? ';transform:none' : '')}, '今天 ' + md(tdy)));
-    ['2026-10-22', '2026-10-29', '2026-11-05', '2026-11-12'].forEach(function(d){
-      if (d === tdy) return;
-      box.appendChild(h('span', {class: 'tl-wk', style: 'left:' + xp(d) + '%'}, md(d)));
-    });
-    var ab = $('agenda-box');
-    ab.appendChild(h('div', {class: 'scroll-x'}, box));
-    ab.appendChild(h('div', {class: 'tl-legend'},
-      h('span', null, h('i', {style: 'width:10px;height:10px;border-radius:50%;background:var(--ink)'}), '事件（横条是多日会议）'),
-      h('span', null, h('i', {style: 'width:16px;height:16px;border-radius:50%;background:var(--brass)'}), '案例回看，数字是案例号')));
-    var map = {};
-    a.events.forEach(function(e){ (map[e.d] = map[e.d] || {ev: [], rv: []}).ev.push(e.time.indexOf(':') > 0 ? e.time.split(' ')[1] + ' ' + e.label : (e.d2 ? e.time + ' ' : '') + e.label + (e.short ? '（' + e.short + '）' : '')); });
-    a.reviews.forEach(function(r){ (map[r.d] = map[r.d] || {ev: [], rv: []}).rv = r.cases; });
-    var list = h('ol', {class: 'tl-v'});
-    Object.keys(map).sort().forEach(function(d){
-      var it = map[d];
-      list.appendChild(h('li', null, h('b', null, md(d)), h('div', null,
-        it.ev.length ? h('div', null, it.ev.join('；')) : null,
-        it.rv.length ? h('div', {class: 'rv'}, '回看', it.rv.map(function(c){ return h('i', null, String(c)); })) : null)));
-    });
-    ab.appendChild(list);
+    $('a-h').textContent = D.agenda.head;
+    $('a-sub').textContent = D.agenda.sub;
+    var lastDay;
+    function refresh(){
+      var now = new Date();
+      agendaView = agendaModel(D.agenda, now);
+      lastDay = agendaView.today;
+      var box = $('agenda-box');
+      box.textContent = '';
+      box.appendChild(renderAgenda(D.agenda, now));
+      if (onAgendaRefresh) onAgendaRefresh();
+    }
+    function resume(){ if (lastDay !== agendaDateKey(new Date())) refresh(); }
+    function midnight(){
+      var delay = 86400000 - ((Date.now() + 8 * 3600000) % 86400000) + 250;
+      setTimeout(function(){ resume(); midnight(); }, delay);
+    }
+    refresh();
+    midnight();
+    document.addEventListener('visibilitychange', function(){ if (!document.hidden) resume(); });
+    window.addEventListener('pageshow', resume);
+    window.addEventListener('focus', resume);
   })();
 
   /* log */
@@ -7003,8 +7045,7 @@ details.tt[open] summary::before{content:"▾"}
       {id: 'review', name: '回看', full: '回看 · 持续记录', start: 'ws-review', p: '上次的判断看对没有，错在哪一层，每期结论怎么变的。', secs: ['log', 'vtl']},
       {id: 'install', name: '框架', full: '框架和安装', start: 'ws-install', p: '这个漏斗是怎么搭的，灯和分数怎么算；把静观装进你自己的研究助手。', secs: ['method', 'install']}];
     var checks = D.signals.checks, ev = D.agenda.events, K = D.kpis, G = D.watch.gauges;
-    var nxt = ev.filter(function(e){ return e.key; })[0] || ev[0];
-    var fomc = ev.filter(function(e){ return /FOMC/.test(e.label); })[0];
+    var fomc = agendaView.futureEvents.filter(function(e){ return /FOMC/.test(e.label); })[0];
     var argus = D.themes.filter(function(t){ return t.state; })[0];
     function dir(v){ v = String(v); return /^\+/.test(v) ? 'up' : (/^[−-]/.test(v) ? 'dn' : ''); }
     function unit(u){ return !u ? '' : (/^[\x00-\x7f]/.test(u) ? u : ' ' + u); }
@@ -7019,7 +7060,6 @@ details.tt[open] summary::before{content:"▾"}
           {'data-tip': LAMP[c.state] + '|' + c.n + ' ' + c.name + '|' + c.trend, 'aria-label': c.n + ' ' + c.name + '：' + LAMP[c.state] + '，' + c.trend});
       }));
     }
-    function day(e){ return e.time.split(' ')[0]; }
     function themeIdx(name){
       for (var i = 0; i < D.themes.length; i++) if (D.themes[i].name === name) return i;
       for (i = 0; i < D.themes.length; i++) if (D.themes[i].name.slice(0, 3) === name.slice(0, 3)) return i;
@@ -7037,7 +7077,8 @@ details.tt[open] summary::before{content:"▾"}
     var nChg = H.changes.items.length, chgBtn = $('chg-btn');
     add(chgBtn, [h('i', {class: 'pip', 'aria-hidden': 'true'}), h('span', {class: 'chg-pre'}, '比上期：'), h('b', null, String(nChg)), ' 处变化']);
     chgBtn.setAttribute('aria-label', '比上期：' + nChg + ' 处变化');
-    add($('cmp'), [h('span', {class: 'cmp-st'}, '立场 ', h('b', null, V.stance)), lamps(), h('span', null, '下个检查点 ', h('b', null, day(nxt)))]);
+    var compactCheckpoint = h('b', null, agendaView.next ? agendaMD(agendaView.next.date) : '待补充');
+    add($('cmp'), [h('span', {class: 'cmp-st'}, '立场 ', h('b', null, V.stance)), lamps(), h('span', null, '下个检查点 ', compactCheckpoint)]);
 
     /* market tape: red up, green down */
     var tape = $('tape');
@@ -7069,8 +7110,14 @@ details.tt[open] summary::before{content:"▾"}
     st.appendChild(h('span', {class: 'sb'}, h('span', {class: 'k'}, '止跌清单'), lamps()));
     if (argus) st.appendChild(link('th-' + D.themes.indexOf(argus), 'sb sb-mono',
       [h('span', {class: 'k'}, argus.state.label.replace(/状态$/, '')), h('b', null, argus.state.steps[argus.state.active]), h('span', {class: 'k'}, argus.state.conf)]));
-    st.appendChild(link('agenda', 'sb', [h('span', {class: 'k'}, '下个检查点'), h('b', null, day(nxt)), h('span', null, nxt.label.split(' · ')[0])]));
-    if (fomc) st.appendChild(link('agenda', 'sb', [h('span', {class: 'k'}, 'FOMC'), h('b', null, fomc.time)]));
+    function checkpointKids(){
+      var n = agendaView.next;
+      return [h('span', {class: 'k'}, '下个检查点'), h('b', null, n ? agendaMD(n.date) : '待补充'), h('span', null, n ? n.label : '暂无后续日程')];
+    }
+    var checkpoint = link('agenda', 'sb', checkpointKids());
+    st.appendChild(checkpoint);
+    var fomcStatus = fomc ? link('agenda', 'sb', [h('span', {class: 'k'}, 'FOMC'), h('b', null, fomc.time)]) : null;
+    if (fomcStatus) st.appendChild(fomcStatus);
     st.appendChild(link('log', 'sb sb-end', [h('span', {class: 'k'}, '完整回看'), h('b', null, D.edition.due)]));
     var tm = h('button', {class: 'theme-t theme-m', type: 'button', 'aria-label': '切换深浅色', title: '切换深浅色'});
     tm.appendChild($('theme-t').querySelector('svg').cloneNode(true));
@@ -7087,6 +7134,11 @@ details.tt[open] summary::before{content:"▾"}
             x.s ? h('span', {class: 'mg-s'}, x.s) : null]));
         })) : null);
     }
+    var agendaMenu;
+    function agendaMenuCard(){
+      var events = agendaView.futureEvents;
+      return mgCard('agenda', D.agenda.head, events.length ? null : '暂无后续事件；案例日期见日程', events.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; }));
+    }
     var CB = D.log.calib;
     var BODY = {
       today: [
@@ -7098,7 +7150,7 @@ details.tt[open] summary::before{content:"▾"}
           return {to: 'chk-' + i, n: [h('i', {class: 'lamp sm ' + c.state, 'aria-hidden': 'true'}), c.n + ' ' + c.name], v: LAMP[c.state] + ' · ' + c.trend}; })),
         mgCard('watch', D.watch.head, null, G.map(function(g, i){
           return {to: 'g-' + i, n: g.name, v: g.curLabel + unit(g.unit), m: true, s: g.stateLabel}; })),
-        mgCard('agenda', D.agenda.head, null, ev.slice(0, 4).map(function(e){ return {to: 'agenda', n: e.label, v: e.time}; }))],
+        (agendaMenu = agendaMenuCard())],
       mechanism: [
         mgCard('mainline', D.mainline ? D.mainline.head : '主线', D.mainline ? D.mainline.band + '。' + D.signals.diagnosis.verdict + '。' : D.signals.diagnosis.verdict),
         mgCard('themes', V.stanceTitle, null, D.stances.map(function(s){
@@ -7125,6 +7177,23 @@ details.tt[open] summary::before{content:"▾"}
       panes[w.id] = pane;
       mega.appendChild(pane);
     });
+
+    onAgendaRefresh = function(){
+      compactCheckpoint.textContent = agendaView.next ? agendaMD(agendaView.next.date) : '待补充';
+      checkpoint.textContent = '';
+      add(checkpoint, checkpointKids());
+      var nextMenu = agendaMenuCard();
+      if (agendaMenu.parentNode) agendaMenu.parentNode.replaceChild(nextMenu, agendaMenu);
+      agendaMenu = nextMenu;
+      if (fomcStatus){
+        var upcomingFomc = agendaView.futureEvents.filter(function(e){ return /FOMC/.test(e.label); })[0];
+        fomcStatus.hidden = !upcomingFomc;
+        if (upcomingFomc){
+          fomcStatus.textContent = '';
+          add(fomcStatus, [h('span', {class: 'k'}, 'FOMC'), h('b', null, upcomingFomc.time)]);
+        }
+      }
+    };
 
     /* change list */
     var cp = $('chg-p'), C = H.changes;
