@@ -1080,8 +1080,8 @@ details.tt[open] summary::before{content:"▾"}
 /* /polish:css */
 /* extras:css */
 /* freshness tags */
-.fr{display:inline-flex;align-items:center;gap:5px;margin-right:8px;padding:0 6px;border-radius:3px;font-family:var(--f-mono);font-size:10.5px;line-height:1.7;color:var(--ink-2);background:var(--surface-2);white-space:nowrap;vertical-align:1px;cursor:default}
-.fr::before{content:"";width:5px;height:5px;border-radius:50%;background:var(--axis)}
+.fr{display:inline-flex;align-items:center;gap:5px;margin-right:8px;padding:0 6px;border-radius:3px;font-family:var(--f-mono);font-size:10.5px;line-height:1.7;color:var(--ink-2);background:var(--surface-2);max-width:calc(100% - 8px);white-space:normal;overflow-wrap:anywhere;vertical-align:1px;cursor:default}
+.fr::before{content:"";width:5px;height:5px;flex-shrink:0;border-radius:50%;background:var(--axis)}
 .fr.old{color:var(--ink);background:var(--warn-wash)}
 .fr.old::before{background:var(--warn)}
 .fr-sum{display:flex;flex-wrap:wrap;align-items:center;gap:4px 10px;margin-top:8px;font-size:12px;color:var(--ink-2);line-height:1.6}
@@ -5978,6 +5978,33 @@ details.tt[open] summary::before{content:"▾"}
   function lv(stance){ return D.stanceScale.indexOf(stance); }
   function pill(stance, label){ return h('span', {class: 'pill lv' + lv(stance)}, label ? label + ' · ' + stance : stance); }
 
+  /* responsive axis helpers */
+  function selectAxisLabels(rects, gap){
+    gap = gap == null ? 7 : Math.max(0, gap);
+    var valid = rects.map(function(r, i){ return {i: i, left: r.left, right: r.right, zero: r.zero}; }).filter(function(r){
+      return typeof r.left === 'number' && typeof r.right === 'number' && isFinite(r.left) && isFinite(r.right) && r.right > r.left;
+    });
+    if (!valid.length) return [];
+    var priority = valid.filter(function(r){ return r.zero; }).concat([valid[0], valid[valid.length - 1]], valid), kept = [];
+    priority.forEach(function(r){
+      if (kept.some(function(k){ return k.i === r.i; })) return;
+      if (kept.every(function(k){ return r.right + gap <= k.left || k.right + gap <= r.left; })) kept.push(r);
+    });
+    return kept.map(function(r){ return r.i; }).sort(function(a, b){ return a - b; });
+  }
+  function fitAxisLabels(axis){
+    var labels = Array.prototype.slice.call(axis.querySelectorAll('em'));
+    labels.forEach(function(label){ label.hidden = false; });
+    if (!labels.length || axis.getBoundingClientRect().width <= 0) return;
+    var rects = labels.map(function(label){
+      var r = label.getBoundingClientRect();
+      return {left: r.left, right: r.right, zero: label.getAttribute('data-axis-value') === '0' || /^[+\-−]?0(?:\.0+)?(?:%|bp)?$/.test(label.textContent.trim())};
+    });
+    var kept = selectAxisLabels(rects);
+    labels.forEach(function(label, i){ label.hidden = kept.indexOf(i) < 0; });
+  }
+  /* end responsive axis helpers */
+
   /* shared chart frame: name | track | value, with a gridline layer and an axis row */
   function frame(o){
     var root = h('div', {class: 'bc ' + (o.cls || ''), style: '--nw:' + o.nw + ';--vw:' + o.vw});
@@ -5993,7 +6020,7 @@ details.tt[open] summary::before{content:"▾"}
     var fmt = o.fmt || tick;
     root.appendChild(h('div', {class: 'bc-axis', 'aria-hidden': 'true'}, h('span'),
       h('span', {class: 'bc-ticks'}, o.ticks.map(function(t, i){
-        return h('em', {class: i === 0 ? 'first' : (i === o.ticks.length - 1 ? 'last' : null), style: 'left:' + pos(t, o.min, o.max) + '%'}, fmt(t));
+        return h('em', {class: i === 0 ? 'first' : (i === o.ticks.length - 1 ? 'last' : null), 'data-axis-value': t, style: 'left:' + pos(t, o.min, o.max) + '%'}, fmt(t));
       })), h('span')));
     return root;
   }
@@ -6015,7 +6042,7 @@ details.tt[open] summary::before{content:"▾"}
   }
   function ticksRow(ticks, min, max, fmt){
     return h('div', {class: 'ticks', 'aria-hidden': 'true'}, ticks.map(function(t, i){
-      return h('em', {class: i === 0 ? 'first' : (i === ticks.length - 1 ? 'last' : null), style: 'left:' + pos(t, min, max) + '%'}, (fmt || plain)(t));
+      return h('em', {class: i === 0 ? 'first' : (i === ticks.length - 1 ? 'last' : null), 'data-axis-value': t, style: 'left:' + pos(t, min, max) + '%'}, (fmt || plain)(t));
     }));
   }
   function tableToggle(head, rows){
@@ -7565,6 +7592,22 @@ details.tt[open] summary::before{content:"▾"}
   })();
 
   /* /extras:js */
+  /* Fit tick text after layout and whenever its actual track width changes. */
+  (function(){
+    var axes = Array.prototype.slice.call(document.querySelectorAll('.bc-ticks, .ticks')), queued = false;
+    function fit(){ queued = false; axes.forEach(fitAxisLabels); }
+    function queue(){ if (!queued){ queued = true; requestAnimationFrame(fit); } }
+    fit();
+    if (window.ResizeObserver){
+      var observer = new ResizeObserver(queue);
+      axes.forEach(function(axis){ observer.observe(axis); });
+    }
+    window.addEventListener('resize', queue);
+    window.addEventListener('pageshow', queue);
+    document.addEventListener('visibilitychange', function(){ if (!document.hidden) queue(); });
+    if (document.fonts && document.fonts.ready) document.fonts.ready.then(queue);
+  })();
+
   /* one shared tooltip: values lead, labels follow */
   var tip = h('div', {class: 'tip', role: 'tooltip', hidden: ''});
   document.body.appendChild(tip);
