@@ -26,6 +26,7 @@ python3 <本skill>/scripts/invest_snapshot.py --workspace <工作区> --days 2
 - ARGUS：沿用argus-research的免密只读接口与更正纪律。常用主题liquidity/ai-infrastructure/china/energy；日报、周报、作者观点分开。fullReport=false只说明摘要可得。宏观观测日期与报告发表日期独立，编辑百分数不等于预测胜率。精确ID从catalog/现行源码查，不凭旧文猜。
 - 吸引子：由shifenxiyin-perspective及共享attractor_client读取。key只通过原已配置环境/私有文件使用，不打印、不入包、不另索要替代PAT。19项核心与扩展项覆盖不同；核本次quality、返回/缺失、未来与旧日期，各灯另判合格票。
 - 行情：正式market_sources与public_market_feeds；交易所原始日线优先，东财/Yahoo/新浪标行情接口，日期与市场状态按每只标的返回值。ETF前收依日期对齐，不能误算两日涨跌。
+- 沪深主力资金净流向：正式`capital_flows.py`配合extra默认采集，历史净额与当日毛流入/流出分开保存，源为东财公开软件统计；不与Wind全A拼接，不称新增入市资金，日期与完成日资格见来源契约。
 - A股全市场成交量/成交额/涨跌家数需明确板块覆盖和单位，不用上证+深证代理声称完整全A；Arms/TRIN=(上涨家数/下跌家数)/(上涨成交量/下跌成交量)，成交量口径不能偷换成交额，零分母缺值。
 - 公告与报道：原公告优先，媒体转引标转引，共同原件只算一次。新闻盘中估数不覆盖同日完整收盘。原件被拒绝访问时使用合法可读转引/镜像并标限制，有界重试。
 

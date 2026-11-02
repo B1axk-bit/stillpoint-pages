@@ -566,6 +566,30 @@ details.tt[open] summary::before{content:"▾"}
 .tt td{font-variant-numeric:tabular-nums}
 .tt tr:last-child td{border-bottom:0}
 
+/* daily capital flow */
+.capital-flow{display:flex;flex-direction:column;gap:12px;min-width:0;padding-top:14px;border-top:1px solid var(--line)}
+.cf-head{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
+.cf-head h4{font:700 15px/1.45 var(--f-body);margin:0}
+.cf-asof{font-size:12px;color:var(--muted)}
+.cf-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+.cf-stat{min-width:0;background:var(--surface-2);border-radius:6px;padding:10px 12px}
+.cf-stat span{display:block;font-size:12px;color:var(--muted)}
+.cf-stat b{display:block;font:600 clamp(19px,2.6vw,25px)/1.5 var(--f-mono);font-variant-numeric:tabular-nums;letter-spacing:-.035em}
+.cf-pos{color:var(--pos)} .cf-neg{color:var(--neg)} .cf-flat{color:var(--ink)}
+.cf-chart{width:100%;height:auto;display:block;overflow:visible}
+.cf-chart .cf-grid{stroke:var(--grid);stroke-width:1}
+.cf-chart .cf-zero{stroke:var(--axis);stroke-width:1.3}
+.cf-chart text{font-family:var(--f-mono);font-size:13px;fill:var(--muted)}
+.cf-chart .cf-bar{outline:none}
+.cf-chart .cf-bar:focus,.cf-chart .cf-bar:hover{stroke:var(--ink);stroke-width:1.5}
+.cf-legend{display:flex;gap:14px;flex-wrap:wrap;font-size:12px;color:var(--ink-2)}
+.cf-legend i{display:inline-block;width:8px;height:8px;margin-right:5px;border-radius:2px}
+.cf-legend .in{background:var(--pos)} .cf-legend .out{background:var(--neg)}
+.cf-note{font-size:12px;color:var(--ink-2);line-height:1.55;margin:0}
+.cf-status{font-size:12px;color:var(--brass);line-height:1.5;margin:0}
+.capital-flow details .src{margin-top:8px;overflow-wrap:anywhere}
+@media (max-width:700px){.cf-chart text{font-size:19px}}
+
 /* macro */
 .macro-top{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:14px;margin-bottom:14px}
 .quad{padding:16px 18px;display:grid;grid-template-columns:minmax(0,300px) minmax(0,1fr);gap:20px;align-items:center}
@@ -2262,7 +2286,277 @@ details.tt[open] summary::before{content:"▾"}
     "down": [
       "煤炭行业 -0.51%"
     ],
-    "src": "东方财富公开行情 · 上证指数与深证综指口径；新浪财经行业行情；领涨股报价交叉核对"
+    "src": "东方财富公开行情 · 上证指数与深证综指口径；新浪财经行业行情；领涨股报价交叉核对",
+    "capitalFlow": {
+      "source": "东方财富Choice公开大盘资金流向（订单分类估算）",
+      "source_url": "https://data.eastmoney.com/zjlx/dpzjlx.html",
+      "method_url": "https://emdesk.eastmoney.com/pc_activity/Pages/VIPTrade/pages/link/zjl.html",
+      "source_kind": "eastmoney_market_capital_flow",
+      "feed_kind": "eastmoney_market_capital_flow",
+      "scope_id": "eastmoney_sh_sz",
+      "scope": "东方财富“沪深两市”口径（上证与深证成指市场接口合并）；未验证北交所覆盖，不等同万得全A。",
+      "unit": "亿元",
+      "retrieved_at": "2026-11-02T23:21:35+08:00",
+      "value": 117.43240192,
+      "date": "2026-11-02",
+      "history": [
+        {
+          "date": "2026-09-29",
+          "main_net_pct": 0.46,
+          "sh_close": 3830.45,
+          "sz_close": 12901.95,
+          "main_net_yi": 65.24353024,
+          "small_net_yi": 52.1773056,
+          "medium_net_yi": -117.42089216,
+          "large_net_yi": -8.26789888,
+          "super_large_net_yi": 73.51142912
+        },
+        {
+          "date": "2026-09-30",
+          "main_net_pct": -0.95,
+          "sh_close": 3842.19,
+          "sz_close": 12887.62,
+          "main_net_yi": -136.28162048,
+          "small_net_yi": 148.49589248,
+          "medium_net_yi": -12.21431296,
+          "large_net_yi": -75.53835008,
+          "super_large_net_yi": -60.7432704
+        },
+        {
+          "date": "2026-10-08",
+          "main_net_pct": -2.86,
+          "sh_close": 3811.9,
+          "sz_close": 12620.9,
+          "main_net_yi": -480.37224448,
+          "small_net_yi": 344.05081088,
+          "medium_net_yi": 136.32139264,
+          "large_net_yi": -229.92777216,
+          "super_large_net_yi": -250.44447232
+        },
+        {
+          "date": "2026-10-09",
+          "main_net_pct": -0.92,
+          "sh_close": 3813.79,
+          "sz_close": 12641.86,
+          "main_net_yi": -174.74904064,
+          "small_net_yi": 215.94206208,
+          "medium_net_yi": -41.19298048,
+          "large_net_yi": -85.824512,
+          "super_large_net_yi": -88.92452864
+        },
+        {
+          "date": "2026-10-12",
+          "main_net_pct": -2.3,
+          "sh_close": 3797.24,
+          "sz_close": 12384.87,
+          "main_net_yi": -354.30731776,
+          "small_net_yi": 327.92788992,
+          "medium_net_yi": 26.3794688,
+          "large_net_yi": -174.99877376,
+          "super_large_net_yi": -179.308544
+        },
+        {
+          "date": "2026-10-13",
+          "main_net_pct": -0.55,
+          "sh_close": 3800.86,
+          "sz_close": 12353.7,
+          "main_net_yi": -91.39605504,
+          "small_net_yi": 91.84374784,
+          "medium_net_yi": -0.4476928,
+          "large_net_yi": -63.07844096,
+          "super_large_net_yi": -28.31761408
+        },
+        {
+          "date": "2026-10-14",
+          "main_net_pct": -2.6,
+          "sh_close": 3767.23,
+          "sz_close": 12110.59,
+          "main_net_yi": -367.55019776,
+          "small_net_yi": 310.98241024,
+          "medium_net_yi": 56.56772608,
+          "large_net_yi": -180.23899136,
+          "super_large_net_yi": -187.3112064
+        },
+        {
+          "date": "2026-10-15",
+          "main_net_pct": -3.89,
+          "sh_close": 3707.48,
+          "sz_close": 11816.79,
+          "main_net_yi": -635.30876928,
+          "small_net_yi": 483.84512,
+          "medium_net_yi": 151.46364928,
+          "large_net_yi": -267.8222848,
+          "super_large_net_yi": -367.48648448
+        },
+        {
+          "date": "2026-10-16",
+          "main_net_pct": -0.32,
+          "sh_close": 3716.28,
+          "sz_close": 11802.46,
+          "main_net_yi": -49.36298496,
+          "small_net_yi": 161.72085248,
+          "medium_net_yi": -112.35790848,
+          "large_net_yi": -50.48930304,
+          "super_large_net_yi": 1.12631808
+        },
+        {
+          "date": "2026-10-19",
+          "main_net_pct": -0.81,
+          "sh_close": 3730.92,
+          "sz_close": 11817.42,
+          "main_net_yi": -116.20791296,
+          "small_net_yi": 181.26835712,
+          "medium_net_yi": -65.06037248,
+          "large_net_yi": -78.02642432,
+          "super_large_net_yi": -38.18148864
+        },
+        {
+          "date": "2026-10-20",
+          "main_net_pct": -0.9,
+          "sh_close": 3735.37,
+          "sz_close": 11801.29,
+          "main_net_yi": -130.43470336,
+          "small_net_yi": 77.31818496,
+          "medium_net_yi": 53.11655936,
+          "large_net_yi": -76.54100992,
+          "super_large_net_yi": -53.89369344
+        },
+        {
+          "date": "2026-10-21",
+          "main_net_pct": -0.61,
+          "sh_close": 3713.03,
+          "sz_close": 11704.35,
+          "main_net_yi": -87.84084992,
+          "small_net_yi": 112.80699392,
+          "medium_net_yi": -24.96606208,
+          "large_net_yi": -97.81481472,
+          "super_large_net_yi": 9.9739648
+        },
+        {
+          "date": "2026-10-22",
+          "main_net_pct": -4.14,
+          "sh_close": 3658.03,
+          "sz_close": 11357.32,
+          "main_net_yi": -632.5170176,
+          "small_net_yi": 482.53415424,
+          "medium_net_yi": 149.98290432,
+          "large_net_yi": -274.4100864,
+          "super_large_net_yi": -358.1069312
+        },
+        {
+          "date": "2026-10-23",
+          "main_net_pct": 0.01,
+          "sh_close": 3690.48,
+          "sz_close": 11673.83,
+          "main_net_yi": 2.80211456,
+          "small_net_yi": 131.4748416,
+          "medium_net_yi": -134.2769152,
+          "large_net_yi": -78.2262272,
+          "super_large_net_yi": 81.02834176
+        },
+        {
+          "date": "2026-10-26",
+          "main_net_pct": -1.73,
+          "sh_close": 3697.52,
+          "sz_close": 11534.38,
+          "main_net_yi": -278.66513408,
+          "small_net_yi": 298.18646528,
+          "medium_net_yi": -19.52129024,
+          "large_net_yi": -117.49126144,
+          "super_large_net_yi": -161.17387264
+        },
+        {
+          "date": "2026-10-27",
+          "main_net_pct": -3.22,
+          "sh_close": 3648.3,
+          "sz_close": 11245.73,
+          "main_net_yi": -471.14316544,
+          "small_net_yi": 370.82947584,
+          "medium_net_yi": 100.31362048,
+          "large_net_yi": -285.85975808,
+          "super_large_net_yi": -185.28340736
+        },
+        {
+          "date": "2026-10-28",
+          "main_net_pct": 1.41,
+          "sh_close": 3681.47,
+          "sz_close": 11473.18,
+          "main_net_yi": 230.29981184,
+          "small_net_yi": -29.73548544,
+          "medium_net_yi": -200.5643264,
+          "large_net_yi": -21.6805376,
+          "super_large_net_yi": 251.98034944
+        },
+        {
+          "date": "2026-10-29",
+          "main_net_pct": -4.49,
+          "sh_close": 3651.43,
+          "sz_close": 11138.2,
+          "main_net_yi": -698.36054528,
+          "small_net_yi": 505.62981888,
+          "medium_net_yi": 192.73068544,
+          "large_net_yi": -317.77611776,
+          "super_large_net_yi": -380.58442752
+        },
+        {
+          "date": "2026-10-30",
+          "main_net_pct": -2.37,
+          "sh_close": 3599.02,
+          "sz_close": 10833.78,
+          "main_net_yi": -396.65811456,
+          "small_net_yi": 364.00078848,
+          "medium_net_yi": 32.657408,
+          "large_net_yi": -231.14551296,
+          "super_large_net_yi": -165.5126016
+        },
+        {
+          "date": "2026-11-02",
+          "main_net_pct": 0.66,
+          "sh_close": 3638.03,
+          "sz_close": 11010.68,
+          "main_net_yi": 117.43240192,
+          "small_net_yi": 109.35660544,
+          "medium_net_yi": -226.78904832,
+          "large_net_yi": -40.89151488,
+          "super_large_net_yi": 158.3239168
+        }
+      ],
+      "current": {
+        "date": "2026-11-02",
+        "unit": "亿元",
+        "inflow_yi": 5590.992896,
+        "outflow_yi": 5473.56049408,
+        "net_yi": 117.43240192,
+        "turnover_yi": 17836.953381646734,
+        "observed_at": "2026-11-02T16:12:00+08:00",
+        "identities": [
+          {
+            "code": "000001",
+            "name": "上证指数",
+            "observed_at": "2026-11-02T16:12:00+08:00"
+          },
+          {
+            "code": "399001",
+            "name": "深证成指",
+            "observed_at": "2026-11-02T16:11:39+08:00"
+          }
+        ],
+        "post_close": true
+      },
+      "provisional": [],
+      "history_complete": true,
+      "history_errors": [],
+      "sum5_yi": -1218.42961152,
+      "sum20_yi": -4685.37781504,
+      "sum5_count": 5,
+      "sum20_count": 20,
+      "note": "主力=超大单+大单，按逐笔成交及委托明细的订单分类模型估算，不识别真实机构身份；不是全市场新增入市资金。只展示同源序列，不与其他数据商拼接；历史净额不倒推历史毛流入/毛流出。",
+      "errors": [],
+      "ok": true,
+      "carried": false,
+      "partial": false,
+      "status": "ok"
+    }
   },
   "macro": {
     "head": "资金价格有约束，广义系统冲击仍待确认",
@@ -3825,7 +4119,7 @@ details.tt[open] summary::before{content:"▾"}
       }
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
-    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.3，研究规则v1.3.2；历史研究依据与原文继续留存。",
+    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.4，研究规则v1.3.2；历史研究依据与原文继续留存。",
     "funnelNote": "这一页是从漏斗出口往回读的：最上面是结论，往下依次是决策层、机制层、事实层，越往下越是\"凭什么\"。",
     "back": {
       "k": "回看",
@@ -3977,8 +4271,8 @@ details.tt[open] summary::before{content:"▾"}
     "head": "把静观装进你的研究助手",
     "sub": "静观是一个可安装的 skill：先记账，再拆机制、选主线，最后形成带证伪条件的研究立场；维护现有项目时，按完整数据与发布流程执行。",
     "spec": [
-      "v0.7.3",
-      "压缩包 59.6 KB",
+      "v0.7.4",
+      "压缩包 60.5 KB",
       "主文件 13.9 KB",
       "核心分析不用 API Key（吸引子指标要）",
       "只读，不下单"
@@ -3999,11 +4293,11 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "pkg": {
       "name": "stillpoint",
-      "ver": "v0.7.3",
-      "size": "59.6 KB",
+      "ver": "v0.7.4",
+      "size": "60.5 KB",
       "zip": "https://b1axk-bit.github.io/stillpoint-pages/skill/stillpoint.zip",
       "skillUrl": "https://github.com/B1axk-bit/stillpoint-pages/blob/main/skill/stillpoint/SKILL.md",
-      "sha256": "31aab619001153ea5f141b9063067f368ed755492e9c9cbaebdb229f59f390f8"
+      "sha256": "1241ee65af321938fb09d9b12117981bf457f5338c3e44d80618fb2b8b4dcc0b"
     },
     "clients": [
       {
@@ -5480,7 +5774,7 @@ details.tt[open] summary::before{content:"▾"}
     }
   },
   "dataHealth": {
-    "generated_at": "2026-11-02T16:52:28+08:00",
+    "generated_at": "2026-11-02T23:23:26+08:00",
     "title": "数据更新状态",
     "note": "来源状态与投资风险灯分别解释；展开查看日期、来源和处理方式。",
     "items": [
@@ -5607,6 +5901,15 @@ details.tt[open] summary::before{content:"▾"}
         "date": "2026-11-02",
         "detail": "日本14:00发布全文；政策决定属于10/29–30会议。AI需求与投资支撑和回报不及预期的调整风险同时保留。",
         "source_url": "https://www.boj.or.jp/en/mopo/outlook/gor2610b.pdf"
+      },
+      {
+        "id": "ashare_capital_flow",
+        "name": "沪深主力资金流",
+        "date": "2026-11-02",
+        "status": "ok",
+        "label": "已更新",
+        "detail": "主力=超大单+大单，按逐笔成交及委托明细的订单分类模型估算，不识别真实机构身份；不是全市场新增入市资金。只展示同源序列，不与其他数据商拼接；历史净额不倒推历史毛流入/毛流出。",
+        "source_url": "https://data.eastmoney.com/zjlx/dpzjlx.html"
       }
     ]
   },
@@ -5720,6 +6023,106 @@ details.tt[open] summary::before{content:"▾"}
         h('thead', null, h('tr', null, head.map(function(x){ return h('th', null, x); }))),
         h('tbody', null, rows.map(function(r){ return h('tr', null, r.map(function(c){ return h('td', null, c); })); })))));
   }
+
+  /* capital flow helpers */
+  function capitalFlowModel(f){
+    f = f || {};
+    function finite(v){ return typeof v === 'number' && Number.isFinite(v); }
+    function day(v){
+      if (typeof v !== 'string' || !/^\d{4}-\d{2}-\d{2}$/.test(v)) return false;
+      var t = new Date(v + 'T00:00:00Z');
+      return Number.isFinite(t.getTime()) && t.toISOString().slice(0, 10) === v;
+    }
+    var states = ['ok', 'partial', 'carried', 'failed'];
+    var qualified = f.unit === '亿元' && f.scope_id === 'eastmoney_sh_sz' && states.indexOf(f.status) >= 0 && f.status !== 'failed';
+    var date = day(f.date) ? f.date : null, seen = {};
+    var rows = qualified && date && Array.isArray(f.history) ? f.history.filter(function(r){
+      if (!r || !day(r.date) || r.date > date || !finite(r.main_net_yi) || seen[r.date]) return false;
+      seen[r.date] = true; return true;
+    }).slice().sort(function(a, b){ return a.date.localeCompare(b.date); }).slice(-20) : [];
+    var value = qualified && date && finite(f.value) ? f.value : null;
+    var c = f.current, current = null;
+    if (value !== null && c && c.date === date && c.unit === '亿元' &&
+        finite(c.inflow_yi) && c.inflow_yi >= 0 && finite(c.outflow_yi) && c.outflow_yi >= 0 && finite(c.net_yi) &&
+        Math.abs(c.net_yi - value) <= 0.01 && Math.abs(c.inflow_yi - c.outflow_yi - c.net_yi) <= 0.02) current = c;
+    var provisional = Array.isArray(f.provisional) ? f.provisional.length > 0 :
+      (f.provisional && typeof f.provisional === 'object' ? Object.keys(f.provisional).length > 0 : !!f.provisional);
+    return {date:date, value:value, current:current, rows:rows,
+      sum5:qualified && f.history_complete !== false && rows.length >= 5 && finite(f.sum5_yi) ? f.sum5_yi : null,
+      status:qualified ? f.status : 'failed', provisional:provisional, historyComplete:f.history_complete !== false,
+      retrieved_at:f.retrieved_at || '', scope:f.scope || '', note:f.note || ''};
+  }
+  function renderCapitalFlow(f){
+    var m = capitalFlowModel(f), box = h('section', {class:'capital-flow', id:'ashare-capital-flow', 'aria-label':'沪深主力资金净流向'});
+    var asof = m.date ? '截至 ' + m.date + ' · 亿元' : '未取得合格交易日';
+    if (m.status === 'carried') asof += ' · 沿用旧日';
+    else if (m.status === 'partial') asof += ' · 部分可用';
+    box.appendChild(h('div', {class:'cf-head'}, h('h4', null, '每日主力资金净流向'), h('span', {class:'cf-asof'}, asof)));
+    function tone(v){ return v === null || v === 0 ? 'cf-flat' : (v > 0 ? 'cf-pos' : 'cf-neg'); }
+    function amount(v, signed){ return v === null ? '—' : (signed ? sgn(v, 2) : num(v, 2)); }
+    var stats = h('div', {class:'cf-stats'});
+    [
+      ['当日主力流入', m.current ? m.current.inflow_yi : null, false, 'cf-pos'],
+      ['当日主力流出', m.current ? m.current.outflow_yi : null, false, 'cf-neg'],
+      ['当日主力净额', m.value, true, tone(m.value)],
+      ['近5个交易日净额', m.sum5, true, tone(m.sum5)]
+    ].forEach(function(x){
+      stats.appendChild(h('div', {class:'cf-stat'}, h('span', null, x[0]), h('b', {class:x[1] === null || x[1] === 0 ? 'cf-flat' : x[3]}, amount(x[1], x[2]))));
+    });
+    box.appendChild(stats);
+    if (m.rows.length) {
+      var NS = 'http://www.w3.org/2000/svg';
+      function sv(tag, attrs, text){
+        var el = document.createElementNS(NS, tag);
+        for (var k in attrs) el.setAttribute(k, attrs[k]);
+        if (text != null) el.textContent = text;
+        return el;
+      }
+      var max = Math.max.apply(null, m.rows.map(function(r){ return Math.abs(r.main_net_yi); }));
+      max = Math.max(100, Math.ceil(max / 100) * 100);
+      var W = 600, X = 80, R = 590, TOP = 16, MID = 105, BOTTOM = 194;
+      var step = (R - X) / m.rows.length, bw = Math.min(23, step * 0.68);
+      var svg = sv('svg', {class:'cf-chart', viewBox:'0 0 ' + W + ' 226', role:'img', 'aria-label':m.rows.length + '个交易日主力净额，红为净流入，绿为净流出；详见每日数据表'});
+      [TOP, MID, BOTTOM].forEach(function(y, i){
+        svg.appendChild(sv('line', {x1:X, x2:R, y1:y, y2:y, class:i === 1 ? 'cf-zero' : 'cf-grid'}));
+        svg.appendChild(sv('text', {x:X - 6, y:y + 4, 'text-anchor':'end'}, i === 0 ? '+' + max : (i === 1 ? '0' : MINUS + max)));
+      });
+      m.rows.forEach(function(r, i){
+        var v = r.main_net_yi, x = X + step * (i + 0.5), height = Math.abs(v) / max * (MID - TOP);
+        var desc = r.date + ' 主力净' + (v < 0 ? '流出 ' : '流入 ') + num(Math.abs(v), 2) + '亿元';
+        var rect = sv('rect', {x:x - bw / 2, y:v > 0 ? MID - height : MID, width:bw,
+          height:v === 0 ? 1.5 : Math.max(height, 1.5), rx:1.4, class:'cf-bar', fill:v > 0 ? 'var(--pos)' : (v < 0 ? 'var(--neg)' : 'var(--muted)'),
+          tabindex:'0', 'aria-label':desc, 'data-tip':sgn(v, 2) + '亿元|' + r.date + '|主力资金净额'});
+        rect.appendChild(sv('title', {}, desc)); svg.appendChild(rect);
+        if (i === 0 || i === m.rows.length - 1 || i % 5 === 0) {
+          var parts = r.date.split('-');
+          svg.appendChild(sv('text', {x:x, y:216, 'text-anchor':i === 0 ? 'start' : (i === m.rows.length - 1 ? 'end' : 'middle')}, (+parts[1]) + '/' + (+parts[2])));
+        }
+      });
+      box.appendChild(svg);
+      box.appendChild(h('div', {class:'cf-legend'}, h('span', null, h('i', {class:'in'}), '净流入'), h('span', null, h('i', {class:'out'}), '净流出'), h('span', null, m.historyComplete ? '近' + m.rows.length + '个完整交易日' : m.rows.length + '条已核记录（历史有缺口）')));
+    } else box.appendChild(h('p', {class:'cf-status'}, '本次没有合格的每日资金流序列，缺值保留为空。'));
+    if (m.status === 'carried') box.appendChild(h('p', {class:'cf-status'}, '本次读取未完成，保留上述实际交易日的数据。'));
+    else if (m.provisional) box.appendChild(h('p', {class:'cf-status'}, '今日盘中或待核数据未纳入完整日序列。'));
+    else if (m.value !== null && !m.current) box.appendChild(h('p', {class:'cf-status'}, '日净额可读；未取得同日合格流入、流出毛额。'));
+    box.appendChild(h('p', {class:'cf-note'}, '主力＝超大单＋大单；反映订单结构，不等同新增资金入市。'));
+    var details = h('details', {class:'tt cf-details'}, h('summary', null, '每日明细与口径'));
+    if (m.rows.length) details.appendChild(h('div', {class:'tt-wrap'}, h('table', null,
+      h('thead', null, h('tr', null, ['交易日', '主力净额', '超大单', '大单', '中单', '小单'].map(function(t){ return h('th', null, t); }))),
+      h('tbody', null, m.rows.slice().reverse().map(function(r){
+        return h('tr', null, [r.date, r.main_net_yi, r.super_large_net_yi, r.large_net_yi, r.medium_net_yi, r.small_net_yi].map(function(v, i){
+          return h('td', null, i === 0 ? v : amount(typeof v === 'number' && Number.isFinite(v) ? v : null, true));
+        }));
+      })))));
+    details.appendChild(h('p', {class:'src'}, (m.scope || '东财沪深两市口径，未验证北交所覆盖。') + ' 历史接口仅有每日净额，不倒填往日流入、流出毛额。'));
+    if (m.note) details.appendChild(h('p', {class:'src'}, m.note));
+    if (m.retrieved_at) details.appendChild(h('p', {class:'src'}, '读取：' + m.retrieved_at));
+    if (m.current && m.current.observed_at) details.appendChild(h('p', {class:'src'}, '毛额来源更新：' + m.current.observed_at));
+    box.appendChild(details);
+    box.appendChild(h('p', {class:'src'}, h('a', {href:'https://data.eastmoney.com/zjlx/dpzjlx.html', target:'_blank', rel:'noopener noreferrer'}, '东财沪深两市 · 软件统计 ↗')));
+    return box;
+  }
+  /* end capital flow helpers */
 
   /* verdict */
   (function(){
@@ -6062,7 +6465,7 @@ details.tt[open] summary::before{content:"▾"}
         h('i', {class: 'pos', style: 'width:' + (a.breadth.up / tot * 100) + '%', tabindex: '0', 'data-tip': a.breadth.up + ' 家|上涨'}),
         h('i', {class: 'neg', style: 'width:' + (a.breadth.down / tot * 100) + '%', tabindex: '0', 'data-tip': num(a.breadth.down, 0) + ' 家|下跌'})),
       h('div', {class: 'stack-l'}, h('span', null, '涨 ', h('b', null, String(a.breadth.up))), h('span', null, '跌 ', h('b', null, num(a.breadth.down, 0))))));
-    a.pairs.forEach(function(p){
+    a.pairs.forEach(function(p, pairIndex){
       var rows = p.rows.map(function(r){
         var val = (r.approx ? '≈' : '') + auto(r.v);
         return {name: r.label, track: [h('i', {class: 'bar mag' + (r.hi ? ' hi' : ''), style: 'left:0;width:' + Math.max(r.v / p.max * 100, 0.8) + '%'})], val: val, tip: val + '|' + r.label};
@@ -6071,7 +6474,9 @@ details.tt[open] summary::before{content:"▾"}
         h('div', {class: 'mini-h'}, h('b', null, p.title)),
         frame({nw: '7.6em', vw: '3.6em', min: 0, max: p.max, ticks: p.ticks, rows: rows, fmt: plain}),
         h('p', {class: 'mini-n'}, p.note + ' · ' + p.src)));
+      if (pairIndex === 0 && a.capitalFlow) ab.appendChild(renderCapitalFlow(a.capitalFlow));
     });
+    if (!a.pairs.length && a.capitalFlow) ab.appendChild(renderCapitalFlow(a.capitalFlow));
     ab.appendChild(h('div', {class: 'chips'}, h('span', {class: 'k'}, '领涨'), a.up.map(function(x){ return h('span', {class: 'chip up'}, x); })));
     ab.appendChild(h('div', {class: 'chips'}, h('span', {class: 'k'}, '领跌'), a.down.map(function(x){ return h('span', {class: 'chip dn'}, x); })));
     ab.appendChild(h('p', {class: 'src'}, a.src));

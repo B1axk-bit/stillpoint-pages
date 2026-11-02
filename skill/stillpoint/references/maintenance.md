@@ -6,7 +6,7 @@
 
 1. 从明确工作区运行 `python3 <本skill>/scripts/preflight.py --workspace <工作区>`。此命令只读、无网络，输出配置/结构问题和研究状态，**不是发布通过证书**。找不到工作区时列出实际缺项，不扫描整盘、不退回旧脚本。单纯展示修复不强制重抓金融数据。
 2. 核对两仓库GitHub main、本地HEAD和未提交改动，按需快进、使用codex/分支；保留后台人工复核、定时档案与其他未提交工作，不reset/强推。`git status`干净不代表与远端一致。
-3. 正式采集器是私有仓库`scripts/invest_snapshot.py`；配套extra_feeds、archive_raw、public_market_feeds、market_sources、source_quality和attractor_client以同仓受维护版本为准。吸引子本机与私有共用客户端须核同版。此包的同名脚本只是定位器，不另养旧采集实现。显式设置INVEST_BASE为私有仓库，防止extra/archive写进旧目录。
+3. 正式采集器是私有仓库`scripts/invest_snapshot.py`；配套extra_feeds、archive_raw、public_market_feeds、capital_flows、market_sources、source_quality和attractor_client以同仓受维护版本为准。吸引子本机与私有共用客户端须核同版。此包的同名脚本只是定位器，不另养旧采集实现。显式设置INVEST_BASE为私有仓库，防止extra/archive写进旧目录。
 4. 优先既有snapshot workflow；等待本次run并核本次产物，必要时使用已授权本机环境。`--resolve-only`只定位，不采集。来源互相独立：失败的有界重试后保留旧日期/缺项，不使整轮停在一个接口，也不拿另一来源成功掩盖失败。
 
 ## 每轮要做到哪里
@@ -126,3 +126,7 @@ JSON事务采用内核flock和同目录原子替换，进程退出后内核释�
 调度器有前后约5分钟的唤醒抖动。若提前，先做只读准备，等本轮北京时间04/16整点后再正式取数；延迟如实记录。名义时点、实际唤醒、完成和市场报价分列，收市竞价/冬令时盘中仍按真实状态标注。
 
 提前唤醒时，第一次scan为空不能据此跳过即将到达的本轮：等北京04/16整点后重新scan并start本轮，再正式采集。未到期批次不能提前标完成。
+
+## 沪深主力资金流展示
+
+默认extra采集包含`ashare_capital_flow`；单项接续用正式`extra_feeds.py --capital-flow-only`，设置INVEST_BASE，不重抓或重标其他来源。页面维护同时更新`page-data.ashare.capitalFlow`及其数据健康摘要：20个实际完成日、最新同日毛额和近5日累计，保留日期和沪深范围。已有feed未嵌页面或数值/日期失配，发布门禁应拦截；不要只采不展示。历史缺毛额不反推，读新不等于观察新；不自动给原灯或账本加票。采集/源校验细节沿私有`docs/capital-flows.md`及受维护脚本，UI兼容缺值、partial和carried。
