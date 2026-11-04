@@ -63,6 +63,36 @@ class RegistryTests(unittest.TestCase):
         self.assertEqual(registry.due_slots(registry.parse_time("2026-10-28T16:00:00+08:00")),
                          ["20261028-04", "20261028-16"])
 
+    def test_morning_cutover_delays_due_time_but_keeps_slot_id(self):
+        before = registry.scan(self.path, registry.parse_time("2026-11-05T05:59:59+08:00"))
+        self.assertEqual(before["pending_slots"][-1], "20261104-16")
+        with self.assertRaisesRegex(registry.RegistryError, "不得开始未来批次"):
+            registry.start(self.path, registry.parse_time("2026-11-05T04:00:00+08:00"),
+                           "too-early", slots=["20261105-04"])
+        self.assertFalse(self.path.exists())
+
+        morning = registry.scan(self.path, registry.parse_time("2026-11-04T22:00:00Z"))
+        self.assertEqual(morning["slots"][-1]["slot"], "20261105-04")
+        self.assertEqual(morning["slots"][-1]["planned_at"], "2026-11-05T06:00:00+08:00")
+        afternoon = registry.scan(self.path, registry.parse_time("2026-11-05T16:00:00+08:00"))
+        self.assertEqual(afternoon["pending_slots"][-2:], ["20261105-04", "20261105-16"])
+        self.assertEqual(afternoon["slots"][-1]["planned_at"], "2026-11-05T16:00:00+08:00")
+
+    def test_morning_cutover_keeps_verified_historical_receipt(self):
+        self.now = registry.parse_time("2026-11-04T04:10:00+08:00")
+        historical = self.start(slots=["20261104-04"])
+        self.complete(historical)
+        original_slot = registry.load_registry(self.path)["slots"]["20261104-04"].copy()
+
+        self.now = registry.parse_time("2026-11-05T06:00:00+08:00")
+        new_run = self.start(run="new-morning", slots=["20261105-04"])
+        self.assertEqual(new_run["coverage_from"], "2026-11-05T06:00:00+08:00")
+        self.assertEqual(new_run["coverage_through"], "2026-11-05T06:00:00+08:00")
+        old_slot = registry.load_registry(self.path)["slots"]["20261104-04"]
+        self.assertEqual(old_slot, original_slot)
+        self.assertEqual(old_slot["planned_at"], "2026-11-04T04:00:00+08:00")
+        self.assertEqual(old_slot["status"], "published_verified")
+
     def test_invalid_and_future_slots_are_not_started(self):
         for slot in ["20261027-16", "20260230-04", "20261028-12", "20261028-16"]:
             with self.subTest(slot=slot), self.assertRaises(registry.RegistryError):

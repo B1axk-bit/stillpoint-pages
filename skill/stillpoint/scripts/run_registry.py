@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Offline receipt registry for the authorized Beijing 04/16 Stillpoint slots.
+"""Offline receipt registry for the authorized Stillpoint morning and afternoon slots.
 
 No scheduler, network, data collection or deployment is performed here. Mutation
 commands are explicit attestations; scan/list never create files. Python 3.9+;
@@ -7,7 +7,7 @@ mutations use POSIX flock (macOS/Linux), not expiring filesystem lock files.
 """
 import argparse
 from contextlib import contextmanager
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 import errno
 import hashlib
 import json
@@ -21,6 +21,7 @@ import time
 
 BJ = timezone(timedelta(hours=8), "Asia/Shanghai")
 ORIGIN = datetime(2026, 10, 28, 4, tzinfo=BJ)
+MORNING_CUTOVER = date(2026, 11, 5)
 STATUSES = {"planned", "started", "failed", "partial", "published_verified"}
 DEFAULT_PATH = Path("operations/automation-runs/registry.json")
 
@@ -54,6 +55,9 @@ def slot_time(slot):
         raise RegistryError("批次日期无效")
     if result < ORIGIN:
         raise RegistryError("批次早于用户授权起点 2026-10-28 04:00 +08:00")
+    # The "-04" key is permanent. Only the due time changes at the cutover.
+    if result.hour == 4 and result.date() >= MORNING_CUTOVER:
+        return result.replace(hour=6)
     return result
 
 
@@ -62,10 +66,10 @@ def due_slots(now):
     result = []
     day = ORIGIN.date()
     while day <= now.date():
-        for hour in (4, 16):
-            planned = datetime(day.year, day.month, day.day, hour, tzinfo=BJ)
-            if ORIGIN <= planned <= now:
-                result.append(planned.strftime("%Y%m%d-%H"))
+        for suffix in ("04", "16"):
+            slot = f"{day:%Y%m%d}-{suffix}"
+            if slot_time(slot) <= now:
+                result.append(slot)
         day += timedelta(days=1)
     return result
 
@@ -401,7 +405,7 @@ def main(argv=None):
     parser.add_argument("--now", help="只读scan/list的观察时点；写命令使用真实时钟")
     parser.add_argument("--run-id")
     group = parser.add_mutually_exclusive_group()
-    group.add_argument("--slot", action="append", help="可重复；YYYYMMDD-04/16")
+    group.add_argument("--slot", action="append", help="可重复；YYYYMMDD-04（早间固定键）或 YYYYMMDD-16")
     group.add_argument("--all-due", action="store_true")
     parser.add_argument("--owner-pid", type=int, help="可选真实长期执行PID；未记录时不自动回收执行租约")
     parser.add_argument("--recover-stale", action="store_true")
