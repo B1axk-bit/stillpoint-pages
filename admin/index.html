@@ -114,6 +114,20 @@ details.fold{scroll-margin-top:72px}
 .note{background:var(--brass-tint);border:1px solid color-mix(in srgb,var(--brass) 18%,var(--line));border-radius:6px;padding:10px 12px;font-size:13px;color:var(--ink-2);margin:0 0 6px}
 h2.mh{font-family:var(--f-display);font-weight:900;font-size:18px;margin:26px 0 10px}
 
+/* 首页访问统计 */
+.traffic-head{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;margin-bottom:8px}
+.traffic-head .mh{margin:0}
+.traffic-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,250px),1fr));gap:8px;margin:10px 0}
+.traffic-cards dl{display:flex;flex-wrap:wrap;gap:8px 18px;margin:8px 0 0}
+.traffic-cards dd{margin:0;font-family:var(--f-mono);font-size:20px;overflow-wrap:anywhere}
+.traffic-chart{table-layout:fixed;font-variant-numeric:tabular-nums}
+.traffic-chart th:first-child{width:5.7rem}
+.traffic-chart th[scope="row"]{background:transparent;color:var(--ink)}
+.traffic-chart td{text-align:right;font-family:var(--f-mono);overflow-wrap:anywhere}
+.traffic-track{display:block;height:4px;margin-top:3px;background:var(--grid);border-radius:3px}
+.traffic-track i{display:block;height:100%;border-radius:inherit;background:var(--ser)}
+.traffic-chart td:last-child i{background:var(--brass)}
+
 /* 候选证据 */
 .group{margin-top:22px}
 .ghead{display:flex;align-items:baseline;justify-content:space-between;gap:8px;flex-wrap:wrap}
@@ -231,6 +245,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
     <button class="tab" role="tab" data-tab="ledger" aria-selected="false"><span class="no">03</span>账本</button>
     <button class="tab" role="tab" data-tab="cases" aria-selected="false"><span class="no">04</span>案例日志</button>
     <button class="tab" role="tab" data-tab="rules" aria-selected="false"><span class="no">05</span>规则</button>
+    <button class="tab" role="tab" data-tab="traffic" aria-selected="false" aria-controls="p-traffic"><span class="no">06</span>访问统计</button>
   </div>
 
   <section class="pane on" id="p-review">
@@ -255,6 +270,15 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   <section class="pane" id="p-ledger"><div id="ledger"></div></section>
   <section class="pane" id="p-cases"><div id="cases"></div></section>
   <section class="pane" id="p-rules"><div id="rules"></div></section>
+  <section class="pane" id="p-traffic" aria-labelledby="traffic-heading">
+    <div class="traffic-head">
+      <h2 class="mh" id="traffic-heading">首页访问统计</h2>
+      <button class="b" id="traffic-refresh" type="button">刷新统计</button>
+    </div>
+    <p class="note">仅统计公开首页，按北京时间分日。浏览量计页面打开次数，访客数按日去重，估算的是浏览器访问，不能跨天相加。</p>
+    <p class="sub" id="traffic-status" role="status"></p>
+    <div id="traffic-content"></div>
+  </section>
 </div>
 
 <script>
@@ -507,6 +531,7 @@ function record(c, action, s, note) {
 function go(tab) {
   document.querySelectorAll(".tab").forEach(t => t.setAttribute("aria-selected", t.dataset.tab === tab));
   document.querySelectorAll(".pane").forEach(p => p.classList.toggle("on", p.id === "p-" + tab));
+  if (tab === "traffic" && !trafficLoaded) loadTraffic();
 }
 
 document.addEventListener("click", e => {
@@ -746,6 +771,93 @@ async function ghFile(path, optional) {
   }
   return {text: unb64(j.content), sha: j.sha};
 }
+
+const TRAFFIC_DAY_MS = 86400000;
+let trafficLoaded = false;
+function trafficDate(time) {
+  return new Date(time + 8 * 3600000).toISOString().slice(0, 10);
+}
+function trafficTimestamp(value) {
+  return typeof value === "string" && /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d+)?(?:Z|[+-]\d{2}:\d{2})$/.test(value)
+    ? Date.parse(value) : NaN;
+}
+function parseTrafficReport(raw) {
+  const report = JSON.parse(raw);
+  const from = trafficTimestamp(report?.collected_from);
+  const generated = trafficTimestamp(report?.generated_at);
+  if (report?.schema_version !== 1 || report.timezone !== "Asia/Shanghai" ||
+      !Number.isFinite(from) || !Number.isFinite(generated) || generated < from || !Array.isArray(report.days)) {
+    throw new Error("访问统计格式不符");
+  }
+  const first = trafficDate(from), last = trafficDate(generated);
+  const days = new Map();
+  for (const row of report.days) {
+    const date = row?.date;
+    const time = Date.parse(date + "T00:00:00Z");
+    if (typeof date !== "string" || !/^\d{4}-\d{2}-\d{2}$/.test(date) || !Number.isFinite(time) ||
+        new Date(time).toISOString().slice(0, 10) !== date || date < first || date > last || days.has(date) ||
+        !Number.isSafeInteger(row.pageviews) || !Number.isSafeInteger(row.visitors) ||
+        row.visitors < 0 || row.pageviews < row.visitors || typeof row.partial !== "boolean") {
+      throw new Error("访问统计日值不符");
+    }
+    days.set(date, row);
+  }
+  return {from, generated, days};
+}
+function trafficHTML(report, now = Date.now()) {
+  const today = trafficDate(now), todayRow = report.days.get(today);
+  const complete = [...report.days.values()].filter(row => row.date <= today && !row.partial)
+    .sort((a, b) => b.date.localeCompare(a.date))[0];
+  const number = value => value.toLocaleString("zh-CN");
+  const card = (title, row) => `<section class="card"><h3>${title}</h3>
+    ${row ? `<p class="sub">${row.date}${row.partial ? " · 当日数据未满" : ""}</p>
+    <dl><div><dt class="k">浏览量</dt><dd>${number(row.pageviews)}</dd></div>
+    <div><dt class="k">独立访客（估算）</dt><dd>${number(row.visitors)}</dd></div></dl>`
+    : `<p class="sub">暂无读数</p>`}</section>`;
+  const cards = `<div class="traffic-cards">${card("今天", todayRow)}${card("最近一个完整日", complete)}</div>`;
+  const dates = Array.from({length: 14}, (_, index) => trafficDate(now - (13 - index) * TRAFFIC_DAY_MS));
+  const rows = dates.map(date => report.days.get(date));
+  const max = Math.max(1, ...rows.map(row => row?.pageviews || 0));
+  const bar = value => `${number(value)}<span class="traffic-track" aria-hidden="true"><i style="width:${100 * value / max}%"></i></span>`;
+  const chart = rows.some(Boolean) ? `<div class="scroll"><table class="traffic-chart" aria-label="近14天首页浏览量与独立访客">
+    <thead><tr><th scope="col">日期</th><th scope="col">浏览量</th><th scope="col">独立访客（估算）</th></tr></thead>
+    <tbody>${dates.map((date, index) => {
+      const row = rows[index];
+      return `<tr><th scope="row"><time datetime="${date}">${md(date)}</time>${row?.partial ? "<br>未满" : ""}</th>
+        ${row ? `<td>${bar(row.pageviews)}</td><td>${bar(row.visitors)}</td>` : '<td>—</td><td>—</td>'}</tr>`;
+    }).join("")}</tbody></table></div>
+    <p class="sub">横条使用同一刻度，— 表示暂无读数。</p>` : `<p class="empty">近14天暂无可绘制的统计。</p>`;
+  return cards + '<h3>近14天访问趋势</h3>' + chart;
+}
+async function loadTraffic() {
+  const button = $("#traffic-refresh"), status = $("#traffic-status"), content = $("#traffic-content");
+  if (button.disabled) return;
+  if (STORE !== "github" || !ghToken || $("#app").classList.contains("locked")) {
+    status.textContent = "请在已连接私有仓库的 GitHub Pages 后台查看统计。";
+    button.disabled = true;
+    return;
+  }
+  trafficLoaded = true;
+  button.disabled = true;
+  status.textContent = "正在读取访问统计…";
+  try {
+    const file = await ghFile("private/site-traffic.json", true);
+    if (file.text === null) {
+      content.textContent = "";
+      status.textContent = "访问统计尚未接入，暂无历史可比较。";
+      return;
+    }
+    const report = parseTrafficReport(file.text);
+    content.innerHTML = trafficHTML(report);
+    const format = time => new Date(time + 8 * 3600000).toISOString().slice(0, 16).replace("T", " ");
+    status.textContent = `北京时间 · 采集起点 ${format(report.from)} · 报表生成 ${format(report.generated)}`;
+  } catch (_) {
+    status.textContent = "访问统计暂时无法读取，请重试。" + (content.innerHTML ? " 下方仍是上次读取的报表。" : "");
+  } finally {
+    button.disabled = false;
+  }
+}
+$("#traffic-refresh").onclick = loadTraffic;
 
 function loginView(msg) {
   $("#login").innerHTML = `<section class="login">
