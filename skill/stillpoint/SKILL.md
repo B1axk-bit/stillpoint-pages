@@ -3,7 +3,7 @@ name: stillpoint
 description: 静观 Stillpoint 的三层投研与项目维护。用于静观数据更新、新闻预填、主线复检、案例回看、前后台修复、上线和定时维护，以及沿用用户框架的市场归因与条件研究；只查询其他指定视角时按其技能处理。
 ---
 
-# 静观 · Stillpoint v0.7.5
+# 静观 · Stillpoint v0.7.6
 
 > "静观其变"：不慌、不猜，等信号出来再动。Stillpoint 出自艾略特的诗，指旋转世界里静止的那一点。
 
@@ -32,7 +32,7 @@ skill版本与研究规则版本分别管理；更新本文件不改固定计分
 | `references/data.md` | 要拉数据、快照有问题、网络被拦、要查指标 ID 或吸引子读法细节时 |
 | `references/mechanisms.md` | 拆机制时要用钱货四格、反身性、三分法、生态位的细节；问到美元、黄金、A 股、存储；问 A 股风格、人民币、楼市（土狗四问） |
 | `references/main-line.md` | 选主线拿不准时，看完整规则和 10/14、10/16 两个例子 |
-| `references/review.md` | 回看打分、缺口和案例导出 |
+| `references/review.md` | 回看打分、错因校准和案例导出 |
 | `references/research-controls.md` | 主线复检、分数/投票/执行把握及人工确认 |
 | `references/maintenance.md` | 数据维护、前后台、发布及自动化状态核对 |
 | `references/source-contracts.md` | 合格来源、日期、币种/期限/分类与失败隔离 |
