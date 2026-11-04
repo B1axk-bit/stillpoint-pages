@@ -62,7 +62,7 @@ function harness({ initial = {}, remote = initial, hook } = {}) {
       addEventListener(type, callback) { documentListeners.set(type, callback); },
     },
     fetch: async (url, options = {}) => {
-      assert.match(url, /^https:\/\/api\.github\.com\/repos\/B1axk-bit\/stillpoint-data\/(?:contents\/confidence\/decisions\.json(?:\?ref=main)?|actions\/workflows\/snapshot\.yml\/dispatches)$/,
+      assert.match(url, /^https:\/\/api\.github\.com\/repos\/B1axk-bit\/stillpoint-data\/(?:contents\/confidence\/decisions\.json(?:\?ref=main)?|git\/blobs\/a{40}|actions\/workflows\/snapshot\.yml\/dispatches)$/,
         'unexpected network target is blocked');
       const request = { method: options.method || 'GET', url, body: options.body ? JSON.parse(options.body) : null };
       if (request.method === 'PUT') request.document = JSON.parse(Buffer.from(request.body.content, 'base64').toString('utf8'));
@@ -326,7 +326,7 @@ for (const failure of ['GET HTTP 500', 'raw GET HTTP 500', 'non-object remote do
       if (request.method === 'PUT') return response(409, {});
       if (failure === 'raw GET HTTP 500' && !raw) {
         raw = true;
-        return response(200, { encoding: 'none', sha: server.sha });
+        return response(200, { encoding: 'none', sha: 'a'.repeat(40) });
       }
       injected = true;
       if (failure.includes('HTTP')) return response(500, 'error body must never become decisions');

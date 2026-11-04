@@ -760,15 +760,21 @@ async function gh(path, opt = {}) {
   return r;
 }
 async function ghFile(path, optional) {
-  const r = await gh(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`);
-  if (r.status === 404 && optional) return {text: null, sha: null};
-  if (!r.ok) throw new Error(path + "：HTTP " + r.status);
+  const read = async (url, media) => {
+    const response = await gh(url, {cache: "no-store", headers: {Accept: media}});
+    if (response.status === 404 && optional && url.startsWith("contents/")) return null;
+    if (!response.ok) throw Object.assign(new Error(path + "：HTTP " + response.status), {status: response.status});
+    return response;
+  };
+  const r = await read(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`, "application/vnd.github.object+json");
+  if (!r) return {text: null, sha: null};
   const j = await r.json();
-  if (j.content == null || j.encoding !== "base64") {   // 超过 1 MB 的文件走 raw
-    const raw = await gh(`contents/${path.split("/").map(encodeURIComponent).join("/")}?ref=${GH.branch}`, {headers: {Accept: "application/vnd.github.raw+json"}});
-    if (!raw.ok) throw new Error(path + "：HTTP " + raw.status);
+  if (j.encoding === "none") {   // 用文件 SHA 单独读取大文件，避免混用目录元数据与正文
+    if (!/^[0-9a-f]{40}$/i.test(j.sha || "")) throw new Error(path + "：缺少文件 SHA。");
+    const raw = await read(`git/blobs/${j.sha}`, "application/vnd.github.raw+json");
     return {text: await raw.text(), sha: j.sha};
   }
+  if (j.encoding !== "base64" || typeof j.content !== "string") throw new Error(path + "：文件响应格式错误。");
   return {text: unb64(j.content), sha: j.sha};
 }
 
@@ -884,6 +890,7 @@ async function ghLoad(remember) {
       ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true),
       ghFile("confidence/brief.json", true), ghFile("archive/attractor/latest-quality.json", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
+    if (!Array.isArray(C?.candidates)) throw new Error("新闻候选数据缺少候选列表。");
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
     DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates, cds: L.cds || {},
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
@@ -893,15 +900,21 @@ async function ghLoad(remember) {
     decisions = dec.text ? JSON.parse(dec.text) : {};
     ghSaved = {...decisions}; ghSaves.clear();
     ghSha = dec.sha;
-    if (remember) lsSet(GH.key, ghToken);
     canWrite = true;
     $("#login").innerHTML = "";
     $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">即刻更新</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">保存成功的条目，每天自动更新时入账；等不及可以点“即刻更新”。</span><div id="gh-save-status" role="status" aria-live="polite" style="width:100%"></div>`;
     $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
     $("#gh-run").onclick = ghRun;
     start();
+    if (remember) lsSet(GH.key, ghToken);
   } catch (e) {
-    ghToken = ""; loginView("连不上：" + e.message + "。检查令牌是不是只给了 stillpoint-data、Contents 有没有读写权限、有没有过期。");
+    ghToken = "";
+    canWrite = false;
+    $("#app").classList.add("locked");
+    const hint = e.status === 401 ? "GitHub 未接受此令牌，请检查令牌是否有效。"
+      : e.status === 403 || e.status === 404 ? "GitHub 拒绝或未找到所需文件，请检查仓库授权和 Contents 权限。"
+      : "后台数据未能加载，请重试。";
+    loginView(hint + " " + e.message);
   }
 }
 
