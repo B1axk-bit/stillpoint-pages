@@ -237,6 +237,61 @@ def validate_capital_flow(public, source, now=None):
     return issues
 
 
+def validate_risk_control(public_derisk, private_derisk):
+    """Compare the public summary with the calculated controls, never infer a tier."""
+    issues = []
+    public_derisk = public_derisk if isinstance(public_derisk, dict) else {}
+    private_derisk = private_derisk if isinstance(private_derisk, dict) else {}
+    public, expected = public_derisk.get('control'), private_derisk.get('control')
+    if not public and not expected:
+        return issues  # Historical pages and fixtures predate risk controls.
+    if not isinstance(public, dict) or not isinstance(expected, dict):
+        return ['风险衔接元数据缺失或与私有计算不匹配']
+    scalar_fields = ('version', 'evaluated_at', 'market_date', 'status', 'minimum_tier',
+                     'next_review_at', 'previous_tier', 'proposed_tier', 'market', 'evidence_asof')
+    for field in scalar_fields:
+        if public.get(field) != expected.get(field):
+            issues.append('风险衔接' + field + '未与本轮计算一致')
+    legacy, expected_legacy = public_derisk.get('legacy'), private_derisk.get('legacy')
+    if not isinstance(legacy, dict) or not isinstance(expected_legacy, dict):
+        issues.append('风险档缺少旧规则对照')
+    elif any(legacy.get(k) != expected_legacy.get(k) for k in ('tier', 'raw')):
+        issues.append('旧规则对照档位未与本轮计算一致')
+    tier, floor = public_derisk.get('tier'), public.get('minimum_tier')
+    if type(tier) is not int or type(floor) is not int or not 0 <= floor <= tier <= 3:
+        issues.append('当前风险档或最低风险约束不合规')
+    release, expected_release = public.get('downgrade'), expected.get('downgrade')
+    if not isinstance(release, dict) or not isinstance(expected_release, dict):
+        issues.append('风险档缺少降档解除状态')
+    else:
+        for field in ('allowed', 'clear_periods', 'required_periods'):
+            if release.get(field) != expected_release.get(field):
+                issues.append('降档解除' + field + '未与本轮计算一致')
+        if expected_release.get('blockers') and not release.get('blockers'):
+            issues.append('页面遗漏当前阻止降档的依据')
+    rows, expected_rows = public.get('reasons'), expected.get('reasons')
+    if not isinstance(rows, list) or not isinstance(expected_rows, list):
+        issues.append('风险约束依据必须为数组')
+    elif (len(rows) != len(expected_rows) or
+          any(not isinstance(row, dict) or not isinstance(source, dict) or
+              any(row.get(k) != source.get(k) for k in ('id', 'tier', 'status', 'next_review_at'))
+              for row, source in zip(rows, expected_rows))):
+        issues.append('风险约束档位、状态或复检日未同步')
+    control_allowed = set(scalar_fields) | {'reasons', 'downgrade', 'active'}
+    reason_allowed = {'id', 'label', 'tier', 'status', 'reason', 'release_condition', 'next_review_at'}
+    release_allowed = {'allowed', 'blockers', 'clear_periods', 'required_periods'}
+    safe_rows = rows if isinstance(rows, list) else []
+    if (set(public) - control_allowed or
+            any(isinstance(row, dict) and set(row) - reason_allowed for row in safe_rows) or
+            isinstance(release, dict) and set(release) - release_allowed):
+        issues.append('公开风险摘要包含白名单外字段')
+    encoded = json.dumps(public, ensure_ascii=False)
+    if any(marker in encoded for marker in ('/Users/', 'analysis/evidence/', 'confidence/ledger',
+                                            'wind_responses', 'buy_anchor', 'holdings', 'shares')):
+        issues.append('公开风险摘要包含私有路径或原始材料')
+    return issues
+
+
 def validate(page, latest, snapshot, extra, production=True):
     issues = []
     theme = next((x for x in latest.get('themes', []) if x.get('theme') == page.get('mainline', {}).get('theme')), None)
@@ -250,6 +305,7 @@ def validate(page, latest, snapshot, extra, production=True):
     ]:
         if public != expected:
             issues.append(label + '未与本轮计算一致')
+    issues.extend(validate_risk_control(signals.get('derisk'), theme.get('derisk')))
     for lamp in latest.get('lamps', []):
         public = signals.get('tally', {}).get('lamps', {}).get(lamp['n'], {})
         if any(public.get(k) != lamp.get(k) for k in ['raw', 'confirmed', 'stress', 'calm']):

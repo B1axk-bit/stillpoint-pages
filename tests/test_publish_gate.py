@@ -84,6 +84,65 @@ class PublishGate(unittest.TestCase):
         self.latest['themes'][0]['research_review'] = copy.deepcopy(self.page['mainline']['review'])
         self.assertEqual(self.errors(), [])
 
+    def install_risk_control(self):
+        control = dict(version='v1.4.0', evaluated_at='2026-11-06T14:30:00+08:00',
+                       market_date='2026-11-05', status='active', minimum_tier=2,
+                       next_review_at='2026-11-07T06:00:00+08:00',
+                       reasons=[dict(id='theme', label='主题承接受损', tier=2, status='active',
+                                     reason='融资约束与本主题价格承接受损并存',
+                                     release_condition='取得对应缓解证据',
+                                     next_review_at='2026-11-07T06:00:00+08:00')],
+                       downgrade=dict(allowed=False, clear_periods=0, required_periods=2,
+                                      blockers=['本主题承接受损尚未解除']))
+        for dr in (self.page['signals']['derisk'], self.latest['themes'][0]['derisk']):
+            dr.update(legacy=dict(tier=1, raw=1), control=copy.deepcopy(control))
+        return self.page['signals']['derisk'], self.latest['themes'][0]['derisk']
+
+    def test_risk_control_allows_public_summary_and_keeps_score_version_separate(self):
+        self.install_risk_control()
+        self.latest['version'] = 'v1.3.2'
+        self.assertEqual(self.errors(), [])
+
+    def test_risk_control_cannot_be_omitted_after_private_activation(self):
+        public, private = self.install_risk_control()
+        public.pop('control')
+        self.assertTrue(any('风险衔接' in e for e in self.errors()))
+
+    def test_risk_control_compares_version_dates_and_legacy_tier(self):
+        for key, value in [('version', 'v1.3.2'), ('market_date', '2026-11-04'),
+                           ('evaluated_at', '2026-11-06T09:23:00+08:00'),
+                           ('next_review_at', '2026-11-09T06:00:00+08:00')]:
+            with self.subTest(field=key):
+                public, private = self.install_risk_control()
+                public['control'][key] = value
+                self.assertTrue(any('风险衔接' in e for e in self.errors()))
+        public, private = self.install_risk_control()
+        public['legacy']['tier'] = 0
+        self.assertTrue(any('旧规则对照' in e for e in self.errors()))
+
+    def test_risk_control_cannot_hide_unresolved_reasons_or_clear_periods(self):
+        public, private = self.install_risk_control()
+        public['control']['reasons'] = []
+        public['control']['downgrade'].update(blockers=[], clear_periods=2, allowed=True)
+        errors = self.errors()
+        self.assertTrue(any('阻止降档' in e for e in errors))
+        self.assertTrue(any('降档解除' in e for e in errors))
+        self.assertTrue(any('风险约束' in e for e in errors))
+
+    def test_risk_control_rejects_private_material_and_tier_below_floor(self):
+        public, private = self.install_risk_control()
+        public['control']['reasons'][0]['source_path'] = 'analysis/evidence/private.json'
+        self.assertTrue(any('白名单' in e or '私有路径' in e for e in self.errors()))
+        public, private = self.install_risk_control()
+        public['control']['minimum_tier'] = private['control']['minimum_tier'] = 3
+        self.assertTrue(any('最低风险约束' in e for e in self.errors()))
+
+    def test_risk_control_malformed_rows_do_not_crash_gate(self):
+        for rows in (1, {}, ['broken']):
+            public, private = self.install_risk_control()
+            public['control']['reasons'] = rows
+            self.assertTrue(self.errors())
+
     def flow(self, count=20):
         dates, day = [], dt.date(2026, 9, 14)
         while len(dates) < count:

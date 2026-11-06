@@ -933,6 +933,12 @@ details.tt[open] summary::before{content:"▾"}
 .dr-c{font-size:12px;color:var(--ink-2);line-height:1.5}
 .dr-execution{grid-column:1 / -1;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
 .dr-execution p{margin:0 0 7px}
+.dr-risk-control{grid-column:1 / -1;border-top:1px dashed var(--line);padding-top:10px;font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.dr-risk-control p{margin:0 0 7px}
+.dr-risk-control details{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.dr-risk-control summary{cursor:pointer;font-weight:700;color:var(--ink)}
+.dr-risk-control ul{padding-left:19px;margin:8px 0}
+.dr-risk-control li{margin:9px 0}
 .execution-boundary,.ml-review{padding:10px 12px;margin-top:9px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;line-height:1.65;overflow-wrap:anywhere}
 .execution-boundary summary,.ml-review summary{cursor:pointer;font-weight:700;color:var(--ink)}
 .execution-boundary p,.ml-review p{margin:7px 0}
@@ -1342,10 +1348,10 @@ details.tt[open] summary::before{content:"▾"}
     "en": "Stillpoint",
     "about": "静观把市场噪音收成一句结论、一个现在能做的动作、一条改主意的线。研究框架，不是投资建议。",
     "tagline": "行情转得再快，先看清再动。",
-    "meta": "06点轮延迟补跑 · 美股11/5完成与亚洲11/6盘中分列"
+    "meta": "风险衔接更新 · 行情沿用早轮实际时点，美股11/5完成与亚洲11/6盘中分列"
   },
   "edition": {
-    "label": "研究档案 · 2026-11-06 06点补跑观察版",
+    "label": "研究档案 · 2026-11-06 风险衔接更新",
     "due": "11/12"
   },
   "verdict": {
@@ -1450,11 +1456,11 @@ details.tt[open] summary::before{content:"▾"}
     },
     {
       "label": "布伦特当月连续",
-      "value": "99.21",
+      "value": "99.14",
       "unit": "美元",
-      "delta": "11-06 09:13北京当月连续报价",
+      "delta": "11-06 09:40北京当月连续报价",
       "read": "重回95线上，供给与风险溢价另核",
-      "src": "本次正式采集·东方财富公共接口，保留实际原时点 · 11-06 09:13北京，具体月份未返",
+      "src": "正式采集已留存的东方财富公共接口 · 11-06 09:40北京，具体月份未返",
       "dir": "",
       "chg": ""
     },
@@ -1472,18 +1478,18 @@ details.tt[open] summary::before{content:"▾"}
     },
     {
       "label": "韩国外资净买卖",
-      "value": "-7,338",
+      "value": "-10,245",
       "unit": "亿韩元",
-      "delta": "韩国11/6外资盘中净卖7,338亿韩元，实际20261106。",
+      "delta": "韩国11/6外资盘中净卖10,245亿韩元，09:50读取。",
       "read": "盘中净卖与指数压力并存",
-      "src": "Naver · 韩国11/6盘中",
+      "src": "Naver · 韩国11/6盘中，读取09:50北京",
       "colorBy": "netFlow",
       "chg": "",
       "dir": ""
     }
   ],
   "signals": {
-    "head": "①红、②红、③红、④红、⑤绿 · 风险1档",
+    "head": "①红、②红、③红、④红、⑤绿 · 风险2档，旧规则1档对照",
     "sub": "警报按原时效和两期规则确认；资金数据落后于股票日，不能当同日因果证明。",
     "diagnosis": {
       "verdict": "宽基修复，融资成本与经营兑现继续分层",
@@ -1519,7 +1525,7 @@ details.tt[open] summary::before{content:"▾"}
         "state": "red",
         "prev": "red",
         "trend": "本期红 / 确认红，有效票族3",
-        "fact": "标普11/5收7353.73低于7541.40本轮参照，VIX28.18；亚洲实际盘中另列。韩国11/6外资盘中净卖7,338亿韩元，实际20261106。",
+        "fact": "标普11/5收7353.73低于7541.40本轮参照，VIX28.18；亚洲实际盘中另列。韩国11/6外资盘中净卖10,245亿韩元，实际20261106。",
         "unlock": "外资重新停止净卖出，KOSPI 连续两天不跌破 10/19 的低点 5,488"
       },
       {
@@ -1562,19 +1568,19 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "prevLabel": "上次已发布实际批次",
     "tally": {
-      "asof": "2026-11-06 09:23",
+      "asof": "2026-11-06 09:50",
       "version": "v1.3.2",
       "lamps": {
         "①": {
           "confirmed": "red",
           "raw": "red",
-          "stress": 3.0,
+          "stress": 2.0,
           "calm": 0,
           "cons": 1.0,
           "flip": 2,
           "watch": false,
-          "valid": 3.0,
-          "abst": 0,
+          "valid": 2.0,
+          "abst": 1,
           "thin": false
         },
         "②": {
@@ -1629,37 +1635,103 @@ details.tt[open] summary::before{content:"▾"}
       "note": "④本期红、确认红。11/4同日SOFR3.94%减IORB3.90%为+4bp，HY OAS3.32%；均早于11/5股票大跌。11/5 VIX28.18越过25原观察线，不能拿滞后资金数据保证当日无压力。"
     },
     "derisk": {
-      "tier": 1,
-      "raw": 1,
+      "tier": 2,
+      "raw": 2,
       "theme": "美股 AI",
       "why": [
-        "主线 H1 对应的 ② 灯确认红"
+        "主题融资压力与同窗价格承接受损组合仍在，新增风险约束独立于主线支持分及亚洲灯色。"
       ],
       "ladder": [
         {
           "t": 0,
           "name": "照常",
-          "cond": "主线自己的灯不是红"
+          "cond": "没有更高的有效风险约束，且原风险解除条件通过"
         },
         {
           "t": 1,
           "name": "不加仓、不加杠杆",
-          "cond": "主线自己的灯确认红"
+          "cond": "本主题自身或适用的共同市场风险保持有效压力"
         },
         {
           "t": 2,
           "name": "主题仓位减三分之一",
-          "cond": "再加上踩踏灯确认红，并且主线分数跌破 60 或出现跳格提示"
+          "cond": "原2档条件，或本主题融资压力与已核价格承接受损组合；降档另验对应缓解证据"
         },
         {
           "t": 3,
           "name": "主题仓位减到一半以下",
-          "cond": "跳格条件满足而且对应的灯也确认红，或者主线分数跌破 50"
+          "cond": "沿用原3档触发；原触发原因未解除时不因提示过期自动降档"
         }
       ],
-      "asof": "2026-11-06 09:23",
-      "note": "原主题风险预案为1档，实际执行基准另核。",
-      "action": "不加仓，不卖期权；已有仓位不动"
+      "asof": "2026-11-06T14:55:39.512131+08:00",
+      "note": "当前档位从本次发布起适用；旧档保留对照，行情沿用早轮实际时点，未记录个人执行。",
+      "action": "主题仓位减三分之一",
+      "name": "减一部分",
+      "legacy": {
+        "raw": 1,
+        "tier": 1,
+        "name": "不加仓、不加杠杆",
+        "action": "不加仓，不卖期权；已有仓位不动",
+        "why": [
+          "按原固定档位规则计算，作为并排对照。"
+        ]
+      },
+      "control": {
+        "version": "v1.4.0",
+        "evaluated_at": "2026-11-06T14:55:39.512131+08:00",
+        "market_date": "2026-11-05",
+        "status": "active",
+        "minimum_tier": 2,
+        "next_review_at": "2026-11-07T07:00:00+08:00",
+        "previous_tier": 2,
+        "proposed_tier": 2,
+        "market": "US",
+        "evidence_asof": "2026-11-06T14:20:24.163270+08:00",
+        "reasons": [
+          {
+            "id": "legacy",
+            "label": "旧规则风险约束",
+            "tier": 1,
+            "status": "active",
+            "next_review_at": "2026-11-07T07:00:00+08:00",
+            "reason": "原规则触发的风险要求继续保留；提示消失或滚出窗口本身不是解除证据。",
+            "release_condition": "用对应风险的合格缓解证据重新复核；跨两个不同真实完成交易日确认，逐档释放。同日重算、缺数和旧提示过期不算改善。"
+          },
+          {
+            "id": "own",
+            "label": "主题自身压力",
+            "tier": 1,
+            "status": "active",
+            "next_review_at": "2026-11-07T07:00:00+08:00",
+            "reason": "本主题对应的风险灯仍有合格压力，主线支持分高不能抵消这项约束。",
+            "release_condition": "用对应风险的合格缓解证据重新复核；跨两个不同真实完成交易日确认，逐档释放。同日重算、缺数和旧提示过期不算改善。"
+          },
+          {
+            "id": "market",
+            "label": "共同市场压力",
+            "tier": 1,
+            "status": "active",
+            "next_review_at": "2026-11-07T07:00:00+08:00",
+            "reason": "共同市场压力仍对本主题适用，按既有信号资格单独约束风险档。",
+            "release_condition": "用对应风险的合格缓解证据重新复核；跨两个不同真实完成交易日确认，逐档释放。同日重算、缺数和旧提示过期不算改善。"
+          },
+          {
+            "id": "theme_structure",
+            "label": "融资压力与主题承接受损",
+            "tier": 2,
+            "status": "active",
+            "next_review_at": "2026-11-07T07:00:00+08:00",
+            "reason": "融资压力与同一完成交易日的主题价格承接受损并存，按本轮复核保留防守预案。",
+            "release_condition": "用对应风险的合格缓解证据重新复核；跨两个不同真实完成交易日确认，逐档释放。同日重算、缺数和旧提示过期不算改善。"
+          }
+        ],
+        "downgrade": {
+          "allowed": false,
+          "clear_periods": 0,
+          "required_periods": 2,
+          "blockers": []
+        }
+      }
     }
   },
   "themesHead": "瓶颈层维持，借钱扩张的回避，其余在等",
@@ -1892,7 +1964,7 @@ details.tt[open] summary::before{content:"▾"}
           "stance": "等待"
         }
       ],
-      "verdict": "韩国KOSPI-7.17%，11-06 09:31北京；海力士-11.39%、三星-8.83%按各自盘中时点。韩国11/6外资盘中净卖7,338亿韩元，实际20261106。日本-6.58%、台湾-8.20%也承压，支持区域科技风险共振，尚不识别具体卖方。保留等待，外资停止持续净卖、价格与订单利润共同改善后再提高把握。",
+      "verdict": "韩国KOSPI-7.17%，11-06 09:31北京；海力士-11.39%、三星-8.83%按各自盘中时点。韩国11/6外资盘中净卖10,245亿韩元，实际20261106。日本-6.58%、台湾-8.20%也承压，支持区域科技风险共振，尚不识别具体卖方。保留等待，外资停止持续净卖、价格与订单利润共同改善后再提高把握。",
       "viz": {
         "type": "bars",
         "title": "韩国价格修复与外资承接分开看（%）",
@@ -2036,7 +2108,7 @@ details.tt[open] summary::before{content:"▾"}
           "stance": "等待"
         }
       ],
-      "verdict": "美元指数101.61，欧元1.1218、美元兑日元157.8238，各按11-06 09:31附近实际报价。布伦特当月连续99.21重回95原线上方，之前油价缓和条件没有持续。12/9会议加息至少25bp概率68.7%，11/6 06:00:54新浪正文转引；年底累计仍缺完整分布。 降息/加息预期变化、油价与避险路径并列，不由美元一条技术线宣布拐点确认。",
+      "verdict": "美元指数101.61，欧元1.1218、美元兑日元157.8238，各按11-06 09:31附近实际报价。布伦特当月连续99.14重回95原线上方，之前油价缓和条件没有持续。12/9会议加息至少25bp概率68.7%，11/6 06:00:54新浪正文转引；年底累计仍缺完整分布。 降息/加息预期变化、油价与避险路径并列，不由美元一条技术线宣布拐点确认。",
       "viz": {
         "type": "conds",
         "title": "六个拐点条件 · 最新时点分别标注",
@@ -2066,8 +2138,8 @@ details.tt[open] summary::before{content:"▾"}
             "n": "④",
             "name": "布伦特跌破 95",
             "s": "red",
-            "v": "布伦特连续99.21回到95线上，11-06 09:13北京。",
-            "fact": "布伦特连续99.21回到95线上，11-06 09:13北京。"
+            "v": "布伦特连续99.14回到95线上，11-06 09:40北京。",
+            "fact": "布伦特连续99.14回到95线上，11-06 09:40北京。"
           },
           {
             "n": "⑤",
@@ -3359,12 +3431,12 @@ details.tt[open] summary::before{content:"▾"}
         "unit": "天连续净买",
         "curLabel": "0",
         "state": "bad",
-        "stateLabel": "韩国11/6外资盘中净卖7,338亿韩元，实际20261106。",
+        "stateLabel": "韩国11/6外资盘中净卖10,245亿韩元，实际20261106。",
         "note": "本轮当日盘中累计，不与完成日直接视作连续净买/卖确认；实际资金身份仍待核。",
         "src": "Naver · 韩国11/6盘中",
         "resold": [
           {
-            "tip": "20261106|净卖7338亿韩元"
+            "tip": "20261106|净卖10245亿韩元"
           }
         ]
       }
@@ -4226,7 +4298,7 @@ details.tt[open] summary::before{content:"▾"}
       }
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
-    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.7，研究规则v1.3.2；历史研究依据与原文继续留存。",
+    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.8，计分v1.3.2、风险控制v1.4.0；历史研究依据与原文继续留存。",
     "funnelNote": "这一页是从漏斗出口往回读的：最上面是结论，往下依次是决策层、机制层、事实层，越往下越是\"凭什么\"。",
     "back": {
       "k": "回看",
@@ -4257,18 +4329,18 @@ details.tt[open] summary::before{content:"▾"}
         },
         {
           "k": "减仓档",
-          "v": "灯红了做什么事先写死：1 档不加仓、不加杠杆；2 档主题仓位减三分之一；3 档减到一半以下。升档当期生效，降档要连续两期。"
+          "v": "主线支持分与风险档分别判断。按主题匹配风险，当前档与旧规则并排；1档不加仓、不加杠杆，2档和3档保留原主题预案比例。升档按有效条件当期提示，降档需对应缓解证据与两个不同真实完成交易日，逐档释放。"
         },
         {
           "k": "怎么验证",
           "v": "每天存一行灯色和分数。10/28 FOMC 之后先查一次灯，11/12 第一次正式校准；每次改规则都记版本和理由。"
         }
       ],
-      "src": "规则全文在静观置信度 v1.3；证据账本和归类只放后台，不在这一页展示。"
+      "src": "固定计分v1.3.2、风险控制v1.4.0分别留档；完整证据与复核只放私有后台。"
     }
   },
   "header": {
-    "edition": "11/6 06点补跑版",
+    "edition": "11/6 风险衔接更新",
     "stanceTag": "宽基止跌候选受反证",
     "mainline": {
       "v": "融资压力（范围收窄）",
@@ -4279,23 +4351,23 @@ details.tt[open] summary::before{content:"▾"}
     "tape": [
       {
         "n": "纳斯达克",
-        "v": "25,736.51",
-        "c": 1.436639185236488,
-        "t": "11-05 06:01北京 · Yahoo ^IXIC · 美东11/4完成日",
+        "v": "24,315.00",
+        "c": -5.5233276717406525,
+        "t": "早轮已核公开行情 · 美东11/5完成日；原报价时点 2026-11-06T06:15:59+08:00",
         "to": "kpi-0"
       },
       {
         "n": "费城半导体",
-        "v": "10,268.65",
-        "c": -3.1295647183138153,
-        "t": "11-05 06:01北京 · Yahoo ^SOX · 美东11/4完成日",
+        "v": "9,011.14",
+        "c": -12.24613111546844,
+        "t": "早轮已核公开行情 · 美东11/5完成日；原报价时点 2026-11-06T06:15:59+08:00",
         "to": "th-0"
       },
       {
         "n": "道琼斯",
-        "v": "53,356.12",
-        "c": 3.030509149607008,
-        "t": "11-05 05:51北京 · Yahoo ^DJI · 美东11/4完成日",
+        "v": "51,523.06",
+        "c": -3.43552165369968,
+        "t": "早轮已核公开行情 · 美东11/5完成日；原报价时点 2026-11-06T05:35:51+08:00",
         "to": "evidence"
       },
       {
@@ -4321,18 +4393,18 @@ details.tt[open] summary::before{content:"▾"}
       },
       {
         "n": "10 年美债",
-        "v": "4.90%",
-        "note": "11/4美国财政部日表",
-        "t": "11/4美国财政部日表2Y4.58%、5Y4.69%、10Y4.90%、10Y实际2.64%，分别较11/3变动-3、-5、-5和-1bp。",
+        "v": "4.84%",
+        "note": "11/5美国财政部日表",
+        "t": "11/5美国财政部日表：2Y4.46%、5Y4.59%、10Y4.84%、10Y实际2.60%；早轮已核来源。",
         "to": "macro"
       },
       {
         "n": "布伦特",
-        "v": "99.21",
+        "v": "99.14",
         "c": null,
-        "t": "11-06 09:13北京 · 本次正式采集·东方财富公共接口，保留实际原时点",
+        "t": "11-06 09:40北京 · 东方财富当月连续",
         "to": "macro",
-        "note": "当月连续，仅绝对水平"
+        "note": "仅绝对水平，合约月份未返回"
       },
       {
         "n": "COMEX 黄金",
@@ -4343,22 +4415,22 @@ details.tt[open] summary::before{content:"▾"}
       },
       {
         "n": "VIX",
-        "v": "16.61",
-        "c": -20.259241186570478,
-        "t": "11-05 05:15北京 · Yahoo ^VIX · 美东11/4完成日",
+        "v": "28.18",
+        "c": 69.65682699877726,
+        "t": "早轮已核公开行情 · 美东11/5完成日；原报价时点 2026-11-06T05:15:01+08:00",
         "to": "g-3"
       },
       {
         "n": "CoreWeave",
-        "v": "48.42",
-        "c": -9.899519003175762,
-        "t": "11-05 05:00北京 · Yahoo CRWV · 美东11/4完成日",
+        "v": "43.66",
+        "c": -9.830645082506829,
+        "t": "早轮已核公开行情 · 美东11/5完成日；原报价时点 2026-11-06T05:00:01+08:00",
         "to": "kpi-1"
       }
     ],
     "changes": {
-      "since": "11/5午后轮",
-      "lead": "美股11/5承接失败，亚洲11/6盘中受冲击。",
+      "since": "11/6早轮原版本",
+      "lead": "行情沿用早轮实际时点；本次更新风险衔接与降档解除条件。",
       "items": [
         {
           "k": "宽基结构",
@@ -4369,8 +4441,8 @@ details.tt[open] summary::before{content:"▾"}
           "v": "费半−12.25%，CRWV−9.83%，芯片跌幅更大。"
         },
         {
-          "k": "原规则",
-          "v": "91.5分、风险1档；用户新增复核已保留。"
+          "k": "风险衔接",
+          "v": "计分仍91.5分；新风险2档、旧规则1档；解除证据与下一复检点单列。"
         }
       ]
     }
@@ -4379,9 +4451,9 @@ details.tt[open] summary::before{content:"▾"}
     "head": "把静观装进你的研究助手",
     "sub": "静观是一个可安装的 skill：先记账，再拆机制、选主线，最后形成带证伪条件的研究立场；维护现有项目时，按完整数据与发布流程执行。",
     "spec": [
-      "v0.7.7",
-      "压缩包 64.9 KB",
-      "主文件 14.0 KB",
+      "v0.7.8",
+      "压缩包 66.1 KB",
+      "主文件 14.1 KB",
       "核心分析不用 API Key（吸引子指标要）",
       "只读，不下单"
     ],
@@ -4401,11 +4473,11 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "pkg": {
       "name": "stillpoint",
-      "ver": "v0.7.7",
-      "size": "64.9 KB",
+      "ver": "v0.7.8",
+      "size": "66.1 KB",
       "zip": "https://b1axk-bit.github.io/stillpoint-pages/skill/stillpoint.zip",
       "skillUrl": "https://github.com/B1axk-bit/stillpoint-pages/blob/main/skill/stillpoint/SKILL.md",
-      "sha256": "68efc60b91331debe419c10b2f0b85dad375bd60065f798ed2c1e72d03542c8e"
+      "sha256": "80cc8b4c266c9bac6b4acdb6d59da6f115cbccb4a774f414ef6e46ee686a1179"
     },
     "clients": [
       {
@@ -6341,6 +6413,41 @@ details.tt[open] summary::before{content:"▾"}
           "20261106-04"
         ],
         "publication_status": "current_release"
+      },
+      {
+        "key": "11/6 风险衔接",
+        "snap": "2026-11-06T14:55:39.512131+08:00",
+        "head": "支持分与风险档分开，解除风险要有证据。",
+        "stance": "主题防守预案",
+        "diag": "计分v1.3.2不变；风险控制v1.4.0，新2档/旧1档。未倒改历史、未记用户交易。",
+        "lamps": [
+          [
+            "①",
+            "踩踏",
+            "red"
+          ],
+          [
+            "②",
+            "融资",
+            "red"
+          ],
+          [
+            "③",
+            "利率",
+            "red"
+          ],
+          [
+            "④",
+            "系统流动性",
+            "red"
+          ],
+          [
+            "⑤",
+            "基本面",
+            "green"
+          ]
+        ],
+        "themes": []
       }
     ]
   },
@@ -6375,7 +6482,7 @@ details.tt[open] summary::before{content:"▾"}
       }
     ],
     "check": "美东11/5宽基与芯片一起大跌，标普跌破本轮7541.40低点参照，前日止跌候选的首日承接失败；亚洲11/6日、韩、台早盘同步承压。AI抛售从融资依赖节点扩展到芯片及交付链条，媒体所述监管与项目兑现担忧是催化候选，不是已生效禁令。Oracle稀疏同合约CDS样本再走阔，Reuters转引CoreWeave五年保护成本仍高；IREN确认ARR目标延期但需求收入仍增长。Meta美元、Alphabet欧元融资已由发行人确认完成，不能称融资全面冻结。CoreWeave当日虽再创新低，却比SMH强约1.38个百分点，窄H1不足以单独解释整日分化。市场恐慌明显上升，最新资金利差与高收益OAS仍是崩跌前一日，尚缺系统性被迫出售的同窗证明。窄H1只保留于实际资金、期限和现金兑现受限的主体；宽基止跌与AI经营验证分别重审。",
-    "src": "静观 v1.3.2 · 11/6延迟早轮计算",
+    "src": "静观计分v1.3.2 · 早轮原计算；风险控制v1.4.0按本次实际复核另列",
     "review": {
       "asof": "2026-11-06T09:36:06+08:00",
       "status": "completed_conditional_H1",
@@ -6774,7 +6881,7 @@ details.tt[open] summary::before{content:"▾"}
   },
   "execution": {
     "title": "执行边界 · 主题预案，不是个人成交记录",
-    "summary": "原规则风险预案1档；是否执行及已执行部分仍以用户记录核对。",
+    "summary": "当前美股AI主题风险预案2档，旧规则对照1档；是否执行及已执行部分仍以用户记录核对。",
     "repeat": "档位持续不等于每天新增一次指令，不得每天对余仓重复减1/3。",
     "details": [
       "这套预案只针对对应主题仓位，不是全部资产；规则触发不等同高胜率卖单。",
@@ -6811,6 +6918,46 @@ details.tt[open] summary::before{content:"▾"}
     e.appendChild(kid instanceof Node ? kid : document.createTextNode(String(kid)));
   }
   function $(id){ return document.getElementById(id); }
+  function riskControlView(dr){
+    var c = dr && dr.control;
+    if (!c || typeof c !== 'object') return null;
+    var release = c.downgrade || c.release || {};
+    var rows = Array.isArray(c.reasons) ? c.reasons : (Array.isArray(c.floors) ? c.floors : []);
+    var labels = {active:'约束有效', stress:'压力仍在', impaired:'承接受损', pending_review:'待复检', review_due:'待复检', unknown:'待核', clear:'已缓解', calm:'已缓解', released:'已解除', release_pending:'等待确认', blocked:'暂不降档', held_pending_review:'待核复检，暂维持', stable:'维持当前档位'};
+    function text(value){ return typeof value === 'string' || typeof value === 'number' ? String(value) : ''; }
+    function time(value){
+      var raw = text(value);
+      if (!/(?:Z|[+-]\d{2}:\d{2})$/.test(raw)) return raw;
+      var date = new Date(raw);
+      if (!Number.isFinite(date.getTime())) return raw;
+      return new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date) + ' 北京时间';
+    }
+    var blockers = release.blockers || release.blocked_by || [];
+    return {version:text(c.version), evaluatedAt:time(c.evaluated_at || c.asof), marketDate:text(c.market_date), status:labels[c.status] || text(c.status),
+      minimumTier:Number.isInteger(c.minimum_tier) ? c.minimum_tier : null,
+      legacyTier:dr.legacy && Number.isInteger(dr.legacy.tier) ? dr.legacy.tier : null,
+      nextReview:time(c.next_review_at), allowed:typeof release.allowed === 'boolean' ? release.allowed : (typeof release.eligible === 'boolean' ? release.eligible : null),
+      clearPeriods:release.clear_periods ?? release.confirmations ?? null, requiredPeriods:release.required_periods ?? release.required ?? null,
+      blockers:Array.isArray(blockers) ? blockers.map(function(x){ return text(typeof x === 'object' && x ? x.reason || x.label : x); }).filter(Boolean) : [],
+      reasons:rows.filter(function(x){ return x && typeof x === 'object'; }).map(function(x){ return {label:text(x.label || x.name || x.id), tier:Number.isInteger(x.tier) ? x.tier : null,
+        status:labels[x.status] || text(x.status), reason:text(x.reason || x.summary), releaseCondition:text(x.release_condition), nextReview:time(x.next_review_at)}; })};
+  }
+  function riskControlNode(dr){
+    var v = riskControlView(dr);
+    if (!v) return null;
+    var confirmation = v.clearPeriods !== null && v.requiredPeriods !== null ? '；不同完成交易日的改善确认 ' + v.clearPeriods + ' / ' + v.requiredPeriods : '';
+    var release = v.allowed === false ? '暂不降档' : (v.allowed === true ? '解除条件已通过，按本轮计算逐档调整' : '解除状态待核');
+    return h('section', {class:'dr-risk-control'},
+      h('p', null, v.legacyTier !== null ? '当前生效 ' + dr.tier + ' 档 · 旧规则对照 ' + v.legacyTier + ' 档。' : '', '主线支持分与风险档分别判断。'),
+      h('details', null, h('summary', null, '风险约束与降档条件' + (v.status ? ' · ' + v.status : '')),
+        h('p', null, release + confirmation + '。' + (v.minimumTier !== null ? '当前风险要求至少 ' + v.minimumTier + ' 档。' : '')),
+        v.blockers.length ? h('ul', null, v.blockers.map(function(x){ return h('li', null, x); })) : null,
+        v.reasons.length ? h('ul', null, v.reasons.map(function(x){ return h('li', null,
+          h('strong', null, x.label || '风险依据'), x.tier !== null ? ' · ' + x.tier + '档约束' : '', x.status ? ' · ' + x.status : '',
+          x.reason ? h('p', null, x.reason) : null, x.releaseCondition ? h('p', null, '解除条件：' + x.releaseCondition) : null,
+          x.nextReview && x.nextReview !== v.nextReview ? h('p', {class:'src'}, '下次复检：' + x.nextReview) : null); })) : null,
+        h('p', {class:'src'}, '风控 ' + (v.version || '未注明') + '；证据完成日 ' + (v.marketDate || '待核') + '；实评 ' + (v.evaluatedAt || '未注明') + '。' + (v.nextReview ? '下次复检 ' + v.nextReview + '。' : '') + '缺数、过期或提示消失不等于风险解除。')));
+  }
   function sgn(v, d){ d = d == null ? 2 : d; if (v === 0) return (0).toFixed(d); return (v > 0 ? '+' : MINUS) + Math.abs(v).toFixed(d); }
   function num(v, d){ var s = Math.abs(v).toLocaleString('en-US', {minimumFractionDigits: d, maximumFractionDigits: d}); return (v < 0 ? MINUS : '') + s; }
   function auto(v){ return Number.isInteger(v) ? num(v, 0) : num(v, 2); }
@@ -7108,12 +7255,13 @@ details.tt[open] summary::before{content:"▾"}
     }
     var R = s.derisk, dbox = $('derisk');
     if (!R) { dbox.hidden = true; return; }
-    dbox.appendChild(h('div', {class: 'dr-h'}, h('span', {class: 'dr-k'}, '减仓档 · ' + R.theme), h('b', null, R.tier + ' 档：' + R.ladder[R.tier].name),
+    dbox.appendChild(h('div', {class: 'dr-h'}, h('span', {class: 'dr-k'}, (R.control ? '风险档 · ' : '减仓档 · ') + R.theme), h('b', null, R.tier + ' 档：' + R.ladder[R.tier].name),
       h('span', {class: 'dr-why'}, (R.why.length ? '理由：' + R.why.join('；') + '。' : '') + R.note)));
     dbox.appendChild(h('ol', {class: 'dr-l'}, R.ladder.map(function(x){
       return h('li', {class: x.t === R.tier ? 'on' : null, 'aria-current': x.t === R.tier ? 'step' : null},
         h('span', {class: 'dr-t'}, x.t + ' 档'), h('b', null, x.name), h('span', {class: 'dr-c'}, x.cond));
     })));
+    dbox.appendChild(riskControlNode(R) || document.createTextNode(''));
     var execution = D.execution;
     if (execution) dbox.appendChild(h('div', {class:'dr-execution'},
       h('p', null, h('b', null, execution.summary)),

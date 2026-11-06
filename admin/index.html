@@ -71,6 +71,13 @@ a{color:inherit}
 .alert{margin-top:10px;padding:8px 12px;border-radius:6px;background:var(--crit-wash);color:var(--crit);font-size:14px}
 .tier{display:inline-flex;align-items:center;gap:8px;margin-top:14px;padding:6px 12px 6px 6px;border-radius:999px;background:var(--surface);border:1px solid var(--line);box-shadow:var(--shadow);font-size:14px}
 .tier b{white-space:nowrap;flex:none;font-family:var(--f-body);font-weight:500;font-variant-numeric:tabular-nums;background:var(--inv-bg);color:var(--inv-fg);border-radius:999px;padding:1px 9px;font-size:12px}
+.risk-control{margin-top:10px;max-width:64em;overflow-wrap:anywhere}
+.risk-control .risk-compare{margin:0 0 7px;font-size:13px;color:var(--ink-2)}
+.risk-control details{padding:10px 12px;border:1px solid var(--line);border-radius:6px;background:var(--surface)}
+.risk-control summary{cursor:pointer;font-weight:700}
+.risk-control ul{margin:8px 0;padding-left:19px}
+.risk-control li{margin:9px 0}
+.risk-control p{margin:7px 0}
 
 /* 五盏灯 */
 .lamps{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;margin-top:22px}
@@ -379,6 +386,44 @@ function executionBoundaryHTML() {
     <p>本页尚无本档个人执行记录，不代表已下单或已完成减仓。执行前需明确本轮主题仓位基准，并核对已经执行的部分。</p>
     <p><strong>档位持续不等于每天新增一次指令，不得每天对余仓重复减1/3。</strong>若已有执行，先核对记录与本轮基准，再判断是否仍有待执行部分。</p></details>`;
 }
+function riskControlView(dr) {
+  const c = dr && dr.control;
+  if (!c || typeof c !== 'object') return null;
+  const release = c.downgrade || c.release || {};
+  const rows = Array.isArray(c.reasons) ? c.reasons : (Array.isArray(c.floors) ? c.floors : []);
+  const labels = {active:'约束有效', stress:'压力仍在', impaired:'承接受损', pending_review:'待复检', review_due:'待复检', unknown:'待核', clear:'已缓解', calm:'已缓解', released:'已解除', release_pending:'等待确认', blocked:'暂不降档', held_pending_review:'待核复检，暂维持', stable:'维持当前档位'};
+  const text = value => typeof value === 'string' || typeof value === 'number' ? String(value) : '';
+  const time = value => {
+    const raw = text(value);
+    if (!/(?:Z|[+-]\d{2}:\d{2})$/.test(raw)) return raw;
+    const date = new Date(raw);
+    if (!Number.isFinite(date.getTime())) return raw;
+    return new Intl.DateTimeFormat('sv-SE', {timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(date) + ' 北京时间';
+  };
+  const blockers = release.blockers || release.blocked_by || [];
+  return {version:text(c.version), evaluatedAt:time(c.evaluated_at || c.asof), marketDate:text(c.market_date), status:labels[c.status] || text(c.status),
+    minimumTier:Number.isInteger(c.minimum_tier) ? c.minimum_tier : null,
+    legacyTier:dr.legacy && Number.isInteger(dr.legacy.tier) ? dr.legacy.tier : null,
+    nextReview:time(c.next_review_at), allowed:typeof release.allowed === 'boolean' ? release.allowed : (typeof release.eligible === 'boolean' ? release.eligible : null),
+    clearPeriods:release.clear_periods ?? release.confirmations ?? null, requiredPeriods:release.required_periods ?? release.required ?? null,
+    blockers:Array.isArray(blockers) ? blockers.map(x => text(typeof x === 'object' && x ? x.reason || x.label : x)).filter(Boolean) : [],
+    reasons:rows.filter(x => x && typeof x === 'object').map(x => ({label:text(x.label || x.name || x.id), tier:Number.isInteger(x.tier) ? x.tier : null,
+      status:labels[x.status] || text(x.status), reason:text(x.reason || x.summary), releaseCondition:text(x.release_condition), nextReview:time(x.next_review_at)}))};
+}
+function riskControlHTML(dr) {
+  const v = riskControlView(dr);
+  if (!v) return '';
+  const confirmation = v.clearPeriods !== null && v.requiredPeriods !== null ? `；不同完成交易日的改善确认 ${esc(v.clearPeriods)} / ${esc(v.requiredPeriods)}` : '';
+  const release = v.allowed === false ? '暂不降档' : (v.allowed === true ? '解除条件已通过，按本轮计算逐档调整' : '解除状态待核');
+  return `<section class="risk-control">
+    <p class="risk-compare">${v.legacyTier !== null ? `当前生效 ${esc(dr.tier)} 档 · 旧规则对照 ${esc(v.legacyTier)} 档。` : ''}主线支持分与风险档分别判断。</p>
+    <details><summary>风险约束与降档条件${v.status ? ` · ${esc(v.status)}` : ''}</summary>
+      <p>${esc(release)}${confirmation}。${v.minimumTier !== null ? `当前风险要求至少 ${esc(v.minimumTier)} 档。` : ''}</p>
+      ${v.blockers.length ? `<ul>${v.blockers.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+      ${v.reasons.length ? `<ul>${v.reasons.map(x => `<li><strong>${esc(x.label || '风险依据')}</strong>${x.tier !== null ? ` · ${esc(x.tier)}档约束` : ''}${x.status ? ` · ${esc(x.status)}` : ''}${x.reason ? `<p>${esc(x.reason)}</p>` : ''}${x.releaseCondition ? `<p>解除条件：${esc(x.releaseCondition)}</p>` : ''}${x.nextReview && x.nextReview !== v.nextReview ? `<p class="sub">下次复检：${esc(x.nextReview)}</p>` : ''}</li>`).join('')}</ul>` : ''}
+      <p class="sub">风控 ${esc(v.version || '未注明')}；证据完成日 ${esc(v.marketDate || '待核')}；实评 ${esc(v.evaluatedAt || '未注明')}。${v.nextReview ? `下次复检 ${esc(v.nextReview)}。` : ''}缺数、过期或提示消失不等于风险解除。</p>
+    </details></section>`;
+}
 
 // ---------- header & summary ----------
 function renderHead() {
@@ -395,8 +440,9 @@ function renderHead() {
     ${t.alerts.map(a => `<div class="alert">${esc(a)}</div>`).join("")}
     ${research ? `<div class="note research-review"><b>${esc(research.headline || '主线复检记录')}</b><p>${esc(research.summary || '')}</p><p class="sub">复检 ${esc(research.asof || '未注明')}；${research.has_new_ledger_evidence ? '此后账本已有新证据，需要继续核验。' : '原账本与规则计算保留，研究结论与计分分别解释。'}</p></div>` : ''}
     ${reviewEvidenceHTML(t)}
-    ${dr ? `<div class="tier"><b>减仓档 ${dr.tier}</b><span><strong>${esc(dr.name)}</strong> · ${esc(dr.action)}</span></div>
+    ${dr ? `<div class="tier"><b>${dr.control ? '风险档' : '减仓档'} ${dr.tier}</b><span><strong>${esc(dr.name)}</strong> · ${esc(dr.action)}</span></div>
       <div class="sub" style="margin-top:6px">${esc(dr.why.join("；"))}</div>
+      ${riskControlHTML(dr)}
       <p class="sub">规则触发的主题风控预案 · 比例效果待验证 · 本页尚无本档个人执行记录。<strong>不得每天对余仓重复减1/3。</strong></p>${executionBoundaryHTML()}` : ""}`;
   $("#lampstrip").innerHTML = DATA.lamps.map(l => `<button class="lampc c-${l.confirmed}" data-lamp="${esc(l.n)}" title="看这盏灯的每一票">
       <span class="nm"><span class="dot"></span>${l.n} ${esc(l.name)} · ${COLOR[l.confirmed]}</span>
@@ -688,7 +734,8 @@ function renderRules() {
       <tr><td>新独立</td><td>${row("新独立", "支持")}</td><td>${row("新独立", "对立")}</td></tr>
       <tr><td>幅度</td><td>${row("幅度", "支持")}</td><td>${row("幅度", "对立")}</td></tr>
       <tr><td>记忆 / 噪声 / 他题</td><td>${ptsTag(0)}（记忆会把衰减时钟拨回 0）</td><td>${ptsTag(0)}</td></tr></table></div>
-    ${DATA.derisk ? `<h2 class="mh">减仓档</h2><div class="scroll"><table><tr><th>规则</th></tr>${DATA.derisk.rules.map(r => `<tr><td>${esc(r)}</td></tr>`).join("")}</table></div>
+    ${DATA.riskControlRubric ? `<h2 class="mh">当前风险衔接规则 · ${esc(DATA.riskControlRubric.version)}</h2><div class="scroll"><table><tr><th>规则</th></tr>${(DATA.riskControlRubric.rules || []).map(r => `<tr><td>${esc(r)}</td></tr>`).join('')}</table></div><p class="sub">${esc(DATA.riskControlRubric.status || '')}。主线支持分、固定计分表与灯阈值仍按计分 ${esc(DATA.version)} 保留。</p>` : ''}
+    ${DATA.derisk ? `<h2 class="mh">${DATA.riskControlRubric ? '旧规则对照' : '减仓档'}</h2><div class="scroll"><table><tr><th>规则</th></tr>${DATA.derisk.rules.map(r => `<tr><td>${esc(r)}</td></tr>`).join("")}</table></div>
       <div class="sub" style="margin-top:6px">2 档：${esc(DATA.derisk.tier2)}；3 档：${esc(DATA.derisk.tier3)}（${esc(DATA.derisk.status)}）</div>` : ""}
     <h2 class="mh">强度怎么定</h2>
     <div class="scroll"><table><tr><th>档</th><th>标准</th><th>账本里的例子</th></tr>
@@ -894,7 +941,7 @@ async function ghLoad(remember) {
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
     DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates, cds: L.cds || {},
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
-      strength: R.strength, changelog: R.changelog, derisk: R.derisk, cases: cases.text ? JSON.parse(cases.text) : null,
+      strength: R.strength, changelog: R.changelog, derisk: R.derisk, riskControlRubric: R.risk_control || null, cases: cases.text ? JSON.parse(cases.text) : null,
       brief: brief.text ? (JSON.parse(brief.text).items || {}) : {},
       attractor: parseAttractorReport(attractor.text), sourceHealth: L.source_health || null};
     decisions = dec.text ? JSON.parse(dec.text) : {};
