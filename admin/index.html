@@ -257,7 +257,7 @@ td.n{font-family:var(--f-mono);font-variant-numeric:tabular-nums;white-space:now
   </div>
 
   <section class="pane on" id="p-review">
-    <div class="note">先看核验后的事实、来源与“四个问题”，再复核建议。分数由原固定表计算，表示对当前 H1 主线的支持程度；你<b>确认</b>或<b>改</b>后，下一次更新才会入账。重复报道集中列出；有具体来源缺口的保留待核实。更改归类时可即时预览加减分，预览不会保存。</div>
+    <div class="note">先看核验后的事实、来源与“四个问题”，再复核建议。分数由原固定表计算，表示对当前 H1 主线的支持程度；你<b>确认</b>或<b>改</b>并保存后，会自动入账并重算分数和风险档；完成状态以匹配本次复核的服务器回执为准。重复报道集中列出；有具体来源缺口的保留待核实。更改归类时可即时预览加减分，预览不会保存。</div>
     <div class="sub" id="prepared-info"></div>
     <div id="groups"></div>
     <div class="group">
@@ -503,7 +503,7 @@ const GROUPS = [
 function candHTML(c) {
   const d = decisions[c.id];
   const s = d && d.action !== "reject" ? d : c.suggest;
-  const st = synced.has(c.id) ? `<span class="state synced">已入账</span>` : d ? `<span class="state ${d.action}">${ACT[d.action]}</span>` : "";
+  const st = STORE === "github" ? "" : synced.has(c.id) ? `<span class="state synced">已入账</span>` : d ? `<span class="state ${d.action}">${ACT[d.action]}</span>` : "";
   const dis = canWrite ? "" : "disabled";
   const duplicate = ["重复候选", "已记过"].includes(c.status);
   const error = reviewError(s);
@@ -542,7 +542,7 @@ function verificationHTML(c) {
 
 function previewHTML(s) {
   const error = reviewError(s);
-  return error ? `<span class="sub">待补齐：${esc(error)}</span>` : `建议分数 ${ptsTag(points(s))}<span class="sub">确认保存后，下一次更新入账</span>`;
+  return error ? `<span class="sub">待补齐：${esc(error)}</span>` : `建议分数 ${ptsTag(points(s))}<span class="sub">保存后自动入账并重算；完成状态以服务器回执为准</span>`;
 }
 function editorHTML(s) {
   return `<div class="row">${["class", "toward", "strength", "layer", "cluster"].map(k => `<label class="f">${LABEL[k]}<select data-f="${k}">${OPTS[k].map(o => `<option ${o === (s[k] || "") ? "selected" : ""}>${esc(o)}</option>`).join("")}</select></label>`).join("")}</div>
@@ -565,7 +565,7 @@ function renderReview() {
   const own = Object.entries(decisions).filter(([, d]) => d.action === "add");
   if (own.length) {
     $("#groups").insertAdjacentHTML("beforeend", `<div class="group"><div class="ghead"><h3>你自己记的<span class="c">${own.length}</span></h3></div>${own.map(([id, d]) => `
-      <div class="cand done" data-id="${id}"><div class="meta"><span class="d">${md(d.date)}</span><span>${esc(d.source)}</span>${synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">自己记的</span>`}${ghSaveHTML(id)}</div>
+      <div class="cand done" data-id="${id}"><div class="meta"><span class="d">${md(d.date)}</span><span>${esc(d.source)}</span>${STORE === "github" ? "" : synced.has(id) ? `<span class="state synced">已入账</span>` : `<span class="state add">自己记的</span>`}${ghSaveHTML(id)}</div>
       <div class="ev">${esc(d.evidence)}</div><div class="chips">${chips(d)}${ptsTag(points(d))}</div>
       ${synced.has(id) ? "" : `<div class="acts"><button class="b" data-act="undo" ${canWrite ? "" : "disabled"}>删掉</button></div>`}</div>`).join("")}</div>`);
   }
@@ -619,6 +619,8 @@ document.addEventListener("click", e => {
   }
   const b = e.target.closest("button");
   if (!b) return;
+  if (b.dataset.refreshCompute) { ghCheckComputation(true).catch(() => {}); return; }
+  if (b.dataset.retryCompute) { ghRetryComputation(); return; }
   if (b.dataset.retrySave) {
     const op = ghSaves.get(b.dataset.retrySave);
     if (op && op.state === "failed") ghWrite(op.id, op.data);
@@ -684,7 +686,7 @@ $("#a-save").addEventListener("click", async () => {
   if (!saved) { $("#a-msg").textContent = STORE === "github" ? "内容已保留，请查看上方保存状态并重试。" : "保存失败，输入内容已保留，请稍后重试。"; return; }
   if ($("#a-ev").value.trim() === ev) $("#a-ev").value = "";
   if ($("#a-src").value.trim() === doc.source) $("#a-src").value = "";
-  $("#a-msg").textContent = "保存成功，下次更新时入账";
+  $("#a-msg").textContent = "保存成功，正在等待入账重算";
 });
 
 // ---------- lamps ----------
@@ -791,7 +793,7 @@ function renderCases() {
 }
 
 function showBanner(t) { const b = $("#banner"); b.textContent = t; b.classList.add("on"); }
-function renderAll() { renderHead(); renderReview(); renderGhSaveStatus(); }
+function renderAll() { renderHead(); renderReview(); renderGhSaveStatus(); renderGhComputationStatus(); }
 
 function start() {
   $("#app").classList.remove("locked");
@@ -822,6 +824,10 @@ async function connectClaude() {
 const GH = {repo: "B1axk-bit/stillpoint-data", branch: "main", key: "stillpoint-admin-token", decisions: "confidence/decisions.json"};
 let ghToken = "", ghSha = null, ghQueue = Promise.resolve();
 let ghRunning = false;
+let ghSaveEpoch = 0;
+let ghComputation = {receipt:null, verified:false, status:'waiting', error:''};
+let ghComputeTimer = null, ghComputeChecking = false, ghComputeDispatching = false, ghComputeAttempts = 0;
+const GH_COMPUTE_DELAYS = [1800, 3000, 5000, 8000, 13000, 20000, 30000, 45000, 60000, 60000, 60000];
 let ghSaved = {};                         // 已确认的远端基线；不混入待保存/失败的操作
 const ghSaves = new Map();                 // 每个 id 的最新操作及保存状态（包括撤销）
 const lsGet = k => { try { return localStorage.getItem(k) || ""; } catch (e) { return ""; } };
@@ -949,7 +955,7 @@ function loginView(msg) {
     <ol>
       <li>打开 <a href="https://github.com/settings/personal-access-tokens/new" target="_blank" rel="noopener">GitHub → Fine-grained token</a>。</li>
       <li>Repository access 只选 <b>stillpoint-data</b>。</li>
-      <li>Permissions 里 <b>Contents</b> 选 Read and write；想用“即刻更新”，再把 <b>Actions</b> 选 Read and write。</li>
+      <li>Permissions 里 <b>Contents</b> 选 Read and write；正常确认会自动入账重算；如需手动重试任务或“完整抓取”，再把 <b>Actions</b> 选 Read and write。</li>
     </ol>
     <div class="card"><div class="row"><label class="f" style="flex:4">令牌<input id="tok" type="password" autocomplete="off" placeholder="github_pat_…"></label>
       <div style="display:flex;align-items:flex-end"><button class="b pri" id="tok-save">连接</button></div></div>
@@ -961,12 +967,23 @@ function loginView(msg) {
 async function ghLoad(remember) {
   $("#login").innerHTML = `<div class="note">正在从私有仓库读数据…</div>`;
   try {
-    const [latest, cand, rubric, reviewed, cases, dec, brief, attractor] = await Promise.all([
+    const [latest, cand, rubric, reviewed, cases, dec, brief, attractor, receiptFile, ledger] = await Promise.all([
       ghFile("confidence/latest.json"), ghFile("confidence/candidates.json"), ghFile("confidence/rubric.json"),
       ghFile("confidence/reviewed.csv", true), ghFile("private/cases.json", true), ghFile(GH.decisions, true),
-      ghFile("confidence/brief.json", true), ghFile("archive/attractor/latest-quality.json", true)]);
+      ghFile("confidence/brief.json", true), ghFile("archive/attractor/latest-quality.json", true),
+      ghFile("confidence/review-sync.json", true), ghFile("confidence/ledger.csv", true)]);
     const L = JSON.parse(latest.text), C = JSON.parse(cand.text), R = JSON.parse(rubric.text);
     if (!Array.isArray(C?.candidates)) throw new Error("新闻候选数据缺少候选列表。");
+    const receipt = receiptFile.text ? JSON.parse(receiptFile.text) : null;
+    if (receipt) {
+      const invalid = ghReceiptError(receipt); if (invalid) throw new Error(invalid);
+      if (receipt.status !== 'failed') {
+        await ghVerifyOutputHashes(receipt, {latest, candidates:cand, reviewed, ledger});
+        ghValidateCalculatedData(L, C, receipt);
+        const currentReceipt = await ghFile('confidence/review-sync.json', true);
+        if (currentReceipt.sha !== receiptFile.sha) throw new Error('正在发布新一轮计算结果，请稍后重新连接。');
+      }
+    }
     const rev = (reviewed.text || "").trim().split("\n").slice(1).map(line => line.split(","));
     DATA = {generated: L.run_at, candidatesGenerated: C.generated, version: L.version, since: C.since, lamps: L.lamps, themes: L.themes, candidates: C.candidates, cds: L.cds || {},
       points: L.points || {}, synced: rev.filter(x => x[4] === "1").map(x => x[0]),
@@ -976,12 +993,14 @@ async function ghLoad(remember) {
     decisions = dec.text ? JSON.parse(dec.text) : {};
     ghSaved = {...decisions}; ghSaves.clear();
     ghSha = dec.sha;
+    ghComputation = {receipt, verified:!!receipt && receipt.status !== 'failed', status:receipt?.status === 'failed' ? 'failed' : 'waiting', error:receipt?.status === 'failed' ? receipt.error || '入账计算未完成，当前分数保留上次结果。' : ''};
     canWrite = true;
     $("#login").innerHTML = "";
-    $("#tools").innerHTML = `<button class="b" id="gh-run" title="跑一次自动更新，约 3 分钟">即刻更新</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">保存成功的条目，每天自动更新时入账；等不及可以点“即刻更新”。</span><div id="gh-save-status" role="status" aria-live="polite" style="width:100%"></div>`;
+    $("#tools").innerHTML = `<button class="b" id="gh-run" title="重新抓取行情与来源，独立于复核的自动入账计算">完整抓取</button><button class="b" id="gh-out" title="清掉这台设备上的令牌">退出</button><span class="sub" id="gh-msg">确认保存后自动入账并重算分数、风险档；无需再点完整抓取。</span><div id="gh-save-status" role="status" aria-live="polite" style="width:100%"></div><div id="gh-compute-status" role="status" aria-live="polite" style="width:100%"></div>`;
     $("#gh-out").onclick = () => { lsSet(GH.key, ""); location.reload(); };
     $("#gh-run").onclick = ghRun;
     start();
+    ghWatchComputation(true);
     if (remember) lsSet(GH.key, ghToken);
   } catch (e) {
     ghToken = "";
@@ -1006,8 +1025,8 @@ function ghRefreshView() {
 }
 function ghSaveHTML(id) {
   if (STORE !== "github") return "";
-  const op = ghSaves.get(id), state = op ? op.state : decisions[id] ? "saved" : "";
-  return state ? `<span class="state ${state}">${op && op.data === null ? "撤销 · " : ""}${{pending: "待保存", saved: "保存成功", failed: "保存失败"}[state]}</span>` : "";
+  const stage = ghDecisionStage(id);
+  return stage ? `<span class="state ${stage.state}"${stage.error ? ` title="${esc(stage.error)}"` : ''}>${esc(stage.text)}</span>` : '';
 }
 function renderGhSaveStatus() {
   const el = $("#gh-save-status");
@@ -1018,6 +1037,8 @@ function renderGhSaveStatus() {
     ops.filter(op => op.state === "failed").map(op => `<div class="acts">${ghSaveHTML(op.id)}<span class="sub">${esc(op.label)}：${esc(op.error)}</span><button class="b" data-retry-save="${esc(op.id)}">重试保存</button></div>`).join("");
 }
 function ghWrite(id, data) {
+  ghSaveEpoch++;
+  ghComputation.error = "";
   // 捕获单条操作；后续点击和冲突重读都不能改变它的内容。
   const op = {id, data: data === null ? null : JSON.parse(JSON.stringify(data)), state: "pending", error: "",
     label: ((data || decisions[id] || ghSaved[id] || (ghSaves.get(id) || {}).data || {}).evidence || id).slice(0, 60)};
@@ -1034,6 +1055,7 @@ function ghWrite(id, data) {
           const sha = (await r.json()).content.sha;
           if (!sha) throw new Error("写入响应缺少 SHA，保存结果未确认，请重试。");
           ghSaved = next; ghSha = sha; op.state = "saved"; ghRefreshView();
+          ghWatchComputation(true);
           return true;
         }
         if (r.status === 409 || r.status === 422) {
@@ -1068,19 +1090,236 @@ async function ghRun() {
     let tail;
     do { tail = ghQueue; await tail; } while (tail !== ghQueue);
     if ([...ghSaves.values()].some(op => op.state !== "saved")) {
-      $("#gh-msg").textContent = "还有未保存的复核操作，请先重试保存成功，再即刻更新。";
+      $("#gh-msg").textContent = "还有未保存的复核操作，请先重试保存成功，再完整抓取。";
       return;
     }
     $("#gh-msg").textContent = "正在请求…";
     const r = await gh("actions/workflows/snapshot.yml/dispatches", {method: "POST", body: JSON.stringify({ref: GH.branch})});
-    $("#gh-msg").textContent = r.status === 204 ? "更新请求已受理，任务是否成功请查看运行记录；完成后刷新页面查看入账结果。"
-      : r.status === 403 ? "令牌没有 Actions 权限，这个按钮用不了；每天的自动运行照样会入账。" : "没跑起来（HTTP " + r.status + "）。";
+    $("#gh-msg").textContent = r.status === 204 ? "完整抓取请求已受理，尚未确认采集成功；复核入账进度会单独核对。"
+      : r.status === 403 ? "完整抓取需要 Actions 权限；已保存复核的自动入账不需要这项权限。" : "没跑起来（HTTP " + r.status + "）。";
   } catch (e) {
     $("#gh-msg").textContent = "更新请求结果未确认，请先查看运行记录，避免重复启动。";
   } finally {
     ghRunning = false; $("#gh-run").disabled = false;
   }
 }
+
+// Server computation is a separate stage from saving a decision. A receipt only
+// counts after its exact decision and every published output have been checked.
+function ghStableJSON(value) {
+  if (Array.isArray(value)) return '[' + value.map(v => ghStableJSON(v) ?? 'null').join(',') + ']';
+  if (value && typeof value === 'object') return '{' + Object.keys(value).filter(k => value[k] !== undefined).sort()
+    .map(k => JSON.stringify(k) + ':' + ghStableJSON(value[k])).join(',') + '}';
+  return JSON.stringify(value);
+}
+function ghSameDecision(a, b) { return ghStableJSON(a) === ghStableJSON(b); }
+function ghReceiptItem(id) {
+  const r = ghComputation.receipt, doc = decisions[id], op = ghSaves.get(id);
+  if (op && op.state !== 'saved') return null;
+  if (!r || !ghComputation.verified) return null;
+  if (doc && r.items && r.items[id] && ghSameDecision(r.items[id].decision, doc)) return r.items[id];
+  if (!doc && r.source.decisions_blob_sha === ghSha && r.removed && r.removed[id]) return r.removed[id];
+  return null;
+}
+function ghDecisionStage(id) {
+  const op = ghSaves.get(id), doc = decisions[id], item = ghReceiptItem(id);
+  if (op && op.state === 'pending') return {state:'pending', text:'待保存'};
+  if (op && op.state === 'failed') return {state:'failed', text:'保存失败'};
+  if (item) {
+    if (item.status === 'applied' && item.ledger === true) return {state:'synced', text:'已入账 · 分数与风险已重算'};
+    if (item.status === 'not_ledger') return {state:'synced', text:'已处理 · 分数与风险已重算'};
+    if (item.status === 'cancelled') return {state:'synced', text:'已撤销 · 未入账'};
+    if (item.status === 'needs_review') return {state:'failed', text:`原记录已${synced.has(id) ? '入账' : '处理'}，本次修改需追加订正`, error:item.error};
+    if (item.status === 'invalid') return {state:'failed', text:'未入账 · 请补齐复核内容', error:item.error};
+    if (item.status === 'failed') return {state:'failed', text:'已保存 · 计算失败', error:item.error};
+  }
+  const r = ghComputation.receipt;
+  if (r && r.status === 'failed' && r.source?.decisions_blob_sha === ghSha && (doc || op)) {
+    return {state:'failed', text:'已保存 · 计算失败', error:r.error || ghComputation.error};
+  }
+  if (doc || op) return synced.has(id) && !(op && op.data === null)
+    ? {state:'saved', text:'原记录已入账 · 本次计算回执待核'}
+    : {state:'pending', text:'保存成功 · 待入账重算'};
+  return null;
+}
+function ghKnownReviewIDs() {
+  const r = ghComputation.receipt;
+  const removed = ghComputation.verified && r?.source?.decisions_blob_sha === ghSha ? Object.keys(r.removed || {}) : [];
+  return [...new Set([...Object.keys(decisions), ...ghSaves.keys(), ...removed])];
+}
+function ghPendingCalculations() {
+  return ghKnownReviewIDs().filter(id => {
+    const op = ghSaves.get(id);
+    if (op && op.state !== 'saved') return false;
+    return !ghReceiptItem(id);
+  });
+}
+function renderGhComputationStatus() {
+  const el = $('#gh-compute-status');
+  if (STORE !== 'github' || !el) return;
+  const r = ghComputation.receipt, pending = ghPendingCalculations();
+  const matching = ghKnownReviewIDs().map(ghReceiptItem).filter(Boolean);
+  const invalid = matching.filter(x => ['invalid','needs_review'].includes(x.status));
+  const failed = matching.filter(x => x.status === 'failed');
+  let message;
+  if (ghComputation.status === 'checking') message = '正在核对入账、分数与风险档…';
+  else if (ghComputation.error) message = ghComputation.error;
+  else if (invalid.length) message = `计算已完成，${invalid.length} 条复核需要补齐或追加订正。`;
+  else if (failed.length || r?.status === 'failed') message = '复核已经保存，本次入账或重算失败。';
+  else if (pending.length) message = `已保存的复核正在等待服务器入账重算（${pending.length} 条待核对）。`;
+  else if (r && ghComputation.verified) message = '已核对入账结果，分数与风险档已重算。';
+  else message = '复核保存后会自动入账并重算分数和风险档。';
+  const completed = r && ghComputation.verified && ['completed','partial'].includes(r.status);
+  const stamp = completed && r.computed?.computed_at ? `计算完成 ${r.computed.computed_at}` : '';
+  const version = completed && r.computed ? `计分 ${r.computed.score_rule_version || '未注明'} · 风控 ${r.computed.risk_control_version || '未注明'}` : '';
+  const researchPending = completed ? DATA.themes.filter(t => t.research_review?.has_new_ledger_evidence).map(t => t.theme) : [];
+  el.innerHTML = `<span class="sub">${esc(message)}</span>${stamp ? `<div class="sub">${esc(stamp)}${version ? ' · ' + esc(version) : ''}</div>` : ''}
+    <div class="acts"><button class="b" data-refresh-compute="1" ${ghComputation.status === 'checking' ? 'disabled' : ''}>刷新入账进度</button>
+    ${(failed.length || r?.status === 'failed' || ghComputation.status === 'paused') ? '<button class="b" data-retry-compute="1">重试入账计算</button>' : ''}</div>
+    ${ghComputation.status === 'paused' ? '<p class="sub">尚未取得匹配的完成回执，当前分数保留上次结果。切回页面或刷新进度后会继续核对；已保存记录不会因关闭本页而丢失。</p>' : ''}
+    ${researchPending.length ? `<p class="sub">${esc(researchPending.join('、'))}：新证据已入账重算，主线研究待复检；上次研究日期保留。</p>` : ''}
+    ${invalid.map(item => `<p class="sub">${esc(item.error || '请核对原记录，已入账历史不会被静默覆盖。')}</p>`).join('')}`;
+}
+function ghReceiptError(receipt) {
+  if (!receipt || receipt.schema_version !== 1 || !['completed','partial','failed'].includes(receipt.status) ||
+      !receipt.source || !/^[a-f0-9]{40}$/i.test(receipt.source.decisions_blob_sha || '') ||
+      !receipt.items || Array.isArray(receipt.items) || typeof receipt.items !== 'object' ||
+      !Number.isFinite(Date.parse(receipt.generated_at)) ||
+      (receipt.status !== 'failed' && (!receipt.computed || !Number.isFinite(Date.parse(receipt.computed.computed_at))))) return '入账回执格式不符，尚未确认本次重算。';
+  for (const item of Object.values(receipt.items)) {
+    if (!item || !['applied','not_ledger','invalid','needs_review','failed'].includes(item.status) ||
+        typeof item.ledger !== 'boolean' || (item.status === 'applied' && !item.ledger) ||
+        (item.status === 'not_ledger' && item.ledger)) return '入账回执的记录状态不符，尚未确认本次重算。';
+  }
+  if (receipt.removed && (Array.isArray(receipt.removed) || typeof receipt.removed !== 'object' ||
+      Object.values(receipt.removed).some(item => !item || !['cancelled','needs_review'].includes(item.status)))) return '撤销回执格式不符，尚未确认本次处理。';
+  return '';
+}
+async function ghTextSHA256(text) {
+  if (!globalThis.crypto?.subtle) throw new Error('当前浏览器暂不能核验计算回执，请使用新版浏览器。');
+  const digest = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));
+  return [...new Uint8Array(digest)].map(v => v.toString(16).padStart(2,'0')).join('');
+}
+function ghParseReviewed(text) {
+  // Only the initial id and ledger column are needed; quoted evidence may span lines.
+  const ids = [];
+  for (const line of String(text || '').split(/\r?\n/).slice(1)) {
+    const fields = line.split(',');
+    if (fields[4] === '1' && /^[a-zA-Z0-9_-]+$/.test(fields[0] || '')) ids.push(fields[0]);
+  }
+  return ids;
+}
+function ghValidateCalculatedData(L, C, receipt) {
+  if (!L || !Array.isArray(L.themes) || !L.themes.length || !Array.isArray(L.lamps) || !C || !Array.isArray(C.candidates)) throw new Error('计算输出格式不符，保留上次分数。');
+  if (receipt.computed.snapshot !== L.snapshot || receipt.computed.run_at !== L.run_at || receipt.computed.score_rule_version !== L.version) throw new Error('计算回执的快照或版本与结果不符，保留上次分数。');
+  if (!Array.isArray(receipt.computed.themes) || receipt.computed.themes.length !== L.themes.length) throw new Error('计算回执缺少匹配的主题分数与风险档，保留上次分数。');
+  for (const t of L.themes) {
+    const rt = receipt.computed.themes.find(row => row.theme === t.theme);
+    if (!rt || !Number.isFinite(t.score) || rt.score !== t.score || rt.tier !== t.derisk?.tier ||
+        rt.legacy_tier !== (t.derisk?.legacy?.tier ?? t.derisk?.tier) ||
+        (t.derisk?.control?.version && t.derisk.control.version !== receipt.computed.risk_control_version)) throw new Error('计算回执的主题分数或风险档与结果不符，保留上次分数。');
+  }
+}
+async function ghVerifyOutputHashes(receipt, files) {
+  for (const key of ['latest','candidates','reviewed','ledger']) {
+    const expected = receipt.outputs?.[key + '_sha256'];
+    if (typeof files[key]?.text !== 'string' || !/^[a-f0-9]{64}$/i.test(expected || '') || await ghTextSHA256(files[key].text) !== expected) throw new Error('计算回执与结果尚未对齐，稍后继续核对；当前分数保留上次结果。');
+  }
+}
+function ghApplyCalculatedData(L, C, reviewed) {
+  DATA = {...DATA, generated:L.run_at, candidatesGenerated:C.generated, version:L.version, since:C.since,
+    lamps:L.lamps, themes:L.themes, candidates:C.candidates, cds:L.cds || {}, points:L.points || {},
+    synced:ghParseReviewed(reviewed), sourceHealth:L.source_health || null};
+  synced = new Set(DATA.synced);
+  ghRefreshView(); renderLamps(); renderLedger();
+}
+function ghClearComputeTimer() {
+  if (ghComputeTimer !== null && typeof clearTimeout === 'function') clearTimeout(ghComputeTimer);
+  ghComputeTimer = null;
+}
+function ghWatchComputation(reset = false) {
+  if (STORE !== 'github' || !ghToken || typeof setTimeout !== 'function') return;
+  if (reset) { ghComputeAttempts = 0; ghClearComputeTimer(); }
+  if (ghComputeTimer !== null || ghComputeChecking) return;
+  if (ghComputeAttempts >= GH_COMPUTE_DELAYS.length) {
+    ghComputation.status = 'paused'; renderGhComputationStatus(); return;
+  }
+  const delay = GH_COMPUTE_DELAYS[ghComputeAttempts];
+  ghComputeTimer = setTimeout(() => { ghComputeTimer = null; ghCheckComputation().catch(() => {}); }, delay);
+  // Test runners and desktop runtimes can release an idle timer; browsers ignore this.
+  if (ghComputeTimer && typeof ghComputeTimer.unref === 'function') ghComputeTimer.unref();
+}
+async function ghCheckComputation(manual = false) {
+  if (STORE !== 'github' || !ghToken || ghComputeChecking) return false;
+  if (manual) { ghComputeAttempts = 0; ghClearComputeTimer(); }
+  if ([...ghSaves.values()].some(op => op.state === 'pending')) { ghWatchComputation(); return false; }
+  ghComputeChecking = true; ghComputeAttempts++;
+  const epoch = ghSaveEpoch;
+  ghComputation.status = 'checking'; renderGhComputationStatus();
+  let retry = true;
+  try {
+    const [decisionFile, receiptFile] = await Promise.all([ghFile(GH.decisions, true), ghFile('confidence/review-sync.json', true)]);
+    if (epoch !== ghSaveEpoch || [...ghSaves.values()].some(op => op.state === 'pending')) return false;
+    const server = decisionFile.text ? JSON.parse(decisionFile.text) : {};
+    if (!server || Array.isArray(server) || typeof server !== 'object') throw new Error('复核记录格式不符，保留当前页面。');
+    ghSaved = server; ghSha = decisionFile.sha; ghRefreshView();
+    if (!receiptFile.text) {
+      ghComputation = {receipt:null, verified:false, status:'waiting', error:'复核已保存，正在等待首次入账计算回执。'};
+      return false;
+    }
+    const receipt = JSON.parse(receiptFile.text), invalid = ghReceiptError(receipt);
+    if (invalid) throw new Error(invalid);
+    if (receipt.status === 'failed') {
+      ghComputation = {receipt, verified:false, status:'failed', error:receipt.error || '入账计算未完成，当前分数保留上次结果。'};
+      retry = receipt.source.decisions_blob_sha !== ghSha;
+      return false;
+    }
+    const paths = {latest:'confidence/latest.json', candidates:'confidence/candidates.json', reviewed:'confidence/reviewed.csv', ledger:'confidence/ledger.csv'};
+    const entries = await Promise.all(Object.entries(paths).map(async ([key,path]) => [key,await ghFile(path)]));
+    const files = Object.fromEntries(entries);
+    await ghVerifyOutputHashes(receipt, files);
+    const latestReceipt = await ghFile('confidence/review-sync.json', true);
+    if (latestReceipt.sha !== receiptFile.sha) throw new Error('正在发布新一轮计算结果，稍后继续核对。');
+    if (epoch !== ghSaveEpoch || [...ghSaves.values()].some(op => op.state === 'pending')) return false;
+    const computedLatest=JSON.parse(files.latest.text), computedCandidates=JSON.parse(files.candidates.text);
+    ghValidateCalculatedData(computedLatest, computedCandidates, receipt);
+    ghComputation = {receipt, verified:true, status:'ready', error:''};
+    ghApplyCalculatedData(computedLatest, computedCandidates, files.reviewed.text);
+    retry = ghPendingCalculations().length > 0;
+    return true;
+  } catch (error) {
+    ghComputation.verified = false; ghComputation.status = 'waiting'; ghComputation.error = error.message || '入账进度暂时无法读取，已保存的复核仍保留。';
+    return false;
+  } finally {
+    ghComputeChecking = false; renderAll();
+    if (retry) ghWatchComputation();
+  }
+}
+async function ghRetryComputation() {
+  if (ghComputeDispatching || STORE !== 'github') return;
+  if ([...ghSaves.values()].some(op => op.state !== 'saved')) {
+    ghComputation.error = '还有未保存的复核，请先重试保存，再重试入账计算。'; renderGhComputationStatus(); return;
+  }
+  ghComputeDispatching = true;
+  try {
+    const response = await gh('actions/workflows/review.yml/dispatches', {method:'POST',body:JSON.stringify({ref:GH.branch})});
+    if (response.status === 204) {
+      ghComputation.error = '重试请求已受理，尚未确认入账或重算成功，正在等完成回执。';
+      ghWatchComputation(true);
+    } else ghComputation.error = response.status === 403
+      ? '重试任务需要 Actions 权限；复核已经保存，可先刷新进度或由维护任务恢复计算。'
+      : `重试计算请求未确认（HTTP ${response.status}），复核已经保存。`;
+  } catch (_) { ghComputation.error = '重试请求结果未确认，请先刷新入账进度，避免重复启动。'; }
+  finally { ghComputeDispatching = false; renderGhComputationStatus(); }
+}
+window.addEventListener('focus', () => {
+  if (STORE === 'github' && ghToken && canWrite) { ghComputeAttempts = 0; ghClearComputeTimer(); ghCheckComputation().catch(() => {}); }
+});
+document.addEventListener('visibilitychange', () => {
+  if (document.visibilityState === 'visible' && STORE === 'github' && ghToken && canWrite) {
+    ghComputeAttempts = 0; ghClearComputeTimer(); ghCheckComputation().catch(() => {});
+  }
+});
 
 if (STORE === "claude") { start(); connectClaude(); }
 else { $("#app").classList.add("locked"); ghToken = lsGet(GH.key); ghToken ? ghLoad(false) : loginView(""); }
