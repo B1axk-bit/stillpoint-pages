@@ -292,6 +292,48 @@ def validate_risk_control(public_derisk, private_derisk):
     return issues
 
 
+def validate_politics_review(public, expected):
+    """US political observations are optional research metadata, never tier inputs."""
+    if not public and not expected:
+        return []
+    if not isinstance(public, dict) or not isinstance(expected, dict):
+        return ['美国政治观察前后台缺失或未同步']
+    issues = []
+    top = {'schema_version', 'mode', 'scope', 'status', 'evaluated_at', 'reviewed_at',
+           'next_review_at', 'summary', 'observations', 'coverage', 'limits'}
+    fields = {'title', 'fact', 'category', 'stage', 'kind', 'policy_date', 'effective_at', 'authority',
+              'execution_constraints', 'affected_themes', 'expected_path', 'realized_path',
+              'implementation_assessment', 'conditional_impact', 'market_expectation',
+              'counterargument', 'next_evidence', 'change_conditions', 'sources'}
+    source_fields = {'title', 'url', 'published_at', 'checked_at', 'status'}
+    if public.get('mode') != 'research_only' or public.get('scope') != 'US':
+        issues.append('美国政治观察须保持美国研究模式')
+    if set(public) - top:
+        issues.append('公开政治观察包含白名单外字段')
+    rows = public.get('observations')
+    if not isinstance(rows, list) or len(rows) > 3:
+        issues.append('政治观察须为最多三项研究段落')
+    else:
+        for row in rows:
+            if not isinstance(row, dict) or set(row) - fields:
+                issues.append('政治观察正文含白名单外字段')
+                continue
+            sources = row.get('sources')
+            if not isinstance(sources, list):
+                issues.append('政治观察来源须为数组')
+                continue
+            for source in sources:
+                if (not isinstance(source, dict) or set(source) - source_fields
+                        or not str(source.get('url', '')).startswith('https://')):
+                    issues.append('政治观察来源不合规')
+    encoded = json.dumps(public, ensure_ascii=False)
+    if any(x in encoded for x in ['/Users/', 'analysis/evidence/', 'confidence/ledger', 'holdings', 'buy_anchor', 'wind_responses']):
+        issues.append('公开政治观察包含私有路径或材料')
+    if any(public.get(k) != expected.get(k) for k in top):
+        issues.append('美国政治观察日期、状态或研究内容未同步')
+    return issues
+
+
 def validate(page, latest, snapshot, extra, production=True):
     issues = []
     theme = next((x for x in latest.get('themes', []) if x.get('theme') == page.get('mainline', {}).get('theme')), None)
@@ -316,6 +358,7 @@ def validate(page, latest, snapshot, extra, production=True):
     if public_review and any(public_review.get(k) != private_review.get(k)
                              for k in ['asof', 'status', 'review_complete', 'summary']):
         issues.append('前后台复检日期或结论未同步')
+    issues.extend(validate_politics_review(mainline.get('politics_review'), theme.get('politics_review')))
     feeds = extra.get('feeds', {})
     ashare = page.get('ashare') or {}
     issues.extend(validate_capital_flow(ashare.get('capitalFlow') if isinstance(ashare, dict) else None,

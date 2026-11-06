@@ -939,7 +939,8 @@ details.tt[open] summary::before{content:"▾"}
 .dr-risk-control summary{cursor:pointer;font-weight:700;color:var(--ink)}
 .dr-risk-control ul{padding-left:19px;margin:8px 0}
 .dr-risk-control li{margin:9px 0}
-.execution-boundary,.ml-review{padding:10px 12px;margin-top:9px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;line-height:1.65;overflow-wrap:anywhere}
+.execution-boundary,.politics-observation{overflow-wrap:anywhere}.politics-observation section{margin:14px 0}.politics-observation h3{font-size:15px}
+.ml-review{padding:10px 12px;margin-top:9px;border:1px solid var(--line);border-radius:6px;background:var(--surface);font-size:13px;line-height:1.65;overflow-wrap:anywhere}
 .execution-boundary summary,.ml-review summary{cursor:pointer;font-weight:700;color:var(--ink)}
 .execution-boundary p,.ml-review p{margin:7px 0}
 .ml-review ul{padding-left:18px;margin:7px 0}
@@ -1348,7 +1349,7 @@ details.tt[open] summary::before{content:"▾"}
     "en": "Stillpoint",
     "about": "静观把市场噪音收成一句结论、一个现在能做的动作、一条改主意的线。研究框架，不是投资建议。",
     "tagline": "行情转得再快，先看清再动。",
-    "meta": "风险衔接更新 · 行情沿用早轮实际时点，美股11/5完成与亚洲11/6盘中分列"
+    "meta": "美国政治研究观察接入 · 行情仍按早轮实际日期，观察复核时间另列"
   },
   "edition": {
     "label": "研究档案 · 2026-11-06 风险衔接更新",
@@ -4298,7 +4299,7 @@ details.tt[open] summary::before{content:"▾"}
       }
     ],
     "route": "怎么分工：点名“土狗怎么看”或“吸引子怎么看”，只用那一家；说“用我的框架”或做复盘，由静观统筹四家，各家当数据源和工具箱。",
-    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.8，计分v1.3.2、风险控制v1.4.0；历史研究依据与原文继续留存。",
+    "foot": "这是研究框架的观点展示，不对应个人买卖指令。现行数字按各卡片标注的来源、观测日与读取时点理解；历史图表和初版案例保留原日期。中国视角及作者账本是依据其公开文章整理和推演，不代表作者最新观点。静观当前维护技能v0.7.9，计分v1.3.2、风险控制v1.4.0；历史研究依据与原文继续留存。",
     "funnelNote": "这一页是从漏斗出口往回读的：最上面是结论，往下依次是决策层、机制层、事实层，越往下越是\"凭什么\"。",
     "back": {
       "k": "回看",
@@ -4443,6 +4444,10 @@ details.tt[open] summary::before{content:"▾"}
         {
           "k": "风险衔接",
           "v": "计分仍91.5分；新风险2档、旧规则1档；解除证据与下一复检点单列。"
+        },
+        {
+          "k": "美国政治观察",
+          "v": "核州级审批、海运制裁和财政融资安排；实施、预期与传导分开，覆盖缺口保留。"
         }
       ]
     }
@@ -4451,9 +4456,9 @@ details.tt[open] summary::before{content:"▾"}
     "head": "把静观装进你的研究助手",
     "sub": "静观是一个可安装的 skill：先记账，再拆机制、选主线，最后形成带证伪条件的研究立场；维护现有项目时，按完整数据与发布流程执行。",
     "spec": [
-      "v0.7.8",
-      "压缩包 66.1 KB",
-      "主文件 14.1 KB",
+      "v0.7.9",
+      "压缩包 69.3 KB",
+      "主文件 14.5 KB",
       "核心分析不用 API Key（吸引子指标要）",
       "只读，不下单"
     ],
@@ -4473,11 +4478,11 @@ details.tt[open] summary::before{content:"▾"}
     ],
     "pkg": {
       "name": "stillpoint",
-      "ver": "v0.7.8",
-      "size": "66.1 KB",
+      "ver": "v0.7.9",
+      "size": "69.3 KB",
       "zip": "https://b1axk-bit.github.io/stillpoint-pages/skill/stillpoint.zip",
       "skillUrl": "https://github.com/B1axk-bit/stillpoint-pages/blob/main/skill/stillpoint/SKILL.md",
-      "sha256": "80cc8b4c266c9bac6b4acdb6d59da6f115cbccb4a774f414ef6e46ee686a1179"
+      "sha256": "d44d57302a622b4974910c029e92e6505eef8ac01bcf1d9bca2fd0164cbd936a"
     },
     "clients": [
       {
@@ -6489,6 +6494,171 @@ details.tt[open] summary::before{content:"▾"}
       "review_complete": true,
       "summary": "美东11/5宽基与芯片一起大跌，标普跌破本轮7541.40低点参照，前日止跌候选的首日承接失败；亚洲11/6日、韩、台早盘同步承压。AI抛售从融资依赖节点扩展到芯片及交付链条，媒体所述监管与项目兑现担忧是催化候选，不是已生效禁令。Oracle稀疏同合约CDS样本再走阔，Reuters转引CoreWeave五年保护成本仍高；IREN确认ARR目标延期但需求收入仍增长。Meta美元、Alphabet欧元融资已由发行人确认完成，不能称融资全面冻结。CoreWeave当日虽再创新低，却比SMH强约1.38个百分点，窄H1不足以单独解释整日分化。市场恐慌明显上升，最新资金利差与高收益OAS仍是崩跌前一日，尚缺系统性被迫出售的同窗证明。窄H1只保留于实际资金、期限和现金兑现受限的主体；宽基止跌与AI经营验证分别重审。",
       "groups": []
+    },
+    "politics_review": {
+      "schema_version": 1,
+      "mode": "research_only",
+      "scope": "US",
+      "status": "available",
+      "evaluated_at": "2026-11-06T07:49:42.321087+00:00",
+      "reviewed_at": "2026-11-06T15:45:25.180261+08:00",
+      "next_review_at": "2026-11-06T16:45:00+08:00",
+      "summary": "首轮整理美国州级审批、海运制裁和财政融资三条已核政策路径。官方动作与实际经营/资金后果分别记录；当前不凭政治标题改变计分或档位，市场预期缺口保留。",
+      "observations": [
+        {
+          "title": "德州许可审查：已有州级措施，证券传导待核",
+          "fact": "州长9/21要求暂停数据中心相关许可并作资源审计；TCEQ最后修改于10/28的官网页说明STEERS临时关闭、调整为工作人员先审，预计11月中旬完成系统改造。今天是读取日，不是新禁令日。",
+          "category": "科技与能源审批",
+          "stage": "formal",
+          "kind": "event",
+          "policy_date": "2026-09-21",
+          "effective_at": null,
+          "authority": "德州州长提出指令，TCEQ处理相关许可；PUCT、ERCOT及水资源机构参与信息与审计。州级措施不能外推为全国政策。",
+          "execution_constraints": "适用许可类别、存量项目及具体证券暴露待核；部分TPDES邮件/临时办理安排不能直接当作数据中心已获豁免。激励政策后续立法意向与当前行政流程分开。",
+          "expected_path": "若相关项目许可或并网确受限：交付、收入确认后移(H3)→建设期与利息、资金占用扩大(H1)。政治预期也可能先改变估值。",
+          "realized_path": "已核州级指令及官网流程说明；尚未核定跟踪公司哪些项目受到实质延期、收入或现金损失。",
+          "implementation_assessment": "正式行政动作可核；具体项目执行范围和强度仍待核。",
+          "conditional_impact": "对依赖相关许可的新项目可能重要；当前不推定所有美国数据中心或所有AI公司同受影响。",
+          "market_expectation": "未知：没有取得该措施的事前市场预期证据，不能从11/5股跌反推它是当天新催化。",
+          "counterargument": "存量项目、许可类别和替代地点可能限制影响；系统恢复也可能先于项目受损，但门户恢复本身不证明许可已批或风险解除。",
+          "next_evidence": "下轮核审计结论与STEERS后续说明；到11月中旬核系统流程，再按具体项目许可、通电、交付和回款披露检验。",
+          "affected_themes": [
+            "美股 AI",
+            "依赖德州新建项目的算力与供应链"
+          ],
+          "change_conditions": [
+            "相关项目如期取得许可、交付与资金覆盖未受损，收窄该传导。",
+            "独立项目明确延迟并传至收入确认、利息或现金缺口，增强H3→H1解释。"
+          ],
+          "sources": [
+            {
+              "title": "Texas州长9/21数据中心许可指令",
+              "url": "https://gov.texas.gov/news/post/governor-abbott-directs-tceq-to-halt-data-center-permits",
+              "published_at": "2026-09-21",
+              "checked_at": "2026-11-06T15:45:25.180261+08:00",
+              "status": "primary"
+            },
+            {
+              "title": "TCEQ STEERS流程说明，最后修改10/28",
+              "url": "https://www.tceq.texas.gov/agency/steers-down",
+              "published_at": "2026-10-28",
+              "checked_at": "2026-11-06T15:45:25.180261+08:00",
+              "status": "primary"
+            }
+          ]
+        },
+        {
+          "title": "伊朗海运网络制裁：措施已公布，供应冲击未知",
+          "fact": "美国财政部和OFAC于11/4公布针对支持伊朗影子船队的虚假船籍、认证网络等相关主体的制裁，并发布行业Alert。",
+          "category": "美国制裁及全球能源反馈",
+          "stage": "formal",
+          "kind": "event",
+          "policy_date": "2026-11-04",
+          "effective_at": null,
+          "authority": "财政部/OFAC推进具体指名和相关限制；实际银行、保险及海运机构的业务调整另核。",
+          "execution_constraints": "许可、豁免和适用交易范围必须逐项看；对其他运输网络、替代供应及境外执行的影响待证。",
+          "expected_path": "若执行实质限制结算、保险或运输：供应及成本变化→通胀、利率与融资条件(H1)；风险溢价可先反应，系统流动性H2仍须独立资金证据。",
+          "realized_path": "已核具体制裁及名单更新；未核运输削减量、保险成本或供给缺口，不能据标题认定封海或开战。",
+          "implementation_assessment": "正式制裁行动有原件；后续执行强度与资源流量效果未知。",
+          "conditional_impact": "若真实运输受损且替代不足，能源与融资敏感资产可能承压；当前无法量化这一跨资产影响。",
+          "market_expectation": "未知：未取得该行动对应的事前预期或保险报价；不由油价变化倒推市场低估。",
+          "counterargument": "运输网络迁移、替代供应或豁免可能降低实际供给损失，制裁也可能主要增加合规摩擦。",
+          "next_evidence": "核名单及许可证后续、实际执法与运输/保险调整；只有可核资源量和成本出现变化，才增强实际供给传导判断。",
+          "affected_themes": [
+            "美股 AI",
+            "能源成本与全球风险偏好"
+          ],
+          "change_conditions": [
+            "执行未影响实际运输或被替代供应抵消，降低供给冲击解释。",
+            "可信运输、保险及供给证据同向变化，再检验油率和相关资产传导。"
+          ],
+          "sources": [
+            {
+              "title": "财政部11/4海运网络制裁原稿",
+              "url": "https://home.treasury.gov/news/press-releases/sb0681/",
+              "published_at": "2026-11-04",
+              "checked_at": "2026-11-06T15:45:25.180261+08:00",
+              "status": "primary"
+            },
+            {
+              "title": "OFAC 11/4名单更新与Alert",
+              "url": "https://ofac.treasury.gov/recent-actions/20261104",
+              "published_at": "2026-11-04",
+              "checked_at": "2026-11-06T15:45:25.180261+08:00",
+              "status": "primary"
+            }
+          ]
+        },
+        {
+          "title": "季度再融资安排：计划已公布，实际资金吸收待看",
+          "fact": "财政部11/4公布季度再融资安排，计划11/9、11/10及11/12拍卖、11/16结算。总发行包含到期债滚续，净新现金、实际支出与现金余额预测应分别核对。",
+          "category": "财政与国债安排",
+          "stage": "formal",
+          "kind": "event",
+          "policy_date": "2026-11-04",
+          "effective_at": null,
+          "authority": "财政部公布债务管理及拍卖安排；国会支出授权、预算立法和财政部具体融资执行不是同一环节。",
+          "execution_constraints": "实际拍卖承接、到期偿还、财政支出及资金由谁提供会改变净影响；计划或现金预测不等于已经到账。",
+          "expected_path": "实际净融资及财政现金收支→资金吸收、缓冲与利率→H2流动性或H1融资环境；不能把总发行额直接当净抽水。",
+          "realized_path": "已核融资计划与未来时间表，拍卖和11/16结算尚未发生；本轮没有新取资金市场读数。",
+          "implementation_assessment": "正式安排已公布，未来执行结果待核。",
+          "conditional_impact": "若资金吸收与利率压力共同增强，影响融资敏感主题；若滚续、支出和其他资金来源抵消，则不能据发行计划认定危机。",
+          "market_expectation": "未知：没有取得该安排相对事前发行预期的可靠差值。",
+          "counterargument": "到期偿还、同期财政支出、货币基金与其他承接来源可能抵消部分抽水；规模稳定也可能早已预期。",
+          "next_evidence": "按美国日期核11/9—11/12拍卖结果及11/16实际结算，再对齐财政现金收支和合格资金市场来源。",
+          "affected_themes": [
+            "美股 AI",
+            "美元资金与久期敏感资产"
+          ],
+          "change_conditions": [
+            "实际净资金吸收温和或被支出与承接抵消，降低流动性冲击解释。",
+            "同窗资金成本、缓冲和广义信用出现可核共振，再提高H2解释权重。"
+          ],
+          "sources": [
+            {
+              "title": "财政部11/4季度再融资声明",
+              "url": "https://home.treasury.gov/news/press-releases/sb0678/",
+              "published_at": "2026-11-04",
+              "checked_at": "2026-11-06T15:45:25.180261+08:00",
+              "status": "primary"
+            }
+          ]
+        }
+      ],
+      "coverage": [
+        {
+          "category": "科技与能源审批",
+          "status": "reviewed_limited",
+          "note": "核Texas9/21指令及TCEQ10/28流程说明；公司/项目映射未完成。"
+        },
+        {
+          "category": "财政与国债",
+          "status": "reviewed_limited",
+          "note": "核11/4财政部再融资声明；未取得本轮新增具体法案或CBO估计全文。"
+        },
+        {
+          "category": "贸易、关税与制裁",
+          "status": "partial",
+          "note": "核OFAC11/4行动；USTR11/2 AGOA未来资格意向与当前AI主线弱相关，仅作覆盖。BIS当年公告列表返回0条，未取得近一周芯片新措施正文，不视为没有新限制。"
+        },
+        {
+          "category": "军事与外交",
+          "status": "not_reviewed",
+          "note": "本轮未完成国防/外交当期行动独立核查；制裁公告不能替代军事行动证据。"
+        },
+        {
+          "category": "选举与机构制衡",
+          "status": "partial",
+          "note": "官方Texas结果入口403，未取得当期官方认证结果；FEC职责说明只作背景，不据此判认证已完成或未完成。"
+        }
+      ],
+      "limits": [
+        "未覆盖类别不等于没有事件或没有风险。",
+        "读取日与原措施日期分别保留；本次整理不冒充三项今天新发生事件，也不倒作11/5日盘已被本系统读取。",
+        "预期路径和实际经营/资金传导均是待检验研究；未核具体证券暴露、事前市场预期和实际资源量的部分保持未知。",
+        "本层仅为美国政治研究解释与观察，不是事件卡、不投票、不加分、不参与风险档。",
+        "资料扫描有限，partial及未覆盖类别在16点原维护轮继续核查；来源失败不等于没有风险。"
+      ]
     }
   },
   "dataHealth": {
@@ -6918,6 +7088,31 @@ details.tt[open] summary::before{content:"▾"}
     e.appendChild(kid instanceof Node ? kid : document.createTextNode(String(kid)));
   }
   function $(id){ return document.getElementById(id); }
+  function politicsView(review) {
+    if (!review || typeof review !== 'object' || review.mode !== 'research_only' || review.scope !== 'US') return null;
+    const text = x => typeof x === 'string' ? x : '';
+    const list = x => Array.isArray(x) ? x.filter(y => typeof y === 'string') : [];
+    const stages = {rumor:'传闻待核',statement:'官方表态',procedure:'正式程序',formal:'正式决定',effective:'已生效',executing:'实际执行',background:'制度背景',unknown:'阶段待核'};
+    const status = {available:'已作本轮研究',stale:'上次观察，待复检',invalid:'观察待核'};
+    const time = x => { const raw=text(x), d=new Date(raw); return raw && Number.isFinite(d.getTime()) && /(?:Z|[+-]\d{2}:\d{2})$/.test(raw) ? new Intl.DateTimeFormat('sv-SE',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',hourCycle:'h23'}).format(d)+' 北京时间' : raw; };
+    const rows = Array.isArray(review.observations) ? review.observations : [];
+    return {status:status[review.status] || '观察待核',summary:text(review.summary),reviewedAt:time(review.reviewed_at),nextReview:time(review.next_review_at),limits:list(review.limits),
+      coverage:Array.isArray(review.coverage) ? review.coverage.filter(x=>x&&typeof x==='object').map(x=>({category:text(x.category),status:text(x.status),note:text(x.note)})) : [],
+      observations:rows.filter(x=>x&&typeof x==='object').slice(0,3).map(x=>({title:text(x.title),fact:text(x.fact),stage:stages[x.stage] || '阶段待核',policyDate:text(x.policy_date),effectiveAt:text(x.effective_at),authority:text(x.authority),constraints:text(x.execution_constraints),themes:list(x.affected_themes).join('、'),expected:text(x.expected_path),realized:text(x.realized_path),implementation:text(x.implementation_assessment),impact:text(x.conditional_impact),expectation:text(x.market_expectation),counter:text(x.counterargument),next:text(x.next_evidence),conditions:list(x.change_conditions),
+        sources:Array.isArray(x.sources) ? x.sources.filter(s=>s&&typeof s==='object'&&/^https:\/\//i.test(s.url||'')).map(s=>({title:text(s.title),url:s.url,date:text(s.published_at),kind:{primary:'原始资料',relay:'转引',background:'背景资料'}[s.status] || '来源待核'})) : []}))};
+  }
+    function politicsNode(review){
+    var v=politicsView(review); if(!v) return null;
+    return h('details',{class:'ml-review politics-observation'},h('summary',null,'美国政治与政策观察 · '+v.status),h('p',null,v.summary),
+      h('p',{class:'src'},'实际复核 '+(v.reviewedAt||'待核')+'；下一检查 '+(v.nextReview||'待定')+'。仅作研究解释与观察，未接入计分、灯票或政治自动档位。'),
+      v.observations.map(function(x){return h('section',null,h('h3',null,x.title+' · '+x.stage),h('p',{class:'src'},'公布日 '+(x.policyDate||'未核')+(x.effectiveAt?'；生效安排 '+x.effectiveAt:'')+'；影响主题 '+(x.themes||'待核')),
+        h('p',null,h('b',null,'已核事实：'),x.fact),h('p',null,h('b',null,'执行与约束：'),x.authority+'；'+x.constraints),h('p',null,h('b',null,'预期传导：'),x.expected),h('p',null,h('b',null,'实际传导：'),x.realized),
+        h('p',null,h('b',null,'实施把握／条件影响／市场预期：'),x.implementation+'；'+x.impact+'；'+x.expectation),h('p',null,h('b',null,'最强反方：'),x.counter),h('p',null,h('b',null,'下一证据：'),x.next),
+        x.conditions.length?h('p',null,'改判条件：'+x.conditions.join('；')):null,
+        h('p',{class:'src'},x.sources.map(function(s){return h('span',null,h('a',{href:s.url,target:'_blank',rel:'noopener noreferrer'},(s.title||'来源')+' ↗'),'（'+s.kind+(s.date?'，'+s.date:'')+'）；');})));}),
+      v.coverage.length?h('p',{class:'src'},'覆盖：'+v.coverage.map(function(x){return x.category+'：'+(x.status==='not_reviewed'?'本轮未覆盖':x.note||x.status);}).join('；')+'。未覆盖不等于无风险。'):null,
+      v.limits.map(function(x){return h('p',{class:'src'},x);}));
+  }
   function riskControlView(dr){
     var c = dr && dr.control;
     if (!c || typeof c !== 'object') return null;
@@ -7290,6 +7485,8 @@ details.tt[open] summary::before{content:"▾"}
       var hi = i + 1 < a.length ? a[i + 1].lo : 101, on = M.score >= x.lo && M.score < hi;
       return h('li', {class: on ? 'on' : null}, h('b', null, x.k + (on ? ' · 现在' : '')), h('span', null, x.v)); })));
     box.appendChild(h('p', {class: 'ml-check'}, M.check));
+    var politics = politicsNode(M.politics_review);
+    if (politics) box.appendChild(politics);
     var review = M.review;
     if (M.alerts.length && !(review && review.review_complete)) {
       box.appendChild(h('p', {class:'ml-alert'},
