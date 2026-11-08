@@ -334,6 +334,71 @@ def validate_politics_review(public, expected):
     return issues
 
 
+
+def brent_expected(snapshot, feeds, now=None):
+    """Accept a later qualified continuous quote without rewriting its snapshot."""
+    original = next((x for x in snapshot.get('prices', [])
+                     if x.get('name') == '布伦特原油'), {})
+    fallback = original.get('price')
+    feed = feeds.get('brent') or {}
+    if not isinstance(feed, dict):
+        return fallback, ['布伦特补充报价格式无效']
+    if feed.get('source_kind') != 'eastmoney_continuous_quote':
+        return fallback, []  # A differently identified settlement is not this quote.
+    failures = []
+    def require(ok, message):
+        if not ok:
+            failures.append('布伦特补充报价：' + message)
+    require(feed.get('ok') is True and feed.get('feed_kind') == 'eastmoney_continuous_quote', '状态或来源分类不合格')
+    require(feed.get('secid') == '112.B00Y' and feed.get('quote_kind') == 'continuous_level'
+            and feed.get('contract_month') is None and feed.get('unit') == '美元/桶', '合约身份或单位不符')
+    value = flow_number(feed.get('value'))
+    require(value is not None and value > 0, '价格不是正有限数')
+    require(feed.get('pct') is None and feed.get('prev') is None, '月份未知不能拼接涨幅或前价')
+    response = feed.get('source_response') or {}
+    if not isinstance(response, dict):
+        response = {}
+    raw_url = response.get('url')
+    parsed = urllib.parse.urlparse(raw_url if isinstance(raw_url, str) else '')
+    query = urllib.parse.parse_qs(parsed.query)
+    ids = ','.join(query.get('secids', []) + query.get('secid', [])).split(',')
+    require(parsed.scheme == 'https' and (parsed.hostname or '').endswith('.eastmoney.com')
+            and parsed.path in ('/api/qt/ulist.np/get', '/api/qt/ulist/get', '/api/qt/stock/get')
+            and '112.B00Y' in ids and response.get('http_status') == 200, '实际请求身份或回执不符')
+    quote = response.get('quote') or {}
+    if not isinstance(quote, dict):
+        quote = {}
+    require(quote.get('f12') == 'B00Y' and str(quote.get('f13')) == '112'
+            and '布伦特' in str(quote.get('f14', '')), '原生证券身份不符')
+    raw_value = flow_number(quote.get('f2'))
+    require(value is not None and raw_value is not None and abs(value - raw_value) < 0.000001, '价格与原生回执不符')
+    zone = dt.timezone(dt.timedelta(hours=8))
+    clock = now or dt.datetime.now(zone)
+    if clock.tzinfo is None:
+        clock = clock.replace(tzinfo=zone)
+    def stamp(raw, allow_naive=False):
+        try:
+            result = dt.datetime.fromisoformat(str(raw).replace('Z', '+00:00'))
+            if result.tzinfo is None:
+                if not allow_naive:
+                    return None
+                result = result.replace(tzinfo=zone)
+            return result.astimezone(zone)
+        except (ValueError, TypeError):
+            return None
+    at, retrieved = stamp(feed.get('quote_time')), stamp(feed.get('retrieved_at'))
+    baseline = stamp(snapshot.get('retrieved_at'), allow_naive=True)
+    require(at is not None and retrieved is not None and baseline is not None
+            and baseline < at <= retrieved <= clock, '报价/读取时点无效、未来或不晚于原快照')
+    require(at is not None and feed.get('date') == at.date().isoformat(), '日期不符')
+    try:
+        raw_at = dt.datetime.fromtimestamp(float(quote.get('f124')), zone)
+    except (ValueError, TypeError, OverflowError, OSError):
+        raw_at = None
+    require(at is not None and raw_at == at, '时点与原生回执不符')
+    return (value if not failures else fallback), failures
+
+
 def validate(page, latest, snapshot, extra, production=True):
     issues = []
     theme = next((x for x in latest.get('themes', []) if x.get('theme') == page.get('mainline', {}).get('theme')), None)
@@ -377,11 +442,13 @@ def validate(page, latest, snapshot, extra, production=True):
         issues.append('CME关键数字的会议日期不一致')
     if len(kpis) > 4 and cme_value is None and number(kpis[4].get('value')) is not None:
         issues.append('CME缺合格读数时仍显示数字')
+    brent, brent_issues = brent_expected(snapshot, feeds)
+    issues.extend(brent_issues)
     expected_kpis = {
         0: prices.get('纳斯达克综合', {}).get('pct'),
         1: crwv.get('pct'),
         2: prices.get('VIX 波动率', {}).get('price'),
-        3: prices.get('布伦特原油', {}).get('price'),
+        3: brent,
         4: cme_value,
         5: feeds.get('kr', {}).get('value'),
     }

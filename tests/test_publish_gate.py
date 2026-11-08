@@ -59,6 +59,76 @@ class PublishGate(unittest.TestCase):
         self.page['kpis'][1]['value'] = '+3'
         self.assertEqual(self.errors(), [])
 
+    def continuous_quote(self):
+        now = dt.datetime.now(dt.timezone(dt.timedelta(hours=8))).replace(microsecond=0)
+        quote_at, retrieved = now - dt.timedelta(minutes=5), now - dt.timedelta(minutes=3)
+        self.snapshot['retrieved_at'] = (now - dt.timedelta(hours=1)).strftime('%Y-%m-%d %H:%M')
+        self.extra['feeds']['brent'] = dict(
+            ok=True, source_kind='eastmoney_continuous_quote', feed_kind='eastmoney_continuous_quote',
+            secid='112.B00Y', quote_kind='continuous_level', contract_month=None,
+            value=97.62, unit='美元/桶', date=quote_at.date().isoformat(),
+            quote_time=quote_at.isoformat(), retrieved_at=retrieved.isoformat(), pct=None, prev=None,
+            source_response=dict(url='https://push2.eastmoney.com/api/qt/ulist.np/get?secids=112.B00Y', http_status=200,
+                                 quote=dict(f12='B00Y', f13=112, f14='布伦特原油当月连续', f2=97.62, f124=int(quote_at.timestamp()))))
+        self.page['kpis'][3]['value'] = '97.62'
+        return self.extra['feeds']['brent']
+
+    def test_later_verified_continuous_quote_supersedes_snapshot_without_mutating_it(self):
+        self.continuous_quote()
+        original = copy.deepcopy(self.snapshot)
+        self.assertEqual(self.errors(), [])
+        self.assertEqual(self.snapshot, original)
+
+    def test_settlement_from_another_series_does_not_override_continuous_snapshot(self):
+        self.extra['feeds']['brent'] = dict(ok=True, value=98.32, source='Yahoo BZ=F settlement')
+        self.assertEqual(self.errors(), [])
+
+    def test_continuous_override_rejects_wrong_instrument_or_request(self):
+        for mutation in ('secid', 'raw', 'host'):
+            with self.subTest(mutation=mutation):
+                feed = self.continuous_quote()
+                if mutation == 'secid': feed['secid'] = '102.CL00Y'
+                if mutation == 'raw': feed['source_response']['quote']['f12'] = 'CL00Y'
+                if mutation == 'host': feed['source_response']['url'] = 'https://example.com/api/qt/stock/get?secid=112.B00Y'
+                self.assertTrue(any('布伦特补充报价' in x for x in self.errors()))
+
+    def test_continuous_override_rejects_missing_or_changed_raw_quote(self):
+        for mutation in ('missing', 'price', 'epoch', 'http'):
+            with self.subTest(mutation=mutation):
+                feed = self.continuous_quote()
+                if mutation == 'missing': feed.pop('source_response')
+                if mutation == 'price': feed['source_response']['quote']['f2'] = 99
+                if mutation == 'epoch': feed['source_response']['quote']['f124'] += 1
+                if mutation == 'http': feed['source_response']['http_status'] = 403
+                self.assertTrue(any('布伦特补充报价' in x for x in self.errors()))
+
+    def test_continuous_override_rejects_future_stale_or_unzoned_time(self):
+        for mutation in ('future', 'stale', 'unzoned'):
+            with self.subTest(mutation=mutation):
+                feed = self.continuous_quote()
+                if mutation == 'future': feed['quote_time'] = '2999-01-01T00:00:00+08:00'
+                if mutation == 'stale': self.snapshot['retrieved_at'] = feed['retrieved_at']
+                if mutation == 'unzoned': feed['quote_time'] = feed['quote_time'][:-6]
+                self.assertTrue(any('布伦特补充报价' in x for x in self.errors()))
+
+    def test_continuous_override_malformed_metadata_fails_without_crashing(self):
+        for kind in ('response', 'quote', 'url'):
+            with self.subTest(kind=kind):
+                feed = self.continuous_quote()
+                if kind == 'response': feed['source_response'] = 'invalid'
+                if kind == 'quote': feed['source_response']['quote'] = []
+                if kind == 'url': feed['source_response']['url'] = 123
+                self.assertTrue(any('布伦特补充报价' in x for x in self.errors()))
+
+    def test_continuous_override_rejects_joined_return_and_bad_price(self):
+        for mutation in ('return', 'month', 'nan'):
+            with self.subTest(mutation=mutation):
+                feed = self.continuous_quote()
+                if mutation == 'return': feed['pct'] = -1
+                if mutation == 'month': feed['contract_month'] = '2026-12'
+                if mutation == 'nan': feed['value'] = float('nan')
+                self.assertTrue(any('布伦特补充报价' in x for x in self.errors()))
+
     def test_null_year_end_is_missing_and_does_not_crash(self):
         self.extra['feeds']['cme']['year_end'] = None
         self.assertTrue(any('缺合格读数' in e for e in self.errors()))
