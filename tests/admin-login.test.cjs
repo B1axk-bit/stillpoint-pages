@@ -88,6 +88,22 @@ test('large candidate files use distinct, uncached metadata and raw blob URLs an
   assert.equal(raw.cache, 'no-store');
 });
 
+test('the dashboard renders both text and structured news summaries from the private candidate feed', async () => {
+  const common = {date: '2026-11-11', status: '待确认', source: '测试公告', why: [], suggest: {class: '噪声'}};
+  const h = harness({candidateData: {candidates: [
+    {...common, id: 'text', evidence: '已核验的中文标题', original_title: 'Original headline',
+      original_url: 'https://example.com/article', brief: '经营现金流 < 设备采购支出'},
+    {...common, id: 'structured', evidence: '结构化记录',
+      brief: {zh: '结构化摘要标题', who: '测试公司', what: '发布季报', figure: '19.75 亿美元', impact: '核对现金覆盖'}},
+    {...common, id: 'pending', evidence: '仅有标题', brief: '  '},
+  ]}});
+  await h.login();
+  const rendered = h.node('#groups').innerHTML;
+  assert.match(rendered, /已核验的中文标题[\s\S]*?<dt>中文摘要<\/dt><dd>经营现金流 &lt; 设备采购支出<\/dd>[\s\S]*?https:\/\/example\.com\/article/);
+  assert.match(rendered, /结构化摘要标题[\s\S]*?<dt>数字<\/dt><dd>19\.75 亿美元<\/dd>/);
+  assert.match(rendered, /仅有标题[\s\S]*?还没整理，每天同步时补上/);
+});
+
 test('a cached metadata-shaped candidate response reports invalid data while staying locked', async () => {
   const h = harness({candidateData: {sha: candidateSha, encoding: 'none', content: ''}});
   await h.login();

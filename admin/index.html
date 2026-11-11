@@ -522,10 +522,14 @@ function candHTML(c) {
 
 // 人工/AI 研究预填优先于旧标题摘要；定时行情刷新不覆盖已核验事实。
 function briefHTML(c) {
-  const b = c.brief || (DATA.brief || {})[c.id], k = c.keys || {};
+  const brief = typeof c.brief === "string" ? c.brief.trim() : c.brief;
+  const b = brief || (DATA.brief || {})[c.id], k = c.keys || {};
   const title = c.original_title || c.evidence, url = c.original_url || c.url;
   const orig = url ? `<a href="${esc(url)}" target="_blank" rel="noopener">${esc(title)} ↗</a>` : esc(title);
-  if (b) return `<div class="zh">${esc(b.zh)}</div>
+  if (typeof b === "string" && b.trim()) return `<div class="zh">${esc(c.evidence || title)}</div>
+    <dl class="kv"><dt>中文摘要</dt><dd>${esc(b)}</dd></dl>
+    <div class="orig">原标题：${orig}</div>`;
+  if (b && typeof b === "object") return `<div class="zh">${esc(b.zh)}</div>
     <dl class="kv"><dt>公司</dt><dd>${esc(b.who)}</dd><dt>事件</dt><dd>${esc(b.what)}</dd><dt>数字</dt><dd>${esc(b.figure)}</dd><dt>影响</dt><dd class="imp">${esc(b.impact)}</dd></dl>
     <div class="orig">原标题：${orig}</div>`;
   if (c.origin === "lamp") return `<div class="ev">${esc(c.evidence)}</div>`;
